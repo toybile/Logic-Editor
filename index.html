@@ -478,6 +478,16 @@ document.querySelector('#copy').onclick=()=>copyArgument(numbered);
 document.querySelector('#download').onclick=()=>{const url=URL.createObjectURL(new Blob([argument()],{type:'text/plain;charset=utf-8'}));const link=document.createElement('a');link.href=url;link.download='argumento.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Arquivo de texto gerado.';};
 
 const root=document.querySelector('#lp-hybrid');
+// Show the portfolio return control only when opened by its wrapper.
+if(new URLSearchParams(location.search).get('from')==='portfolio'){
+  const home=document.createElement('a');
+  home.href='https://toybile.github.io/';home.target='_top';
+  home.className='hy-button hy-icon-button hy-home';
+  home.setAttribute('aria-label','Todas as criações');home.title='Todas as criações';
+  home.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v11h14V9M9 20v-7h6v7"/></svg>';
+  root.querySelector('.hy-title').prepend(home);
+}
+
 const icons={"panel-left":"<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M9 4v16\"/>","moon":"<path d=\"M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5\"/>","eye":"<path d=\"M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","eye-off":"<path d=\"m3 3 18 18M10.6 5.1A13 13 0 0 1 12 5c6.5 0 10 7 10 7a19 19 0 0 1-3.1 4M6.5 6.5A20 20 0 0 0 2 12s3.5 7 10 7a13 13 0 0 0 5.5-1.5\"/>","plus":"<path d=\"M12 5v14M5 12h14\"/>","copy":"<rect x=\"8\" y=\"8\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3\"/>","download":"<path d=\"M12 3v12m-5-5 5 5 5-5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4\"/>"};
 function uiIcon(name){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[name]+'</svg>';}
 let ui={focus:false,theme:'light',editor:true,preview:true,language:'pt-BR'};
