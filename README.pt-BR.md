@@ -15,7 +15,7 @@ Abra index.html em um navegador moderno. Não é necessário instalar dependênc
 1. Escreva nas linhas de premissas e conclusões. Use o botão à esquerda para alternar a função da linha.
 2. Escolha símbolos na biblioteca organizada em grupos. Abra **Todas as notações** para usar outras representações de um operador.
 3. Adicione linhas, arraste-as pela alça para mudar a ordem e remova-as pela lixeira.
-4. Segure o botão da função da linha por **0,3 segundo** para transformá-la em uma linha vazia proposital. O texto permanece guardado, mas oculto; um clique curto restaura a linha como premissa.
+4. Uma linha vazia gera um salto de linha no Argumento, mesmo estando marcada como **Premissa** ou **Conclusão**. Se a linha contiver texto, segure o botão Premissa/Conclusão por **0,3 segundo** para representá-la como uma linha em branco no Argumento. O texto fica preservado, mas oculto; um clique curto restaura a linha como premissa.
 5. Marque **Números**, se desejar, e use **Copiar** ou **Exportar**. A exportação baixa um arquivo .txt.
 
 ## Vários argumentos
