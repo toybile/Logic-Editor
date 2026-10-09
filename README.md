@@ -15,7 +15,7 @@ Open index.html in a modern browser. No installation, account, or server is requ
 1. Write in the premise and conclusion rows. Use the button on the left to switch a row's role.
 2. Choose symbols from the grouped sidebar. Open **All notations** to use alternative representations of an operator.
 3. Add rows, reorder them using the drag handle, and remove them using the trash button.
-4. Hold a row's role button for **0.3 seconds** to make it a deliberate blank line. Its text is preserved but hidden; a short click restores it as a premise.
+4. An empty row creates a blank line in the Argument, even when marked as **Premise** or **Conclusion**. If the row contains text, hold the Premise/Conclusion button for **0.3 seconds** to represent it as a blank line in the Argument. Its text is preserved but hidden; a short click restores the row as a premise.
 5. Enable **Numbers** if needed, then use **Copy** or **Export**. Export downloads a .txt file.
 
 ## Multiple arguments
