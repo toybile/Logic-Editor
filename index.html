@@ -1630,4 +1630,44 @@ for(const key of ['editor','preview']){const eye=root.querySelector('[data-actio
 #lp-hybrid[data-role-display=names] .hy-role-symbol{display:none}
 #lp-hybrid[data-role-display=symbols] .hy-role-name{display:none}
 #lp-hybrid[data-role-display=symbols] .hy-row .hy-line-shell .hy-role{width:var(--row-control-height);min-width:var(--row-control-height);padding:0}
-</style><script id="role-display-default">if(!['names','both','symbols'].includes(ui.roleDisplay))ui.roleDisplay='names';root.dataset.roleDisplay=ui.roleDisplay;</script></body></html>
+</style><script id="role-display-default">if(!['names','both','symbols'].includes(ui.roleDisplay))ui.roleDisplay='names';root.dataset.roleDisplay=ui.roleDisplay;</script><style id="inset-trash-hover-return">
+#lp-hybrid .hy-row>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line,#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{width:34px;min-width:34px;height:var(--row-control-height);min-height:var(--row-control-height);padding:0 8px 0 0;margin-right:-12px;border-radius:9px 0 0 9px;display:grid;place-items:center;background:light-dark(#eef0f5,#222730);box-shadow:inset 0 2px 5px light-dark(#26364a12,#0004);opacity:0;transform:translateX(18px);pointer-events:none;z-index:0;transition:transform .2s ease,opacity .2s ease,background .18s ease}
+#lp-hybrid .hy-row>.hy-delete-line svg{display:block;width:16px;height:16px;transform:none;left:0}
+#lp-hybrid .hy-row>.hy-delete-line::before,#lp-hybrid .hy-row>.hy-delete-line::after{display:none}
+#lp-hybrid .hy-row:hover>.hy-delete-line,#lp-hybrid .hy-row:focus-within>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line):hover>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line):focus-within>.hy-delete-line,#lp-hybrid .hy-row.hy-blank-line:hover>.hy-delete-line,#lp-hybrid .hy-row.hy-blank-line:focus-within>.hy-delete-line{opacity:1;transform:translateX(0);pointer-events:auto}
+#lp-hybrid .hy-row:hover>.hy-delete-line svg,#lp-hybrid .hy-row:focus-within>.hy-delete-line svg{transform:none}
+#lp-hybrid .hy-row>.hy-delete-line:hover,#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line:hover,#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line:hover{background:light-dark(#fbe8eb,#492b32);color:light-dark(#ab3043,#f3a8b5)}
+#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{padding:0;margin-right:0;border-radius:9px}
+#lp-hybrid .hy-row.drag-ghost>.hy-delete-line{opacity:0}
+@media(hover:none),(pointer:coarse){#lp-hybrid .hy-row>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line,#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{opacity:1;transform:none;pointer-events:auto}}
+@media(prefers-reduced-motion:reduce){#lp-hybrid .hy-row>.hy-delete-line{transition:none}}
+</style><style id="inset-trash-reference-refinement">
+#lp-hybrid .hy-row>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line{width:44px;min-width:44px;margin-right:-16px;padding:0 12px 0 0;border-radius:12px 0 0 12px;background:light-dark(#e9ecf2,#292f39);box-shadow:inset 0 2px 5px light-dark(#26364a12,#0003)}
+#lp-hybrid .hy-row>.hy-delete-line svg{width:19px;height:19px}
+#lp-hybrid .hy-row .hy-line-shell .hy-role{border-radius:11px;box-shadow:0 2px 5px light-dark(#26364a0b,#0002)}
+#lp-hybrid[data-role-display=names] .hy-row .hy-line-shell .hy-role{width:calc(88px * var(--writing-scale));min-width:calc(88px * var(--writing-scale))}
+#lp-hybrid[data-role-display=both] .hy-row .hy-line-shell .hy-role{width:calc(108px * var(--writing-scale));min-width:calc(108px * var(--writing-scale))}
+#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{width:34px;min-width:34px;padding:0;margin-right:0;border-radius:9px}
+</style><style id="inset-trash-deeper-hover">
+#lp-hybrid .hy-row>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line{margin-right:-24px;padding-right:12px}
+#lp-hybrid .hy-row>.hy-delete-line::before{content:'';display:block;position:absolute;left:-28px;right:0;top:0;bottom:0;background:transparent;transform:none;border-radius:0;z-index:-1}
+#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{margin-right:0;padding:0}
+</style><style id="trash-hit-area-cleanup">
+#lp-hybrid .hy-row>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line{margin-right:-29px}
+#lp-hybrid .hy-row>.hy-delete-line::before,#lp-hybrid .hy-row:hover>.hy-delete-line::before,#lp-hybrid .hy-row:focus-within>.hy-delete-line::before,#lp-hybrid .hy-row>.hy-delete-line:hover::before{background:transparent;transform:none;clip-path:none;box-shadow:none;border:0;border-radius:0}
+#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{margin-right:0}
+</style><style id="stable-trash-hover-and-blank-position">
+#lp-hybrid .hy-row>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line{overflow:visible}
+#lp-hybrid .hy-row>.hy-delete-line::before,#lp-hybrid .hy-row:hover>.hy-delete-line::before,#lp-hybrid .hy-row:focus-within>.hy-delete-line::before,#lp-hybrid .hy-row>.hy-delete-line:hover::before{display:block;left:-40px;right:0;top:-5px;bottom:-5px;z-index:0;pointer-events:auto;background:transparent;transform:none}
+#lp-hybrid .hy-row>.hy-delete-line svg{position:relative;z-index:1;pointer-events:none}
+#lp-hybrid .hy-row:has(>.hy-delete-line:hover)>.hy-delete-line{opacity:1;transform:none;pointer-events:auto}
+#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{width:34px;min-width:34px;justify-self:start;margin:0;padding:0;border-radius:9px;transform:none;display:grid;place-items:center}
+#lp-hybrid .hy-row.hy-blank-line:hover>.hy-delete-line,#lp-hybrid .hy-row.hy-blank-line:focus-within>.hy-delete-line{transform:none}
+</style><style id="trash-hover-overflow-fix">
+#lp-hybrid .hy-panel-frame #hy-editor-content[data-open=true]>.hy-collapse-inner{overflow:visible}
+#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{width:34px;min-width:34px;height:34px;min-height:34px;justify-self:start;align-self:center;padding:0;margin:0;transform:none}
+</style><style id="row-hover-stable-gutter">
+#lp-hybrid .hy-row:not(.drag-ghost)::before{content:'';position:absolute;left:-36px;top:0;bottom:0;width:80px;background:transparent;pointer-events:auto;z-index:0}
+#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{justify-self:start;left:28px}
+#lp-hybrid .hy-row>.hy-delete-line::before,#lp-hybrid .hy-row:hover>.hy-delete-line::before,#lp-hybrid .hy-row:focus-within>.hy-delete-line::before,#lp-hybrid .hy-row>.hy-delete-line:hover::before{left:-36px;right:-6px;pointer-events:auto}
+</style><style id="resize-edge-row-hover">#lp-hybrid .hy-row[data-gutter-hover=true]>.hy-delete-line,#lp-hybrid .hy-row:not(.hy-blank-line)[data-gutter-hover=true]>.hy-delete-line,#lp-hybrid .hy-row.hy-blank-line[data-gutter-hover=true]>.hy-delete-line{opacity:1;transform:none;pointer-events:auto}</style><script id="resize-edge-row-hover-script">(()=>{const panel=root.querySelector('.hy-editor'),frame=panel.closest('.hy-panel-frame');function clear(){panel.querySelectorAll('[data-gutter-hover]').forEach(row=>row.removeAttribute('data-gutter-hover'))}frame.addEventListener('pointermove',event=>{for(const row of panel.querySelectorAll('#rows>.hy-row')){const b=row.getBoundingClientRect();const hit=event.clientX>=b.left-36&&event.clientX<=b.left+44&&event.clientY>=b.top&&event.clientY<=b.bottom;if(hit)row.dataset.gutterHover='true';else row.removeAttribute('data-gutter-hover')}});frame.addEventListener('pointerleave',clear)})();</script><style id="blank-trash-click-layer">#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{z-index:2}</style><style id="trash-inset-final-adjustment">#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line{margin-right:-34px}</style><style id="row-content-right-inset">#lp-hybrid .hy-row .hy-line-shell{margin-left:6px;max-width:calc(100% - 6px)}#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line{left:6px}#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{left:34px}</style><style id="balanced-role-row-spacing">#lp-hybrid .hy-row{--role-side-gap:20px}#lp-hybrid .hy-row .hy-line-shell{margin-left:var(--role-side-gap);max-width:calc(100% - var(--role-side-gap));gap:var(--role-side-gap)}#lp-hybrid .hy-row:not(.hy-blank-line)>.hy-delete-line{left:var(--role-side-gap)}#lp-hybrid .hy-row.hy-blank-line>.hy-delete-line{left:calc(28px + var(--role-side-gap))}@media(max-width:480px){#lp-hybrid .hy-row{--role-side-gap:16px}}</style></body></html>
