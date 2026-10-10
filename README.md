@@ -150,7 +150,7 @@ Project files contain argument data, not panel positions or interface preference
 
 Arguments, descriptions, preferences and panel arrangement are automatically stored with `localStorage`. The status distinguishes **Saved in this browser**, **Saving…** and **Could not save in this browser**. Automatic browser storage is separate from downloading a backup.
 
-There is no account or cloud synchronization. Another browser, device or website address has separate data. Private browsing, blocked storage or clearing site data can affect persistence. Use `.lp.json` for a portable editable backup.
+There is no account or cloud synchronization. Another browser, device or origin (protocol, domain and port) has separate data; different URL paths on the same origin share browser storage. Private browsing, blocked storage or clearing site data can affect persistence. Use `.lp.json` for a portable editable backup.
 
 ## Settings and accessibility
 
@@ -312,7 +312,7 @@ Arquivos de projeto contêm dados dos argumentos, não posições dos painéis o
 
 Argumentos, descrições, preferências e disposição dos painéis são salvos automaticamente com `localStorage`. O indicador distingue **Salvo neste navegador**, **Salvando…** e **Não foi possível salvar neste navegador**. O armazenamento automático é separado do download de uma cópia de segurança.
 
-Não há conta nem sincronização na nuvem. Outro navegador, dispositivo ou endereço de site tem dados separados. Navegação privada, bloqueio do armazenamento ou limpeza dos dados do site podem afetar a persistência. Use `.lp.json` para uma cópia editável e portátil.
+Não há conta nem sincronização na nuvem. Outro navegador, dispositivo ou origem (protocolo, domínio e porta) tem dados separados; caminhos de URL diferentes na mesma origem compartilham o armazenamento do navegador. Navegação privada, bloqueio do armazenamento ou limpeza dos dados do site podem afetar a persistência. Use `.lp.json` para uma cópia editável e portátil.
 
 ## Configurações e acessibilidade
 
