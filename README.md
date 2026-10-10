@@ -26,7 +26,7 @@ Open the website or download this repository and open `index.html` in a modern b
 - **Backspace in an empty block** removes that block and returns to the previous one.
 - **Enter** inserts a new premise immediately after the current row, ready to edit.
 - **Tab** goes to the next row, at the end of its last block. **Shift+Tab** goes to the previous row the same way. At the first or last row, normal browser focus navigation applies when there is no adjacent row.
-- **Aa** toggles uppercase conversion for subsequent typing; it does not rewrite all existing text.
+- The **Caps Lock icon (upward arrow above a horizontal line)** toggles uppercase conversion for subsequent typing; it does not rewrite all existing text. When active, its contrasting background, heavier icon and indicator dot show that uppercase typing is enabled; the tooltip also reports the active state.
 - Click a block before choosing a sidebar symbol. The symbol is inserted into the active block, or into a new block after an occupied block.
 
 ## Premises, conclusions and blank rows
@@ -38,13 +38,13 @@ An empty row creates a blank line in the formatted Argument and is ignored by va
 ### Reorder, select and delete
 
 - **Drag a row from its text or another available area of the row.** No dedicated drag handle or waiting period is needed: press and move. A normal click still lets you edit text. Role buttons, trash buttons and selection controls keep their own actions.
-- Use the **selection checkbox next to the lower +** to enable selection mode. Select several rows to drag them together in their original order or use **Delete selected**.
+- Hold a row still for **0.2 seconds** to enable selection mode and select it. Hold a row again to exit selection mode and clear the selection. Moving before that starts immediate dragging instead. You can also use the **selection checkbox next to the lower +** to enable selection mode. Select several rows to drag them together in their original order or use **Delete selected**.
 - Use a row's **trash icon** to delete it. If that row is selected, deletion applies to the selected group. Deleting nonempty content requires confirmation; empty rows can be removed directly. The editor keeps at least one editable row.
 - The **undo and redo arrows below the rows** restore recorded row operations, including addition, deletion and reordering. These buttons are not a replacement for text-field undo.
 
 ## Multiple arguments and examples
 
-The **+ in the header** opens two choices: **Blank** creates an empty argument immediately; **Example** opens a selection window with formula previews. An example is added as a new argument, preserving the existing ones.
+The **+ in the header** opens two choices: **Blank** creates an empty argument immediately; **Example** opens a selection window with formula previews. An example is added as a new argument, preserving the existing ones. **Help** in this window opens an offline explanation page for the current examples; the upper-left arrow returns to the examples without changing your argument.
 
 Examples include modus ponens, modus tollens, disjunctive syllogism, affirming the consequent and formulas with longer proposition names. The affirming-the-consequent example deliberately demonstrates an invalid inference.
 
@@ -73,7 +73,7 @@ Click the **magnifying glass** to reveal and focus symbol search in place of the
 
 ## Argument preview, copy and export
 
-The Argument updates as you write. **Numbers** toggles line numbering for the current argument. The **eye icons** independently collapse the editing area and the Argument contents; collapsing the sidebar does not toggle either eye.
+The Argument updates as you write. The **numbered-list icon** (Number lines) toggles line numbering for the current argument. The **eye icons** independently collapse the editing area and the Argument contents; collapsing the sidebar does not toggle either eye.
 
 **Copy** places the formatted argument on the clipboard, subject to the browser's clipboard permissions. **Export** opens a menu immediately below the button:
 
@@ -188,7 +188,7 @@ Abra o site ou baixe este repositório e abra `index.html` em um navegador moder
 - **Backspace em um bloco vazio** remove esse bloco e retorna ao anterior.
 - **Enter** insere uma nova premissa imediatamente depois da linha atual, pronta para editar.
 - **Tab** leva à próxima linha, com o cursor no fim do último bloco. **Shift+Tab** volta à linha anterior da mesma forma. Quando não há linha adjacente, vale a navegação normal de foco do navegador.
-- **Aa** ativa ou desativa a conversão para maiúsculas durante a digitação seguinte; não reescreve todo o texto existente.
+- O **ícone de Caps Lock (seta para cima sobre uma linha horizontal)** ativa ou desativa a conversão para maiúsculas durante a digitação seguinte; não reescreve todo o texto existente. Quando ativo, o fundo contrastante, o ícone mais marcado e o ponto indicador sinalizam a digitação em maiúsculas; a descrição do botão também informa o estado ativo.
 - Clique em um bloco antes de escolher um símbolo no menu lateral. O símbolo entra no bloco ativo ou em um novo bloco depois de um bloco preenchido.
 
 ## Premissas, conclusões e linhas em branco
@@ -200,13 +200,13 @@ Uma linha vazia gera uma linha em branco no Argumento e é ignorada na validaç�
 ### Reordenar, selecionar e excluir
 
 - **Arraste uma linha pelo texto ou por outra área disponível dela.** Não é necessário usar uma alça nem esperar: pressione e mova. Um clique normal continua permitindo editar. Botões de função, lixeira e seleção mantêm suas próprias ações.
-- Use a **caixa de seleção ao lado do + inferior** para ativar o modo de seleção. Selecione várias linhas para arrastá-las juntas, preservando sua ordem, ou use **Excluir selecionadas**.
+- Segure uma linha parada por **0,2 segundo** para ativar a seleção múltipla e selecioná-la. Segure uma linha novamente para sair do modo e limpar a seleção. Mover antes disso inicia o arrasto imediato. Também é possível usar a **caixa de seleção ao lado do + inferior** para ativar o modo de seleção. Selecione várias linhas para arrastá-las juntas, preservando sua ordem, ou use **Excluir selecionadas**.
 - Use a **lixeira** para excluir uma linha. Se ela estiver selecionada, a exclusão vale para o grupo selecionado. Conteúdo preenchido exige confirmação; linhas vazias podem ser removidas diretamente. O editor mantém pelo menos uma linha editável.
 - As **setas de desfazer e refazer abaixo das linhas** recuperam operações registradas nas linhas, incluindo adição, exclusão e reordenação. Não substituem o desfazer de texto dentro dos campos.
 
 ## Vários argumentos e exemplos
 
-O **+ no cabeçalho** abre duas opções: **Em branco** cria um argumento vazio imediatamente; **Exemplo** abre uma janela com prévias das fórmulas. O exemplo entra como um novo argumento, preservando os existentes.
+O **+ no cabeçalho** abre duas opções: **Em branco** cria um argumento vazio imediatamente; **Exemplo** abre uma janela com prévias das fórmulas. O exemplo entra como um novo argumento, preservando os existentes. **Ajuda** nessa janela abre uma página offline com explicações dos exemplos atuais; a seta superior esquerda retorna à lista sem alterar seu argumento.
 
 Os exemplos incluem modus ponens, modus tollens, silogismo disjuntivo, afirmação do consequente e fórmulas com nomes maiores de proposições. A afirmação do consequente demonstra deliberadamente uma inferência inválida.
 
@@ -235,7 +235,7 @@ Clique na **lupa** para abrir e focar a busca no lugar do título da biblioteca.
 
 ## Prévia do Argumento, cópia e exportação
 
-O Argumento se atualiza durante a escrita. **Números** alterna a numeração do argumento atual. Os **olhos** recolhem a área de edição e o conteúdo do Argumento de forma independente; recolher o menu lateral não altera esses controles.
+O Argumento se atualiza durante a escrita. O **ícone de lista numerada** (Numerar linhas) alterna a numeração do argumento atual. Os **olhos** recolhem a área de edição e o conteúdo do Argumento de forma independente; recolher o menu lateral não altera esses controles.
 
 **Copiar** envia o argumento formatado para a área de transferência, conforme as permissões do navegador. **Exportar** abre um menu logo abaixo do botão:
 
