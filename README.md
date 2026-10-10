@@ -48,7 +48,7 @@ The **+ in the header** opens two choices: **Blank** creates an empty argument i
 
 Examples include modus ponens, modus tollens, disjunctive syllogism, affirming the consequent and formulas with longer proposition names. The affirming-the-consequent example deliberately demonstrates an invalid inference.
 
-Click a tab to switch arguments. The **pencil** renames it; leave the name empty to restore automatic naming. The **X** deletes it, with confirmation for nonempty content. These controls appear on hover or keyboard focus and remain visible on touch layouts. **Hold a tab for about 0.25 seconds and drag** to reorder arguments. Automatic names follow tab positions.
+The active argument tab has a subtle tinted background and border. Premises default to soft blue and conclusions to soft green. Hold a panel’s eye button for **0.2 seconds** to open its individual appearance dialog. It offers preset swatches and a full color picker; changes also update the panel side markers, persist in this browser, and reset with Restore defaults. Thin deletion strips appear on row hover or keyboard focus. Hovering a strip turns it red; strips remain visible on touch devices. Each panel has its own Colored border toggle, using its own color. This choice persists in this browser. Appearance settings also toggle the outer marker and select the inner detail: soft gradient, none, inset channel, curved connections, soft wave, inner corners, subtle row numbering, color on hover, segmented line, vertical capsule, row arcs or localized light. Row details follow additions and reordering. The deletion strip also supports row dragging and the 0.2-second selection hold; a short click deletes. Click a tab to switch arguments. The **pencil** renames it; leave the name empty to restore automatic naming. The **X** deletes it, with confirmation for nonempty content. These controls appear on hover or keyboard focus and remain visible on touch layouts. **Hold a tab for about 0.25 seconds and drag** to reorder arguments. Automatic names follow tab positions.
 
 Each argument retains its rows, numbering choice and proposition descriptions. Panel arrangement and interface settings belong to the workspace.
 
@@ -58,7 +58,7 @@ Expand a symbol category to browse it. Click a symbol to insert it. The library 
 
 **The library is broader than the validator:** being available for writing does not mean a symbol can be evaluated by the current classical propositional validator.
 
-Use a symbol's **small arrow** to open **All notations** and choose an alternative representation. Hover also opens this window after a short delay; keyboard Arrow Down opens it, and Escape closes it.
+Symbol buttons have a uniform height and no individual dropdown arrows. **Hover** a symbol to see its meaning and available alternative notations. **Arrow Down** on a focused symbol opens the same window; **Escape** closes it. On touch screens, hold the symbol for **0.3 seconds** to open it without inserting. Choose a notation to insert it. The **? in the window's upper-right corner** opens an explanation dialog with a definition, example, notations, references and validator support. Close it with X or Escape to return to the symbol window; the editor stays in place.
 
 Click the **magnifying glass** to reveal and focus symbol search in place of the library heading. Search matches symbol text, names and category labels, ignoring letter case and accents. Matching groups open automatically; clearing the query restores their earlier open/closed state. Leaving an empty search closes the field; leaving a nonempty query preserves it. Escape closes search; toggling the magnifying glass off also clears its filter.
 
@@ -160,11 +160,29 @@ The **default icon between theme and language** opens a confirmation listing the
 
 The layout adapts to narrow screens, uses keyboard focus indicators and labeled icon controls, and reduces supported animations when the system requests reduced motion. Panels and tabs animate movement/appearance without changing their logical content.
 
+## Opening the latest version
+
+When opened online, the editor checks its published scripts and styles with a request that bypasses the browser cache. If they changed, it reloads once automatically before interaction; after interaction begins, an update notice lets you choose when to reload. Failed checks leave the current editor available. Local/offline use skips this check. Publishing and server-cache propagation can still take time; this check does not make an unfinished deployment available.
+
 ## Repository and implementation
 
 `index.html` contains the application HTML, CSS and JavaScript. There is no build step or runtime dependency to install. Serve it as the root page on a static host or open it locally. This repository contains the editor; the separate portfolio menu links to it.
 
 Where a browser exposes `document.modelContext.registerTool`, the editor can register a read-only `get_argument` tool returning the current rows, numbering and formatted text. Ordinary browser use does not require this optional integration.
+
+
+
+Role buttons default to **names**. Double-click cycles through names, names + symbols, and symbols; premise and conclusion buttons have equal sizes within each mode. A single click switches the role immediately. **∵ means “because” and is used only as an interface marker for premises; it is not a universal formal premise symbol and is not included in formulas or logical validation. ∴ means “therefore”.** Individual appearance defaults to the outer marker on, colored border off, and inner detail None. The detail list opens above the interface and does not pass scrolling to the page. Drag inner details horizontally; a weak 3 px snap aligns them with the eye column. Double-click the detail or press Home while focused to restore alignment. Click outside the appearance dialog to close it. General Settings contains an Appearance help hint explaining the eye-button hold.
+
+## Credits and authorship
+
+Conceived and directed by **toybile**, developed with **OpenAI Codex**. Interface decisions, feature requirements and project direction were defined by toybile; Codex assisted with code implementation and documentation.
+
+The symbol explanations link to their educational references. Those referenced works retain their respective authorship and licenses.
+
+## License
+
+This project is distributed under the **MIT License**. See [LICENSE](LICENSE) for the full terms. Preserve the copyright and license notice when redistributing the covered code. Third-party works retain their own terms.
 
 </details>
 
@@ -210,7 +228,7 @@ O **+ no cabeçalho** abre duas opções: **Em branco** cria um argumento vazio 
 
 Os exemplos incluem modus ponens, modus tollens, silogismo disjuntivo, afirmação do consequente e fórmulas com nomes maiores de proposições. A afirmação do consequente demonstra deliberadamente uma inferência inválida.
 
-Clique em uma aba para trocar de argumento. O **lápis** renomeia; deixe o nome vazio para recuperar a nomenclatura automática. O **X** exclui, com confirmação se houver conteúdo. Esses controles aparecem com o mouse sobre a aba ou com foco pelo teclado e ficam visíveis em telas com toque. **Segure uma aba por aproximadamente 0,25 segundo e arraste** para reordenar os argumentos. Os nomes automáticos acompanham as posições.
+A aba do argumento ativo tem fundo e borda discretamente coloridos. Premissas usam azul suave e conclusões verde suave por padrão. Segure o olhinho de um painel por **0,2 segundo** para abrir sua janela individual de aparência. Ela oferece amostras e um seletor completo de cores; a escolha também altera as faixas laterais dos painéis, fica salva neste navegador e é restaurada pelo botão de padrão. Faixas finas de exclusão aparecem ao passar o mouse ou focar a linha pelo teclado. Ao passar sobre a faixa, ela fica vermelha; em dispositivos de toque, ficam visíveis. Cada painel possui seu próprio interruptor Borda colorida, usando sua cor. A escolha fica salva neste navegador. A seção Aparência permite ocultar o traço externo e escolher o detalhe interno: degradê suave, nenhum, rebaixo, conexões curvas, ondulação suave, cantos internos, numeração discreta, cor no hover, linha segmentada, cápsula vertical, arcos por linha ou luz localizada. Os detalhes das linhas acompanham adições e reordenação. A faixa de exclusão também permite arrastar a linha e segurar por 0,2 segundo para seleção; o clique curto exclui. Clique em uma aba para trocar de argumento. O **lápis** renomeia; deixe o nome vazio para recuperar a nomenclatura automática. O **X** exclui, com confirmação se houver conteúdo. Esses controles aparecem com o mouse sobre a aba ou com foco pelo teclado e ficam visíveis em telas com toque. **Segure uma aba por aproximadamente 0,25 segundo e arraste** para reordenar os argumentos. Os nomes automáticos acompanham as posições.
 
 Cada argumento conserva suas linhas, escolha de numeração e descrições de proposições. A disposição dos painéis e as configurações de interface pertencem ao espaço de trabalho.
 
@@ -220,7 +238,7 @@ Expanda uma categoria para consultar os símbolos e clique em um símbolo para i
 
 **A biblioteca é mais ampla que o validador:** um símbolo disponível para escrita não é necessariamente avaliável pela validação proposicional clássica atual.
 
-Use a **pequena seta do símbolo** para abrir **Todas as notações** e escolher outra representação. Passar o mouse também abre essa janela após uma breve espera; a seta para baixo do teclado abre e Escape fecha.
+Os botões têm altura uniforme e não possuem setinhas individuais. **Passe o mouse** sobre um símbolo para consultar seu significado e as notações alternativas disponíveis. **Seta para baixo** com foco no símbolo abre a mesma janela; **Escape** fecha. Em telas com toque, segure o símbolo por **0,3 segundo** para abrir sem inserir. Escolha uma notação para inseri-la. O **? no canto superior direito da janela** abre uma janela com definição, exemplo, notações, referências e indicação de suporte pelo validador. Feche pelo X ou Escape para voltar à janela do símbolo; o editor permanece no lugar.
 
 Clique na **lupa** para abrir e focar a busca no lugar do título da biblioteca. Ela procura símbolos, nomes e categorias sem distinguir maiúsculas ou acentos. Grupos correspondentes abrem automaticamente; limpar a busca restaura o estado anterior dos grupos. Sair de uma busca vazia fecha o campo; uma consulta preenchida é preservada. Escape fecha a busca; desligar a lupa também limpa o filtro.
 
@@ -322,10 +340,28 @@ O **ícone de padrão entre tema e idioma** abre uma confirmação listando a re
 
 A disposição se adapta a telas estreitas, tem indicadores de foco pelo teclado e controles com rótulos acessíveis, e reduz as animações contempladas quando o sistema solicita movimento reduzido. Os painéis e abas animam movimentos e aparições sem alterar o conteúdo lógico.
 
+## Abrir a versão atual
+
+Ao abrir online, o editor verifica os scripts e estilos publicados por uma requisição que evita o cache do navegador. Se mudaram, recarrega uma vez automaticamente antes da interação; depois que a interação começa, um aviso permite escolher quando atualizar. Falhas na consulta mantêm o editor atual disponível. O uso local/offline não faz essa consulta. A publicação e a propagação do cache do servidor ainda podem levar tempo; a consulta não disponibiliza uma publicação ainda incompleta.
+
 ## Repositório e implementação
 
 `index.html` contém HTML, CSS e JavaScript da aplicação. Não há etapa de compilação nem dependência de execução para instalar. Sirva esse arquivo como página inicial em uma hospedagem estática ou abra localmente. Este repositório contém o editor; o menu de projetos separado aponta para ele.
 
 Quando o navegador oferece `document.modelContext.registerTool`, o editor pode registrar a ferramenta de leitura `get_argument`, que retorna linhas atuais, numeração e texto formatado. O uso normal no navegador não exige essa integração opcional.
+
+
+
+Os botões de tipo usam **nomes** por padrão. O duplo clique alterna entre nomes, nomes + símbolos e símbolos; premissa e conclusão têm dimensões iguais em cada modo. O clique simples troca o tipo imediatamente. **∵ significa “porque” e serve somente como identificação visual de premissas nesta interface; não é um símbolo formal universal de premissa e não integra as fórmulas nem a validação lógica. ∴ significa “portanto”.** A aparência individual tem como padrão o traço externo ligado, borda colorida desligada e detalhe interno Nenhum. A lista abre acima da interface e seu scroll não passa para a página. Arraste os detalhes internos horizontalmente; um encaixe fraco de 3 px alinha à coluna do olho. Duplo clique no detalhe ou Home com foco restaura o alinhamento. Clique fora da janela de aparência para fechar. Nas configurações gerais, a ajuda em Aparência explica como segurar o olhinho.
+
+## Créditos e autoria
+
+Concebido e dirigido por **toybile**, desenvolvido com o **OpenAI Codex**. As decisões de interface, os requisitos das funções e a direção do projeto foram definidos por toybile; o Codex auxiliou na implementação do código e na documentação.
+
+As explicações dos símbolos apontam para suas referências educacionais. As obras referenciadas mantêm suas respectivas autorias e licenças.
+
+## Licença
+
+Este projeto é distribuído sob a **licença MIT**. Consulte [LICENSE](LICENSE) para os termos completos. Preserve os avisos de direitos autorais e de licença ao redistribuir o código abrangido. Obras de terceiros mantêm seus próprios termos.
 
 </details>
