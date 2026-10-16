@@ -1,10 +1,10 @@
-# Propositional Logic Editor
+# Logic Editor
 
-[Open the editor / Abrir o editor](https://toybile.github.io/Propositional-Logic-Editor/)
+[Open the editor / Abrir o editor](https://toybile.github.io/Logic-Editor/)
 
-A browser workspace for writing, organizing and evaluating propositional arguments. Read the **English** guide below.
+A browser workspace for writing and organizing logical arguments, including modal symbols and quantifiers. Automatic validation supports classical propositional logic. Read the **English** guide below.
 
-Um espaço no navegador para escrever, organizar e avaliar argumentos proposicionais. Abra o guia **Português (Brasil)** abaixo.
+Um espaço no navegador para escrever e organizar argumentos lógicos, incluindo símbolos modais e quantificadores. A validação automática contempla lógica proposicional clássica. Abra o guia **Português (Brasil)** abaixo.
 
 <details>
 <summary><strong>English — complete user guide</strong></summary>
@@ -381,3 +381,7 @@ As explicações dos símbolos apontam para suas referências educacionais. As o
 Este projeto é distribuído sob a **licença MIT**. Consulte [LICENSE](LICENSE) para os termos completos. Preserve os avisos de direitos autorais e de licença ao redistribuir o código abrangido. Obras de terceiros mantêm seus próprios termos.
 
 </details>
+
+## Navigation / Navegação
+
+The Home icon returns to the portfolio. The canonical address is https://toybile.github.io/Logic-Editor/. Previous addresses redirect there. Browser storage keys remain unchanged on the same origin. / O ícone Home volta ao portfólio. O endereço canônico é https://toybile.github.io/Logic-Editor/. Os endereços anteriores redirecionam para ele. As chaves de armazenamento local são preservadas na mesma origem.
