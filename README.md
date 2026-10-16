@@ -24,8 +24,8 @@ Open the website or download this repository and open `index.html` in a modern b
 - Click any existing block to edit it in place, including blocks before the last one. Later blocks are preserved.
 - Each row contains editable blocks for proposition names and connectives. Blocks adapt to their contents; proposition names may have multiple letters, such as `Rain` or `WetStreet`.
 - **Space** advances from a nonempty block to the next block. It does not insert a space inside a proposition name.
-- **Backspace or Delete in an empty block** returns to the previous block while retaining a faint, dashed ghost in the deleted slot. The ghost is excluded from the argument and project data. It remains while editing that row; click it to restore the slot, or leave the row to remove the ghost. At least one editable block is retained.
-- **Space** advances to the next live block, skipping deleted ghosts, and creates an empty block when there is no next one. **Shift + Space** inserts an empty block immediately after the current one without replacing later blocks. **Alt + Space is not captured by the editor**.
+- **Backspace or Delete in an empty block** removes that block immediately and returns to the previous one (or the next one when deleting the first). At least one editable block is retained.
+- **Space** advances to the next block and creates an empty block when there is no next one. **Shift + Space** inserts an empty block immediately after the current one without replacing later blocks. **Alt + Space is not captured by the editor**.
 - **Enter** inserts a new premise immediately after the current row, ready to edit.
 - **Tab** goes to the next row, at the end of its last block. **Shift+Tab** goes to the previous row the same way. At the first or last row, normal browser focus navigation applies when there is no adjacent row.
 - The **Caps Lock icon (upward arrow above a horizontal line)** toggles uppercase conversion for subsequent typing; it does not rewrite all existing text. When active, its contrasting background, heavier icon and indicator dot show that uppercase typing is enabled; the tooltip also reports the active state.
@@ -212,8 +212,8 @@ Abra o site ou baixe este repositório e abra `index.html` em um navegador moder
 - Clique em qualquer bloco existente para editá-lo, inclusive antes do último. Os blocos seguintes são preservados.
 - Cada linha contém blocos editáveis para nomes de proposições e conectivos. Os blocos acompanham o conteúdo; os nomes podem ter várias letras, como `Chove` ou `RuaMolhada`.
 - **Espaço** avança de um bloco preenchido para o seguinte. Não insere um espaço dentro do nome de uma proposição.
-- **Backspace ou Delete em um bloco vazio** volta ao bloco anterior e mantém um fantasma discreto, tracejado, no espaço removido. O fantasma não integra o argumento nem os dados do projeto. Permanece durante a edição da linha: clique nele para restaurar o espaço ou saia da linha para removê-lo. Pelo menos um bloco editável é mantido.
-- **Espaço** avança ao próximo bloco ativo, pulando os fantasmas removidos, e cria um bloco vazio se não houver próximo. **Shift + Espaço** insere um bloco vazio imediatamente após o atual, sem substituir os blocos seguintes. **Alt + Espaço não é capturado pelo editor**.
+- **Backspace ou Delete em um bloco vazio** remove o bloco imediatamente e volta ao anterior (ou ao próximo, ao remover o primeiro). Pelo menos um bloco editável é mantido.
+- **Espaço** avança ao próximo bloco e cria um bloco vazio se não houver próximo. **Shift + Espaço** insere um bloco vazio imediatamente após o atual, sem substituir os blocos seguintes. **Alt + Espaço não é capturado pelo editor**.
 - **Enter** insere uma nova premissa imediatamente depois da linha atual, pronta para editar.
 - **Tab** leva à próxima linha, com o cursor no fim do último bloco. **Shift+Tab** volta à linha anterior da mesma forma. Quando não há linha adjacente, vale a navegação normal de foco do navegador.
 - O **ícone de Caps Lock (seta para cima sobre uma linha horizontal)** ativa ou desativa a conversão para maiúsculas durante a digitação seguinte; não reescreve todo o texto existente. Quando ativo, o fundo contrastante, o ícone mais marcado e o ponto indicador sinalizam a digitação em maiúsculas; a descrição do botão também informa o estado ativo.
