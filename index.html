@@ -631,7 +631,7 @@ function updateRole(){const isConclusion=row.role==='conclusion',blank=row.role=
 field.addEventListener('focus',()=>active=field);field.addEventListener('input',event=>automaticSpace(row,field,event));field.addEventListener('compositionend',()=>automaticSpace(row,field,{inputType:'insertText'}));field.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();addLine(index+1);}});
 let holdTimer=null,roleHeld=false;
 function cancelRoleHold(){clearTimeout(holdTimer);holdTimer=null;}
-function startRoleHold(){cancelRoleHold();roleHeld=false;holdTimer=setTimeout(()=>{if(!toggle.isConnected||!rows.includes(row))return;const state=spacing.get(row);if(state){clearTimeout(state.timer);if(state.generated&&row.text.endsWith(' '))row.text=row.text.slice(0,-1);state.generated=false;}row.role='blank';roleHeld=true;updateRole();render();},getHoldDelay());}
+function startRoleHold(){cancelRoleHold();roleHeld=false;holdTimer=setTimeout(()=>{if(!toggle.isConnected||!rows.includes(row))return;const state=spacing.get(row);if(state){clearTimeout(state.timer);if(state.generated&&row.text.endsWith(' '))row.text=row.text.slice(0,-1);state.generated=false;}if(row.role!=='blank')root.dispatchEvent(new Event('lp-record-line-change'));row.role='blank';roleHeld=true;updateRole();render();},getHoldDelay());}
 let dragOriginalRole=null;
 toggle.addEventListener('pointerdown',event=>{if(event.button!==0)return;dragOriginalRole=row.role;startRoleHold();startDrag(event,row,container,toggle);});
 toggle.addEventListener('pointermove',event=>{if(!drag||drag.pointerId!==event.pointerId)return;if(Math.hypot(event.clientX-drag.startX,event.clientY-drag.startY)>=4){cancelRoleHold();roleHeld=true;if(row.role!==dragOriginalRole){row.role=dragOriginalRole;updateRole();}}moveDrag(event);});
@@ -641,7 +641,7 @@ for(const name of ['pointerup','pointercancel','pointerleave','blur'])toggle.add
 toggle.addEventListener('keydown',event=>{if(event.key===' '&&!event.repeat)startRoleHold();});
 toggle.addEventListener('keyup',event=>{if(event.key===' ')cancelRoleHold();});
 toggle.addEventListener('contextmenu',event=>event.preventDefault());
-toggle.onclick=()=>{cancelRoleHold();if(roleHeld){roleHeld=false;return;}row.role=row.role==='premise'?'conclusion':'premise';updateRole();render();};toggle.ondblclick=event=>{event.preventDefault();const modes=['names','both','symbols'];ui.roleDisplay=modes[(modes.indexOf(ui.roleDisplay||'names')+1)%3];root.dataset.roleDisplay=ui.roleDisplay;saveUI();};updateRole();
+toggle.onclick=()=>{cancelRoleHold();if(roleHeld){roleHeld=false;return;}root.dispatchEvent(new Event('lp-record-line-change'));row.role=row.role==='premise'?'conclusion':'premise';updateRole();render();};toggle.ondblclick=event=>{event.preventDefault();const modes=['names','both','symbols'];ui.roleDisplay=modes[(modes.indexOf(ui.roleDisplay||'names')+1)%3];root.dataset.roleDisplay=ui.roleDisplay;saveUI();};updateRole();
 const handle=document.createElement('span');handle.className='hy-grip';handle.tabIndex=0;handle.title='Arraste para mover a linha';handle.setAttribute('aria-label',`Mover linha ${index+1}. Arraste ou use as setas do teclado.`);handle.setAttribute('role','button');handle.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
 handle.addEventListener('pointerdown',event=>startDrag(event,row,container,handle));
 handle.addEventListener('pointermove',moveDrag);
@@ -676,6 +676,7 @@ const symbolGroups=[
 ['Delimitadores e pontuação', [['(','Abrir parênteses'],[')','Fechar parênteses'],['[','Abrir colchetes'],[']','Fechar colchetes'],['{','Abrir chaves'],['}','Fechar chaves'],['⌈','Abrir teto'],['⌉','Fechar teto'],['⌊','Abrir piso'],['⌋','Fechar piso'],['…','Reticências'],['⋯','Reticências centrais'],['⋮','Reticências verticais'],[':','Dois-pontos']]]
 ];
 function insertNotation(symbol){
+ if(!active||active.readOnly||!active.isConnected)return;root.dispatchEvent(new Event('lp-record-line-change'));
  if(blockFields.has(active)){if(active.readOnly)return;setSection('editor',true);blockFields.get(active).insert(symbol);return;}
  if(!active||active.readOnly)return;
  setSection('editor',true);
@@ -877,6 +878,7 @@ tools.className='hy-line-controls';split.className='hy-line-split';add.before(to
 function history(){const id=argumentWorkspace.activeId;if(!histories.has(id))histories.set(id,[]);return histories.get(id);}
 function redoHistory(){const id=argumentWorkspace.activeId;if(!redoHistories.has(id))redoHistories.set(id,[]);return redoHistories.get(id);}
 function remember(){redoHistory().length=0;history().push(rows.map(r=>({...r})));if(history().length>30)history().shift();updateControls();}
+root.addEventListener('lp-record-line-change',remember);
 function updateControls(){for(const r of selected)if(!rows.includes(r))selected.delete(r);root.dataset.selectLines=String(selectionMode);select.setAttribute('aria-pressed',String(selectionMode));select.querySelector('input').checked=selectionMode;undo.disabled=!history().length;redo.disabled=!redoHistory().length;bulk.hidden=!selected.size;bulk.textContent=(ui.language==='en'?'Delete selected':'Excluir selecionadas')+' ('+selected.size+')';for(const r of rows){const line=rowElements.get(r);line?.classList.toggle('hy-line-selected',selected.has(r));const checkbox=line?.querySelector('.hy-line-select');if(checkbox)checkbox.checked=selected.has(r);}}
 const originalBuild=buildRow,originalAdd=addLine,originalStart=startDrag,originalUpdate=updateDrag,originalFinish=finishDrag;
 buildRow=function(row,index){const built=originalBuild(row,index),line=built.container,checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.className='hy-line-select';checkbox.setAttribute('aria-label','Selecionar linha '+(index+1));checkbox.checked=selected.has(row);const highlight=document.createElement('span');highlight.className='hy-selection-highlight';highlight.setAttribute('aria-hidden','true');line.prepend(checkbox,highlight);checkbox.onchange=()=>{if(checkbox.checked)selected.add(row);else selected.delete(row);updateControls();};
