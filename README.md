@@ -203,7 +203,7 @@ When opened online, the editor checks its published scripts and styles with a re
 
 ## Repository and implementation
 
-`index.html` contains the application HTML, CSS and JavaScript. There is no build step or runtime dependency to install. Serve it as the root page on a static host or open it locally. This repository contains the editor; the separate portfolio menu links to it.
+`index.html` is the self-contained distribution containing HTML, CSS and JavaScript. Users need no installation or runtime dependencies: serve it on a static host or open it locally. Editable sources are organized by responsibility; a small Node generator assembles the single HTML. The local source folder `src` contains the maintenance guide, manifest and regression suite. Edit those sources instead of appending patches to the generated HTML. This repository contains the editor; the separate portfolio menu links to it.
 
 Where a browser exposes `document.modelContext.registerTool`, the editor can register a read-only `get_argument` tool returning the current rows, numbering and formatted text. Ordinary browser use does not require this optional integration.
 
@@ -418,7 +418,7 @@ Ao abrir online, o editor verifica os scripts e estilos publicados por uma requi
 
 ## Repositório e implementação
 
-`index.html` contém HTML, CSS e JavaScript da aplicação. Não há etapa de compilação nem dependência de execução para instalar. Sirva esse arquivo como página inicial em uma hospedagem estática ou abra localmente. Este repositório contém o editor; o menu de projetos separado aponta para ele.
+`index.html` é a distribuição autossuficiente com HTML, CSS e JavaScript. Quem utiliza o site não precisa instalar dependências: basta hospedá-lo ou abrir localmente. Os fontes editáveis estão organizados por responsabilidade; um pequeno gerador em Node reúne o HTML único. A pasta local `src` contém o guia de manutenção, o manifesto e a suíte de regressão. Edite esses fontes em vez de acrescentar correções ao HTML gerado. Este repositório contém o editor; o menu de projetos separado aponta para ele.
 
 Quando o navegador oferece `document.modelContext.registerTool`, o editor pode registrar a ferramenta de leitura `get_argument`, que retorna linhas atuais, numeração e texto formatado. O uso normal no navegador não exige essa integração opcional.
 
