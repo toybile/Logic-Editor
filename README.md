@@ -2,9 +2,9 @@
 
 [Open the editor / Abrir o editor](https://toybile.github.io/Logic-Editor/)
 
-A browser workspace for writing and organizing logical arguments, including modal symbols and quantifiers. Automatic validation supports classical propositional logic. Read the **English** guide below.
+A browser workspace for writing and organizing logical arguments, including modal symbols and quantifiers. Automatic validation supports classical propositional logic. Read the **English** guide below. This README is the functionality reference; writing notation and automatic validation have different scopes.
 
-Um espaço no navegador para escrever e organizar argumentos lógicos, incluindo símbolos modais e quantificadores. A validação automática contempla lógica proposicional clássica. Abra o guia **Português (Brasil)** abaixo.
+Um espaço no navegador para escrever e organizar argumentos lógicos, incluindo símbolos modais e quantificadores. A validação automática contempla lógica proposicional clássica. Abra o guia **Português (Brasil)** abaixo. Este README é a referência das funcionalidades; notação escrita e validação automática têm escopos diferentes.
 
 <details>
 <summary><strong>English — complete user guide</strong></summary>
@@ -26,7 +26,8 @@ Open the website or download this repository and open `index.html` in a modern b
 - **Space** advances from a nonempty block to the next block. It does not insert a space inside a proposition name.
 - **Backspace or Delete in an empty block** removes that block immediately and returns to the previous one (or the next one when deleting the first). At least one editable block is retained.
 - **Space** advances to the next block and creates an empty block when there is no next one. **Shift + Space** inserts an empty block immediately after the current one without replacing later blocks. **Alt + Space is not captured by the editor**.
-- **Enter** inserts a new premise immediately after the current row, ready to edit.
+- **Left/Right arrow at the text boundary** focuses the neighboring block (left at the start; right at the end). Within text, arrows retain ordinary caret movement.
+- **Enter** inserts a premise immediately after the current row, except while row selection is active.
 - **Tab** goes to the next row, at the end of its last block. **Shift+Tab** goes to the previous row the same way. At the first or last row, normal browser focus navigation applies when there is no adjacent row.
 - The **Caps Lock icon (upward arrow above a horizontal line)** toggles uppercase conversion for subsequent typing; it does not rewrite all existing text. When active, its contrasting background, heavier icon and indicator dot show that uppercase typing is enabled; the tooltip also reports the active state.
 - Click a block before choosing a sidebar symbol. The symbol is inserted into the active block, or into a new block after an occupied block.
@@ -40,10 +41,13 @@ An empty row creates a blank line in the formatted Argument and is ignored by va
 ### Reorder, select and delete
 
 - **Drag a row from its text or another available area of the row.** No dedicated drag handle or waiting period is needed: press and move. A normal click still lets you edit text. Role buttons, trash buttons and selection controls keep their own actions.
-- Hold a row still for **0.5 seconds** to enable selection mode and select it. Hold a row again to exit selection mode and clear the selection. Moving before that starts immediate dragging instead. You can also use the **selection checkbox next to the lower +** to enable selection mode. Select several rows to drag them together in their original order or use **Delete selected**.
+- Hold a row still for **the configured delay (default 0.5 seconds)** to enable selection mode and select it. Hold a row again to exit selection mode and clear the selection. Moving before that starts immediate dragging instead. You can also use the **selection checkbox next to the lower +** to enable selection mode. Select several rows to drag them together in their original order or use **Delete selected**.
 - **Hold a row's trash button for configured hold delay (default: 0.5 seconds)** to request deletion of all premises and conclusions in the current argument. All affected rows are selected before a confirmation dialog with a red top border appears. Cancel preserves the rows and prior selection; confirmation clears this argument only, keeps one empty editable row, and can be undone. Move before the hold completes to drag instead.
 - Use a row's **trash icon** to delete it. If that row is selected, deletion applies to the selected group. Deleting nonempty content requires confirmation; empty rows can be removed directly. The editor keeps at least one editable row.
 - The **undo and redo arrows below the rows** restore recorded row operations, including addition, deletion and reordering. These buttons are not a replacement for text-field undo.
+
+
+The **+ below the rows** and the full-width dividers between them insert a premise at the requested position. Their + is centered; line creation (including Enter) is disabled while selection mode is active. Reordering shows a lightly tinted placeholder without a dashed outline; a row changes position after sufficient overlap with its neighbor (65%), also used by category ordering.
 
 ## Multiple arguments and examples
 
@@ -51,19 +55,37 @@ The **+ in the header** opens two choices: **Blank** creates an empty argument i
 
 Examples include modus ponens, modus tollens, disjunctive syllogism, affirming the consequent and formulas with longer proposition names. The affirming-the-consequent example deliberately demonstrates an invalid inference.
 
-The active argument tab has a subtle tinted background and border. Premises default to soft blue and conclusions to soft green. Hold a panel’s eye button for **0.5 seconds** to open its individual appearance dialog. It offers preset swatches and a full color picker; changes also update the panel side markers, persist in this browser, and reset with Restore defaults. Inset trash buttons slide out from behind the role button on row hover or keyboard focus. They turn red on hover and remain visible on touch devices. Blank rows have a separate upright square trash button. Only the visible trash box responds to deletion clicks; the surrounding gutter preserves hover without deleting. Selection checkboxes and highlights start at the panel title column, leaving inner decorations uncovered. Each panel has its own Colored border toggle, using its own color. This choice persists in this browser. Appearance settings also toggle the outer marker and select the inner detail: soft gradient, none, inset channel, curved connections, soft wave, inner corners, subtle row numbering, color on hover, segmented line, vertical capsule, row arcs or localized light. Row details follow additions and reordering. The trash button also supports row dragging; holding it still for configured hold delay (default: 0.5 seconds) requests deletion of all rows in the current argument. A short click deletes the row or current selection. Click a tab to switch arguments. The **pencil** renames it; leave the name empty to restore automatic naming. The **X** deletes it, with confirmation for nonempty content. These controls appear on hover or keyboard focus and remain visible on touch layouts. **Hold a tab for the configured hold delay (default: 0.5 seconds) and drag** to reorder arguments. Automatic names follow tab positions.
+The active argument tab has a subtle tinted background and border. Premises default to soft blue and conclusions to soft green. Hold a panel’s eye button for **the configured delay (default 0.5 seconds)** to open its individual appearance dialog. It offers preset swatches and a full color picker; changes also update the panel side markers, persist in this browser, and reset with Restore defaults. Inset trash buttons slide out from behind the role button on row hover or keyboard focus. They turn red on hover and remain visible on touch devices. Blank rows have a separate upright square trash button. Only the visible trash box responds to deletion clicks; the surrounding gutter preserves hover without deleting. Selection checkboxes and highlights start at the panel title column, leaving inner decorations uncovered. Each panel has its own Colored border toggle, using its own color. This choice persists in this browser. Appearance settings also toggle the outer marker and select the inner detail: soft gradient, none, inset channel, curved connections, soft wave, inner corners, subtle row numbering, color on hover, segmented line, vertical capsule, row arcs or localized light. Row details follow additions and reordering. The trash button also supports row dragging; holding it still for configured hold delay (default: 0.5 seconds) requests deletion of all rows in the current argument. A short click deletes the row or current selection. Click a tab to switch arguments. The **pencil** renames it; leave the name empty to restore automatic naming. The **X** deletes it, with confirmation for nonempty content. These controls appear on hover or keyboard focus and remain visible on touch layouts. **Hold a tab for the configured hold delay (default: 0.5 seconds) and drag** to reorder arguments. Automatic names follow tab positions.
 
 Each argument retains its rows, numbering choice and proposition descriptions. Panel arrangement and interface settings belong to the workspace.
 
 ## Symbol library and search
 
-Expand a symbol category to browse it. Click a symbol to insert it. The library includes propositional connectives, quantifiers, modal notation, sets, comparisons and delimiters.
+The library contains propositional connectives, implication/equivalence, quantifiers/equality, modal operators, deduction/consequence, set operations, set relations, operators over families, comparison/definition and delimiters. **Available notation is broader than the classical propositional validator.**
 
-**The library is broader than the validator:** being available for writing does not mean a symbol can be evaluated by the current classical propositional validator.
+Each section has a move/collapse grip, category selector, duplicate button and close button. Repeated categories are allowed; closing a section does not delete arguments or favorites.
 
-Symbol buttons have a uniform height and no individual dropdown arrows. **Hover** a symbol to see its meaning and available alternative notations. **Arrow Down** on a focused symbol opens the same window; **Escape** closes it. On touch screens, hold the symbol for **configured hold delay (default: 0.5 seconds)** to open it without inserting. Choose a notation to insert it. The **? in the window's upper-right corner** opens an explanation dialog with a definition, example, notations, references and validator support. Close it with X or Escape to return to the symbol window; the editor stays in place.
+| Control or gesture | Result |
+| --- | --- |
+| Category selector | Click to open/close a centered grid with Common, Recent, Favorites and ten categories. Choose one to replace only this section. Outside click or Escape closes the grid. |
+| Drag a category from the grid | Create a separate category window. |
+| Divider with + | The entire line adds a Common section at that position. Middle separators stay gray; hover/focus shows the blue line and centered +. |
+| Duplicate: click | Add a copy immediately below, inside the library. |
+| Duplicate: drag | Create a copy and preview its insertion position in the library, or leave it floating outside. |
+| Section grip: click | Collapse or expand that section. |
+| Attached section: drag | Reorder it or detach it. The insertion preview moves neighboring sections and uses the dragged window's actual dimensions. |
+| Floating window: drag | Move it from its surface, including symbol areas. Resize edges and the duplicate control retain their separate actions. |
+| Floating grip: hold still | Return the section to the library after the configured hold delay (default 0.5 s). Simply aligning a floating window does not dock it. |
+| Left/right edge | Resize horizontally, without starting a window move. |
+| X | Remove this section/window. |
 
-Click the **magnifying glass** to reveal and focus symbol search in place of the library heading. Search matches symbol text, names and category labels, ignoring letter case and accents. Matching groups open automatically; clearing the query restores their earlier open/closed state. Leaving an empty search closes the field; leaving a nonempty query preserves it. Escape closes search; toggling the magnifying glass off also clears its filter.
+Ordinary symbol clicks insert into the active block and update Recent (up to 20 distinct symbols). **Alt + click** toggles Favorites without insertion. Insertion produces a gray wave from the click position; favoriting produces a yellow wave and temporarily suppresses the gray hover background. Collections and section layout persist in this browser. A copied section originating in the library uses the same ordering rules as an ordinary section drag.
+
+**Hover** a symbol to see its meaning and alternatives. **Arrow Down** on a focused symbol opens the same window; **Escape** closes it. On touch screens, hold for the configured delay to open alternatives without inserting. Choosing an alternative inserts it. **?** opens the definition, examples, notations, references and validator-support information; X/Escape returns to the symbol window.
+
+The **magnifying glass** opens search in the heading and focuses it. Search displays one deduplicated result grid across all categories, matching symbols, alternative forms and Portuguese/English names regardless of case or accents. An empty-state message explains when there are no matches. Escape or closing search clears the query and restores the existing sections. Search does not change their categories or order.
+
+The library's main grip moves/collapses it; its title is centered between the grip and search. On desktop, arrow keys on a move grip move the window; Home or double-click on the main library grip restores its docked position. Narrow layouts stack windows. Restore defaults can reset the library arrangement while preserving Favorites, Recent and argument content.
 
 ## Movable, resizable panels
 
@@ -73,6 +95,10 @@ Click the **magnifying glass** to reveal and focus symbol search in place of the
 - If separated panels would collide because the upper one grows, the lower one moves down while preserving the chosen gap. When the upper one shrinks, the lower one moves back up. If you deliberately overlap them, this automatic separation does not change that arrangement.
 - To move with the keyboard, focus the panel itself, rather than an input: **arrow keys** move it by 10 pixels; **Alt+arrow** moves by 1 pixel. **Shift+Left/Right** changes width.
 - **Ctrl+Z** undoes recorded panel moves/resizes and row reordering. **Ctrl+Shift+Z** redoes them. On systems using Command, the corresponding modifier is supported. Inside an input, the browser's native text undo takes priority. Undo history is temporary and is not included in saved project files.
+
+### Appearance and role labels
+
+Role buttons default to **names**. Double-click cycles through names, names + symbols, and symbols; premise and conclusion buttons have equal sizes within each mode. A single click switches the role immediately. **∵ means “because” and is used only as an interface marker for premises; it is not a universal formal premise symbol and is not included in formulas or logical validation. ∴ means “therefore”.** Individual appearance defaults to the outer marker on, colored border off, and inner detail None. The detail list opens above the interface and does not pass scrolling to the page. Hold **Alt** while dragging an inner detail horizontally; without Alt, this area remains available for the normal row interactions. Keeping the mouse stationary there for the configured hover delay (default 0.5 seconds) shows an Alt hint. Neither the handle nor the hint is available for None. A weak 3 px snap aligns the detail with the eye column. Double-click the detail or press Home while focused to restore alignment. Click outside the appearance dialog to close it. General Settings contains an Appearance help hint explaining the eye-button hold.
 
 ## Argument preview, copy and export
 
@@ -87,6 +113,8 @@ The Argument updates as you write. The **numbered-list icon** (Number lines) tog
 | `.lp.json` via the file menu | An editable backup | Row roles, text, argument names, numbering and proposition descriptions |
 
 PDF pages contain rendered images, so their text is not selectable. Text and PDF exports do not include the validation report or proposition descriptions and cannot be imported as editable projects.
+
+The **prefix-spacing button immediately to the right of numbering** joins prefix symbols to the following token in the formatted Argument: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Negation variants and modal prefixes are supported too. Infix connectives keep their spaces. The setting is reversible, is saved in this browser, and applies to the preview, copied text and text/PDF exports. It does not change the editable blocks, project data or validation support for quantifiers and modal logic.
 
 ## Proposition descriptions — beta
 
@@ -157,13 +185,17 @@ There is no account or cloud synchronization. Another browser, device or origin 
 
 ## Settings and accessibility
 
-Hover hints share a rounded appearance with a compact icon, title, soft shadow and highlighted shortcut keys. Informational hints default to **0.5 seconds** with the mouse over a control. In Settings, **Hover hint delay** offers a slider and a numeric seconds field from **0.01 to 1 second**, synchronized and saved in this browser. Restore defaults returns to 0.5 seconds. This setting applies to control hints, symbol hover windows and decoration hints; it does not change press-and-hold action timings; keyboard focus can show the same help. They open above the interface, stay within the viewport, and close on interaction or Escape. Native browser titles use this styled presentation. Proposition descriptions are retained in block hints alongside the editing shortcuts, including Backspace/Delete. Symbol hover windows keep their notation choices and help button. A small reminder on the right side of the header points visitors to the hover hints and shortcuts. Title-only hints, including argument rename/delete, have equal top and bottom spacing.
+Settings controls language (International English / Português do Brasil), light/dark theme and independent library/writing scales from **80% to 150%**, in 5% steps.
 
-Open the **settings icon** to switch **International English / Português (Brasil)** and **light / dark theme**. Sidebar size and argument size are independent, from **80% to 150%** in 5% steps, using sliders or minus/plus buttons.
+**Hover hints** have an enable switch and a delay from **0.01 to 1 second**, default **0.5 s**. Disabling them hides control/symbol/decoration hover help without disabling the controls. Hints use a shared rounded panel, can show keyboard shortcuts and proposition descriptions, respect viewport edges and close on interaction or Escape. Keyboard focus can also show help.
 
-The **default icon between theme and language** opens a confirmation listing the reset: English, light theme, both sizes at 100%, and panels centered at the full available width. Cancel preserves your settings. Reset does not delete arguments or descriptions.
+**Hold delay** is separate, with the same range/default. It controls panel appearance (eye buttons), blank-row conversion, delete-all confirmation, row selection, argument-tab ordering, touch symbol alternatives and returning a detached category. A small progress indicator fills beneath the control during the hold; releasing or moving cancels pending stationary holds. Changing hover delay does not change hold delay.
 
-The layout adapts to narrow screens, uses keyboard focus indicators and labeled icon controls, and reduces supported animations when the system requests reduced motion. Panels and tabs animate movement/appearance without changing their logical content.
+**Restore defaults** opens a preview of 19 settings and target values. Turn on **Preserve** beside any item to exclude it; all off resets the listed items, all on disables confirmation. Choices apply only to this confirmation. Cancel/Escape changes nothing. Numbering resets only the active argument; arguments, names and proposition descriptions are never deleted. Favorites/Recent survive a library-layout reset.
+
+First visits use the browser's Portuguese/English language (English fallback), a modus-ponens example, named role buttons, light theme, 100% scales, 0.5 s delays, uppercase typing, numbering and compact prefixes enabled. Soft panel colors, outer markers on, colored borders off and no inner detail are initial appearance choices. At 1440 px and above the writing/output panels start side by side; narrower screens stack them. Existing saved data/preferences are retained.
+
+Controls have accessible labels and visible focus indicators. Narrow layouts adapt, and supported animations respect reduced-motion preferences. The Home button returns to the portfolio with one click.
 
 ## Opening the latest version
 
@@ -176,11 +208,6 @@ When opened online, the editor checks its published scripts and styles with a re
 Where a browser exposes `document.modelContext.registerTool`, the editor can register a read-only `get_argument` tool returning the current rows, numbering and formatted text. Ordinary browser use does not require this optional integration.
 
 
-
-Role buttons default to **names**. Double-click cycles through names, names + symbols, and symbols; premise and conclusion buttons have equal sizes within each mode. A single click switches the role immediately. **∵ means “because” and is used only as an interface marker for premises; it is not a universal formal premise symbol and is not included in formulas or logical validation. ∴ means “therefore”.** Individual appearance defaults to the outer marker on, colored border off, and inner detail None. The detail list opens above the interface and does not pass scrolling to the page. Hold **Alt** while dragging an inner detail horizontally; without Alt, this area remains available for the normal row interactions. Keeping the mouse stationary there for the configured hover delay (default 0.5 seconds) shows an Alt hint. Neither the handle nor the hint is available for None. A weak 3 px snap aligns the detail with the eye column. Double-click the detail or press Home while focused to restore alignment. Click outside the appearance dialog to close it. General Settings contains an Appearance help hint explaining the eye-button hold.
-
-
-The **prefix-spacing button immediately to the right of numbering** joins prefix symbols to the following token in the formatted Argument: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Negation variants and modal prefixes are supported too. Infix connectives keep their spaces. The setting is reversible, is saved in this browser, and applies to the preview, copied text and text/PDF exports. It does not change the editable blocks, project data or validation support for quantifiers and modal logic.
 
 ## Credits and authorship
 
@@ -214,7 +241,8 @@ Abra o site ou baixe este repositório e abra `index.html` em um navegador moder
 - **Espaço** avança de um bloco preenchido para o seguinte. Não insere um espaço dentro do nome de uma proposição.
 - **Backspace ou Delete em um bloco vazio** remove o bloco imediatamente e volta ao anterior (ou ao próximo, ao remover o primeiro). Pelo menos um bloco editável é mantido.
 - **Espaço** avança ao próximo bloco e cria um bloco vazio se não houver próximo. **Shift + Espaço** insere um bloco vazio imediatamente após o atual, sem substituir os blocos seguintes. **Alt + Espaço não é capturado pelo editor**.
-- **Enter** insere uma nova premissa imediatamente depois da linha atual, pronta para editar.
+- **Seta esquerda/direita no limite do texto** dá foco ao bloco vizinho; dentro do texto, mantém o movimento normal do cursor.
+- **Enter** insere uma premissa depois da linha atual, exceto durante a seleção de linhas.
 - **Tab** leva à próxima linha, com o cursor no fim do último bloco. **Shift+Tab** volta à linha anterior da mesma forma. Quando não há linha adjacente, vale a navegação normal de foco do navegador.
 - O **ícone de Caps Lock (seta para cima sobre uma linha horizontal)** ativa ou desativa a conversão para maiúsculas durante a digitação seguinte; não reescreve todo o texto existente. Quando ativo, o fundo contrastante, o ícone mais marcado e o ponto indicador sinalizam a digitação em maiúsculas; a descrição do botão também informa o estado ativo.
 - Clique em um bloco antes de escolher um símbolo no menu lateral. O símbolo entra no bloco ativo ou em um novo bloco depois de um bloco preenchido.
@@ -228,10 +256,13 @@ Uma linha vazia gera uma linha em branco no Argumento e é ignorada na validaç�
 ### Reordenar, selecionar e excluir
 
 - **Arraste uma linha pelo texto ou por outra área disponível dela.** Não é necessário usar uma alça nem esperar: pressione e mova. Um clique normal continua permitindo editar. Botões de função, lixeira e seleção mantêm suas próprias ações.
-- Segure uma linha parada por **0,5 segundo** para ativar a seleção múltipla e selecioná-la. Segure uma linha novamente para sair do modo e limpar a seleção. Mover antes disso inicia o arrasto imediato. Também é possível usar a **caixa de seleção ao lado do + inferior** para ativar o modo de seleção. Selecione várias linhas para arrastá-las juntas, preservando sua ordem, ou use **Excluir selecionadas**.
+- Segure uma linha parada pelo **tempo configurado (padrão: 0,5 s)** para ativar a seleção múltipla e selecioná-la. Segure uma linha novamente para sair do modo e limpar a seleção. Mover antes disso inicia o arrasto imediato. Também é possível usar a **caixa de seleção ao lado do + inferior** para ativar o modo de seleção. Selecione várias linhas para arrastá-las juntas, preservando sua ordem, ou use **Excluir selecionadas**.
 - **Segure a lixeira de uma linha por tempo de segurar configurado (padrão: 0,5 segundo)** para solicitar a exclusão de todas as premissas e conclusões do argumento aberto. As linhas afetadas são selecionadas antes da confirmação com traço vermelho no topo. Cancelar preserva as linhas e a seleção anterior; confirmar limpa apenas esse argumento, mantém uma linha editável vazia e permite desfazer. Mover antes do tempo de segurar inicia o arraste.
 - Use a **lixeira** para excluir uma linha. Se ela estiver selecionada, a exclusão vale para o grupo selecionado. Conteúdo preenchido exige confirmação; linhas vazias podem ser removidas diretamente. O editor mantém pelo menos uma linha editável.
 - As **setas de desfazer e refazer abaixo das linhas** recuperam operações registradas nas linhas, incluindo adição, exclusão e reordenação. Não substituem o desfazer de texto dentro dos campos.
+
+
+O **+ abaixo das linhas** e as divisórias entre elas inserem uma premissa na posição escolhida. O + fica centralizado; criar linhas (inclusive por Enter) fica desativado durante a seleção. O arraste mostra uma prévia com cor suave, sem tracejado; a posição muda após sobreposição suficiente com a vizinha (65%), regra também aplicada às categorias.
 
 ## Vários argumentos e exemplos
 
@@ -239,19 +270,37 @@ O **+ no cabeçalho** abre duas opções: **Em branco** cria um argumento vazio 
 
 Os exemplos incluem modus ponens, modus tollens, silogismo disjuntivo, afirmação do consequente e fórmulas com nomes maiores de proposições. A afirmação do consequente demonstra deliberadamente uma inferência inválida.
 
-A aba do argumento ativo tem fundo e borda discretamente coloridos. Premissas usam azul suave e conclusões verde suave por padrão. Segure o olhinho de um painel por **0,5 segundo** para abrir sua janela individual de aparência. Ela oferece amostras e um seletor completo de cores; a escolha também altera as faixas laterais dos painéis, fica salva neste navegador e é restaurada pelo botão de padrão. Botões de lixeira deslizam de trás do botão de tipo ao passar o mouse ou focar a linha pelo teclado. Ficam vermelhos no hover e permanecem visíveis em dispositivos de toque. Linhas vazias têm uma lixeira em quadrado separado. Apenas a caixa visível da lixeira responde aos cliques de exclusão; a margem mantém o hover sem excluir. Caixas e destaques de seleção começam na coluna do título, sem cobrir as decorações internas. Cada painel possui seu próprio interruptor Borda colorida, usando sua cor. A escolha fica salva neste navegador. A seção Aparência permite ocultar o traço externo e escolher o detalhe interno: degradê suave, nenhum, rebaixo, conexões curvas, ondulação suave, cantos internos, numeração discreta, cor no hover, linha segmentada, cápsula vertical, arcos por linha ou luz localizada. Os detalhes das linhas acompanham adições e reordenação. O botão de lixeira também permite arrastar a linha; segurar por tempo de segurar configurado (padrão: 0,5 segundo) solicita excluir todas as linhas do argumento atual. O clique curto exclui a linha ou seleção atual. Clique em uma aba para trocar de argumento. O **lápis** renomeia; deixe o nome vazio para recuperar a nomenclatura automática. O **X** exclui, com confirmação se houver conteúdo. Esses controles aparecem com o mouse sobre a aba ou com foco pelo teclado e ficam visíveis em telas com toque. **Segure uma aba por tempo de segurar configurado (padrão: 0,5 segundo) e arraste** para reordenar os argumentos. Os nomes automáticos acompanham as posições.
+A aba do argumento ativo tem fundo e borda discretamente coloridos. Premissas usam azul suave e conclusões verde suave por padrão. Segure o olhinho de um painel pelo **tempo configurado (padrão: 0,5 s)** para abrir sua janela individual de aparência. Ela oferece amostras e um seletor completo de cores; a escolha também altera as faixas laterais dos painéis, fica salva neste navegador e é restaurada pelo botão de padrão. Botões de lixeira deslizam de trás do botão de tipo ao passar o mouse ou focar a linha pelo teclado. Ficam vermelhos no hover e permanecem visíveis em dispositivos de toque. Linhas vazias têm uma lixeira em quadrado separado. Apenas a caixa visível da lixeira responde aos cliques de exclusão; a margem mantém o hover sem excluir. Caixas e destaques de seleção começam na coluna do título, sem cobrir as decorações internas. Cada painel possui seu próprio interruptor Borda colorida, usando sua cor. A escolha fica salva neste navegador. A seção Aparência permite ocultar o traço externo e escolher o detalhe interno: degradê suave, nenhum, rebaixo, conexões curvas, ondulação suave, cantos internos, numeração discreta, cor no hover, linha segmentada, cápsula vertical, arcos por linha ou luz localizada. Os detalhes das linhas acompanham adições e reordenação. O botão de lixeira também permite arrastar a linha; segurar por tempo de segurar configurado (padrão: 0,5 segundo) solicita excluir todas as linhas do argumento atual. O clique curto exclui a linha ou seleção atual. Clique em uma aba para trocar de argumento. O **lápis** renomeia; deixe o nome vazio para recuperar a nomenclatura automática. O **X** exclui, com confirmação se houver conteúdo. Esses controles aparecem com o mouse sobre a aba ou com foco pelo teclado e ficam visíveis em telas com toque. **Segure uma aba por tempo de segurar configurado (padrão: 0,5 segundo) e arraste** para reordenar os argumentos. Os nomes automáticos acompanham as posições.
 
 Cada argumento conserva suas linhas, escolha de numeração e descrições de proposições. A disposição dos painéis e as configurações de interface pertencem ao espaço de trabalho.
 
 ## Biblioteca de símbolos e busca
 
-Expanda uma categoria para consultar os símbolos e clique em um símbolo para inseri-lo. A biblioteca inclui conectivos proposicionais, quantificadores, notação modal, conjuntos, comparações e delimitadores.
+A biblioteca contém conectivos proposicionais, implicação/equivalência, quantificadores/igualdade, operadores modais, dedução/consequência, operações de conjuntos, relações entre conjuntos, operadores sobre famílias, comparação/definição e delimitadores. **A notação disponível é mais ampla que a validação proposicional clássica.**
 
-**A biblioteca é mais ampla que o validador:** um símbolo disponível para escrita não é necessariamente avaliável pela validação proposicional clássica atual.
+Cada seção tem alça de mover/recolher, seletor de categoria, duplicação e fechamento. Categorias podem se repetir; fechar uma seção não apaga argumentos nem favoritos.
 
-Os botões têm altura uniforme e não possuem setinhas individuais. **Passe o mouse** sobre um símbolo para consultar seu significado e as notações alternativas disponíveis. **Seta para baixo** com foco no símbolo abre a mesma janela; **Escape** fecha. Em telas com toque, segure o símbolo por **tempo de segurar configurado (padrão: 0,5 segundo)** para abrir sem inserir. Escolha uma notação para inseri-la. O **? no canto superior direito da janela** abre uma janela com definição, exemplo, notações, referências e indicação de suporte pelo validador. Feche pelo X ou Escape para voltar à janela do símbolo; o editor permanece no lugar.
+| Controle ou gesto | Comportamento |
+| --- | --- |
+| Seletor de categoria | Clique abre/fecha uma grade centralizada com Comuns, Recentes, Favoritos e dez categorias. A escolha altera somente esta seção. Clique fora ou Escape fecha a grade. |
+| Arrastar categoria da grade | Cria uma janela separada dessa categoria. |
+| Divisória com + | Toda a linha adiciona uma seção de Mais comuns naquela posição. As separações intermediárias permanecem cinzas; hover/foco mostra linha azul e + centralizado. |
+| Duplicar: clique | Acrescenta uma cópia imediatamente abaixo, dentro da biblioteca. |
+| Duplicar: arraste | Cria uma cópia com prévia da posição de inserção na biblioteca, ou a deixa flutuante fora dela. |
+| Alça da seção: clique | Recolhe ou expande a seção. |
+| Seção acoplada: arraste | Reordena ou desacopla. A prévia desloca as seções vizinhas e usa as dimensões reais da janela arrastada. |
+| Janela flutuante: arraste | Move pela superfície, inclusive pela área dos símbolos. Bordas de redimensionamento e controle de duplicação preservam suas ações próprias. |
+| Alça flutuante: segurar sem mover | Retorna à biblioteca após o tempo configurado (padrão: 0,5 s). Alinhar a janela flutuante não a acopla automaticamente. |
+| Borda esquerda/direita | Alarga ou estreita sem iniciar o movimento da janela. |
+| X | Remove somente aquela seção/janela. |
 
-Clique na **lupa** para abrir e focar a busca no lugar do título da biblioteca. Ela procura símbolos, nomes e categorias sem distinguir maiúsculas ou acentos. Grupos correspondentes abrem automaticamente; limpar a busca restaura o estado anterior dos grupos. Sair de uma busca vazia fecha o campo; uma consulta preenchida é preservada. Escape fecha a busca; desligar a lupa também limpa o filtro.
+O clique normal insere no bloco ativo e atualiza Recentes (até 20 símbolos distintos). **Alt + clique** alterna Favoritos sem inserir. Inserir produz onda cinza a partir da posição do clique; favoritar produz onda amarela, suspendendo o fundo cinza de hover durante a animação. Coleções e disposição ficam salvas neste navegador. A cópia arrastada a partir da biblioteca segue as mesmas regras de ordenação do arraste normal.
+
+**Hover** sobre um símbolo mostra significado e alternativas. **Seta para baixo** com foco abre a mesma janela; **Escape** fecha. Em tela de toque, segure pelo tempo configurado para abrir as alternativas sem inserir. Escolher uma notação a insere. **?** abre definição, exemplos, notações, referências e informação de suporte pelo validador; X/Escape retorna à janela do símbolo.
+
+A **lupa** abre a busca no cabeçalho e dá foco ao campo. A busca mostra uma grade única, sem duplicatas, de todas as categorias: símbolos, formas alternativas e nomes em português/inglês, sem distinguir caixa ou acentos. Uma mensagem indica ausência de resultados. Escape ou fechar a busca limpa o filtro e restaura as seções existentes, sem alterar suas categorias ou ordem.
+
+A alça principal move/recolhe a biblioteca; o título fica centralizado entre ela e a busca. No desktop, setas com foco na alça movem a janela; Home ou duplo clique na alça principal restaura a biblioteca acoplada. Telas estreitas empilham as janelas. Restaurar padrões pode redefinir a disposição sem apagar Favoritos, Recentes ou argumentos.
 
 ## Painéis movíveis e redimensionáveis
 
@@ -261,6 +310,10 @@ Clique na **lupa** para abrir e focar a busca no lugar do título da biblioteca.
 - Se painéis separados forem colidir porque o superior cresceu, o inferior desce preservando o intervalo escolhido. Quando o superior diminui, o inferior volta a subir. Se você os sobrepuser deliberadamente, a separação automática não altera essa disposição.
 - Pelo teclado, foque o próprio painel, não um campo: as **setas** movem 10 pixels; **Alt+seta** move 1 pixel. **Shift+Esquerda/Direita** altera a largura.
 - **Ctrl+Z** desfaz movimentos/redimensionamentos registrados dos painéis e reordenações das linhas. **Ctrl+Shift+Z** refaz. O modificador Command correspondente também é aceito em sistemas que o utilizam. Dentro de um campo, o desfazer nativo de texto tem prioridade. O histórico é temporário e não acompanha os arquivos de projeto.
+
+### Aparência e identificação das linhas
+
+Os botões de tipo usam **nomes** por padrão em novos acessos. O duplo clique alterna entre nomes, nomes + símbolos e símbolos; premissa e conclusão têm dimensões iguais em cada modo. O clique simples troca o tipo imediatamente. **∵ significa “porque” e serve somente como identificação visual de premissas nesta interface; não é um símbolo formal universal de premissa e não integra as fórmulas nem a validação lógica. ∴ significa “portanto”.** A aparência individual tem como padrão o traço externo ligado, borda colorida desligada e detalhe interno Nenhum. A lista abre acima da interface e seu scroll não passa para a página. Segure **Alt** ao arrastar os detalhes internos horizontalmente; sem Alt, a região fica disponível para as interações normais das linhas. Parar o mouse ali pelo tempo de hover configurado (padrão de 0,5 segundo) exibe uma dica sobre Alt. A alça e a dica não ficam disponíveis em Nenhum. Um encaixe fraco de 3 px alinha à coluna do olho. Duplo clique no detalhe ou Home com foco restaura o alinhamento. Clique fora da janela de aparência para fechar. Nas configurações gerais, a ajuda em Aparência explica como segurar o olhinho.
 
 ## Prévia do Argumento, cópia e exportação
 
@@ -275,6 +328,8 @@ O Argumento se atualiza durante a escrita. O **ícone de lista numerada** (Numer
 | `.lp.json` pelo menu de arquivo | Cópia de segurança editável | Funções das linhas, texto, nomes dos argumentos, numeração e descrições de proposições |
 
 As páginas do PDF contêm imagens renderizadas; o texto não é selecionável. Exportações em texto e PDF não incluem o relatório de validação nem as descrições de proposições e não podem ser importadas como projetos editáveis.
+
+O **botão de espaçamento de prefixos, imediatamente à direita da enumeração**, une símbolos de prefixo ao próximo token na apresentação do Argumento: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Também contempla variantes de negação e prefixos modais. Conectivos infixos mantêm seus espaços. A opção é reversível, fica salva neste navegador e vale na prévia, na cópia e nas exportações de texto/PDF. Não altera os blocos editáveis, os dados do projeto nem o suporte da validação a quantificadores e lógica modal.
 
 ## Descrições de proposições — beta
 
@@ -345,13 +400,17 @@ Não há conta nem sincronização na nuvem. Outro navegador, dispositivo ou ori
 
 ## Configurações e acessibilidade
 
-As dicas de hover compartilham o estilo arredondado, com ícone compacto, título, sombra suave e atalhos destacados como teclas. Dicas informativas usam **0,5 segundo** por padrão sobre um controle. Nas configurações, **Tempo das dicas** oferece barra e campo numérico em segundos, de **0,01 a 1 segundo**, sincronizados e salvos neste navegador. Restaurar o padrão retorna a 0,5 segundo. A opção vale para dicas dos controles, janelas dos símbolos e dicas das decorações; não altera os tempos de segurar botões; o foco pelo teclado também pode mostrar a ajuda. Abrem acima da interface, respeitam os limites da tela e fecham ao interagir ou pressionar Escape. Os títulos nativos do navegador usam essa apresentação estilizada. Descrições de proposições continuam nas dicas dos blocos junto aos atalhos de edição, incluindo Backspace/Delete. As janelas dos símbolos preservam as notações alternativas e o botão de ajuda. Um lembrete discreto à direita do cabeçalho chama atenção para as dicas e os atalhos. Dicas com apenas título, incluindo editar/excluir argumentos, têm margens superior e inferior iguais.
+As configurações controlam idioma (International English / Português do Brasil), tema claro/escuro e escalas independentes da biblioteca e da escrita: **80% a 150%**, em passos de 5%.
 
-Abra o **ícone de configurações** para alternar **International English / Português (Brasil)** e **tema claro / escuro**. Tamanho do menu lateral e dos argumentos são independentes: de **80% a 150%**, em passos de 5%, por controles deslizantes ou botões de menos/mais.
+**Dicas de hover** têm interruptor e tempo entre **0,01 e 1 segundo**, padrão **0,5 s**. Desligá-las oculta as ajudas dos controles, símbolos e decorações sem desativar as funções. Usam janela arredondada compartilhada, podem incluir atalhos e descrições das proposições, respeitam a tela e fecham ao interagir ou por Escape. O foco pelo teclado também pode mostrar ajuda.
 
-O **ícone de padrão entre tema e idioma** abre uma confirmação listando a restauração: inglês, tema claro, tamanhos em 100% e painéis centralizados com a largura disponível inteira. Cancelar preserva as configurações. Restaurar não apaga argumentos nem descrições.
+**Tempo de segurar** é independente, com a mesma faixa/padrão. Vale para aparência pelos olhinhos, conversão em linha em branco, confirmação de excluir tudo, seleção de linhas, reordenação de abas, alternativas dos símbolos por toque e retorno de categoria desacoplada. Um indicador sob o controle preenche durante o gesto; soltar ou mover cancela os toques estacionários pendentes. Alterar o hover não altera esse tempo.
 
-A disposição se adapta a telas estreitas, tem indicadores de foco pelo teclado e controles com rótulos acessíveis, e reduz as animações contempladas quando o sistema solicita movimento reduzido. Os painéis e abas animam movimentos e aparições sem alterar o conteúdo lógico.
+**Restaurar padrões** abre uma prévia de 19 ajustes com os valores de destino. Ative **Preservar** junto ao que deve permanecer; todos desligados restaura os ajustes listados, todos ligados desabilita a confirmação. A escolha vale somente naquela confirmação. Cancelar/Escape não altera nada. A enumeração muda apenas no argumento ativo; argumentos, nomes e descrições nunca são apagados. Favoritos/Recentes sobrevivem ao reset da disposição da biblioteca.
+
+O primeiro acesso usa o idioma português/inglês do navegador (inglês como alternativa), exemplo de modus ponens, botões de tipo com nomes, tema claro, escalas 100%, tempos 0,5 s, maiúsculas, enumeração e prefixos compactos ligados. Cores suaves, traços externos ligados, bordas coloridas desligadas e detalhe interno Nenhum são os valores iniciais. A partir de 1440 px, escrita e resultado começam lado a lado; abaixo disso ficam empilhados. Dados e preferências já salvos são preservados.
+
+Controles têm rótulos acessíveis e foco visível. A disposição se adapta a telas estreitas, e as animações contempladas respeitam movimento reduzido. Home retorna ao portfólio com um clique.
 
 ## Abrir a versão atual
 
@@ -365,11 +424,6 @@ Quando o navegador oferece `document.modelContext.registerTool`, o editor pode r
 
 
 
-Os botões de tipo usam **símbolos** por padrão em novos acessos. O duplo clique alterna entre nomes, nomes + símbolos e símbolos; premissa e conclusão têm dimensões iguais em cada modo. O clique simples troca o tipo imediatamente. **∵ significa “porque” e serve somente como identificação visual de premissas nesta interface; não é um símbolo formal universal de premissa e não integra as fórmulas nem a validação lógica. ∴ significa “portanto”.** A aparência individual tem como padrão o traço externo ligado, borda colorida desligada e detalhe interno Nenhum. A lista abre acima da interface e seu scroll não passa para a página. Segure **Alt** ao arrastar os detalhes internos horizontalmente; sem Alt, a região fica disponível para as interações normais das linhas. Parar o mouse ali pelo tempo de hover configurado (padrão de 0,5 segundo) exibe uma dica sobre Alt. A alça e a dica não ficam disponíveis em Nenhum. Um encaixe fraco de 3 px alinha à coluna do olho. Duplo clique no detalhe ou Home com foco restaura o alinhamento. Clique fora da janela de aparência para fechar. Nas configurações gerais, a ajuda em Aparência explica como segurar o olhinho.
-
-
-O **botão de espaçamento de prefixos, imediatamente à direita da enumeração**, une símbolos de prefixo ao próximo token na apresentação do Argumento: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Também contempla variantes de negação e prefixos modais. Conectivos infixos mantêm seus espaços. A opção é reversível, fica salva neste navegador e vale na prévia, na cópia e nas exportações de texto/PDF. Não altera os blocos editáveis, os dados do projeto nem o suporte da validação a quantificadores e lógica modal.
-
 ## Créditos e autoria
 
 Concebido e dirigido por **toybile**, desenvolvido com o **OpenAI Codex**. As decisões de interface, os requisitos das funções e a direção do projeto foram definidos por toybile; o Codex auxiliou na implementação do código e na documentação.
@@ -382,58 +436,8 @@ Este projeto é distribuído sob a **licença MIT**. Consulte [LICENSE](LICENSE)
 
 </details>
 
-## Navigation / Navegação
+## Verification / Verificação
 
-The combined sidebar/Home button toggles the sidebar on click; holding for the configured delay (default: 0.5 seconds) returns to the portfolio. The canonical address is https://toybile.github.io/Logic-Editor/. Previous addresses redirect there. Browser storage keys remain unchanged on the same origin. / O botão único de barra lateral/Home alterna a barra com um clique; segurar pelo tempo configurado (padrão: 0,5 segundo) volta ao portfólio. O endereço canônico é https://toybile.github.io/Logic-Editor/. Os endereços anteriores redirecionam para ele. As chaves de armazenamento local são preservadas na mesma origem.
+Local audit: 18 October 2026. Browser checks cover editing, row operations, library selection/search, favorites, duplication/ordering, resize, configured hold timing, hints, validation, persistence, import and TXT/PDF downloads. Passing checks establish the tested cases, not absence of all defects. Clipboard permissions, optional browser integrations and remote hosting depend on their environment.
 
-The library heading uses a circular search button beside a centered title card. Clicking search transforms the title card into an automatically focused field; results filter while typing. Clicking search again or pressing Escape clears the filter. / O cabeçalho da biblioteca usa um botão circular de busca ao lado do título centralizado em sua própria caixa. Ao clicar na busca, o título vira um campo com foco automático e filtragem durante a digitação. Outro clique na busca ou Escape limpa o filtro.
-
-## Hint and hold settings / Configurações das dicas e do gesto de segurar
-
-Hover hints have a left-hand enable switch and an independent delay of 0.01–1 second (default: 0.5 s). Turning hints off hides control, symbol-hover and decoration hints without disabling controls. Hold action delay is separate, has the same bounds/default, and applies to Home, panel appearance, blank rows, delete-all confirmation, row selection, tab reordering and symbol notation on touch. Values persist in this browser; Restore defaults enables hints and resets both delays to 0.5 s. Previously saved longer hint delays are clamped to 1 second.
-
-As dicas têm um interruptor à esquerda e tempo independente de 0,01–1 segundo (padrão: 0,5 s). Desligar as dicas oculta as ajudas dos controles, símbolos no hover e decorações sem desativar os controles. O tempo de segurar é separado, com a mesma faixa/padrão, e vale para Home, aparência dos painéis, linhas vazias, confirmação de excluir tudo, seleção de linhas, reordenação de abas e notações em telas de toque. Os valores ficam salvos neste navegador; restaurar o padrão ativa as dicas e retorna ambos os tempos a 0,5 s. Tempos antigos maiores são limitados a 1 segundo.
-
-The search circle and title/input are outside the library card, in a separate header above it. The title has a soft tinted surface; the active search field has a distinct border, shape and typography, a shorter placeholder and automatic focus. Both states remain centered. / O círculo de busca e o título/campo ficam fora do cartão da biblioteca, num cabeçalho acima dele. O título tem fundo suave; o campo ativo tem borda, formato e tipografia próprios, texto de orientação curto e foco automático. Ambos permanecem centralizados.
-
-## First visit and selective reset / Primeiro acesso e reset seletivo
-
-New visitors start with English, light theme, sidebar and both panels visible, sidebar/arguments at 100%, hints enabled, hint/hold delays at 0.5 s, uppercase typing enabled, symbols-only role labels, numbering enabled and compact prefix spacing enabled. Panels start centered at full available width; soft panel colors, external markers on, colored borders off and no inner detail. Existing browser settings and arguments are preserved, including settings saved before this update.
-
-Restore defaults opens a complete preview with 19 settings and their target values. Turn on Preserve next to any item to exclude it from this reset. All switches initially off means all listed settings will reset; all on disables confirmation. Choices apply only to this confirmation. Numbering resets only the active argument. Text, argument names and proposition descriptions are never reset. Cancel/Escape applies nothing.
-
-Novos acessos começam em inglês, tema claro, barra lateral e painéis visíveis, tamanhos em 100%, dicas ativadas, tempos de dicas/segurar em 0,5 s, maiúsculas ativadas, botões somente com símbolos, enumeração ativada e prefixos compactos. Os painéis começam centralizados com toda a largura disponível; cores suaves, traços externos ligados, bordas coloridas desligadas e nenhum detalhe interno. Configurações e argumentos existentes neste navegador são preservados, inclusive de versões anteriores.
-
-Restaurar padrões abre uma prévia completa dos 19 ajustes e seus valores de destino. Ative Preservar ao lado do que deve permanecer. Todos desligados restaura os ajustes listados; todos ligados desabilita a confirmação. A escolha vale somente para aquela confirmação. A enumeração muda apenas no argumento ativo. Textos, nomes e descrições das proposições não são apagados. Cancelar/Escape não aplica mudanças.
-
-
-## Modular symbol library / Biblioteca modular de símbolos
-
-The library has a category bar that can be horizontal or vertical. Recent (clock) and Favorites (star) come first; a grid identifies Most common. All original symbol categories remain available. Click a category to show its symbols; search covers all categories. Hover still opens alternative notations, descriptions and scientific/educational references through the help button. The small Alt + click instruction appears only in that hover, with no star on symbol buttons.
-
-Alt + click adds/removes the symbol from Favorites without inserting it. Ordinary insertion updates a deduplicated Recent list (up to 20 symbols), including alternative notations. Both lists are saved in this browser. The category bar can detach from the library and move independently; its orientation control follows it. Detach opens a separate symbol-group window, including Recent/Favorites. The library and group windows move by their header or free surfaces; symbol buttons and inputs keep their normal actions. Dragging is desktop-only; arrow keys on the move handle also move the window. Double-click the library handle or press Home on it to dock the library again. Mobile layouts stack the library and detached windows with no horizontal overflow.
-
-The window arrangement, selected category, orientation and detached groups persist. Restore defaults includes a separate Library arrangement item: horizontal, docked, no detached windows. Its Preserve switch keeps that layout. Resetting arrangement does not clear Favorites or Recent and does not change argument content.
-
-A biblioteca tem uma barra de categorias horizontal ou vertical. Recentes (relógio) e Favoritos (estrela) aparecem primeiro; uma grade identifica Mais comuns. Todas as categorias originais continuam disponíveis. Clique numa categoria para mostrar seus símbolos; a pesquisa abrange todas elas. O hover mantém as notações alternativas, descrições e referências pela ajuda. A instrução pequena de Alt + clique aparece somente nessa dica, sem estrelas nos botões dos símbolos.
-
-Alt + clique adiciona/remove dos Favoritos sem inserir. A inserção normal atualiza Recentes sem duplicatas (até 20 símbolos), incluindo notações alternativas. As duas listas ficam salvas neste navegador. A barra de categorias pode ser destacada e movida separadamente; o controle de orientação acompanha a barra. Destacar abre uma janela do grupo, inclusive Recentes/Favoritos. A biblioteca e os grupos são arrastáveis pelo cabeçalho ou áreas livres; botões de símbolos e campos mantêm suas ações. O arraste funciona no desktop; as setas com foco na alça também movem a janela. Duplo clique na alça da biblioteca ou Home com foco nela recolhe à lateral. No celular, biblioteca e janelas destacadas ficam empilhadas sem transbordar horizontalmente.
-
-A disposição, categoria selecionada, orientação e grupos destacados ficam salvos. O reset geral inclui Disposição da biblioteca: horizontal, fixa e sem janelas destacadas. Seu interruptor Preservar mantém a disposição. Esse reset não limpa Favoritos/Recentes nem altera o conteúdo dos argumentos.
-
-
-The library search heading uses separate surfaces for the circular magnifier and title/input, with no enclosing background panel. The current visual style is preserved (no macOS theme). Category hints now include the category's purpose, examples, interaction and relevant validation limits. / O cabeçalho de pesquisa tem fundos separados para a lupa circular e o título/campo, sem painel externo envolvendo ambos. O estilo atual é mantido (sem tema macOS). As dicas das categorias incluem finalidade, exemplos, interação e limites relevantes da validação.
-
-
-Search shows one deduplicated grid across categories, matching Portuguese/English names, symbols and alternative forms regardless of accents. The move grip has no background box, and moving the library keeps its outer surface transparent.
-
-A pesquisa mostra uma grade única sem duplicatas entre categorias, aceitando nomes em português/inglês, símbolos e formas alternativas, independentemente de acentos. A alça não tem caixa de fundo e o contorno externo da biblioteca permanece transparente durante o arraste.
-
-Categorias têm botões quadrados de mesmo tamanho e três grupos visuais: Recentes/Favoritos, Mais comuns e demais categorias. A divisória da biblioteca destaca-se ao apontar os controles de orientação ou destaque (tracejada neste último). Favoritar produz uma onda amarela; inserir produz uma onda azul-acinzentada. O tamanho da biblioteca flutuante acompanha o ajuste de escala; as animações respeitam a preferência de movimento reduzido.
-
-## Primeira visita / First visit
-
-Novos visitantes recebem um exemplo correto de modus ponens (A → B, A, conclusão B), botões com nomes e idioma do navegador (português ou inglês, com inglês como alternativa). A biblioteca começa unida em Mais comuns. A partir de 1440 px, os painéis de construção e resultado ficam lado a lado; abaixo disso ficam empilhados. Uma dica discreta explica edição e arraste. Argumentos e preferências de visitantes existentes são preservados. A organização responsiva permanece até um movimento manual.
-
-New visitors start with modus ponens, named role buttons and their browser language (Portuguese/English, with English fallback). The library starts docked on Most common. At 1440 px and above, editor and output are side by side; smaller screens stack them. A brief hint introduces editing and dragging. Existing visitor content and preferences are preserved; responsive layout remains until manually arranged.
-
+Auditoria local: 18 de outubro de 2026. Os testes de navegador abrangem edição, linhas, seleção/busca de símbolos, favoritos, duplicação/ordenação, redimensionamento, tempo configurado de segurar, dicas, validação, persistência, importação e downloads TXT/PDF. Aprovação dos casos testados não demonstra ausência de todo defeito. Permissões de área de transferência, integrações opcionais e hospedagem dependem do ambiente.
