@@ -108,7 +108,7 @@
   color: var(--ink);
 }
 #lp-hybrid .hy-logic-area {
-  display: flex;
+  display: none !important;
   flex-direction: column;
   gap: 14px;
   min-width: 0;
@@ -632,6 +632,8 @@
 #lp-hybrid .hy-tools .hy-export {
   margin-left: auto;
   border-color: var(--blue);
+  background: var(--soft);
+  color: var(--blue);
 }
 #lp-hybrid .hy-preview-wrap {
   display: grid;
@@ -715,6 +717,8 @@
   }
   #lp-hybrid .hy-tools .hy-export {
     margin-left: 0;
+    background: var(--soft);
+    color: var(--blue);
   }
   #lp-hybrid .hy-button {
     min-height: 44px;
@@ -835,8 +839,6 @@
   background: transparent;
 }
 #lp-hybrid .hy-tools .hy-export {
-  background: var(--soft);
-  color: var(--ink);
 }
 #lp-hybrid .hy-preview-wrap .hy-panel {
   background: light-dark(#f8f9fb, #27282c);
@@ -1435,13 +1437,13 @@ body {
   gap: 9px;
 }
 #lp-hybrid .hy-tools #copy {
-  background: light-dark(#eef5f2, #283b34);
+  background: var(--paper);
   color: var(--ink);
-  border: 1px solid light-dark(#dceae3, #395247);
-  border-radius: 8px;
+  border: 1px solid var(--edge);
+  border-radius: 10px;
 }
 #lp-hybrid .hy-tools #copy:hover {
-  background: light-dark(#e2eee8, #344b40);
+  background: var(--soft);
 }
 #lp-hybrid .hy-check input {
   appearance: none;
@@ -1717,7 +1719,8 @@ body {
 }
 #lp-hybrid .hy-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 45vw minmax(0, 1fr);
+  grid-auto-rows: minmax(40px, auto);
 }
 #lp-hybrid .hy-head > [popovertarget] {
   justify-self: end;
@@ -1728,14 +1731,24 @@ body {
   gap: 8px;
   min-width: 0;
   max-width: 45vw;
+  justify-self: center;
+  justify-content: center;
+  align-self: center;
+  margin-bottom: 0;
+}
+#lp-hybrid .hy-argument-navigation.hy-compact-arguments {
+  position: relative;
+  align-self: center;
+  margin-bottom: 0;
 }
 #lp-hybrid .hy-argument-tabs {
   display: flex;
   align-items: center;
   overflow-x: auto;
   min-width: 0;
-  padding: 4px;
-  scrollbar-width: thin;
+  padding: 0 4px;
+  align-self: stretch;
+  border-bottom: 1px solid var(--edge);
 }
 #lp-hybrid .hy-argument-tab {
   flex-shrink: 0;
@@ -1755,7 +1768,7 @@ body {
   background: var(--soft);
   color: var(--ink);
 }
-@media (max-width: 760px) {
+@media (max-width: 1100px) {
   #lp-hybrid .hy-head {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -2701,7 +2714,7 @@ body {
   display: inline-flex;
 }
 #lp-hybrid .hy-tools .hy-export-group .hy-export {
-  border: 1px solid light-dark(#cdd5e1, #515d70);
+  border: 1px solid color-mix(in srgb,var(--blue) 28%,var(--edge));
   border-radius: 10px;
 }
 #lp-hybrid .hy-export-menu {
@@ -2740,7 +2753,8 @@ body {
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell {
   position: relative;
-  padding-inline: 32px;
+  padding-inline: 0;
+  padding-top: 0;
   isolation: isolate;
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-argument-tab,
@@ -2769,10 +2783,13 @@ body {
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument,
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument {
   position: absolute;
-  top: 50%;
+  top: 0;
+  height: 24px;
+  min-height: 24px;
+  padding: 4px;
   display: inline-flex;
   margin: 0;
-  transform: translateY(-50%);
+  transform: none;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -2788,15 +2805,19 @@ body {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(-50%);
+  transform: none;
 }
 @media (hover: none), (pointer: coarse) {
   #lp-hybrid .hy-argument-navigation .hy-tab-shell {
-    padding-inline: 44px;
+    padding-inline: 0;
+    padding-top: 0;
+    min-width: 90px;
   }
   #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument,
   #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument {
     width: 44px;
+    height: 44px;
+    min-height: 44px;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -2819,12 +2840,175 @@ body {
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-argument-tab {
   position: relative;
   z-index: 2;
+  background: transparent;
+  border-radius: 6px;
+}
+#lp-hybrid .hy-argument-navigation .hy-argument-tab[aria-selected="true"] {
+  color: var(--blue);
+}
+#lp-hybrid .hy-argument-navigation .hy-argument-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--blue);
+}
+#lp-hybrid #argument-view-toggle {
+  flex-shrink: 0;
+  background: var(--soft);
+}
+#lp-hybrid #argument-compact-view {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  position: relative;
+  padding-inline: 0;
+}
+#lp-hybrid #argument-compact-view[hidden],
+#lp-hybrid .hy-argument-tabs[hidden] {
+  display: none;
+}
+#lp-hybrid #argument-select {
+  min-width: 0;
+  max-width: 240px;
+  width: 100%;
+  font: inherit;
+  color: var(--paper);
+  background: var(--blue);
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+  padding: 8px 16px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+#lp-hybrid #argument-select span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#lp-hybrid #argument-options {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  --argument-action-gutter: 0px;
+  isolation: isolate;
+}
+#lp-hybrid #argument-options::before {
+  content: "";
+  position: absolute;
+  inset: 0 var(--argument-action-gutter);
+  border: 1px solid var(--edge);
+  border-radius: 14px;
   background: var(--paper);
-  border-radius: 9px;
+  box-shadow: 0 12px 32px light-dark(#26364a22, #0006);
+  pointer-events: none;
+  z-index: -1;
+}
+#lp-hybrid #argument-option-list {
+  --argument-card-height: 72px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(var(--argument-card-height), auto);
+  gap: 8px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: none;
+  max-height: inherit;
+  padding: 10px;
+}
+#lp-hybrid #argument-options:popover-open {
+  display: block;
+  animation: hy-argument-picker-in 140ms ease-out;
+}
+#lp-hybrid #argument-options [role="menuitemradio"] {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 60px;
+  height: 100%;
+  touch-action: none;
+  user-select: none;
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--edge);
+  border-radius: 11px;
+  font: inherit;
+  text-align: left;
+  overflow-wrap: anywhere;
+  background: var(--paper);
+  color: var(--ink);
+}
+#lp-hybrid #argument-options [role="menuitemradio"]:hover {
+  background: var(--soft);
+  border-color: var(--blue);
+}
+#lp-hybrid #argument-options [aria-checked="true"] {
+  background: var(--blue);
+  color: var(--paper);
+  border-color: var(--blue);
+}
+#lp-hybrid #argument-options [role="menuitemradio"] svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#lp-hybrid #argument-options [role="menuitemradio"] span { min-width: 0; }
+@keyframes hy-argument-picker-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #lp-hybrid #argument-options:popover-open { animation: none; }
+}
+#lp-hybrid #argument-options .hy-argument-option { position: relative; min-width: 0; }
+#lp-hybrid .hy-argument-grid-add {
+  width: var(--argument-card-height); height: var(--argument-card-height); max-width: 100%; justify-self: start; padding: 0; display: grid; place-items: center;
+  border: 1px solid var(--edge); border-radius: 11px;
+  background: var(--soft); color: var(--quiet); align-self: center;
+}
+#lp-hybrid .hy-argument-grid-add svg { width: 22px; height: 22px; }
+#lp-hybrid .hy-argument-grid-add:hover { border-color: var(--blue); color: var(--blue); }
+#lp-hybrid .hy-argument-option.hy-card-dragging { opacity: .3; }
+#lp-hybrid .hy-argument-card-ghost {
+  position: fixed; inset: 0 auto auto 0; margin: 0; box-sizing: border-box;
+  padding: 9px; display: flex; align-items: center; gap: 9px;
+  border: 1px solid var(--blue); border-radius: 11px;
+  background: var(--paper); color: var(--ink); font: inherit;
+  box-shadow: 0 10px 30px light-dark(#26364a30, #0008); pointer-events: none;
+}
+#lp-hybrid .hy-argument-card-ghost svg { width: 22px; height: 22px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.5; }
+@media (max-width: 480px) {
+  #lp-hybrid #argument-option-list { --argument-card-height: 88px; }
+  #lp-hybrid #argument-options [role="menuitemradio"],
+  #lp-hybrid .hy-argument-card-ghost {
+    flex-direction: column; justify-content: center; text-align: center;
+    font-size: 12px; gap: 5px;
+  }
+}
+@media (pointer: coarse) {
+  #lp-hybrid #argument-select, #lp-hybrid #argument-view-toggle { min-height: 44px; }
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell:hover .hy-argument-tab,
 #lp-hybrid .hy-argument-navigation .hy-tab-shell:focus-within .hy-argument-tab {
-  border-radius: 9px;
+  border-radius: 6px;
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument,
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument {
@@ -2832,10 +3016,15 @@ body {
   background: light-dark(#eef0f5, #222730);
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument {
-  padding-right: 10px;
+  padding-right: 4px;
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument {
-  padding-left: 10px;
+  padding-left: 4px;
+}
+#lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument svg,
+#lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument svg {
+  width: 14px;
+  height: 14px;
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument:hover {
   background: light-dark(#edf3ff, #2e405b);
@@ -2963,23 +3152,25 @@ body {
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument,
 #lp-hybrid .hy-tab-ghost .hy-edit-argument {
-  left: 0;
-  width: 37px;
-  border-radius: 10px 0 0 10px;
+  left: calc(50% - 25px);
+  width: 24px;
+  border-radius: 7px;
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument,
 #lp-hybrid .hy-tab-ghost .hy-delete-argument {
-  right: 0;
-  width: 37px;
-  border-radius: 0 10px 10px 0;
+  right: calc(50% - 25px);
+  width: 24px;
+  border-radius: 7px;
 }
 @media (pointer: coarse) {
   #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument,
   #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument,
   #lp-hybrid .hy-tab-ghost .hy-edit-argument,
   #lp-hybrid .hy-tab-ghost .hy-delete-argument {
-    width: 49px;
+    width: 44px;
   }
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument { left: calc(50% - 45px); }
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument { right: calc(50% - 45px); }
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument,
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument,
@@ -2995,7 +3186,7 @@ body {
 #lp-hybrid .hy-argument-navigation .hy-tab-shell:focus-within .hy-argument-tab,
 #lp-hybrid .hy-tab-ghost .hy-argument-tab {
   border-color: transparent;
-  box-shadow: 0 3px 5px light-dark(#26364a12, #0003);
+  box-shadow: none;
 }
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-edit-argument:focus-visible,
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-delete-argument:focus-visible {
@@ -3740,7 +3931,7 @@ body {
   outline: 2px solid var(--blue);
   outline-offset: 2px;
 }
-#lp-hybrid .hy-caps-lock[hidden] {
+#lp-hybrid .hy-panel-frame #caps-lock[hidden] {
   display: none;
 }
 @media (pointer: coarse) {
@@ -3783,10 +3974,10 @@ body {
 }
 #lp-hybrid .hy-caps-lock[aria-pressed="true"],
 #lp-hybrid .hy-caps-lock[aria-pressed="true"]:hover {
-  background: light-dark(#3d526e, #b6c9e1);
-  border-color: light-dark(#3d526e, #b6c9e1);
-  color: light-dark(#fff, #192638);
-  box-shadow: 0 2px 7px light-dark(#3d526e35, #0004);
+  background: color-mix(in srgb,var(--blue) 10%,var(--paper));
+  border-color: color-mix(in srgb,var(--blue) 30%,var(--edge));
+  color: var(--blue);
+  box-shadow: none;
 }
 #lp-hybrid .hy-caps-lock[aria-pressed="true"]::after {
   content: "";
@@ -4089,10 +4280,65 @@ body {
 }
 /* active-argument-emphasis */
 #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-argument-tab[aria-selected="true"] {
-  background: light-dark(#f0f4f9, #2d3743);
-  color: var(--ink);
-  border-color: light-dark(#c5d1df, #56677a);
-  box-shadow: 0 2px 5px light-dark(#34547a0b, #0002);
+  background: transparent;
+  color: var(--blue);
+  border-color: transparent;
+  box-shadow: none;
+  border-radius: 6px;
+  border-bottom-color: transparent;
+  font-weight: 400;
+}
+#lp-hybrid .hy-argument-navigation > #argument-view-toggle,
+#lp-hybrid .hy-argument-navigation > .hy-add-argument-wrap {
+  align-self: center;
+}
+#lp-hybrid .hy-tab-tools {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--edge);
+  border-radius: 9px;
+  background: var(--paper);
+  box-shadow: 0 4px 14px light-dark(#26364a1c, #0006);
+  overflow: visible;
+}
+#lp-hybrid .hy-tab-tools:popover-open { display: flex; gap: 3px; }
+@media (max-width: 760px) {
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-argument-tab,
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell:hover .hy-argument-tab,
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell:focus-within .hy-argument-tab {
+    padding: 8px 12px;
+  }
+}
+#lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-tab-tools button {
+  position: static;
+  transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 24px;
+  min-height: 24px;
+  margin: 0;
+  padding: 4px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  border-radius: 6px;
+  background: var(--soft);
+}
+@media (pointer: coarse) {
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-tab-tools button {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell .hy-argument-tab,
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell:hover .hy-argument-tab,
+  #lp-hybrid .hy-argument-navigation .hy-tab-shell:focus-within .hy-argument-tab {
+    padding: 8px 12px;
+  }
 }
 #lp-hybrid .hy-row:not(.hy-blank-line) .hy-line-shell .hy-role[aria-pressed="false"] {
   background: color-mix(in srgb, var(--premise-color) 13%, var(--paper));
@@ -4632,6 +4878,7 @@ body {
   --eye-column: 43px;
 }
 #lp-hybrid :is(.hy-editor, .hy-argument-panel)[data-internal-detail] .hy-internal-decoration {
+  top: var(--detail-top, 70px);
   left: calc(var(--eye-column) + var(--detail-offset));
   translate: -50% 0;
   pointer-events: auto;
@@ -4644,18 +4891,18 @@ body {
   translate: -50% 0;
 }
 #lp-hybrid :is(.hy-editor, .hy-argument-panel)[data-internal-detail] .hy-row-decoration {
-  left: calc(17px + var(--detail-offset));
+  left: calc(var(--row-eye-column, 17px) + var(--detail-offset));
   translate: -50% 0;
 }
 #lp-hybrid :is(.hy-editor, .hy-argument-panel)[data-internal-detail="branches"] .hy-row-decoration {
-  left: calc(17px + var(--detail-offset));
+  left: calc(var(--row-eye-column, 17px) + var(--detail-offset));
   width: 17px;
   translate: 0 0;
 }
 #lp-hybrid .hy-inner-appearance-handle {
   position: absolute;
   left: calc(var(--eye-column) + var(--detail-offset) - 10px);
-  top: 74px;
+  top: var(--detail-top, 74px);
   bottom: 26px;
   width: 20px;
   padding: 0;
@@ -4758,7 +5005,7 @@ body {
 }
 #lp-hybrid :is(.hy-editor, .hy-argument-panel)[data-internal-detail="arcs"] .hy-row-decoration,
 #lp-hybrid :is(.hy-editor, .hy-argument-panel)[data-internal-detail="hover"] .hy-row-decoration {
-  left: calc(17px + var(--detail-offset));
+  left: calc(var(--row-eye-column, 17px) + var(--detail-offset));
   box-sizing: border-box;
 }
 #lp-hybrid .hy-panel-appearance-dialog {
@@ -5662,7 +5909,7 @@ body {
   line-height: 1.45;
   text-wrap: balance;
 }
-@media (max-width: 760px) {
+@media (max-width: 1100px) {
   #lp-hybrid .hy-head-end {
     display: contents;
   }
@@ -5683,20 +5930,20 @@ body {
 /* tiered-active-writing-controls */
 #lp-hybrid #compact-prefix-spacing[aria-pressed="true"],
 #lp-hybrid #compact-prefix-spacing[aria-pressed="true"]:hover {
-  background: light-dark(#718196, #90a5bf);
-  border-color: light-dark(#65788f, #90a5bf);
-  color: light-dark(#fff, #192638);
-  box-shadow: 0 2px 5px light-dark(#3d526e20, #0003);
+  background: color-mix(in srgb,var(--blue) 14%,var(--paper));
+  border-color: color-mix(in srgb,var(--blue) 38%,var(--edge));
+  color: var(--blue);
+  box-shadow: none;
 }
 #lp-hybrid #compact-prefix-spacing[aria-pressed="true"] svg {
   stroke-width: 1.9;
 }
 #lp-hybrid #number-toggle[aria-pressed="true"],
 #lp-hybrid #number-toggle[aria-pressed="true"]:hover {
-  background: light-dark(#d3dce8, #465973);
-  border-color: light-dark(#b6c5d9, #637a99);
-  color: light-dark(#304763, #e4edf8);
-  box-shadow: inset 0 0 0 1px light-dark(#fff3, #ffffff08);
+  background: color-mix(in srgb,var(--blue) 14%,var(--paper));
+  border-color: color-mix(in srgb,var(--blue) 38%,var(--edge));
+  color: var(--blue);
+  box-shadow: none;
 }
 #lp-hybrid #number-toggle[aria-pressed="true"] svg {
   stroke-width: 1.7;
@@ -6268,7 +6515,7 @@ body {
   animation: none;
   overflow: visible;
   margin: 0 8px 10px;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid var(--edge);
   border-radius: 18px;
   background: var(--paper);
@@ -8432,6 +8679,19 @@ body {
 #lp-hybrid .hy-symbol-dock-stack > .hy-add-section-zone:focus-within::before {
   opacity: 0;
 }
+#lp-hybrid .hy-symbol-dock-stack > .hy-add-section-zone:first-child {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -5px;
+  height: 10px;
+  min-height: 10px;
+  z-index: 1000;
+}
+#lp-hybrid .hy-symbol-dock-stack > .hy-add-section-zone:first-child button { height: 10px; }
+#lp-hybrid .hy-symbol-dock-stack > .hy-add-section-zone:first-child::before {
+  display: none;
+}
 /* extended-search-and-centered-library-title */
 #lp-hybrid .hy-modular-library > .hy-side-heading .hy-library-heading {
   position: relative;
@@ -8519,6 +8779,9 @@ body {
   z-index: 2;
   margin: 0;
 }
+#lp-hybrid .hy-premise-line-overlay > .hy-premise-add-line[data-insert-index="0"]::before {
+  display: none;
+}
 /* premise-lines-and-compact-library-footer */
 #lp-hybrid #add-line {
   display: grid !important;
@@ -8533,22 +8796,22 @@ body {
   display: none;
 }
 #lp-hybrid .hy-modular-library .hy-symbol-dock-stack + .hy-add-section-zone button {
-  height: 20px;
+  height: 10px;
 }
 #lp-hybrid .hy-modular-library > .hy-side:not(:has(.hy-symbol-dock-stack > .hy-mod-palette)) {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
 }
-/* equal-category-divider-margins */
+/* compact-category-divider-margins */
 #lp-hybrid .hy-symbol-dock-stack > .hy-add-section-zone,
 #lp-hybrid .hy-symbol-dock-stack + .hy-add-section-zone {
-  height: 20px;
-  min-height: 20px;
+  height: 8px;
+  min-height: 8px;
   margin: 0;
 }
 #lp-hybrid .hy-symbol-dock-stack > .hy-add-section-zone button,
 #lp-hybrid .hy-symbol-dock-stack + .hy-add-section-zone button {
-  height: 20px;
+  height: 8px;
 }
 /* vertically-balanced-premise-rows */
 #lp-hybrid #rows {
@@ -8565,10 +8828,11 @@ body {
 }
 #lp-hybrid .hy-modular-library .hy-symbol-dock-stack + .hy-add-section-zone {
   position: absolute;
-  left: 12px;
-  right: 12px;
+  left: 10px;
+  right: 10px;
   bottom: 0;
-  height: 20px;
+  height: 10px;
+  min-height: 10px;
   margin: 0;
 }
 #lp-hybrid
@@ -8583,8 +8847,8 @@ body {
 }
 /* reduced-general-library-margin */
 #lp-hybrid .hy-modular-library > .hy-side:has(.hy-symbol-dock-stack > .hy-mod-palette) {
-  padding-top: 9px !important;
-  padding-bottom: 13px !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
 }
 /* library-margin-sixteen */
 #lp-hybrid .hy-symbol-dock-stack > .hy-mod-palette[data-docked="true"],
@@ -8807,7 +9071,6 @@ body {
     system-ui;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: var(--edge) transparent;
 }
 #lp-hybrid .hy-beta-dialog::backdrop {
   background: light-dark(#23365040, #080f1f88);
@@ -9109,6 +9372,140 @@ body {
     16px/1.5 "Cambria Math",
     serif;
 }
+
+#lp-hybrid .hy-compact-arguments .hy-add-argument-wrap { display: none; }
+#lp-hybrid #argument-options [aria-checked="true"]:hover {
+  background: light-dark(#526985, #d0dff1);
+  color: light-dark(#fff, #202124);
+}
+#lp-hybrid .hy-argument-card-editor {
+  position: fixed; inset: auto; margin: 0; padding: 14px; width: min(320px, calc(100vw - 16px));
+  box-sizing: border-box; border: 1px solid var(--edge); border-radius: 14px;
+  background: var(--paper); color: var(--ink); box-shadow: 0 10px 30px light-dark(#26364a30,#0008); font: inherit;
+}
+#lp-hybrid .hy-argument-card-editor label { display: grid; gap: 8px; }
+#lp-hybrid .hy-argument-card-editor input { min-width: 0; width: 100%; box-sizing: border-box; padding: 9px; border: 1px solid var(--edge); border-radius: 9px; background: var(--paper); color: var(--ink); font: inherit; }
+#lp-hybrid .hy-argument-card-editor form > div { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 6px; margin-top: 12px; }
+#lp-hybrid .hy-argument-card-editor button { border: 1px solid var(--edge); border-radius: 9px; padding: 8px 10px; background: var(--soft); color: var(--ink); font: inherit; }
+#lp-hybrid .hy-argument-card-editor .hy-argument-editor-delete { color: light-dark(#a83146,#ffa5b4); }
+
+#lp-hybrid .hy-argument-card-editor button[type="button"]:first-child { justify-self: start; }
+#lp-hybrid .hy-argument-card-editor button[type="submit"] { justify-self: end; }
+#lp-hybrid .hy-argument-card-editor button:has(svg) { width: 38px; height: 38px; padding: 8px; display: grid; place-items: center; }
+#lp-hybrid .hy-argument-card-editor button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+#lp-hybrid .hy-compact-arguments #argument-view-toggle { position: absolute; right: calc(100% + 8px); }
+
+/* Theme variants are opt-in. The two original palettes keep their existing rules. */
+#lp-hybrid .hy-theme-choices { border: 0; padding: 0; margin: 12px 0 20px; min-width: 0; }
+#lp-hybrid .hy-theme-choices legend { font-size: 12px; color: var(--quiet); padding: 0 0 8px; }
+#lp-hybrid .hy-theme-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+#lp-hybrid .hy-theme-option { display: grid; gap: 7px; padding: 9px; border: 1px solid var(--edge); border-radius: 11px; background: var(--paper); color: var(--ink); text-align: left; font: 12px/1.4 system-ui; min-width: 0; }
+#lp-hybrid .hy-theme-option[aria-pressed="true"] { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+#lp-hybrid .hy-theme-option:hover { border-color: var(--blue); }
+#lp-hybrid .hy-theme-swatch { display: flex; align-items: center; gap: 6px; height: 45px; padding: 8px; border-radius: 7px; background: #f4f6fb; border: 1px solid #dce1eb; }
+#lp-hybrid .hy-theme-swatch i { width: 36%; height: 28px; border: 1px solid #dce1eb; border-radius: 5px; background: #fff; }
+#lp-hybrid [data-theme-value="dark"] .hy-theme-swatch { background: #202124; border-color: #34363b; }
+#lp-hybrid [data-theme-value="dark"] .hy-theme-swatch i { background: #303238; border-color: #454851; }
+#lp-hybrid [data-theme-value="indigo-light"] .hy-theme-swatch { background: radial-gradient(at 15% 90%,#b4b8ff88,transparent 80%),#f4f4fd; border-color:#dcdff1; }
+#lp-hybrid [data-theme-value="indigo-light"] .hy-theme-swatch i { background:#ffffffbc; border-color:#dcdff1; }
+#lp-hybrid [data-theme-value="indigo-dark"] .hy-theme-swatch { background:radial-gradient(at 10% 90%,#6570eb66,transparent 85%),#0f1023; border-color:#303450; }
+#lp-hybrid [data-theme-value="indigo-dark"] .hy-theme-swatch i { background:#191c37cc; border-color:#41476a; }
+html[data-editor-theme="indigo-light"] body { background:#f4f4fd; }
+html[data-editor-theme="indigo-dark"] body { background:#0f1023; }
+#lp-hybrid[data-theme="indigo-light"] {
+  --paper:#fff; --canvas:#f4f4fd; --ink:#23263e; --quiet:#626b86; --edge:#dcdff1; --soft:#eef0fc; --blue:#4c57c9;
+  --theme-glass:#ffffffbf; --theme-raised:#fffffff2; --theme-header:#fafaffd9;
+  --theme-cloud-a:#a1a8ff49; --theme-cloud-b:#cbb0ed38; --theme-cloud-c:#a5c7ef38;
+  --theme-shadow:0 14px 40px #3b417813, inset 0 1px 0 #ffffffa6;
+}
+#lp-hybrid[data-theme="indigo-dark"] {
+  --paper:#15172e; --canvas:#0f1023; --ink:#f3f3fc; --quiet:#b4bad3; --edge:#30344f; --soft:#212540; --blue:#a4b0ff;
+  --theme-glass:#15182dd9; --theme-raised:#191d36f5; --theme-header:#0e1020df;
+  --theme-cloud-a:#5b66de39; --theme-cloud-b:#6563be27; --theme-cloud-c:#3a61972c;
+  --theme-shadow:0 18px 48px #05061245, inset 0 1px 0 #ffffff06;
+}
+#lp-hybrid[data-theme^="indigo-"] {
+  min-height:100vh;
+  background:radial-gradient(ellipse 48vw 40vh at 12% 74%,var(--theme-cloud-a),transparent 100%),radial-gradient(ellipse 42vw 46vh at 83% 38%,var(--theme-cloud-b),transparent 100%),radial-gradient(ellipse 35vw 30vh at 55% 94%,var(--theme-cloud-c),transparent 100%),var(--canvas);
+  background-attachment:fixed;
+}
+#lp-hybrid[data-theme^="indigo-"] .hy-head { background:var(--theme-header); backdrop-filter:blur(16px); box-shadow:inset 0 -1px 0 var(--edge); }
+#lp-hybrid[data-theme^="indigo-"] :is(.hy-panel-frame > .hy-panel,.hy-modular-library > .hy-side,.hy-mod-palette[data-docked="false"]) { background:var(--theme-glass); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
+#lp-hybrid[data-theme^="indigo-"] :is(.hy-size-popover,.hy-card-picker-menu,.hy-feature-dialog,.hy-argument-card-editor,.hy-tab-tools) { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
+#lp-hybrid[data-theme^="indigo-"] #argument-options::before { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
+#lp-hybrid[data-theme^="indigo-"] .hy-mod-palette[data-docked="true"] { background:transparent; }
+#lp-hybrid[data-theme^="indigo-"] :is(.hy-side-heading,.hy-library-heading) { background:color-mix(in srgb,var(--soft) 80%,transparent); }
+#lp-hybrid[data-theme^="indigo-"] :is(.hy-block,.hy-symbol) { background:color-mix(in srgb,var(--paper) 90%,transparent); border-color:var(--edge); }
+#lp-hybrid[data-theme^="indigo-"] :is(.hy-block,.hy-symbol):hover { border-color:var(--blue); }
+#lp-hybrid[data-theme^="indigo-"] #argument-options [aria-checked="true"]:hover { background:color-mix(in srgb,var(--blue) 82%,var(--paper)); color:var(--paper); }
+html[data-editor-theme^="indigo-"] .lp-unified-hint { background:light-dark(#fffffff2,#191d36f5); color:light-dark(#23263e,#f3f3fc); border-color:light-dark(#dcdff1,#30344f); backdrop-filter:blur(18px); }
+@media (max-width:600px) {
+  #lp-hybrid[data-theme^="indigo-"] { background-size:auto; background-attachment:scroll; }
+}
+
+#lp-hybrid[data-theme^="indigo-"] .hy-work { background:transparent; }
+#lp-hybrid[data-theme^="indigo-"] .hy-panel-frame { background:transparent; backdrop-filter:none; box-shadow:none; }
+/* Settings navigation and grouped controls. */
+#lp-hybrid #editor-settings { width:380px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 24px); box-sizing:border-box; padding:18px; }
+#lp-hybrid #editor-settings > .hy-settings-head { margin-bottom:16px; gap:12px; }
+#lp-hybrid #editor-settings .hy-settings-actions { display:flex; align-items:center; gap:6px; }
+#lp-hybrid #editor-settings .hy-settings-actions button { width:32px; height:32px; min-height:32px; padding:7px; margin:0; border-radius:9px; }
+#lp-hybrid #editor-settings .hy-settings-actions #settings-language svg { width:22px; height:16px; }
+#lp-hybrid #editor-settings .hy-settings-tabs { display:flex; gap:4px; background:var(--soft); padding:4px; border:1px solid var(--edge); border-radius:12px; margin-bottom:18px; }
+#lp-hybrid #editor-settings .hy-settings-tabs button { flex:1; min-width:0; padding:9px 6px; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); font:13px/1.4 system-ui; }
+#lp-hybrid #editor-settings .hy-settings-tabs [aria-selected="true"] { background:var(--paper); border-color:var(--edge); color:var(--blue); box-shadow:0 2px 5px light-dark(#26364a0c,#0003); }
+#lp-hybrid #editor-settings .hy-settings-panel[hidden] { display:none; }
+#lp-hybrid #editor-settings .hy-settings-panel .hy-setting { margin:0; padding:16px 0; border-top:1px solid var(--edge); }
+#lp-hybrid #editor-settings .hy-theme-choices { margin:0 0 18px; }
+#lp-hybrid #editor-settings .hy-setting-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+#lp-hybrid #editor-settings .hy-setting-heading label { margin:0; color:var(--ink); font-size:13px; }
+#lp-hybrid #editor-settings .hy-settings-panel > .hy-hover-delay-setting { padding:15px; border:1px solid var(--edge); border-radius:12px; background:color-mix(in srgb,var(--soft) 45%,transparent); margin-bottom:12px; }
+#lp-hybrid #editor-settings .hy-layout-recovery-setting { padding-bottom:0; }
+#lp-hybrid #editor-settings .hy-layout-recovery-button { width:100%; display:flex; align-items:center; justify-content:center; gap:9px; min-height:42px; border:1px solid var(--edge); border-radius:11px; color:var(--blue); background:var(--soft); font-size:13px; }
+#lp-hybrid #editor-settings .hy-layout-recovery-button:hover { background:color-mix(in srgb,var(--blue) 12%,var(--paper)); border-color:var(--blue); }
+#lp-hybrid #editor-settings .hy-layout-recovery-button svg { width:18px; height:18px; flex-shrink:0; }
+/* Scrollbars follow the active surface and keep a visible draggable thumb. */
+html { scrollbar-width:thin; scrollbar-color:light-dark(#a5b0c2,#596582) transparent; }
+#lp-hybrid * { scrollbar-width:thin; scrollbar-color:color-mix(in srgb,var(--quiet) 52%,var(--paper)) transparent; }
+html::-webkit-scrollbar, #lp-hybrid ::-webkit-scrollbar { width:9px; height:9px; }
+html::-webkit-scrollbar-track, #lp-hybrid ::-webkit-scrollbar-track { background:transparent; }
+html::-webkit-scrollbar-thumb { background:light-dark(#a5b0c2,#596582); border:2px solid transparent; background-clip:content-box; border-radius:20px; }
+#lp-hybrid ::-webkit-scrollbar-thumb { background:color-mix(in srgb,var(--quiet) 52%,var(--paper)); border:2px solid transparent; background-clip:content-box; border-radius:20px; }
+#lp-hybrid ::-webkit-scrollbar-thumb:hover { background-color:var(--quiet); }
+html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { background:transparent; }
+@supports selector(::-webkit-scrollbar) {
+  html, #lp-hybrid * { scrollbar-width:auto; scrollbar-color:auto; }
+}
+#lp-hybrid .hy-panel-shortcuts { padding:16px 0; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-panel-shortcuts h3 { font:400 12px/1.4 system-ui; margin:0 0 8px; color:var(--quiet); }
+#lp-hybrid .hy-panel-shortcuts p { font:12px/1.5 system-ui; color:var(--quiet); margin:0 0 12px; }
+#lp-hybrid .hy-panel-shortcut-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+#lp-hybrid .hy-panel-shortcut-grid button { display:flex; align-items:center; gap:8px; padding:10px; min-height:54px; text-align:left; font:12px/1.4 system-ui; color:var(--ink); background:var(--soft); border:1px solid var(--edge); border-radius:11px; }
+#lp-hybrid .hy-panel-shortcut-grid button:hover { border-color:var(--blue); color:var(--blue); }
+#lp-hybrid .hy-panel-shortcut-grid svg { width:22px; height:22px; flex-shrink:0; }
+#lp-hybrid .hy-panel-shortcuts .hy-background-theme-help { margin:10px 0 0; font-size:11px; }
+#lp-hybrid .hy-theme-dialog { width:380px; max-width:calc(100vw - 24px); padding:18px; border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); }
+#lp-hybrid .hy-theme-dialog .hy-settings-head { margin-bottom:16px; }
+#lp-hybrid .hy-theme-dialog h2 { font-size:15px; margin:0; }
+
+#lp-hybrid .hy-panel-detail-row { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:16px; margin-top:10px; }
+#lp-hybrid .hy-panel-detail-row label { margin:0; }
+#lp-hybrid .hy-panel-detail-row summary { min-width:0; padding-right:30px; }
+
+#lp-hybrid .hy-validation-dialog { position:fixed; inset:0; margin:auto; box-sizing:border-box; width:1000px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 32px); overflow:auto; padding:24px; border:1px solid var(--edge); border-radius:20px; background:var(--paper); color:var(--ink); box-shadow:0 24px 80px #0004; font:14px/1.5 system-ui; }
+#lp-hybrid .hy-validation-dialog::backdrop { background:#10132388; backdrop-filter:blur(5px); }
+#lp-hybrid .hy-validation-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+#lp-hybrid .hy-validation-heading h2 { margin:0; font:500 18px/1.4 system-ui; }
+#lp-hybrid .hy-validation-preview { padding:16px; border:1px solid var(--edge); border-radius:14px; background:var(--soft); margin-bottom:16px; }
+#lp-hybrid .hy-validation-preview .hy-section-head { margin:0 0 12px; padding:0; }
+#lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; width:100%; justify-content:flex-end; gap:8px; margin:0; }
+#lp-hybrid .hy-validation-preview #hy-argument { display:block !important; grid-template-rows:1fr !important; opacity:1; max-height:none; }
+#lp-hybrid .hy-validation-preview #preview { white-space:pre-wrap; overflow-wrap:anywhere; }
+#lp-hybrid .hy-validation-dialog .hy-logic-button { display:none; }
+#lp-hybrid .hy-validation-dialog .hy-logic-footer { margin:0 0 16px; padding:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel { margin:0; }
+@media(max-width:600px) { #lp-hybrid .hy-validation-dialog { padding:16px; } #lp-hybrid .hy-validation-preview { padding:12px; } }
 </style>
   </head>
   <body>
@@ -9128,7 +9525,14 @@ body {
           ><strong>Editor de Lógica</strong>
         </div>
         <div class="hy-argument-navigation">
+          <button type="button" class="hy-button hy-icon-button" id="argument-view-toggle" aria-label="Usar seletor compacto" aria-pressed="false" aria-controls="argument-compact-view">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" /></svg>
+          </button>
           <nav class="hy-argument-tabs" role="tablist" aria-label="Argumentos"></nav>
+          <div id="argument-compact-view" hidden>
+            <button type="button" class="hy-button" id="argument-select" aria-label="Argumento atual" aria-haspopup="menu" aria-expanded="false" popovertarget="argument-options"><span></span></button>
+            <div id="argument-options" popover="auto" role="menu" aria-label="Argumentos"></div>
+          </div>
           <button
             type="button"
             class="hy-button hy-icon-button hy-new-argument"
@@ -9217,7 +9621,7 @@ body {
                     id="copy"
                     data-action="copy"
                   >
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2" /><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" /></svg
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="7" width="12" height="14" rx="2" /><path d="M16 7V3H4v14h4" /></svg
                     >Copiar
                   </button><button
                     type="button"
@@ -9225,7 +9629,7 @@ body {
                     id="download"
                     data-action="export"
                   ><svg viewBox="0 0 24 24" aria-hidden="true"><path
-                        d="M12 3v12m-5-5 5 5 5-5M4 16v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"
+                        d="M14 3H4v18h13v-3M14 3v5h5M14 3l5 5M11 14h11m-4-4 4 4-4 4"
                       /></svg
                     >Exportar
                   </button></div></div></div><div class="hy-preview-wrap" id="hy-argument" data-open="true"><div class="hy-preview-inner"><pre class="hy-preview" id="preview"></pre></div></div></section><div id="status" class="hy-status" role="status" aria-live="polite"></div><div
@@ -9244,15 +9648,6 @@ body {
             </div>
             <div class="hy-settings-switches">
               <button
-                type="button"
-                class="hy-button hy-icon-button hy-theme-toggle"
-                id="settings-theme"
-                data-action="theme"
-                aria-label="Ativar tema escuro"
-                title="Alternar tema"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" /></svg></button
-              ><button
                 type="button"
                 class="hy-button hy-icon-button hy-language"
                 id="settings-language"
@@ -10039,6 +10434,7 @@ try {
       .map((doc, index) => ({
         id: doc.id,
         name: "Argumento " + (index + 1),
+        autoNumber: Number.isSafeInteger(doc.autoNumber) && doc.autoNumber > 0 ? doc.autoNumber : undefined,
         customName: typeof doc.customName === "string" ? doc.customName.trim() : "",
         descriptions:
           doc.descriptions && typeof doc.descriptions === "object" ? doc.descriptions : {},
@@ -10074,10 +10470,23 @@ try {
 } catch {}
 if (!LPReturningUser) argumentWorkspace.documents[0].customName = "Modus ponens";
 function renumberArguments() {
-  argumentWorkspace.documents.forEach(
-    (doc, index) => (doc.name = doc.customName || "Argumento " + (index + 1)),
-  );
-  argumentWorkspace.nextNumber = argumentWorkspace.documents.length + 1;
+  const used = new Set();
+  for (const doc of argumentWorkspace.documents) {
+    if (doc.customName) { delete doc.autoNumber; continue; }
+    if (Number.isSafeInteger(doc.autoNumber) && doc.autoNumber > 0 && !used.has(doc.autoNumber)) used.add(doc.autoNumber);
+    else delete doc.autoNumber;
+  }
+  let next = 1;
+  for (const doc of argumentWorkspace.documents) {
+    if (doc.customName) { doc.name=doc.customName; continue; }
+    if (!doc.autoNumber) {
+      while (used.has(next)) next++;
+      doc.autoNumber=next; used.add(next);
+    }
+    doc.name='Argumento '+doc.autoNumber;
+  }
+  next=1; while(used.has(next)) next++;
+  argumentWorkspace.nextNumber=next;
 }
 renumberArguments();
 function saveArguments() {
@@ -10116,7 +10525,135 @@ function showArgument(id, focusField = false) {
   drawArgumentTabs();
   render();
 }
+let compactArgumentView = false;
+try { compactArgumentView = localStorage.getItem("formal-argument-view") === "compact"; } catch {}
+function updateArgumentView() {
+  const navigation = document.querySelector(".hy-argument-navigation");
+  const toggle = document.querySelector("#argument-view-toggle");
+  const english = typeof ui !== "undefined" && ui.language === "en";
+  const selector = document.querySelector("#argument-select");
+  const menu = document.querySelector("#argument-options");
+  menu.replaceChildren();
+  const list = document.createElement("div");
+  list.id = "argument-option-list";
+  list.setAttribute("role", "presentation");
+  menu.append(list);
+  argumentWorkspace.documents.forEach((doc) => {
+    const option = document.createElement("button");
+    option.type = "button";
+    option.dataset.argumentId = doc.id;
+    option.setAttribute("role", "menuitemradio");
+    option.setAttribute("aria-checked", String(doc.id === argumentWorkspace.activeId));
+    const name = document.createElement("span");
+    name.textContent = doc.name;
+    option.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9ZM14 3v6h6M8 13h8M8 17h5"/></svg>';
+    option.append(name);
+    if (doc.customName) option.className = "hy-custom-argument-name";
+    option.onclick = () => {
+      if (Date.now() < cardSuppressUntil) return;
+      hideArgumentTools();
+      menu.hidePopover();
+      showArgument(doc.id);
+      selector.focus();
+    };
+    const item = document.createElement("div");
+    item.className = "hy-argument-option";
+    item.dataset.argumentId = doc.id;
+    option.addEventListener("pointerdown", startArgumentCardDrag);
+    item.setAttribute("role", "presentation");
+    item.append(option);
+    list.append(item);
+  });
+  const add = document.createElement("button");
+  add.type = "button";
+  add.className = "hy-argument-grid-add";
+  add.setAttribute("aria-label", english ? "Add argument" : "Adicionar argumento");
+  add.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>';
+  add.onclick = () => {
+    if (Date.now() < gridAddSuppressUntil) return;
+    hideArgumentTools();
+    createArgument();
+    positionArgumentPicker();
+    menu.querySelector('[aria-checked="true"]')?.scrollIntoView({ block: "nearest" });
+  };
+  add.addEventListener("pointerdown", startArgumentGridAddHold);
+  list.append(add);
+  const current = argumentWorkspace.documents.find(doc => doc.id === argumentWorkspace.activeId);
+  selector.querySelector("span").textContent = current.name;
+  selector.querySelector("span").classList.toggle("hy-custom-argument-name", !!current.customName);
+  navigation.classList.toggle("hy-compact-arguments", compactArgumentView);
+  navigation.querySelector(".hy-argument-tabs").hidden = compactArgumentView;
+  document.querySelector("#argument-compact-view").hidden = !compactArgumentView;
+  toggle.setAttribute("aria-pressed", String(compactArgumentView));
+  toggle.setAttribute("aria-label", compactArgumentView
+    ? (english ? "Use underline tabs" : "Usar linha discreta")
+    : (english ? "Use compact selector" : "Usar seletor compacto"));
+  toggle.querySelector("path").setAttribute("d", compactArgumentView
+    ? "M4 5h16v14H4zM9 5v14M15 5v14"
+    : "M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01");
+  const workspace = document.querySelector("#argument-workspace");
+  workspace.dataset.userLabel = String(!!current.customName);
+  if (compactArgumentView) {
+    workspace.removeAttribute("aria-labelledby");
+    workspace.setAttribute("aria-label", current.name);
+  } else {
+    workspace.removeAttribute("aria-label");
+    workspace.setAttribute("aria-labelledby", "tab-" + argumentWorkspace.activeId);
+  }
+}
+function toggleArgumentView() {
+  hideArgumentTools();
+  if (argumentTabDrag) finishArgumentTabDrag({ pointerId: argumentTabDrag.pointerId });
+  const navigation = document.querySelector(".hy-argument-navigation");
+  const elements = [document.querySelector("#argument-view-toggle"), document.querySelector("#new-argument")];
+  const before = elements.map(element => element.getBoundingClientRect());
+  elements.forEach(element => element.getAnimations().forEach(animation => animation.cancel()));
+  compactArgumentView = !compactArgumentView;
+  document.querySelector("#argument-options").hidePopover();
+  updateArgumentView();
+  try { localStorage.setItem("formal-argument-view", compactArgumentView ? "compact" : "tabs"); } catch {}
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    elements.forEach((element, index) => {
+      const after = element.getBoundingClientRect(), previous = before[index];
+      element.animate([{ transform: `translate(${previous.x - after.x}px, ${previous.y - after.y}px)` }, { transform: "translate(0, 0)" }], { duration: 260, easing: "cubic-bezier(.22,1,.36,1)" });
+    });
+    const content = navigation.querySelector(compactArgumentView ? "#argument-compact-view" : ".hy-argument-tabs");
+    content.animate([{ transform: "translateY(4px)", opacity: 0.5 }, { transform: "translateY(0)", opacity: 1 }], { duration: 200, easing: "ease-out" });
+  }
+}
+function positionArgumentPicker() {
+  const button = document.querySelector("#argument-select"), menu = document.querySelector("#argument-options");
+  const box = button.getBoundingClientRect();
+  const gutter = 0;
+  menu.style.setProperty("--argument-action-gutter", gutter + "px");
+  const width = Math.min(Math.max(box.width, 610), window.innerWidth - 24);
+  menu.style.width = width + "px";
+  menu.style.left = Math.max(12, Math.min(box.left + box.width / 2 - width / 2, window.innerWidth - width - 12)) + "px";
+  menu.style.top = (box.bottom + 8) + "px";
+  menu.style.maxHeight = Math.max(100, window.innerHeight - box.bottom - 80) + "px";
+}
+let openArgumentTools = null;
+function hideArgumentTools() {
+  if (!openArgumentTools) return;
+  clearTimeout(openArgumentTools.timer);
+  openArgumentTools.menu.hidePopover();
+  openArgumentTools = null;
+}
+function showArgumentTools(shell, menu) {
+  if (argumentTabDrag?.active) return;
+  if (openArgumentTools?.menu !== menu) hideArgumentTools();
+  const box = shell.getBoundingClientRect();
+  menu.showPopover();
+  const width = menu.offsetWidth, height = menu.offsetHeight;
+  menu.style.left = Math.max(6, Math.min(innerWidth - width - 6, box.left + box.width / 2 - width / 2)) + "px";
+  const bottom = menu.classList.contains("hy-argument-card-tools")
+    ? document.querySelector("#argument-options").getBoundingClientRect().bottom : box.bottom;
+  menu.style.top = Math.min(innerHeight - height - 6, bottom + 3) + "px";
+  clearTimeout(openArgumentTools?.timer);
+  openArgumentTools = { menu, shell, timer: null };
+}
 function drawArgumentTabs() {
+  hideArgumentTools();
   renumberArguments();
   const tabs = document.querySelector(".hy-argument-tabs");
   tabs.replaceChildren();
@@ -10135,7 +10672,9 @@ function drawArgumentTabs() {
     button.onmousedown = (event) => event.preventDefault();
     button.onclick = () => {
       if (Date.now() < tabSuppressUntil) return;
-      showArgument(doc.id, true);
+      const touch = matchMedia("(pointer: coarse)").matches;
+      showArgument(doc.id, !touch);
+      if (touch) document.getElementById("tab-" + doc.id)?.focus();
     };
     button.onkeydown = (event) => {
       if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
@@ -10155,38 +10694,12 @@ function drawArgumentTabs() {
     shell.className = "hy-tab-shell";
     shell.dataset.argumentId = doc.id;
     shell.setAttribute("role", "presentation");
-    const close = document.createElement("button");
-    close.type = "button";
-    close.className = "hy-delete-argument";
-    const english = typeof ui !== "undefined" && ui.language === "en";
-    close.setAttribute("aria-label", english ? "Delete argument" : "Excluir argumento");
-    close.setAttribute("aria-describedby", button.id);
-    close.title = english ? "Delete argument" : "Excluir argumento";
-    close.innerHTML =
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
-    close.onmousedown = (event) => event.preventDefault();
-    close.onclick = () => {
-      if (Date.now() < tabSuppressUntil) return;
-      deleteArgument(doc.id);
-    };
-    const edit = document.createElement("button");
-    edit.type = "button";
-    edit.className = "hy-edit-argument";
-    edit.setAttribute("aria-label", english ? "Rename argument" : "Renomear argumento");
-    edit.title = english ? "Rename argument" : "Renomear argumento";
-    edit.setAttribute("aria-describedby", button.id);
-    edit.innerHTML =
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 5 5-12 12-6 1 1-6ZM14 5l5 5"/></svg>';
-    edit.onmousedown = (event) => event.preventDefault();
-    edit.onclick = () => {
-      if (Date.now() < tabSuppressUntil) return;
-      renameArgument(doc.id);
-    };
-    shell.append(edit, button, close);
+    shell.append(button);
     tabs.append(shell);
     if (selected)
       document.querySelector("#argument-workspace").setAttribute("aria-labelledby", button.id);
   });
+  updateArgumentView();
 }
 
 let renameId = null;
@@ -10262,8 +10775,9 @@ async function deleteArgument(id) {
   }
   drawArgumentTabs();
   render();
+  saveArguments();
 }
-function createArgument() {
+function createArgument(position = argumentWorkspace.documents.length) {
   const index = argumentWorkspace.nextNumber++;
   const doc = {
     id: "argument-" + crypto.randomUUID(),
@@ -10275,10 +10789,13 @@ function createArgument() {
     ],
     numbered: true,
   };
-  argumentWorkspace.documents.push(doc);
+  const insertion = Number.isInteger(position)
+    ? Math.max(0, Math.min(argumentWorkspace.documents.length, position))
+    : argumentWorkspace.documents.length;
+  argumentWorkspace.documents.splice(insertion, 0, doc);
   showArgument(doc.id, true);
   document
-    .querySelector('[aria-selected="true"]')
+    .querySelector(compactArgumentView ? "#argument-select" : '.hy-argument-tabs [aria-selected="true"]')
     .scrollIntoView({ block: "nearest", inline: "nearest" });
 }
 
@@ -10323,6 +10840,7 @@ function arrangeArgumentTabs() {
   }
 }
 function startArgumentTabDrag(event) {
+  if (event.target.closest(".hy-tab-tools")) return;
   if (event.button !== 0 || argumentTabDrag || drag) return;
   const shell = event.target.closest(".hy-tab-shell");
   if (!shell) return;
@@ -10345,11 +10863,19 @@ function startArgumentTabDrag(event) {
     timer: null,
     frame: null,
   };
-  argumentTabDrag.timer = setTimeout(liftArgumentTab, getHoldDelay());
+  const state = argumentTabDrag;
+  state.timer = setTimeout(() => {
+    if (argumentTabDrag !== state || state.active) return;
+    state.held = true;
+    state.shell.setPointerCapture(state.pointerId);
+    showArgumentCardEditor(state.id,state.shell.querySelector('[role=tab]'));
+  },getHoldDelay());
 }
 function liftArgumentTab() {
+  hideArgumentCardEditor();
   const state = argumentTabDrag;
   if (!state || state.active) return;
+  hideArgumentTools();
   state.active = true;
   clearTimeout(state.timer);
   state.shell.setPointerCapture(state.pointerId);
@@ -10417,7 +10943,6 @@ function moveArgumentTabDrag(event) {
   state.y = event.clientY;
   if (
     !state.active &&
-    state.pointerType !== "touch" &&
     Math.hypot(state.x - state.startX, state.y - state.startY) > 5
   )
     liftArgumentTab();
@@ -10432,7 +10957,15 @@ function finishArgumentTabDrag(event) {
   argumentTabDrag = null;
   clearTimeout(state.timer);
   cancelAnimationFrame(state.frame);
-  if (!state.active) return;
+  if (!state.active) {
+    if (state.held) {
+      tabSuppressUntil=Date.now()+350;
+      if (state.shell.hasPointerCapture(state.pointerId)) state.shell.releasePointerCapture(state.pointerId);
+      if (event.type==='pointerup') argumentCardEditor?.querySelector('input')?.focus();
+      else hideArgumentCardEditor();
+    }
+    return;
+  }
   tabSuppressUntil = Date.now() + 350;
   event.preventDefault?.();
   if (state.shell.hasPointerCapture(state.pointerId))
@@ -10454,6 +10987,160 @@ function finishArgumentTabDrag(event) {
     setTimeout(() => state.ghost.remove(), reducedMotion.matches ? 0 : 170);
   }
 }
+let argumentCardDrag = null, cardSuppressUntil = 0;
+function startArgumentCardDrag(event) {
+  if (event.button !== 0 || argumentCardDrag) return;
+  const card = event.currentTarget, box = card.getBoundingClientRect();
+  const state = { card, item: card.closest('.hy-argument-option'), id: card.dataset.argumentId,
+    pointer: event.pointerId, x: event.clientX, y: event.clientY,
+    dx: event.clientX-box.left, dy: event.clientY-box.top, active: false,
+    original: argumentWorkspace.documents.map(doc => doc.id) };
+  argumentCardDrag = state;
+  state.timer = setTimeout(() => {
+    if (argumentCardDrag !== state) return;
+    state.held = true;
+    card.setPointerCapture(state.pointer);
+    showArgumentCardEditor(state.id,card);
+  }, getHoldDelay());
+}
+function liftArgumentCard(state) {
+  hideArgumentCardEditor();
+  state.active = true;
+  state.item.classList.add('hy-card-dragging');
+  const box = state.card.getBoundingClientRect(), ghost = document.createElement('div');
+  ghost.className = 'hy-argument-card-ghost'; ghost.dataset.userContent = '';
+  ghost.setAttribute('popover','manual'); ghost.setAttribute('aria-hidden','true');
+  ghost.innerHTML = state.card.innerHTML;
+  ghost.style.width = box.width+'px'; ghost.style.height = box.height+'px';
+  root.append(ghost); ghost.showPopover(); state.ghost=ghost;
+}
+
+function positionArgumentCardGhost(x,y) {
+  const state = argumentCardDrag;
+  if (state?.ghost) state.ghost.style.transform = `translate(${x-state.dx}px,${y-state.dy}px)`;
+}
+function moveArgumentCardDrag(event) {
+  const state = argumentCardDrag;
+  if (!state || state.pointer !== event.pointerId) return;
+  if (!state.active) {
+    const distance=Math.hypot(event.clientX-state.x,event.clientY-state.y);
+    if (distance<=6) return;
+    clearTimeout(state.timer);
+    state.held = true;
+    state.card.setPointerCapture(state.pointer);
+    liftArgumentCard(state);
+  }
+  event.preventDefault();
+  positionArgumentCardGhost(event.clientX,event.clientY);
+  const list = document.querySelector('#argument-option-list');
+  const bounds = list.getBoundingClientRect();
+  if (event.clientY < bounds.top+28) list.scrollTop -= 12;
+  if (event.clientY > bounds.bottom-28) list.scrollTop += 12;
+  const items = [...list.querySelectorAll('.hy-argument-option')];
+  const target = items.find(item => {
+    const b = item.getBoundingClientRect();
+    const transform = getComputedStyle(item).transform;
+    const matrix = transform === 'none' ? {m41:0,m42:0} : new DOMMatrixReadOnly(transform);
+    return event.clientX>=b.left-matrix.m41 && event.clientX<=b.right-matrix.m41 && event.clientY>=b.top-matrix.m42 && event.clientY<=b.bottom-matrix.m42;
+  });
+  if (!target || target===state.item) return;
+  const before = new Map(items.map(item=>[item,item.getBoundingClientRect()]));
+  const index = argumentWorkspace.documents.findIndex(doc=>doc.id===target.dataset.argumentId);
+  reorderArgument(state.id,index);
+  const map = new Map(items.map(item=>[item.dataset.argumentId,item]));
+  const add = list.querySelector('.hy-argument-grid-add');
+  argumentWorkspace.documents.forEach(doc=>{
+    const item=map.get(doc.id); list.insertBefore(item,add);
+    item.querySelector('[role="menuitemradio"] span').textContent=doc.name;
+  });
+  if (!reducedMotion.matches) items.forEach(item=>{
+    item.getAnimations().forEach(a=>a.cancel());
+    const old=before.get(item), now=item.getBoundingClientRect();
+    if (item!==state.item) item.animate([{transform:`translate(${old.x-now.x}px,${old.y-now.y}px)`},{transform:'translate(0,0)'}],{duration:180,easing:'ease-out'});
+  });
+}
+function finishArgumentCardDrag(event) {
+  const state=argumentCardDrag;
+  if (!state || (event.pointerId!==undefined && state.pointer!==event.pointerId)) return;
+  argumentCardDrag=null; clearTimeout(state.timer);
+  if (!state.held) return;
+  cardSuppressUntil=Date.now()+350;
+  if (state.card.hasPointerCapture(state.pointer)) state.card.releasePointerCapture(state.pointer);
+  if (!state.active) {
+    if (event.type==='pointerup') argumentCardEditor?.querySelector('input')?.focus();
+    else hideArgumentCardEditor();
+    return;
+  }
+  state.item.classList.remove('hy-card-dragging');
+  if (state.card.hasPointerCapture(state.pointer)) state.card.releasePointerCapture(state.pointer);
+  state.ghost?.remove();
+  if (event.type==='pointercancel' || event.key==='Escape') {
+    const map=new Map(argumentWorkspace.documents.map(doc=>[doc.id,doc]));
+    argumentWorkspace.documents=state.original.map(id=>map.get(id));
+  }
+  drawArgumentTabs(); saveArguments(); positionArgumentPicker();
+}
+window.addEventListener('pointermove',moveArgumentCardDrag,{passive:false});
+window.addEventListener('pointerup',finishArgumentCardDrag);
+window.addEventListener('pointercancel',finishArgumentCardDrag);
+window.addEventListener('blur',finishArgumentCardDrag);
+window.addEventListener('keydown',event=>{if(event.key==='Escape') finishArgumentCardDrag(event);});
+let argumentCardEditor = null, argumentGridAddHold = null, gridAddSuppressUntil = 0;
+function hideArgumentCardEditor() { argumentCardEditor?.remove(); argumentCardEditor=null; }
+function showArgumentCardEditor(id,card) {
+  hideArgumentCardEditor();
+  const doc=argumentWorkspace.documents.find(doc=>doc.id===id);
+  if (!doc) return;
+  const panel=document.createElement('div');
+  panel.className='hy-argument-card-editor'; panel.setAttribute('popover','manual');
+  panel.setAttribute('role','dialog');
+  panel.setAttribute('aria-label',interfaceText('Editar argumento','Edit argument'));
+  const form=document.createElement('form'), label=document.createElement('label'), input=document.createElement('input');
+  label.textContent=interfaceText('Nome do argumento','Argument name');
+  input.value=doc.customName || ''; input.placeholder=doc.name; input.maxLength=200;
+  label.append(input);
+  const actions=document.createElement('div'), save=document.createElement('button'), remove=document.createElement('button'), cancel=document.createElement('button');
+  save.type='submit';save.textContent=interfaceText('Salvar','Save');
+  remove.type=cancel.type='button';
+  cancel.setAttribute('aria-label',interfaceText('Cancelar','Cancel'));
+  cancel.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
+  remove.setAttribute('aria-label',interfaceText('Excluir','Delete'));
+  save.setAttribute('aria-label',interfaceText('Salvar','Save'));
+  remove.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M9 6V4h6v2M5 6l1 14h12l1-14M10 10v6M14 10v6"/></svg>';
+  save.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13l4 4v14H3V3ZM7 3v6h10V3M7 21v-8h10v8"/></svg>';
+  remove.className='hy-argument-editor-delete';
+  actions.append(cancel,remove,save);form.append(label,actions);panel.append(form);(card.closest("#argument-options") || root).append(panel);argumentCardEditor=panel;
+  form.onsubmit=e=>{e.preventDefault();commitArgumentName(id,input.value);hideArgumentCardEditor();positionArgumentPicker();};
+  remove.onclick=()=>{hideArgumentCardEditor();document.querySelector('#argument-options').hidePopover();deleteArgument(id);};
+  cancel.onclick=hideArgumentCardEditor;
+  panel.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();hideArgumentCardEditor();card.focus();}});
+  panel.showPopover();const box=card.getBoundingClientRect();
+  panel.style.left=Math.max(8,Math.min(innerWidth-panel.offsetWidth-8,box.left+box.width/2-panel.offsetWidth/2))+'px';
+  panel.style.top=Math.max(8,Math.min(innerHeight-panel.offsetHeight-8,box.bottom+6))+'px';
+}
+function startArgumentGridAddHold(event) {
+  if(event.button!==0)return;
+  const state={pointer:event.pointerId,x:event.clientX,y:event.clientY};argumentGridAddHold=state;
+  state.timer=setTimeout(()=>{
+    if(argumentGridAddHold!==state)return;
+    gridAddSuppressUntil=Date.now()+500;
+    root.dispatchEvent(new Event('lp-open-argument-examples'));
+    argumentGridAddHold=null;
+  },getHoldDelay());
+}
+function stopArgumentGridAddHold(event) {
+  const state=argumentGridAddHold;
+  if(!state || (event.pointerId!==undefined && state.pointer!==event.pointerId))return;
+  if(event.type==='pointermove'&&Math.hypot(event.clientX-state.x,event.clientY-state.y)<=6)return;
+  clearTimeout(state.timer);argumentGridAddHold=null;
+}
+window.addEventListener('pointerup',stopArgumentGridAddHold);
+window.addEventListener('pointercancel',stopArgumentGridAddHold);
+window.addEventListener('pointermove',stopArgumentGridAddHold);
+window.addEventListener('blur',stopArgumentGridAddHold);
+document.addEventListener('pointerdown',event=>{
+  if(argumentCardEditor&&!argumentCardEditor.contains(event.target)&&!event.target.closest('#argument-options [role=menuitemradio]'))hideArgumentCardEditor();
+});
 </script>
 
 <script id="blocks-and-rows">
@@ -11386,6 +12073,469 @@ document.querySelector("#download").onclick = () => {
 };
 </script>
 
+<script id="interface-translations">
+// Shared interface lexicon; user-authored arguments and names are excluded.
+const interfaceLanguagePairs = {
+  "Uma nova versão está disponível.": "A new version is available.",
+  "Atualizar": "Update",
+  "Fechar aviso de atualização": "Dismiss update notice",
+  "Inserir argumento aqui": "Insert argument here",
+  "Renomear": "Rename",
+  "Excluir": "Delete",
+  "Usar linha discreta": "Use underline tabs",
+  "Usar seletor compacto": "Use compact selector",
+  "Excluir argumento": "Delete argument",
+  "Renomear argumento": "Rename argument",
+  "Ações do argumento": "Argument actions",
+  "Bloco removido. Clique para restaurar.": "Deleted block. Click to restore.",
+  "Proposição ou conectivo": "Proposition or connective",
+  "Espaço: próximo bloco": "Space: next block",
+  "— clique para alternar; duplo clique muda a exibição. ∵ identifica premissas nesta interface, não integra a fórmula nem a validação. Segure para uma linha vazia": "— click to switch; double-click changes display. ∵ is an interface marker for premises, not a formula or validation operator. Hold for a blank line",
+  "Ajuda sobre este símbolo": "Help about this symbol",
+  "Adicionar premissa acima": "Add premise above",
+  "Argumento atual": "Current argument",
+  "Maiúsculas ativadas — clique para desativar": "Uppercase enabled — click to disable",
+  "Numerar linhas": "Number lines",
+  "Clique para voltar a premissa": "Click to return to premise",
+  "Segure por 0,3 segundo para criar uma linha vazia": "Hold for 0.3 seconds to create a blank line",
+  "Linha vazia. Clique para voltar a premissa": "Blank line. Click to return to premise",
+  "Excluir linha": "Delete line",
+  "Todas as criações": "All creations",
+  "Todas as notações": "All notations",
+  "Implicação e equivalência": "Implication and equivalence",
+  "Conjuntos: operações": "Sets: operations",
+  "Conjuntos: relações": "Sets: relations",
+  "Operadores sobre famílias": "Operators over families",
+  "Comparação e definição": "Comparison and definition",
+  "Delimitadores e pontuação": "Delimiters and punctuation",
+  "Notações de negação clássica.": "Classical negation notation.",
+  "O sinal + segue a convenção da álgebra booleana.": "The + sign follows the Boolean algebra convention.",
+  "O símbolo ⊃ também representa inclusão em conjuntos; aqui indica o condicional material.": "The symbol ⊃ also denotes set inclusion; here it denotes the material conditional.",
+  "Aqui, ≡ representa o bicondicional material.": "Here, ≡ denotes the material biconditional.",
+  "Aqui, | representa a negação da conjunção.": "Here, | denotes negated conjunction.",
+  "Fim da demonstração": "End of proof",
+  "Complemento": "Complement",
+  "Diferença simétrica": "Symmetric difference",
+  "União de multiconjuntos": "Multiset union",
+  "Inclusão com desigualdade explícita": "Subset with explicit inequality",
+  "Inclusão inversa com desigualdade explícita": "Superset with explicit inequality",
+  "Conjunção sobre uma família": "Conjunction over a family",
+  "Disjunção sobre uma família": "Disjunction over a family",
+  "União sobre uma família": "Union over a family",
+  "Interseção sobre uma família": "Intersection over a family",
+  "União de multiconjuntos sobre uma família": "Multiset union over a family",
+  "Menor que": "Less than",
+  "Maior que": "Greater than",
+  "Menor ou igual": "Less than or equal",
+  "Maior ou igual": "Greater than or equal",
+  "Não menor que": "Not less than",
+  "Não maior que": "Not greater than",
+  "Não menor ou igual": "Not less than or equal",
+  "Não maior ou igual": "Not greater than or equal",
+  "Aproximação": "Approximation",
+  "Não aproximação": "Non-approximation",
+  "Definição à direita": "Definition on the right",
+  "Definição à esquerda": "Definition on the left",
+  "Igualdade por definição": "Equality by definition",
+  "Igualdade por definição (triângulo)": "Equality by definition (triangle)",
+  "Abrir teto": "Opening ceiling",
+  "Fechar teto": "Closing ceiling",
+  "Abrir piso": "Opening floor",
+  "Fechar piso": "Closing floor",
+  "Reticências": "Ellipsis",
+  "Reticências centrais": "Midline ellipsis",
+  "Reticências verticais": "Vertical ellipsis",
+  "Dois-pontos": "Colon",
+  "Nome do argumento": "Argument name",
+  "Deixe vazio para usar a numeração automática.": "Leave blank to use automatic numbering.",
+  "Cancelar": "Cancel",
+  "Salvar": "Save",
+  "Fechar": "Close",
+  "Argumentos": "Arguments",
+  "Adicionar argumento": "Add argument",
+  "Voltar ao portfólio": "Home — portfolio",
+  "Editor de Lógica": "Logic Editor",
+  "Símbolos lógicos": "Logical symbols",
+  "Mais comuns": "Most common",
+  "Premissas e conclusões": "Premises and conclusions",
+  "Premissas (∵) · Conclusões (∴)": "Premises (∵) · Conclusions (∴)",
+  "Argumento": "Argument",
+  "Números": "Numbers",
+  "Copiar": "Copy",
+  "Exportar": "Export",
+  "Linha": "Line",
+  "Premissa": "Premise",
+  "Conclusão": "Conclusion",
+  "Configurações": "Settings",
+  "Fechar configurações": "Close settings",
+  "Tamanho da seção de símbolos lógicos": "Logical symbols section size",
+  "Tamanho dos argumentos": "Argument size",
+  "Diminuir tamanho": "Decrease size",
+  "Aumentar tamanho": "Increase size",
+  "Ativar tema claro": "Switch to light theme",
+  "Ativar tema escuro": "Switch to dark theme",
+  "Alternar tema": "Toggle theme",
+  "Mostrar biblioteca": "Show library",
+  "Ocultar biblioteca": "Hide library",
+  "Mostrar ou ocultar biblioteca": "Show or hide library",
+  "Mostrar premissas e conclusões": "Show premises and conclusions",
+  "Ocultar premissas e conclusões": "Hide premises and conclusions",
+  "Mostrar ou ocultar premissas e conclusões": "Show or hide premises and conclusions",
+  "Mostrar argumento": "Show argument",
+  "Ocultar argumento": "Hide argument",
+  "Conectivos proposicionais": "Propositional connectives",
+  "Outras notações de conectivos": "Alternative connective notation",
+  "Quantificadores e igualdade": "Quantifiers and equality",
+  "Operadores modais": "Modal operators",
+  "Dedução e consequência": "Deduction and consequence",
+  "Conjuntos e relações": "Sets and relations",
+  "Delimitadores": "Delimiters",
+  "Negação": "Negation",
+  "Conjunção": "Conjunction",
+  "Disjunção": "Disjunction",
+  "Condicional": "Conditional",
+  "Bicondicional": "Biconditional",
+  "Disjunção exclusiva": "Exclusive disjunction",
+  "Verdade": "Truth",
+  "Falsidade": "Falsity",
+  "Negação da conjunção": "Negated conjunction",
+  "Negação da disjunção": "Negated disjunction",
+  "Implicação": "Implication",
+  "Equivalência": "Equivalence",
+  "Condicional inverso": "Converse conditional",
+  "Implicação inversa": "Converse implication",
+  "Negação do condicional": "Negated conditional",
+  "Negação do bicondicional": "Negated biconditional",
+  "Não implicação": "Non-implication",
+  "Não equivalência": "Non-equivalence",
+  "Quantificador universal": "Universal quantifier",
+  "Quantificador existencial": "Existential quantifier",
+  "Existência única": "Unique existence",
+  "Não existência": "Non-existence",
+  "Igualdade": "Equality",
+  "Desigualdade": "Inequality",
+  "Necessidade": "Necessity",
+  "Possibilidade": "Possibility",
+  "Derivabilidade": "Derivability",
+  "Não derivabilidade": "Non-derivability",
+  "Consequência semântica": "Semantic consequence",
+  "Não consequência semântica": "Non-entailment",
+  "Portanto": "Therefore",
+  "Porque": "Because",
+  "Pertinência": "Membership",
+  "Não pertinência": "Non-membership",
+  "Contém como elemento": "Contains as an element",
+  "Não contém como elemento": "Does not contain as an element",
+  "Inclusão": "Subset",
+  "Não inclusão": "Not a subset",
+  "Inclusão estrita": "Proper subset",
+  "Não inclusão estrita": "Not a proper subset",
+  "Inclusão inversa": "Superset",
+  "Não inclusão inversa": "Not a superset",
+  "Inclusão estrita inversa": "Proper superset",
+  "Não inclusão estrita inversa": "Not a proper superset",
+  "União": "Union",
+  "Interseção": "Intersection",
+  "Diferença de conjuntos": "Set difference",
+  "Conjunto vazio": "Empty set",
+  "Conjunto das partes": "Power set",
+  "Produto cartesiano": "Cartesian product",
+  "Abrir parênteses": "Opening parenthesis",
+  "Fechar parênteses": "Closing parenthesis",
+  "Abrir colchetes": "Opening bracket",
+  "Fechar colchetes": "Closing bracket",
+  "Abrir chaves": "Opening brace",
+  "Fechar chaves": "Closing brace",
+  "Argumento copiado com números.": "Argument copied with numbers.",
+  "Argumento copiado sem números.": "Argument copied without numbers.",
+  "Arquivo de texto gerado.": "Text file generated.",
+  "Argumento selecionado. Use Ctrl+C para copiar.": "Argument selected. Press Ctrl+C to copy.",
+  "Arraste para mover a linha": "Drag to move the line",
+  "Validação lógica": "Logic validation",
+  "Digitar em maiúsculas": "Type in uppercase",
+  "Confirmar exclusão": "Confirm deletion",
+  "Excluir selecionadas": "Delete selected",
+  "Excluir todas as premissas e conclusões?": "Delete all premises and conclusions?",
+  "Excluir todas": "Delete all",
+  "Arquivo": "File",
+  "Salvar todos os argumentos": "Save all arguments",
+  "Salvar argumento atual": "Save current argument",
+  "Importar": "Import",
+  "Escolha os argumentos para importar": "Choose arguments to import",
+  "Importar selecionados": "Import selected",
+  "Arquivo inválido ou acima dos limites de importação. Seus argumentos foram preservados.": "Invalid file or import limits exceeded. Your arguments were preserved.",
+  "Voltar aos exemplos": "Back to examples",
+  "Entenda os exemplos": "Understanding the examples",
+  "As formas abaixo pertencem à lógica proposicional clássica. ∴ indica a conclusão; ¬ significa negação, ∨ disjunção e → condicional. Uma inferência válida preserva a verdade: premissas verdadeiras não podem levar a uma conclusão falsa.": "These forms use classical propositional logic. ∴ marks the conclusion; ¬ means negation, ∨ disjunction, and → conditional. A valid inference preserves truth: true premises cannot lead to a false conclusion.",
+  "Referências para continuar:": "Further reading:",
+  "Carregar em um novo argumento": "Load as a new argument",
+  "Ajuda": "Help",
+  "Em branco": "Blank",
+  "Exemplo": "Example",
+  "Buscar símbolos": "Search symbols",
+  "Tabela-verdade": "Truth table",
+  "Linhas em vermelho são contraexemplos. Exibição em páginas de 128 interpretações.": "Red rows are counterexamples. Pages show 128 interpretations.",
+  "Filtrar interpretações": "Filter interpretations",
+  "Todas as interpretações": "All interpretations",
+  "Somente contraexemplos": "Counterexamples only",
+  "Premissas verdadeiras": "True premises",
+  "Calculando…": "Computing…",
+  "Restaurar padrões": "Restore defaults",
+  "Cada item mostra como ficará após restaurar. Ative Preservar no que deseja manter. Argumentos e descrições serão mantidos.": "Each item shows the value to restore. Turn on Preserve for anything you want to keep. Arguments and descriptions are kept.",
+  "Idioma": "Language",
+  "Tema": "Theme",
+  "Claro": "Light",
+  "Barra lateral": "Sidebar",
+  "Visível": "Visible",
+  "Conteúdo dos painéis": "Panel contents",
+  "Editor e Argumento visíveis": "Editor and Argument visible",
+  "Dicas de hover": "Hover hints",
+  "Ativadas": "Enabled",
+  "Tempo das dicas": "Hover hint delay",
+  "Tempo de segurar": "Hold action delay",
+  "Digitação em maiúsculas": "Uppercase typing",
+  "Ativada": "Enabled",
+  "Botões Premissa / Conclusão": "Premise / Conclusion labels",
+  "Nomes (Premissa / Conclusão)": "Names (Premise / Conclusion)",
+  "Enumeração do argumento atual": "Current argument numbering",
+  "Espaçamento dos prefixos": "Prefix spacing",
+  "Compacto (¬A, ∀x)": "Compact (¬A, ∀x)",
+  "Cores dos painéis": "Panel colors",
+  "Azul suave e verde suave": "Soft blue and soft green",
+  "Traços externos": "Outer markers",
+  "Ativados em ambos os painéis": "Enabled on both panels",
+  "Bordas coloridas": "Colored borders",
+  "Desativadas em ambos os painéis": "Disabled on both panels",
+  "Detalhes internos": "Inner details",
+  "Nenhum; alinhamento na coluna do olho": "None; aligned to the eye column",
+  "Disposição da biblioteca": "Library arrangement",
+  "Horizontal, fixa e sem janelas destacadas": "Horizontal, docked, no detached windows",
+  "Posição e largura das janelas": "Panel positions and widths",
+  "Centralizadas, com toda a largura disponível": "Centered, full available width",
+  "Preservar": "Preserve",
+  "Restaurar selecionados": "Restore selected",
+  "Salvando…": "Saving…",
+  "Salvo neste navegador": "Saved in this browser",
+  "Não foi possível salvar neste navegador": "Could not save in this browser",
+  "Proposições": "Propositions",
+  "Descrição das proposições": "Proposition descriptions",
+  "Digite proposições no argumento primeiro.": "Enter propositions in the argument first.",
+  "Ex.: Está chovendo": "E.g. It is raining",
+  "Comparar fórmulas": "Compare formulas",
+  "Equivalência entre fórmulas": "Formula equivalence",
+  "Primeira fórmula": "First formula",
+  "Segunda fórmula": "Second formula",
+  "Comparar": "Compare",
+  "Verificando…": "Checking…",
+  "As fórmulas são equivalentes em todas as interpretações.": "The formulas are equivalent in every interpretation.",
+  "As fórmulas diferem nesta interpretação:": "The formulas differ in this interpretation:",
+  "Confira a sintaxe das fórmulas e o limite de 16 proposições.": "Check formula syntax and the 16-proposition limit.",
+  "Por que este é um contraexemplo?": "Why is this a counterexample?",
+  "Nesta interpretação, todas as premissas são verdadeiras, mas esta conclusão é falsa. Portanto, as premissas não garantem a conclusão.": "In this interpretation, every premise is true but this conclusion is false. Therefore, the premises do not guarantee this conclusion.",
+  "Avaliação dos conectivos": "Connective evaluation",
+  "Analisar premissas redundantes": "Analyze redundant premises",
+  "Analisar": "Analyze",
+  "Analisando…": "Analyzing…",
+  "Uma premissa é redundante aqui quando decorre das outras. Cada resultado considera a retirada de uma única premissa; não retire todas simultaneamente.": "A premise is redundant here when it follows from the others. Each result considers removing only one premise; do not remove all of them together.",
+  "Nenhuma premissa redundante encontrada.": "No redundant premises found.",
+  "Nega uma proposição: ¬A é verdadeiro exatamente quando A é falso. A dupla negação ¬¬A tem o mesmo valor de A.": "Negates a proposition: ¬A is true exactly when A is false. Double negation ¬¬A has the same value as A.",
+  "A conjunção exige que as duas proposições sejam verdadeiras. Uma única parcela falsa torna o resultado falso.": "Conjunction requires both propositions to be true. One false operand makes the result false.",
+  "A disjunção inclusiva exige pelo menos uma proposição verdadeira. Também é verdadeira quando ambas são verdadeiras.": "Inclusive disjunction requires at least one true proposition. It is also true when both are true.",
+  "O condicional material só é falso quando o antecedente é verdadeiro e o consequente é falso. Não afirma, por si só, uma relação causal.": "The material conditional is false only when the antecedent is true and the consequent is false. It does not by itself assert causation.",
+  "O bicondicional é verdadeiro quando os dois lados têm o mesmo valor de verdade. Na lógica proposicional, ≡ é aceito como outra notação do bicondicional; em outros contextos pode indicar equivalência ou congruência.": "The biconditional is true when both sides have the same truth value. In propositional validation, ≡ is another biconditional notation; elsewhere it can denote equivalence or congruence.",
+  "A disjunção exclusiva é verdadeira quando exatamente uma das duas proposições é verdadeira. Difere da disjunção inclusiva quando ambas são verdadeiras.": "Exclusive disjunction is true when exactly one proposition is true. It differs from inclusive disjunction when both are true.",
+  "Constante de verdade: seu valor é verdadeiro em qualquer interpretação. Não é uma variável que muda entre linhas da tabela.": "Truth constant: true in every interpretation. It is not a variable whose value changes between table rows.",
+  "Constante de falsidade: falsa em qualquer interpretação. Não confunda com uma variável que apenas recebeu valor falso em uma linha da tabela.": "Falsehood constant: false in every interpretation. Do not confuse it with a variable assigned false in one table row.",
+  "NAND é a negação da conjunção. Só é falso quando ambas as proposições são verdadeiras.": "NAND is negated conjunction. It is false only when both propositions are true.",
+  "NOR é a negação da disjunção inclusiva. Só é verdadeiro quando ambas as proposições são falsas.": "NOR is negated inclusive disjunction. It is true only when both propositions are false.",
+  "O condicional inverso troca os papéis de antecedente e consequente: A ← B tem o valor de B → A.": "Reverse conditional swaps antecedent and consequent: A ← B has the value of B → A.",
+  "Nega o condicional material. É verdadeiro precisamente quando o lado esquerdo é verdadeiro e o direito é falso. Fora deste validador, ⇏ pode expressar uma afirmação sobre não consequência.": "Negates the material conditional. True exactly when the left side is true and the right side false. Outside this validator, ⇏ can express a claim about non-entailment.",
+  "Nega o bicondicional: os dois lados precisam ter valores diferentes. No validador, equivale à disjunção exclusiva.": "Negates the biconditional: both sides must have different values. In the validator this equals exclusive disjunction.",
+  "Quantifica sobre todos os objetos do domínio escolhido. ∀x P(x) exige que P valha para cada objeto desse domínio.": "Quantifies over all objects of the chosen domain. ∀x P(x) requires P to hold for every object in that domain.",
+  "Afirma que existe pelo menos um objeto do domínio que satisfaz a fórmula. O domínio e o predicado precisam ser especificados.": "Asserts that at least one object in the domain satisfies the formula. The domain and predicate must be specified.",
+  "Afirma existência e unicidade: exatamente um objeto do domínio satisfaz a condição. Não basta apenas existir algum objeto.": "Asserts existence and uniqueness: exactly one object satisfies the condition. Mere existence is not enough.",
+  "Afirma que nenhum objeto do domínio satisfaz a condição. Pode ser escrito como a negação de uma quantificação existencial.": "Asserts that no object in the domain satisfies the condition. It can be written as negated existential quantification.",
+  "Afirma igualdade entre os objetos ou valores dos termos. Não é o mesmo que dizer que duas proposições têm valores de verdade iguais.": "Asserts equality between the objects or values denoted by terms. This differs from two propositions sharing a truth value.",
+  "Nega a igualdade dos dois termos. Exige um contexto que dê significado aos termos comparados.": "Negates equality of two terms. A context must assign meaning to the compared terms.",
+  "Indica que a equivalência ou congruência em questão não vale. Seu significado preciso depende da relação definida no contexto.": "Indicates that the relevant equivalence or congruence does not hold. Its exact meaning depends on the relation defined in context.",
+  "Na semântica modal relacional, □A exige A em todos os mundos acessíveis a partir do mundo de avaliação. As propriedades da acessibilidade dependem do sistema modal.": "In relational modal semantics, □A requires A in every world accessible from the evaluation world. Accessibility properties depend on the modal system.",
+  "Na semântica modal relacional, ◇A exige pelo menos um mundo acessível em que A valha. Possibilidade não significa que A já seja verdadeiro no mundo atual.": "In relational modal semantics, ◇A requires at least one accessible world where A holds. Possibility does not mean A is already true at the current world.",
+  "Indica derivabilidade em um sistema de demonstração especificado: há uma derivação da fórmula à direita a partir das hipóteses à esquerda.": "Indicates derivability in a specified proof system: the right-hand formula has a derivation from the hypotheses on the left.",
+  "Indica ausência de derivação no sistema de demonstração especificado. É uma afirmação sobre derivabilidade, não um conectivo da fórmula.": "Indicates absence of a derivation in the specified proof system. It is a claim about derivability, not a formula connective.",
+  "Indica consequência semântica: toda interpretação que satisfaz as hipóteses satisfaz a conclusão. Com hipóteses vazias, indica validade.": "Indicates semantic consequence: every interpretation satisfying the hypotheses satisfies the conclusion. With no hypotheses it indicates validity.",
+  "Nega a consequência semântica: há uma interpretação que satisfaz as hipóteses e torna a conclusão falsa.": "Negates semantic consequence: an interpretation satisfies the hypotheses and makes the conclusion false.",
+  "Marca uma conclusão na apresentação do raciocínio. No editor, use o botão Conclusão; não é necessário digitar ∴ no campo da fórmula.": "Marks a conclusion in the presentation of an argument. Use the Conclusion role button; you do not need to type ∴ into the formula field.",
+  "Marca a apresentação de uma razão ou justificativa. Não é um conectivo proposicional que receba uma tabela de valores.": "Marks the presentation of a reason or justification. It is not a propositional connective with a truth table.",
+  "Indica que uma demonstração terminou. Não verifica a correção da demonstração nem entra na avaliação de uma fórmula.": "Marks the end of a proof. It neither verifies the proof nor participates in formula evaluation.",
+  "A união contém os elementos que pertencem a pelo menos um dos conjuntos. Repetições de um elemento não criam novos elementos em conjuntos comuns.": "Union contains elements belonging to at least one set. Repeating an element does not add new elements to ordinary sets.",
+  "A interseção contém exatamente os elementos comuns aos dois conjuntos.": "Intersection contains exactly the elements common to both sets.",
+  "A diferença mantém os elementos do conjunto esquerdo que não pertencem ao direito. A ordem importa.": "Set difference keeps elements of the left set that are absent from the right. Order matters.",
+  "O complemento depende de um universo U: contém os elementos de U que não pertencem ao conjunto considerado.": "Complement depends on a universe U: it contains the elements of U absent from the chosen set.",
+  "A diferença simétrica contém elementos de exatamente um dos conjuntos, excluindo os comuns.": "Symmetric difference contains elements in exactly one set, excluding common elements.",
+  "Nesta biblioteca, representa união de multiconjuntos: as multiplicidades dos elementos são somadas. Em outros textos também pode designar união disjunta; confira a convenção usada.": "In this library it represents multiset union: element multiplicities are added. Other texts also use it for disjoint union; check the convention.",
+  "O conjunto vazio não possui elementos. Ele é diferente de um conjunto contendo o próprio conjunto vazio.": "The empty set has no elements. It differs from a set containing the empty set itself.",
+  "O conjunto das partes de A contém todos os subconjuntos de A, incluindo o vazio e A. Um conjunto finito com n elementos tem 2ⁿ subconjuntos.": "The power set of A contains every subset of A, including the empty set and A. A finite n-element set has 2ⁿ subsets.",
+  "O produto cartesiano contém pares ordenados, com o primeiro componente no conjunto esquerdo e o segundo no direito.": "Cartesian product contains ordered pairs, with the first component from the left set and the second from the right.",
+  "Expressa pertencimento de um elemento a um conjunto. Não confunda com inclusão entre conjuntos.": "Expresses membership of an element in a set. Do not confuse it with inclusion between sets.",
+  "Nega pertencimento de um elemento ao conjunto.": "Negates membership of an element in a set.",
+  "É a relação de pertencimento escrita na ordem inversa: o conjunto fica à esquerda e o elemento à direita.": "Membership written in reverse order: the set is on the left and the element on the right.",
+  "Nega pertencimento na ordem inversa, com conjunto à esquerda e elemento à direita.": "Negates membership in reverse order, with the set on the left and element on the right.",
+  "A ⊆ B exige que todo elemento de A pertença a B. Permite A = B.": "A ⊆ B requires every element of A to belong to B. Equality A = B is allowed.",
+  "Nega inclusão: há pelo menos um elemento do conjunto esquerdo ausente no direito.": "Negates inclusion: at least one element of the left set is absent from the right.",
+  "Nesta biblioteca indica inclusão estrita: A é subconjunto de B e A ≠ B. Alguns textos usam ⊂ permitindo igualdade; ⊊ explicita a desigualdade.": "In this library it means strict inclusion: A is a subset of B and A ≠ B. Some texts allow equality with ⊂; ⊊ makes inequality explicit.",
+  "Nega a inclusão estrita adotada nesta biblioteca. A negação pode ocorrer por falta de inclusão ou por igualdade entre os conjuntos.": "Negates strict inclusion as used in this library. It can fail because inclusion fails or because the sets are equal.",
+  "A ⊇ B afirma B ⊆ A. Permite igualdade.": "A ⊇ B states B ⊆ A. Equality is allowed.",
+  "Nega a inclusão inversa: algum elemento do conjunto direito não pertence ao esquerdo.": "Negates reverse inclusion: some element of the right set is absent from the left.",
+  "Na categoria de conjuntos, indica inclusão estrita inversa: A contém B como subconjunto e A ≠ B. Na categoria proposicional, ⊃ representa o condicional material.": "In the sets category it means strict reverse inclusion: A contains B as a subset and A ≠ B. In the propositional category, ⊃ represents material implication.",
+  "Nega a inclusão estrita inversa segundo a convenção desta biblioteca. Confira se o texto consultado permite igualdade com ⊃.": "Negates strict reverse inclusion under this library convention. Check whether the consulted text allows equality with ⊃.",
+  "Conjunção indexada: exige todas as proposições da família. Em uma família finita, expande-se como uma sequência de conjunções.": "Indexed conjunction requires all propositions in a family. A finite family expands into a chain of conjunctions.",
+  "Disjunção indexada: exige pelo menos uma proposição verdadeira na família.": "Indexed disjunction requires at least one true proposition in the family.",
+  "União de uma família: reúne os elementos presentes em pelo menos um conjunto da família.": "Union of a family collects elements present in at least one member set.",
+  "Interseção de uma família: mantém os elementos presentes em todos os conjuntos da família.": "Intersection of a family keeps elements present in every member set.",
+  "Aplica a união de multiconjuntos a uma família, somando multiplicidades. Também pode denotar união disjunta em outra convenção.": "Applies multiset union to a family, adding multiplicities. It can also denote disjoint union under another convention.",
+  "Indica aproximação ou uma relação de equivalência convencionada. Para aproximações numéricas, a precisão ou tolerância deve ser definida.": "Indicates approximation or a stipulated equivalence relation. Numerical approximation requires a specified precision or tolerance.",
+  "Nega a aproximação ou relação indicada por ≈. A tolerância ou relação usada precisa ser conhecida.": "Negates the approximation or relation denoted by ≈. The tolerance or relation must be known.",
+  "Marca uma definição, não uma conclusão deduzida. Em x ≔ expressão, define-se x pela expressão; ≕ inverte essa apresentação. ≝ e ≜ também sinalizam igualdade por definição.": "Marks a definition, not a derived conclusion. In x ≔ expression, x is defined by the expression; ≕ reverses the presentation. ≝ and ≜ also mark equality by definition.",
+  "Abre ou fecha um agrupamento. No validador proposicional, parênteses, colchetes e chaves podem agrupar fórmulas e precisam fechar com o mesmo tipo de delimitador. Chaves também representam conjuntos em outro contexto.": "Opens or closes a grouping. In propositional validation, parentheses, brackets and braces group formulas and must close with the matching delimiter type. Braces also denote sets in another context.",
+  "O par ⌈x⌉ indica o teto: o menor inteiro maior ou igual a x. Use ambos os delimitadores para escrever a operação.": "The pair ⌈x⌉ denotes the ceiling: the smallest integer greater than or equal to x. Both delimiters form the operation.",
+  "O par ⌊x⌋ indica o piso: o maior inteiro menor ou igual a x. Para números negativos, não equivale a simplesmente remover a parte decimal.": "The pair ⌊x⌋ denotes the floor: the greatest integer less than or equal to x. For negative numbers it is not simply truncation.",
+  "Indica continuação de uma sequência ou padrão, na direção da notação escolhida. Os termos omitidos precisam ser inferíveis do contexto; não é um operador proposicional.": "Indicates continuation of a sequence or pattern along the notation direction. Omitted terms must be inferable from context; it is not a propositional operator.",
+  "Separa uma identificação de seu conteúdo ou indica uma condição, conforme a convenção. Não possui um significado lógico único independente do contexto.": "Separates a label from its content or introduces a condition under the chosen convention. It has no single context-independent logical meaning.",
+  "Fechar explicação": "Close explanation",
+  "Exemplo:": "Example:",
+  "Notações nesta categoria:": "Notations in this category:",
+  "Atenção: o validador interpreta ⊃ como condicional material entre proposições, não como relação de conjuntos.": "Note: the validator interprets ⊃ as material conditional between propositions, not as a set relation.",
+  "No editor: aceito na sintaxe proposicional. Os termos dos exemplos matemáticos continuam fora do validador; use variáveis proposicionais e conectivos.": "In the editor: accepted in propositional syntax. Mathematical example terms remain outside the validator; use propositional variables and connectives.",
+  "No editor: disponível para escrever e exportar, mas este símbolo não é avaliado pela validação proposicional atual.": "In the editor: available for writing and exporting, but this symbol is not evaluated by current propositional validation.",
+  "Os valores V e F representam verdadeiro e falso. O significado de uma notação depende do contexto; símbolos parecidos não garantem a mesma operação.": "V and F stand for true and false in these examples. Notation depends on context; similar symbols do not guarantee the same operation.",
+  "Referências:": "References:",
+  "Degradê suave": "Soft gradient",
+  "Nenhum": "None",
+  "Rebaixo": "Inset channel",
+  "Conexões curvas": "Curved connections",
+  "Ondulação suave": "Soft wave",
+  "Cantos internos": "Inner corners",
+  "Numeração discreta": "Subtle numbering",
+  "Cor no hover": "Color on hover",
+  "Linha segmentada": "Segmented line",
+  "Cápsula vertical": "Vertical capsule",
+  "Arcos por linha": "Row arcs",
+  "Luz localizada": "Localized light",
+  "Tente segurar os olhinhos": "Try holding the eye buttons",
+  "Aparência": "Appearance",
+  "Cor da janela": "Panel color",
+  "Traço externo": "Outer marker",
+  "Borda colorida": "Colored border",
+  "Detalhe interno": "Inner detail",
+  "Deletar": "Delete",
+  "Remover espaços após símbolos de prefixo (¬ ∀ ∃)": "Remove spaces after prefix symbols (¬ ∀ ∃)",
+  "Mover decoração": "Move decoration",
+  "Segure Alt e arraste na horizontal.": "Hold Alt and drag horizontally.",
+  "Duplicar categoria": "Duplicate category",
+  "Clique para criar uma cópia acoplada logo abaixo. Arraste para criar uma cópia e escolher sua posição, dentro ou fora da biblioteca.": "Click to create a docked copy directly below. Drag to create a copy and choose its position inside or outside the library.",
+  "Selecionar categoria": "Choose category",
+  "Clique para abrir ou fechar a grade. Escolher uma categoria troca somente o conteúdo desta seção.": "Click to open or close the grid. Choosing a category replaces only this section’s content.",
+  "Clique para selecionar nesta seção. Segure e arraste para criar uma janela desta categoria.": "Click to select in this section. Hold and drag to create a window of this category.",
+  "Inserir argumento": "Insert argument",
+  "Clique para criar um argumento em branco nesta posição, preservando os demais.": "Click to create a blank argument at this position, keeping the others.",
+  "Clique para inserir uma premissa nesta posição. Indisponível durante a seleção de linhas.": "Click to insert a premise at this position. Unavailable while selecting rows.",
+  "Clique para adicionar uma categoria nesta posição.": "Click to add a category at this position.",
+  "Mover ou recolher": "Move or collapse",
+  "Clique para recolher ou expandir. Arraste para reorganizar ou desacoplar.": "Click to collapse or expand. Drag to reorder or detach.",
+  "Clique para recolher ou expandir. Arraste para mover. Segure sem mover por": "Click to collapse or expand. Drag to move. Hold still for",
+  "para voltar à biblioteca.": "to return to the library.",
+  "Clique para recolher ou reabrir a biblioteca. Arraste para mover.": "Click to collapse or reopen the library. Drag to move.",
+  "Clique para recolher ou expandir. Arraste para mover a janela.": "Click to collapse or expand. Drag to move the window.",
+  "Pesquisar símbolos": "Search symbols",
+  "Clique para abrir ou fechar a pesquisa. Digite um nome ou símbolo. Escape: fechar a pesquisa.": "Click to open or close search. Type a name or symbol. Escape: close search.",
+  "Orientação das categorias": "Category orientation",
+  "Clique para alternar entre horizontal e vertical.": "Click to switch between horizontal and vertical.",
+  "Clique para destacar ou recolher esta janela.": "Click to detach or dock this window.",
+  "Aparência dos painéis": "Panel appearance",
+  "Tente segurar os olhinhos por 0,2 segundo para personalizar cada janela.": "Try holding the eye buttons for 0.2 seconds to customize each panel.",
+  "Linha vazia": "Blank row",
+  "Clique para voltar a premissa.": "Click to return to a premise.",
+  "Clique para alternar o tipo. Duplo clique muda a exibição. Segure por 0,3 segundo para criar uma linha vazia. ∵ e ∴ identificam o tipo na interface; não integram a validação.": "Click to switch the role. Double-click changes the labels. Hold for 0.3 seconds to create a blank row. ∵ and ∴ mark roles in the interface; they are not part of validation.",
+  "Clique para excluir. Segure por 0,3 segundo para selecionar e confirmar a exclusão de todas as linhas deste argumento.": "Click to delete. Hold for 0.3 seconds to select and confirm deletion of every row in this argument.",
+  "Clique para voltar ao portfólio.": "Click to return to the portfolio.",
+  "Clique em qualquer bloco para editar.\nEspaço: avançar ao próximo bloco; no último preenchido, criar outro.\nShift + Espaço: inserir um bloco após o atual.\nSetas esquerda/direita: no limite do texto, ir ao bloco vizinho.\nEnter: criar linha (fora do modo de seleção); Tab: próxima linha; Shift+Tab: linha anterior.\nBackspace ou Delete em bloco vazio: removê-lo imediatamente e voltar ao anterior (ou ao próximo, se for o primeiro). Pelo menos um bloco é mantido.": "Click any block to edit.\nSpace: next block; from the last filled block, create another.\nShift + Space: insert a block after the current one.\nLeft/right arrows: at the text boundary, move to the adjacent block.\nEnter: new row (outside selection mode); Tab: next row; Shift+Tab: previous row.\nBackspace or Delete in an empty block: remove it immediately and return to the previous block (or the next one if it is first). At least one block is kept.",
+  "Editar bloco": "Edit block",
+  "Enumeração das linhas": "Line numbering",
+  "Mostrar ou ocultar os números no argumento formatado.": "Show or hide line numbers in the formatted argument.",
+  "Espaços de prefixos": "Prefix spacing",
+  "Unir símbolos ao próximo termo na apresentação: ¬ A → ¬A, ∀ x → ∀x. Os blocos e a validação permanecem preservados.": "Join prefix symbols to the next token in the display: ¬ A → ¬A, ∀ x → ∀x. Blocks and validation are preserved.",
+  "Clique para mostrar ou recolher. Segure por 0,2 segundo para abrir a aparência desta janela.": "Click to expand or collapse. Hold for 0.2 seconds to customize this panel.",
+  "Ajustar idioma, tema e tamanho da interface.": "Adjust the language, theme and interface size.",
+  "Criar um argumento em branco ou carregar um exemplo.": "Create a blank argument or load an example.",
+  "Alternar entre abas com linha discreta e seletor compacto, mantendo o argumento atual.": "Switch between underline tabs and a compact selector, keeping the current argument.",
+  "Alterar o nome deste argumento.": "Change this argument's name.",
+  "Excluir este argumento. Se houver texto, será pedida confirmação.": "Delete this argument. Confirmation is requested if it contains text.",
+  "Ativada. Clique para desativar a conversão das próximas letras.": "Enabled. Click to stop converting newly typed letters.",
+  "Clique para converter as próximas letras em maiúsculas.": "Click to convert newly typed letters to uppercase.",
+  "Ativar tema claro.": "Switch to light theme.",
+  "Ativar tema escuro.": "Switch to dark theme.",
+  "Desfazer": "Undo",
+  "Desfazer a última operação registrada nas linhas. Ctrl+Z também permite desfazer operações.": "Undo the last recorded row operation. Ctrl+Z also undoes operations.",
+  "Refazer": "Redo",
+  "Refazer a última operação desfeita. Ctrl+Shift+Z também refaz operações.": "Redo the last undone operation. Ctrl+Shift+Z also redoes operations.",
+  "Como usar": "How to use",
+  "Clique nos blocos para editar. Arraste as janelas para organizar.": "Click blocks to edit. Drag windows to arrange.",
+  "Explore as dicas: elas revelam atalhos.": "Explore hover hints for useful shortcuts.",
+  "Tempo de segurar os botões": "Hold action delay",
+  "em segundos": "in seconds",
+  "Ativar dicas de hover": "Enable hover hints",
+  "Recentes": "Recent",
+  "Favoritos": "Favorites",
+  "Recolher ou expandir categoria": "Collapse or expand category",
+  "Fechar categoria": "Close category",
+  "Removido dos favoritos": "Removed from favorites",
+  "Adicionado aos favoritos": "Added to favorites",
+  "Alt + clique para": "Alt + click to",
+  "remover dos favoritos": "remove from favorites",
+  "favoritar": "add to favorites",
+  "Nenhum símbolo nesta coleção.": "No symbols in this collection.",
+  "Nenhum símbolo encontrado. Tente outro nome ou símbolo.": "No symbols found. Try another name or symbol.",
+  "Nenhum símbolo favorito.": "No favorite symbols.",
+  "Os símbolos inseridos aparecem aqui.": "Inserted symbols appear here.",
+  "Nenhum símbolo encontrado.": "No symbols found.",
+  "Categoria deste card": "Card category",
+  "Fechar janela": "Close window",
+  "Mover janela": "Move window",
+  "Redimensionar janela": "Resize window",
+  "Arraste para ajustar largura e altura. Setas ajustam em 10 pixels.": "Drag to adjust width and height. Arrow keys adjust by 10 pixels.",
+  "Categorias": "Categories",
+  "Categorias de símbolos": "Symbol categories",
+  "Colocar barra na vertical": "Make category bar vertical",
+  "Colocar barra na horizontal": "Make category bar horizontal",
+  "Recolher barra à biblioteca": "Return category bar to library",
+  "Destacar barra de categorias": "Detach category bar",
+  "Mover barra de categorias. Segure e arraste em qualquer direção.": "Move category bar. Hold and drag in any direction.",
+  "Mover biblioteca; duplo clique recolhe": "Move library; double-click docks",
+  "Mover barra de categorias": "Move category bar",
+  "Barra de categorias": "Category bar",
+  "Criar janela desta categoria. Segure e arraste em qualquer direção.": "Create a window of this category. Hold and drag in any direction.",
+  "Clique para mostrar esta coleção.": "Click to show this collection.",
+  "Reorganizar janelas": "Reorganize windows",
+  "Clique para recolher a biblioteca e centralizar os painéis. Textos e demais configurações são preservados.": "Click to dock the symbol library and center the argument panels. Content and other settings are preserved.",
+  "Conectivos": "Connectives",
+  "Quantificadores": "Quantifiers",
+  "Modais": "Modal",
+  "Dedução": "Deduction",
+  "Operações com conjuntos": "Set operations",
+  "Relações entre conjuntos": "Set relations",
+  "Comuns": "Common",
+  "Salvar neste navegador": "Save in this browser"
+};
+const interfaceLanguageReverse = Object.fromEntries(Object.entries(interfaceLanguagePairs).map(([pt,en])=>[en.trim(),pt.trim()]));
+function interfaceText(pt,en) {
+  if (typeof pt === "string" && typeof en === "string") {
+    interfaceLanguagePairs[pt.trim()] = en.trim();
+    interfaceLanguageReverse[en.trim()] = pt.trim();
+  }
+  return ui.language === "en" ? en : pt;
+}
+</script>
+
 <script id="settings-and-language">
 const root = document.querySelector("#lp-hybrid");
 // Show the portfolio return control only when opened by its wrapper.
@@ -11488,10 +12638,40 @@ function setSection(section, open) {
   }
   saveUI();
 }
+function isDarkTheme() { return ui.theme === "dark" || ui.theme === "indigo-dark"; }
+const editorThemeChoices = [
+  ["light", "Claro original", "Original light"],
+  ["dark", "Escuro original", "Original dark"],
+  ["indigo-light", "Índigo claro", "Indigo light"],
+  ["indigo-dark", "Índigo escuro", "Indigo dark"],
+];
+if (!editorThemeChoices.some(([value]) => value === ui.theme)) ui.theme = "light";
+const themeChoices = document.createElement("fieldset");
+themeChoices.className = "hy-theme-choices";
+const themeLegend = document.createElement("legend");
+themeLegend.textContent = interfaceText("Temas", "Themes"); themeChoices.append(themeLegend);
+function createThemeOptions() {
+const grid = document.createElement("div"); grid.className="hy-theme-grid";
+editorThemeChoices.forEach(([value,pt,en]) => {
+  const choice=document.createElement("button"); choice.type="button"; choice.className="hy-theme-option";
+  choice.dataset.themeValue=value;
+  const swatch=document.createElement("span");swatch.className="hy-theme-swatch";swatch.setAttribute("aria-hidden","true");
+  swatch.innerHTML='<i></i><i></i>';
+  const name=document.createElement("span");name.textContent=interfaceText(pt,en);
+  choice.append(swatch,name);choice.onclick=()=>{ui.theme=value;applyUI();};grid.append(choice);
+});
+  return grid;
+}
+const themeGrid=createThemeOptions();
+themeChoices.append(themeGrid);
+root.querySelector(".hy-settings-switches").after(themeChoices);
 function applyUI() {
   root.dispatchEvent(new Event("lp-ui-colors"));
   root.dataset.focus = String(ui.focus);
-  root.style.colorScheme = ui.theme === "dark" ? "dark" : "light";
+  root.dataset.theme=ui.theme;
+  document.documentElement.dataset.editorTheme=ui.theme;
+  root.style.colorScheme = isDarkTheme() ? "dark" : "light";
+  root.querySelectorAll(".hy-theme-option").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeValue===ui.theme)));
   document.documentElement.style.colorScheme = root.style.colorScheme;
   const side = root.querySelector(".hy-side");
   side.inert = ui.focus;
@@ -11499,23 +12679,12 @@ function applyUI() {
   const focus = root.querySelector('[data-action="focus"]');
   focus.setAttribute("aria-expanded", String(!ui.focus));
   focus.setAttribute("aria-label", ui.focus ? "Mostrar biblioteca" : "Ocultar biblioteca");
-  const theme = root.querySelector('[data-action="theme"]');
-  theme.innerHTML = uiIcon(ui.theme === "dark" ? "sun" : "moon");
-  theme.setAttribute("aria-pressed", String(ui.theme === "dark"));
-  theme.setAttribute(
-    "aria-label",
-    ui.theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro",
-  );
   setSection("editor", ui.editor);
   setSection("preview", ui.preview);
   saveUI();
 }
 root.querySelector('[data-action="editor"]').onclick = () => setSection("editor", !ui.editor);
 root.querySelector('[data-action="preview"]').onclick = () => setSection("preview", !ui.preview);
-root.querySelector('[data-action="theme"]').onclick = () => {
-  ui.theme = ui.theme === "dark" ? "light" : "dark";
-  applyUI();
-};
 const focusButton = root.querySelector('[data-action="focus"]');
 focusButton.onmousedown = (e) => e.preventDefault();
 focusButton.onclick = (e) => {
@@ -11577,6 +12746,11 @@ drawRows();
 render();
 
 const argumentTabs = document.querySelector(".hy-argument-tabs");
+window.addEventListener("resize", hideArgumentTools);
+window.addEventListener("scroll", hideArgumentTools, true);
+document.addEventListener("pointerdown", event => {
+  if (!event.target.closest(".hy-tab-shell,.hy-tab-tools")) hideArgumentTools();
+});
 argumentTabs.addEventListener("pointerdown", startArgumentTabDrag);
 window.addEventListener("pointermove", moveArgumentTabDrag, { passive: false });
 window.addEventListener("pointerup", finishArgumentTabDrag);
@@ -11594,178 +12768,38 @@ renameDialog
 renameDialog.addEventListener("close", () => {
   const id = renameId;
   renameId = null;
-  document.getElementById("tab-" + id)?.focus();
+  (compactArgumentView ? document.querySelector("#argument-select") : document.getElementById("tab-" + id))?.focus();
 });
 drawArgumentTabs();
+
+document.querySelector("#argument-view-toggle").onclick = toggleArgumentView;
+const argumentPickerMenu = document.querySelector("#argument-options");
+const argumentPickerButton = document.querySelector("#argument-select");
+argumentPickerMenu.addEventListener("beforetoggle", event => {
+  if (event.newState === "open") positionArgumentPicker();
+  else { hideArgumentTools(); hideArgumentCardEditor(); finishArgumentCardDrag({}); }
+  argumentPickerButton.setAttribute("aria-expanded", String(event.newState === "open"));
+});
+argumentPickerButton.onkeydown = event => {
+  if (!["ArrowDown", "ArrowUp"].includes(event.key)) return;
+  event.preventDefault();
+  argumentPickerMenu.showPopover();
+  const choices = [...argumentPickerMenu.querySelectorAll('[role="menuitemradio"]')];
+  (choices.find(button => button.getAttribute("aria-checked") === "true") || choices[0])?.focus();
+};
+argumentPickerMenu.onkeydown = event => {
+  if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const choices = [...argumentPickerMenu.querySelectorAll('[role="menuitemradio"]')];
+  const index = choices.findIndex(button => button.parentElement.contains(document.activeElement));
+  const next = event.key === "Home" ? 0 : event.key === "End" ? choices.length - 1 : (index + (event.key === "ArrowDown" ? 1 : -1) + choices.length) % choices.length;
+  choices[next]?.focus();
+};
+window.addEventListener("resize", () => { if (argumentPickerMenu.matches(":popover-open")) positionArgumentPicker(); });
 document.querySelector("#new-argument").onmousedown = (event) => event.preventDefault();
 document.querySelector("#new-argument").onclick = createArgument;
-const translations = {
-  "Maiúsculas ativadas — clique para desativar": "Uppercase enabled — click to disable",
-  "Numerar linhas": "Number lines",
-  "Clique para voltar a premissa": "Click to return to premise",
-  "Segure por 0,3 segundo para criar uma linha vazia":
-    "Hold for 0.3 seconds to create a blank line",
-  "Linha vazia. Clique para voltar a premissa": "Blank line. Click to return to premise",
-  "Excluir linha": "Delete line",
-  "Todas as criações": "All creations",
-  "Todas as notações": "All notations",
-  "Implicação e equivalência": "Implication and equivalence",
-  "Conjuntos: operações": "Sets: operations",
-  "Conjuntos: relações": "Sets: relations",
-  "Operadores sobre famílias": "Operators over families",
-  "Comparação e definição": "Comparison and definition",
-  "Delimitadores e pontuação": "Delimiters and punctuation",
-  "Notações de negação clássica.": "Classical negation notation.",
-  "O sinal + segue a convenção da álgebra booleana.":
-    "The + sign follows the Boolean algebra convention.",
-  "O símbolo ⊃ também representa inclusão em conjuntos; aqui indica o condicional material.":
-    "The symbol ⊃ also denotes set inclusion; here it denotes the material conditional.",
-  "Aqui, ≡ representa o bicondicional material.": "Here, ≡ denotes the material biconditional.",
-  "Aqui, | representa a negação da conjunção.": "Here, | denotes negated conjunction.",
-  "Fim da demonstração": "End of proof",
-  Complemento: "Complement",
-  "Diferença simétrica": "Symmetric difference",
-  "União de multiconjuntos": "Multiset union",
-  "Inclusão com desigualdade explícita": "Subset with explicit inequality",
-  "Inclusão inversa com desigualdade explícita": "Superset with explicit inequality",
-  "Conjunção sobre uma família": "Conjunction over a family",
-  "Disjunção sobre uma família": "Disjunction over a family",
-  "União sobre uma família": "Union over a family",
-  "Interseção sobre uma família": "Intersection over a family",
-  "União de multiconjuntos sobre uma família": "Multiset union over a family",
-  "Menor que": "Less than",
-  "Maior que": "Greater than",
-  "Menor ou igual": "Less than or equal",
-  "Maior ou igual": "Greater than or equal",
-  "Não menor que": "Not less than",
-  "Não maior que": "Not greater than",
-  "Não menor ou igual": "Not less than or equal",
-  "Não maior ou igual": "Not greater than or equal",
-  Aproximação: "Approximation",
-  "Não aproximação": "Non-approximation",
-  "Definição à direita": "Definition on the right",
-  "Definição à esquerda": "Definition on the left",
-  "Igualdade por definição": "Equality by definition",
-  "Igualdade por definição (triângulo)": "Equality by definition (triangle)",
-  "Abrir teto": "Opening ceiling",
-  "Fechar teto": "Closing ceiling",
-  "Abrir piso": "Opening floor",
-  "Fechar piso": "Closing floor",
-  Reticências: "Ellipsis",
-  "Reticências centrais": "Midline ellipsis",
-  "Reticências verticais": "Vertical ellipsis",
-  "Dois-pontos": "Colon",
-  "Nome do argumento": "Argument name",
-  "Deixe vazio para usar a numeração automática.": "Leave blank to use automatic numbering.",
-  Cancelar: "Cancel",
-  Salvar: "Save",
-  Fechar: "Close",
-  "Renomear argumento": "Rename argument",
-  "Excluir argumento": "Delete argument",
-  Argumentos: "Arguments",
-  "Adicionar argumento": "Add argument",
-  "Voltar ao portfólio": "Home — portfolio",
-  "Editor de Lógica": "Logic Editor",
-  "Símbolos lógicos": "Logical symbols",
-  "Mais comuns": "Most common",
-  "Premissas e conclusões": "Premises and conclusions",
-  "Premissas (∵) · Conclusões (∴)": "Premises (∵) · Conclusions (∴)",
-  Argumento: "Argument",
-  Números: "Numbers",
-  Copiar: "Copy",
-  Exportar: "Export",
-  Linha: "Line",
-  Premissa: "Premise",
-  Conclusão: "Conclusion",
-  Configurações: "Settings",
-  "Fechar configurações": "Close settings",
-  "Tamanho da seção de símbolos lógicos": "Logical symbols section size",
-  "Tamanho dos argumentos": "Argument size",
-  "Diminuir tamanho": "Decrease size",
-  "Aumentar tamanho": "Increase size",
-  "Ativar tema claro": "Switch to light theme",
-  "Ativar tema escuro": "Switch to dark theme",
-  "Alternar tema": "Toggle theme",
-  "Mostrar biblioteca": "Show library",
-  "Ocultar biblioteca": "Hide library",
-  "Mostrar ou ocultar biblioteca": "Show or hide library",
-  "Mostrar premissas e conclusões": "Show premises and conclusions",
-  "Ocultar premissas e conclusões": "Hide premises and conclusions",
-  "Mostrar ou ocultar premissas e conclusões": "Show or hide premises and conclusions",
-  "Mostrar argumento": "Show argument",
-  "Ocultar argumento": "Hide argument",
-  "Conectivos proposicionais": "Propositional connectives",
-  "Outras notações de conectivos": "Alternative connective notation",
-  "Quantificadores e igualdade": "Quantifiers and equality",
-  "Operadores modais": "Modal operators",
-  "Dedução e consequência": "Deduction and consequence",
-  "Conjuntos e relações": "Sets and relations",
-  Delimitadores: "Delimiters",
-  Negação: "Negation",
-  Conjunção: "Conjunction",
-  Disjunção: "Disjunction",
-  Condicional: "Conditional",
-  Bicondicional: "Biconditional",
-  "Disjunção exclusiva": "Exclusive disjunction",
-  Verdade: "Truth",
-  Falsidade: "Falsity",
-  "Negação da conjunção": "Negated conjunction",
-  "Negação da disjunção": "Negated disjunction",
-  Implicação: "Implication",
-  Equivalência: "Equivalence",
-  "Condicional inverso": "Converse conditional",
-  "Implicação inversa": "Converse implication",
-  "Negação do condicional": "Negated conditional",
-  "Negação do bicondicional": "Negated biconditional",
-  "Não implicação": "Non-implication",
-  "Não equivalência": "Non-equivalence",
-  "Quantificador universal": "Universal quantifier",
-  "Quantificador existencial": "Existential quantifier",
-  "Existência única": "Unique existence",
-  "Não existência": "Non-existence",
-  Igualdade: "Equality",
-  Desigualdade: "Inequality",
-  Necessidade: "Necessity",
-  Possibilidade: "Possibility",
-  Derivabilidade: "Derivability",
-  "Não derivabilidade": "Non-derivability",
-  "Consequência semântica": "Semantic consequence",
-  "Não consequência semântica": "Non-entailment",
-  Portanto: "Therefore",
-  Porque: "Because",
-  Pertinência: "Membership",
-  "Não pertinência": "Non-membership",
-  "Contém como elemento": "Contains as an element",
-  "Não contém como elemento": "Does not contain as an element",
-  Inclusão: "Subset",
-  "Não inclusão": "Not a subset",
-  "Inclusão estrita": "Proper subset",
-  "Não inclusão estrita": "Not a proper subset",
-  "Inclusão inversa": "Superset",
-  "Não inclusão inversa": "Not a superset",
-  "Inclusão estrita inversa": "Proper superset",
-  "Não inclusão estrita inversa": "Not a proper superset",
-  União: "Union",
-  Interseção: "Intersection",
-  "Diferença de conjuntos": "Set difference",
-  "Conjunto vazio": "Empty set",
-  "Conjunto das partes": "Power set",
-  "Produto cartesiano": "Cartesian product",
-  "Abrir parênteses": "Opening parenthesis",
-  "Fechar parênteses": "Closing parenthesis",
-  "Abrir colchetes": "Opening bracket",
-  "Fechar colchetes": "Closing bracket",
-  "Abrir chaves": "Opening brace",
-  "Fechar chaves": "Closing brace",
-  "Argumento copiado com números.": "Argument copied with numbers.",
-  "Argumento copiado sem números.": "Argument copied without numbers.",
-  "Arquivo de texto gerado.": "Text file generated.",
-  "Argumento selecionado. Use Ctrl+C para copiar.": "Argument selected. Press Ctrl+C to copy.",
-  "Arraste para mover a linha": "Drag to move the line",
-};
-const reverseTranslations = Object.fromEntries(
-  Object.entries(translations).map(([pt, en]) => [en, pt]),
-);
+const translations = interfaceLanguagePairs;
+const reverseTranslations = interfaceLanguageReverse;
 function translated(text) {
   const words = text.trim(),
     english = ui.language === "en";
@@ -11814,6 +12848,18 @@ function translated(text) {
     const [operation, ...rest] = words.split(" · ");
     if (dict[operation]) value = dict[operation] + " · " + rest.join(" · ");
   }
+  if (value === undefined) {
+    for (const separator of [" — ", ": "]) {
+      const split = words.indexOf(separator);
+      if (split < 0) continue;
+      const prefix = words.slice(0, split);
+      const suffix = words.slice(split + separator.length);
+      if (dict[prefix]) value = dict[prefix] + separator + suffix;
+      else if (separator === ": " && dict[prefix + ":"]) value = dict[prefix + ":"] + " " + suffix;
+      else if (separator === " — " && dict[suffix]) value = prefix + separator + dict[suffix];
+      if (value !== undefined) break;
+    }
+  }
   return value === undefined ? text : text.replace(words, value);
 }
 const languageFlags = {
@@ -11830,7 +12876,7 @@ function applyLanguage() {
     flag.dataset.language = code;
     flag.innerHTML = languageFlags[code];
   }
-  const flagLabel = english ? "Mudar para Português (Brasil)" : "Switch to International English",
+  const flagLabel = english ? "Switch to Portuguese (Brazil)" : "Mudar para inglês",
     flagTitle = english ? "International English" : "Português (Brasil)";
   if (flag.getAttribute("aria-label") !== flagLabel) flag.setAttribute("aria-label", flagLabel);
   if (flag.dataset.hintText !== undefined) {
@@ -11841,16 +12887,26 @@ function applyLanguage() {
     const node = walker.currentNode;
     if (
       node.parentElement.closest(
-        "pre,input,script,style,output,#settings-language,.hy-custom-argument-name",
+        "pre,input,textarea,script,style,output,#settings-language,.hy-custom-argument-name,[data-user-content]",
       )
     )
       continue;
     const value = translated(node.nodeValue);
     if (value !== node.nodeValue) node.nodeValue = value;
   }
-  root.querySelectorAll("[aria-label],[title],[data-hint-text]").forEach((element) => {
-    if (element === flag) return;
-    for (const attribute of ["aria-label", "title", "data-hint-text"]) {
+  const sharedHint = document.querySelector("#lp-shared-hover-hint");
+  if (sharedHint) {
+    const hintWalker = document.createTreeWalker(sharedHint, NodeFilter.SHOW_TEXT);
+    while (hintWalker.nextNode()) {
+      const node = hintWalker.currentNode;
+      const value = translated(node.nodeValue);
+      if (value !== node.nodeValue) node.nodeValue = value;
+    }
+  }
+  root.querySelectorAll("[aria-label],[title],[data-hint-text],[placeholder]").forEach((element) => {
+    if (element === flag || element.closest(".hy-custom-argument-name")) return;
+    for (const attribute of ["aria-label", "title", "data-hint-text", "placeholder"]) {
+      if (attribute === "aria-label" && element.dataset.userLabel === "true") continue;
       const value = element.getAttribute(attribute);
       if (value !== null) {
         const next = translated(value);
@@ -11870,7 +12926,7 @@ languageObserver.observe(root, {
   childList: true,
   characterData: true,
   attributes: true,
-  attributeFilter: ["aria-label", "title", "data-hint-text"],
+  attributeFilter: ["aria-label", "title", "data-hint-text", "placeholder"],
 });
 applyLanguage();
 
@@ -12051,6 +13107,7 @@ async function updateLogicValidation() {
         (words.messages[error.code] || words.messages.limit) +
         error.token;
       button.onclick = () => {
+        if (typeof validationDialog !== "undefined" && validationDialog.open) validationDialog.close();
         setSection("editor", true);
         const input = rowElements.get(rows[error.index])?.querySelector(".hy-block");
         input?.focus();
@@ -12103,13 +13160,7 @@ async function updateLogicValidation() {
 }
 logicButton.textContent = logicText().button;
 logicButton.onclick = () => {
-  logicEnabled = !logicEnabled;
-  logicRevision++;
-  clearTimeout(logicTimer);
-  logicButton.setAttribute("aria-expanded", String(logicEnabled));
-  logicButton.setAttribute("aria-pressed", String(logicEnabled));
-  logicPanel.hidden = !logicEnabled;
-  if (logicEnabled) updateLogicValidation();
+  openLogicValidation();
 };
 let logicLanguage = document.documentElement.lang;
 new MutationObserver(() => {
@@ -12335,6 +13386,7 @@ async function confirmDeletion(message) {
     line.addEventListener("pointerdown", (event) => {
       if (event.button !== 0 || event.target === checkbox || event.target.closest(".hy-role"))
         return;
+      if (event.target.closest("button") && !event.target.closest(".hy-delete-line")) return;
       if (selected.size && !selected.has(row) && !selectionMode) {
         selected.clear();
         updateControls();
@@ -13308,7 +14360,7 @@ async function confirmDeletion(message) {
 <script id="workspace-features">
 (() => {
   const en = () => document.documentElement.lang === "en",
-    label = (pt, english) => (en() ? english : pt);
+    label = interfaceText;
   const tools = document.createElement("div");
   tools.className = "hy-workspace-tools";
   const fileMenu = document.createElement("details"),
@@ -13720,7 +14772,7 @@ async function confirmDeletion(message) {
     }
     content.append(sources);
     page.append(back, content);
-    page.style.colorScheme = ui.theme === "dark" ? "dark" : "light";
+    page.style.colorScheme = isDarkTheme() ? "dark" : "light";
     helpPage = page;
     root.hidden = true;
     root.inert = true;
@@ -13782,6 +14834,10 @@ async function confirmDeletion(message) {
     dialog.showModal();
   }
 
+  root.addEventListener("lp-open-argument-examples", () => {
+    document.querySelector("#argument-options").hidePopover();
+    openExamples();
+  });
   const newButton = root.querySelector("#new-argument"),
     createBlank = newButton.onclick;
   const addWrap = document.createElement("div");
@@ -14299,9 +15355,9 @@ async function confirmDeletion(message) {
         "layout",
         "Posição e largura das janelas",
         "Panel positions and widths",
-        "Centralizadas, com toda a largura disponível",
-        "Centered, full available width",
-        () => {},
+        "Disposição inicial; lado a lado em telas largas",
+        "Initial arrangement; side by side on wide screens",
+        restoreInitialLayoutProfile,
       ],
     ];
     function config(key) {
@@ -14404,7 +15460,7 @@ async function confirmDeletion(message) {
 <script id="completed-feature-script">
 (() => {
   const english = () => document.documentElement.lang === "en",
-    text = (pt, en) => (english() ? en : pt);
+    text = interfaceText;
   function el(tag, value, cls) {
     const node = document.createElement(tag);
     if (value !== undefined) node.textContent = value;
@@ -14525,6 +15581,7 @@ async function confirmDeletion(message) {
       for (const atom of [...names].sort()) {
         const label = el("label", atom),
           input = el("input");
+        label.dataset.userContent = "";
         input.value = typeof existing[atom] === "string" ? existing[atom] : "";
         input.maxLength = 1000;
         input.placeholder = text("Ex.: Está chovendo", "E.g. It is raining");
@@ -15184,7 +16241,7 @@ const LPSymbolHelp = (() => {
     returnCell = null,
     returnEntry = null,
     scroll = 0;
-  const text = (pt, en) => (document.documentElement.lang === "en" ? en : pt);
+  const text = interfaceText;
   function close() {
     if (page) page.close();
   }
@@ -15198,7 +16255,7 @@ const LPSymbolHelp = (() => {
     page = document.createElement("dialog");
     page.className = "hy-symbol-help-dialog";
     page.setAttribute("aria-labelledby", "symbol-help-title");
-    page.style.colorScheme = ui.theme === "dark" ? "dark" : "light";
+    page.style.colorScheme = isDarkTheme() ? "dark" : "light";
     const back = document.createElement("button");
     back.type = "button";
     back.className = "hy-symbol-help-close";
@@ -15351,11 +16408,6 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
     decoration.setAttribute("aria-hidden", "true");
     root.querySelector(selector).append(decoration);
   }
-  const head = document.createElement("div");
-  head.className = "hy-settings-head";
-  head.innerHTML =
-    '<h3>Aparência</h3><button type="button" class="hy-appearance-help" aria-label="Ajuda sobre aparência">?</button>';
-  settings.append(head);
   Object.assign(translations, {
     "Tente segurar os olhinhos": "Try holding the eye buttons",
     "Ajuda sobre aparência": "Appearance help",
@@ -15410,9 +16462,7 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
       const text = detail === "numbers" ? String(i + 1) : "";
       if (mark.textContent !== text) mark.textContent = text;
     });
-    const help = head.querySelector("button");
-    help.dataset.help =
-      ui.language === "en" ? "Try holding the eye buttons" : "Tente segurar os olhinhos";
+
   }
   function open(key) {
     const en = ui.language === "en",
@@ -15421,7 +16471,7 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
     dialog.className = "hy-panel-appearance-dialog";
     dialog.innerHTML =
       '<div class="hy-settings-head"><h2 style="font-size:14px;margin:0">' +
-      (en ? "Appearance" : "Aparência") +
+      (key === "editor" ? (en ? "Premises and conclusions" : "Premissas e conclusões") : (en ? "Argument" : "Argumento")) +
       '</h2><button class="hy-button hy-icon-button" data-close aria-label="' +
       (en ? "Close" : "Fechar") +
       '">×</button></div>';
@@ -15450,10 +16500,7 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
     dialog.append(swatches);
     color.oninput = () => {
       ui[colorKey] = color.value;
-      root.style.setProperty(
-        key === "editor" ? "--premise-color" : "--conclusion-color",
-        color.value,
-      );
+      root.dispatchEvent(new Event("lp-ui-colors"));
       saveUI();
     };
     for (const [property, pt, english] of [
@@ -15490,11 +16537,15 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
       root.dispatchEvent(new Event("lp-ui-colors"));
       saveUI();
     };
-    dialog.append(label, choice);
+    const detailRow = document.createElement("div");
+    detailRow.className = "hy-panel-detail-row";
+    label.id = "panel-detail-label";
+    dialog.append(detailRow, choice);
     choice.style.display = "none";
     const picker = document.createElement("details");
     picker.className = "hy-detail-picker";
     const summary = document.createElement("summary");
+    summary.setAttribute("aria-labelledby", label.id);
     summary.textContent = choice.selectedOptions[0].textContent;
     const list = document.createElement("div");
     list.className = "hy-detail-options";
@@ -15533,9 +16584,15 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
       summary.setAttribute("aria-expanded", "true");
     };
     picker.append(summary);
-    dialog.append(picker, list);
+    detailRow.append(label, picker);
+    dialog.append(list);
     list.classList.add("hy-floating-detail-options");
-    dialog.querySelector("[data-close]").onclick = () => dialog.close();
+    const fromSettings = root.querySelector("#editor-settings").matches(":popover-open");
+    const dismiss = () => {
+      if (fromSettings) { dialog.hidePopover(); dialog.remove(); }
+      else dialog.close();
+    };
+    dialog.querySelector("[data-close]").onclick = dismiss;
     dialog.addEventListener("click", (event) => {
       const bounds = dialog.getBoundingClientRect();
       if (
@@ -15545,12 +16602,20 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
           event.clientY < bounds.top ||
           event.clientY > bounds.bottom)
       )
-        dialog.close();
+        dismiss();
     });
     dialog.onclose = () => dialog.remove();
-    root.append(dialog);
-    dialog.showModal();
+    (fromSettings ? root.querySelector("#editor-settings") : root).append(dialog);
+    if (fromSettings) {
+      dialog.setAttribute("popover", "manual");
+      dialog.showPopover();
+      dialog.addEventListener("keydown", event => { if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); dismiss(); } });
+    } else dialog.showModal();
   }
+  root.addEventListener("lp-open-panel-appearance", event => {
+    const key=event.detail?.key;
+    if (["editor","preview"].includes(key) && !root.querySelector(".hy-panel-appearance-dialog")) open(key);
+  });
   for (const key of ["editor", "preview"]) {
     const eye = root.querySelector("[data-action=" + key + "]");
     let timer,
@@ -15613,7 +16678,8 @@ function innerDetailEnabled(panel) {
     ["preview", ".hy-argument-panel"],
   ]) {
     const panel = root.querySelector(selector),
-      handle = document.createElement("button");
+      handle = document.createElement("button"),
+      eye = panel.querySelector('[data-action="' + key + '"]');
     handle.type = "button";
     handle.className = "hy-inner-appearance-handle";
     handle.setAttribute("aria-label", "Mover detalhe interno horizontalmente");
@@ -15622,8 +16688,20 @@ function innerDetailEnabled(panel) {
     function apply() {
       const value = Number(ui[key + "DetailOffset"]) || 0;
       panel.style.setProperty("--detail-offset", value + "px");
-      const padding = parseFloat(getComputedStyle(panel).paddingLeft);
-      panel.style.setProperty("--eye-column", padding + 17 + "px");
+      const box = panel.getBoundingClientRect(), eyeBox = eye.getBoundingClientRect();
+      if (!eyeBox.width) return;
+      const center = eyeBox.left + eyeBox.width / 2;
+      const border = parseFloat(getComputedStyle(panel).borderLeftWidth) || 0;
+      panel.style.setProperty("--eye-column", center - box.left - border + "px");
+      const symbolBox = eye.querySelector("svg").getBoundingClientRect();
+      const borderTop = parseFloat(getComputedStyle(panel).borderTopWidth) || 0;
+      panel.style.setProperty("--detail-top", symbolBox.bottom + 8 - box.top - borderTop + "px");
+      const firstRow = panel.querySelector(".hy-row");
+      if (firstRow) {
+        const rowBox = firstRow.getBoundingClientRect();
+        const rowBorder = parseFloat(getComputedStyle(firstRow).borderLeftWidth) || 0;
+        panel.style.setProperty("--row-eye-column", center - rowBox.left - rowBorder + "px");
+      }
     }
     function set(value) {
       ui[key + "DetailOffset"] = Math.max(-24, Math.min(14, Math.round(value)));
@@ -15660,7 +16738,9 @@ function innerDetailEnabled(panel) {
     };
     handle.ondblclick = () => set(0);
     root.addEventListener("lp-ui-colors", apply);
-    new ResizeObserver(apply).observe(panel);
+    const geometryObserver = new ResizeObserver(apply);
+    geometryObserver.observe(panel);
+    geometryObserver.observe(eye);
     apply();
   }
   Object.assign(translations, {
@@ -15906,10 +16986,10 @@ const LPHints = (() => {
     visibleAnchor = null,
     lastTrigger = null;
   const en = () => ui.language === "en";
-  const text = (pt, english) => (en() ? english : pt);
+  const text = interfaceText;
   function bodyKeys(container, value) {
     const pattern =
-      /\b(?:Ctrl\s*\+\s*Shift\s*\+\s*Z|Ctrl\s*\+\s*Z|Shift\s*\+\s*(?:Tab|Space|Espaço)|Alt\s*\+\s*(?:clique|click)|duplo clique|double[- ]click|clique(?: direito| esquerdo)?|right[- ]click|left[- ]click|click|segure|hold|arraste|drag|Space|Espaço|Tab|Alt|Enter|Backspace|Delete|Escape|Home)\b/giu;
+      /\b(?:Ctrl\s*\+\s*Shift\s*\+\s*Z|Ctrl\s*\+\s*Z|Shift\s*\+\s*(?:Tab|Space|Espaço)|Alt\s*\+\s*(?:clique|click)|duplo clique|double[- ]click|clique(?: direito| esquerdo)?|right[- ]click|left[- ]click|click|segure|hold|arraste|drag|Space|Espaço|Tab|Alt|Enter|Backspace|Delete|edit|editar|excluir|Escape|Home)\b/giu;
     for (const paragraph of String(value).split(/\n+/)) {
       for (const sentence of paragraph.split(/(?<=[.!?])\s+(?=[A-ZÀ-Ý∵∴])/u)) {
         if (!sentence.trim()) continue;
@@ -15971,6 +17051,8 @@ const LPHints = (() => {
           "Click to select in this section. Hold and drag to create a window of this category.",
         ),
       };
+    if (element.matches("[data-argument-insert]"))
+      return { title: text("Inserir argumento", "Insert argument"), body: text("Clique para criar um argumento em branco nesta posição, preservando os demais.", "Click to create a blank argument at this position, keeping the others.") };
     if (element.matches(".hy-add-section-zone button"))
       return {
         title: element.getAttribute("aria-label"),
@@ -16069,7 +17151,7 @@ const LPHints = (() => {
     }
     if (element.matches(".hy-delete-line"))
       return {
-        title: text("Excluir linha", "Delete row"),
+        title: text("Excluir linha", "Delete line"),
         body: text(
           "Clique para excluir. Segure por 0,3 segundo para selecionar e confirmar a exclusão de todas as linhas deste argumento.",
           "Click to delete. Hold for 0.3 seconds to select and confirm deletion of every row in this argument.",
@@ -16136,6 +17218,33 @@ const LPHints = (() => {
           "Create a blank argument or load an example.",
         ),
       };
+    if (element.matches("#argument-view-toggle"))
+      return {
+        title: element.getAttribute("aria-label"),
+        body: text("Alternar entre abas com linha discreta e seletor compacto, mantendo o argumento atual.", "Switch between underline tabs and a compact selector, keeping the current argument."),
+      };
+    if (element.matches('.hy-argument-tab,#argument-options [role="menuitemradio"]'))
+      return {
+        title: text("Argumento", "Argument"),
+        body: text(
+          "Clique para selecionar. Arraste para mudar a posição na grade. Segure sem mover para editar o nome ou excluir.",
+          "Click to select. Drag to change its position in the grid. Hold still to edit the name or delete.",
+        ),
+      };
+    if (element.matches(".hy-argument-grid-add"))
+      return {
+        title: text("Adicionar argumento", "Add argument"),
+        body: text("Clique para criar um argumento em branco. Segure para escolher um exemplo.", "Click to create a blank argument. Hold to choose an example."),
+      };
+    if (element.matches(".hy-option-rename"))
+      return { title: text("Renomear argumento", "Rename argument"), body: text("Alterar o nome deste argumento.", "Change this argument's name.") };
+    if (element.matches(".hy-option-delete"))
+      return { title: text("Excluir argumento", "Delete argument"), body: text("Excluir este argumento. Se houver texto, será pedida confirmação.", "Delete this argument. Confirmation is requested if it contains text.") };
+    if (element.matches("#hover-hints-toggle"))
+      return {
+        title: text("Dicas de hover", "Hover hints"),
+        body: text("Ative para mostrar explicações ao passar o mouse sobre os controles. Ajuste o tempo abaixo.", "Enable explanations when hovering over controls. Adjust the delay below."),
+      };
     if (element.matches("#caps-lock"))
       return {
         title: text("Digitação em maiúsculas", "Uppercase typing"),
@@ -16160,7 +17269,7 @@ const LPHints = (() => {
       return {
         title: text("Tema", "Theme"),
         body:
-          ui.theme === "dark"
+          isDarkTheme()
             ? text("Ativar tema claro.", "Switch to light theme.")
             : text("Ativar tema escuro.", "Switch to dark theme."),
       };
@@ -16194,7 +17303,7 @@ const LPHints = (() => {
     const element =
       node instanceof Element
         ? node.closest(
-            "[data-hint-text],.hy-search-trigger,.hy-appearance-help,.hy-icon-button[aria-label],.hy-symbol-help,.hy-role,.hy-delete-line,.hy-block,.hy-card-picker,.hy-add-section-zone button",
+            "[data-hint-text],.hy-search-trigger,.hy-appearance-help,.hy-icon-button[aria-label],.hy-symbol-help,.hy-role,.hy-delete-line,.hy-block,.hy-card-picker,.hy-add-section-zone button,#hover-hints-toggle,.hy-argument-grid-add,.hy-argument-tab,#argument-options [role=menuitemradio]",
           )
         : null;
     if (
@@ -16216,7 +17325,7 @@ const LPHints = (() => {
         12,
         Math.min(innerWidth - size.width - 12, b.left + b.width / 2 - size.width / 2),
       ),
-      below = b.bottom + 9 + size.height <= innerHeight - 12;
+      below = (visibleAnchor.id !== 'hover-hints-toggle' || b.top - size.height - 9 < 12) && b.bottom + 9 + size.height <= innerHeight - 12;
     tip.dataset.side = below ? "bottom" : "top";
     tip.style.left = left + "px";
     tip.style.top =
@@ -16448,6 +17557,11 @@ const LPHints = (() => {
       item.id +
       '-number" type="number" min="0.01" max="1" step="0.01" value="0.2" inputmode="decimal"><span aria-hidden="true">s</span></div></div>';
     settings.insertBefore(setting, settings.querySelector(".hy-appearance-settings"));
+    const header=document.createElement("div");header.className="hy-setting-heading";
+    header.append(setting.querySelector("label"));
+    const switchButton=setting.querySelector("[role=switch]");
+    if(switchButton) { header.append(switchButton); setting.querySelector(".hy-hover-delay-control").classList.remove("hy-has-hint-toggle"); }
+    setting.prepend(header);
     const range = setting.querySelector("[type=range]"),
       number = setting.querySelector("[type=number]"),
       label = setting.querySelector("label"),
@@ -16459,7 +17573,7 @@ const LPHints = (() => {
       if (source !== "number") number.value = String(value);
       range.style.setProperty("--range-fill", ((value - 0.01) / 0.99) * 100 + "%");
       const en = ui.language === "en";
-      label.textContent = en ? item.en : item.pt;
+      label.textContent = item.toggle ? (en ? "Hover hints" : "Dicas de hover") : (en ? item.en : item.pt);
       const name = (en ? item.en : item.pt) + (en ? " in seconds" : " em segundos");
       range.setAttribute("aria-label", name);
       number.setAttribute("aria-label", name);
@@ -16627,7 +17741,7 @@ const LPHints = (() => {
     dock: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16m7-10-3 2 3 2"/>',
   };
   const icon = (name) => '<svg viewBox="0 0 24 24" aria-hidden="true">' + paths[name] + "</svg>";
-  const text = (pt, en) => (ui.language === "en" ? en : pt);
+  const text = interfaceText;
   const name = (id) =>
     id === "recent"
       ? text("Recentes", "Recent")
@@ -18186,17 +19300,19 @@ const LPHints = (() => {
   const settings = root.querySelector("#editor-settings"),
     row = document.createElement("div"),
     button = document.createElement("button");
-  row.className = "hy-setting";
+  row.className = "hy-setting hy-layout-recovery-setting";
   button.type = "button";
-  button.className = "hy-button";
+  button.className = "hy-button hy-layout-recovery-button";
   function label() {
-    button.textContent = ui.language === "en" ? "Reorganize windows" : "Reorganizar janelas";
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="8" height="7" rx="2"/><rect x="13" y="4" width="8" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/></svg>';
+    const name=document.createElement("span");name.textContent=ui.language === "en" ? "Reorganize windows" : "Reorganizar janelas";button.append(name);
     button.dataset.hintText =
       ui.language === "en"
-        ? "Click to dock the symbol library and center the argument panels. Content and other settings are preserved."
-        : "Clique para recolher a biblioteca e centralizar os painéis. Textos e demais configurações são preservados.";
+        ? "Restore the first-visit window arrangement. Content and other settings are preserved."
+        : "Restaura a disposição das janelas do primeiro acesso. Textos e demais configurações são preservados.";
   }
   button.onclick = () => {
+    restoreInitialLayoutProfile();
     root.dispatchEvent(new Event("lp-reset-library-layout"));
     root.dispatchEvent(new Event("lp-reset-panel-layout"));
     root.style.minHeight = "";
@@ -18211,6 +19327,12 @@ const LPHints = (() => {
 
 <script id="guided-first-visit-layout">
 root.dataset.initialLayout = ui.initialLayout || "legacy";
+
+function restoreInitialLayoutProfile() {
+  ui.initialLayout = "guided";
+  root.dataset.initialLayout = "guided";
+  saveUI();
+}
 </script>
 
 <script id="hand-create-window-drag">
@@ -18758,10 +19880,10 @@ root.dataset.initialLayout = ui.initialLayout || "legacy";
   function scan() {
     pending = false;
     const cards = [...stack.children].filter((e) => e.matches(".hy-mod-palette"));
-    const ids = new Set(cards.slice(1).map((e) => e.dataset.windowId));
+    const ids = new Set(cards.map((e) => e.dataset.windowId));
     for (const zone of stack.querySelectorAll(".hy-add-section-zone"))
       if (!ids.has(zone.dataset.beforeId)) zone.remove();
-    for (const card of cards.slice(1)) {
+    for (const card of cards) {
       let zone = [...stack.querySelectorAll(".hy-add-section-zone")].find(
         (z) => z.dataset.beforeId === card.dataset.windowId,
       );
@@ -18921,29 +20043,33 @@ root.dataset.initialLayout = ui.initialLayout || "legacy";
   function scan() {
     scheduled = false;
     const list = [...rows.querySelectorAll(":scope>.hy-row")],
-      base = parent.getBoundingClientRect(),
       bounds = rows.getBoundingClientRect();
-    while (overlay.children.length > list.length) overlay.lastChild.remove();
-    list.forEach((row, index) => {
-      let zone = overlay.children[index];
+    const boundaries = list.length ? [
+      { row: list[0], index: 0, top: list[0].offsetTop },
+      ...list.map((row, index) => ({ row, index: index + 1, top: row.offsetTop + row.offsetHeight })),
+    ] : [];
+    while (overlay.children.length > boundaries.length) overlay.lastChild.remove();
+    boundaries.forEach(({ row, index, top }, slot) => {
+      let zone = overlay.children[slot];
       if (!zone) {
         zone = document.createElement("div");
         zone.className = "hy-add-section-zone hy-premise-add-line";
         const button = document.createElement("button");
         button.type = "button";
-        button.setAttribute("aria-label", "Adicionar premissa abaixo");
         button.innerHTML =
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg>';
         button.onclick = () =>
           root.dispatchEvent(
-            new CustomEvent("lp-insert-premise-line", { detail: { index: index + 1 } }),
+            new CustomEvent("lp-insert-premise-line", { detail: { index: Number(zone.dataset.insertIndex) } }),
           );
         zone.append(button);
         overlay.append(zone);
       }
+      zone.dataset.insertIndex = String(index);
+      zone.querySelector("button").setAttribute("aria-label", index === 0 ? "Adicionar premissa acima" : "Adicionar premissa abaixo");
       const inset = parseFloat(getComputedStyle(row).getPropertyValue("--content-gutter")) || 44;
       zone.style.left = rows.offsetLeft + inset + "px";
-      zone.style.top = rows.offsetTop + row.offsetTop + row.offsetHeight - 10 + "px";
+      zone.style.top = rows.offsetTop + top - 10 + "px";
       zone.style.width = Math.max(0, bounds.width - inset) + "px";
     });
   }
@@ -19213,16 +20339,20 @@ root.dataset.initialLayout = ui.initialLayout || "legacy";
   document.addEventListener(
     "pointerdown",
     (e) => {
-      if (e.button !== 0 || !root.contains(e.target)) return;
+      const background = typeof isThemeBackgroundTarget === "function" && isThemeBackgroundTarget(e.target);
+      if (e.button !== 0 || (!root.contains(e.target) && !background)) return;
       stop();
+      if (e.target.closest("button:disabled,input:disabled,[aria-disabled=true]")) return;
       const detachedGrip = e.target.closest(".hy-mod-palette[data-docked=false] .hy-mod-grip"),
         role = e.target.closest(".hy-role"),
-        tab = e.target.closest(".hy-tab-shell"),
+        tab = e.target.closest(".hy-argument-tab,#argument-options [role=menuitemradio],.hy-argument-grid-add"),
         eye = e.target.closest('[data-action="editor"],[data-action="preview"]'),
         row = e.target.closest("#rows>.hy-row"),
         symbol = e.pointerType !== "mouse" && e.target.closest(".hy-symbol");
-      let owner = detachedGrip || role || tab || eye || symbol || row;
+      let owner = detachedGrip || role || tab || eye || symbol || row || (background ? root : null);
       if (!owner) return;
+      if (row && !role && !symbol && e.target.closest("button,input,label,select,a") &&
+          !e.target.closest(".hy-delete-line,.hy-block")) return;
       if (row && !role && !symbol && e.target.closest(".hy-premise-add-line")) return;
       const duration = typeof getHoldDelay === "function" ? getHoldDelay() : 500,
         visual = document.createElement("div");
@@ -19245,7 +20375,7 @@ root.dataset.initialLayout = ui.initialLayout || "legacy";
           stop();
           return;
         }
-        const r = owner.getBoundingClientRect();
+        const r = background ? {left:g.x,width:0,bottom:g.y+8} : owner.getBoundingClientRect();
         visual.style.left =
           Math.max(4, Math.min(innerWidth - 48, r.left + r.width / 2 - 22)) + "px";
         visual.style.top = Math.min(innerHeight - 27, r.bottom + 3) + "px";
@@ -19329,6 +20459,146 @@ globalThis.LPCategoryRowTarget = (stack, preview, cards, top, height, nextId) =>
   }
   return target;
 };
+</script>
+
+<script id="settings-sections">
+// Keep existing settings nodes and their listeners; only their presentation changes.
+(() => {
+  const settings=root.querySelector('#editor-settings');
+  const head=settings.querySelector(':scope > .hy-settings-head');
+  const switches=settings.querySelector('.hy-settings-switches');
+  const actions=document.createElement('div');actions.className='hy-settings-actions';
+  actions.append(...switches.children,head.querySelector('button'));
+  head.append(actions);switches.remove();
+  const tabs=document.createElement('div');tabs.className='hy-settings-tabs';tabs.setAttribute('role','tablist');
+  tabs.setAttribute('aria-label',interfaceText('Seções das configurações','Settings sections'));
+  const appearance=document.createElement('section'),functionalities=document.createElement('section');
+  appearance.id='settings-appearance';functionalities.id='settings-functionalities';
+  for(const panel of [appearance,functionalities]){panel.className='hy-settings-panel';panel.setAttribute('role','tabpanel');}
+  appearance.append(settings.querySelector('.hy-theme-choices'),settings.querySelector('.hy-setting:has(#scale-library)'),settings.querySelector('.hy-setting:has(#scale-writing)'),settings.querySelector('.hy-layout-recovery-setting'));
+  const panelSection=document.createElement("section");panelSection.className="hy-panel-shortcuts";
+  const title=document.createElement("h3");title.textContent=interfaceText("Personalizar painéis","Customize panels");
+  const info=document.createElement("p");info.textContent=interfaceText("Clique em um painel abaixo ou segure o olhinho dele para personalizar.","Click a panel below or hold its eye button to customize it.");
+  const buttons=document.createElement("div");buttons.className="hy-panel-shortcut-grid";
+  [["editor","Premissas e conclusões","Premises and conclusions",'<path d="M9 6h12M9 12h12M9 18h12M3 6h2M3 12h2M3 18h2"/>'],["preview","Argumento","Argument",'<path d="M14 3H5v18h14V8ZM14 3v5h5M8 12h8M8 16h8"/>']].forEach(([key,pt,en,icon])=>{
+    const button=document.createElement("button");button.type="button";button.dataset.panelSettings=key;
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';
+    const name=document.createElement("span");name.textContent=interfaceText(pt,en);button.append(name);
+    button.onclick=()=>{root.dispatchEvent(new CustomEvent("lp-open-panel-appearance",{detail:{key}}));};buttons.append(button);
+  });
+  const backgroundInfo=document.createElement("p");backgroundInfo.className="hy-background-theme-help";
+  backgroundInfo.textContent=interfaceText("Segure uma área vazia do fundo para escolher o tema.","Hold an empty area of the background to choose a theme.");
+  panelSection.append(title,info,buttons,backgroundInfo);
+  appearance.querySelector(".hy-theme-choices").after(panelSection);
+  functionalities.append(...settings.querySelectorAll('.hy-hover-delay-setting'));
+  settings.querySelector('.hy-appearance-settings')?.remove();
+  const panels=[appearance,functionalities];
+  function select(index,focus=false){
+    panels.forEach((panel,i)=>{panel.hidden=i!==index;const tab=tabs.children[i];tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;});
+    ui.settingsTab=index===1?'functionalities':'appearance';saveUI();if(focus)tabs.children[index].focus();
+  }
+  [['Aparência','Appearance'],['Funcionalidades','Functionalities']].forEach(([pt,en],i)=>{
+    const tab=document.createElement('button');tab.type='button';tab.id=panels[i].id+'-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-controls',panels[i].id);
+    tab.textContent=interfaceText(pt,en);panels[i].setAttribute('aria-labelledby',tab.id);
+    tab.onclick=()=>select(i);tab.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:1-i,true);}};
+    tabs.append(tab);
+  });
+  head.after(tabs);settings.append(appearance,functionalities);
+  select(ui.settingsTab==='functionalities'?1:0);applyLanguage();
+})();
+</script>
+
+<script id="background-theme-hold">
+function isThemeBackgroundTarget(node) {
+  return node instanceof Element && (node === document.body || node === document.documentElement || node.matches('#lp-hybrid,.hy-layout,.hy-work,.hy-panel-board'));
+}
+function openBackgroundThemes() {
+  if(root.querySelector('.hy-theme-dialog[open]'))return;
+  const dialog=document.createElement('dialog');dialog.className='hy-feature-dialog hy-theme-dialog';
+  const head=document.createElement('div');head.className='hy-settings-head';
+  const title=document.createElement('h2');title.textContent=interfaceText('Temas','Themes');title.id='background-theme-title';
+  dialog.setAttribute('aria-labelledby',title.id);
+  const close=document.createElement('button');close.type='button';close.className='hy-button hy-icon-button';close.setAttribute('aria-label',interfaceText('Fechar','Close'));
+  close.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
+  close.onclick=()=>dialog.close();head.append(title,close);dialog.append(head,createThemeOptions());
+  dialog.onclose=()=>dialog.remove();dialog.addEventListener('click',e=>{if(e.target!==dialog)return;const b=dialog.getBoundingClientRect();if(e.clientX<b.left||e.clientX>b.right||e.clientY<b.top||e.clientY>b.bottom)dialog.close();});
+  root.append(dialog);dialog.showModal();
+}
+(() => {
+  let gesture=null;
+  function cancel(){if(gesture)clearTimeout(gesture.timer);gesture=null;}
+  document.addEventListener('pointerdown',event=>{
+    cancel();if(event.button!==0||!event.isPrimary||!isThemeBackgroundTarget(event.target))return;
+    const state={id:event.pointerId,x:event.clientX,y:event.clientY};gesture=state;
+    state.timer=setTimeout(()=>{if(gesture!==state)return;gesture=null;openBackgroundThemes();},getHoldDelay());
+  });
+  document.addEventListener('pointermove',event=>{if(gesture&&event.pointerId===gesture.id&&Math.hypot(event.clientX-gesture.x,event.clientY-gesture.y)>5)cancel();});
+  for(const name of ['pointerup','pointercancel','scroll'])document.addEventListener(name,cancel,true);
+  window.addEventListener('blur',cancel);document.addEventListener('keydown',cancel);
+})();
+</script>
+
+<script id="validation-dialog">
+// Reuse the live preview and its controls; restore their exact positions on close.
+const validationDialog = document.createElement("dialog");
+validationDialog.className = "hy-validation-dialog";
+const validationHeader = document.createElement("header");
+validationHeader.className = "hy-validation-heading";
+const validationTitle = document.createElement("h2");
+validationTitle.id = "validation-title";
+validationTitle.textContent = interfaceText("Validação lógica", "Logic validation");
+validationDialog.setAttribute("aria-labelledby", validationTitle.id);
+const validationClose = document.createElement("button");
+validationClose.type = "button";
+validationClose.className = "hy-button hy-icon-button";
+validationClose.setAttribute("aria-label", interfaceText("Fechar", "Close"));
+validationClose.textContent = "×";
+validationClose.onclick = () => validationDialog.close();
+validationHeader.append(validationTitle, validationClose);
+const validationPreview = document.createElement("section");
+validationPreview.className = "hy-validation-preview";
+const validationControls = document.createElement("div");
+validationControls.className = "hy-section-head";
+validationPreview.append(validationControls);
+validationDialog.append(validationHeader, validationPreview, logicFooter, logicPanel);
+root.append(validationDialog);
+root.querySelector(".hy-argument-panel .hy-tools").append(logicButton);
+logicButton.setAttribute("aria-haspopup", "dialog");
+logicButton.setAttribute("aria-controls", "logic-validation-dialog");
+validationDialog.id = "logic-validation-dialog";
+let validationRestore = [];
+function openLogicValidation() {
+  if (validationDialog.open) return;
+  const tools = root.querySelector(".hy-argument-panel .hy-tools"),
+    content = root.querySelector("#hy-argument");
+  validationRestore = [tools, content].map(node => {
+    const marker = document.createComment("validation restore");
+    node.before(marker);
+    return { node, marker };
+  });
+  validationControls.append(tools);
+  validationPreview.append(content);
+  logicEnabled = true;
+  logicPanel.hidden = false;
+  logicButton.setAttribute("aria-expanded", "true");
+  validationDialog.showModal();
+  updateLogicValidation();
+}
+validationDialog.addEventListener("close", () => {
+  logicEnabled = false;
+  logicRevision++;
+  clearTimeout(logicTimer);
+  for (const { node, marker } of validationRestore) marker.replaceWith(node);
+  validationRestore = [];
+  logicPanel.hidden = true;
+  logicButton.setAttribute("aria-expanded", "false");
+  logicButton.focus();
+});
+validationDialog.addEventListener("click", event => {
+  if (event.target !== validationDialog) return;
+  const b = validationDialog.getBoundingClientRect();
+  if (event.clientX < b.left || event.clientX > b.right || event.clientY < b.top || event.clientY > b.bottom) validationDialog.close();
+});
 </script>
   </body>
 </html>
