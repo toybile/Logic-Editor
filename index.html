@@ -314,8 +314,12 @@
   font-weight: 400;
 }
 #lp-hybrid .hy-history-split .hy-button {
-  font-size: 23px;
+  width: 38px;
+  min-width: 38px;
+  padding: 9px;
 }
+#lp-hybrid .hy-history-split { margin-left:auto; flex-shrink:0; }
+#lp-hybrid .hy-history-split svg { width:18px; height:18px; display:block; }
 #lp-hybrid .hy-select-mode input {
   pointer-events: none;
   accent-color: var(--blue);
@@ -1218,10 +1222,10 @@ body {
   flex-wrap: wrap;
 }
 #lp-hybrid .hy-argument-panel .hy-tools {
-  flex: 1;
+  flex: 0 0 auto;
   margin: 0;
   padding: 0;
-  gap: 12px;
+  gap: 8px;
 }
 #lp-hybrid .hy-tools[hidden] {
   display: none !important;
@@ -1437,8 +1441,9 @@ body {
   }
 }
 #lp-hybrid .hy-argument-panel .hy-tools {
-  margin-left: 24px;
+  margin-left: auto;
 }
+#lp-hybrid .hy-argument-panel .hy-tools .hy-export-group { margin-left:8px; }
 #lp-hybrid .hy-check {
   background: light-dark(#edf2fc, #26364c);
   color: var(--ink);
@@ -2781,7 +2786,7 @@ body {
   border-width: 1px;
   padding: 8px 12px;
 }
-#lp-hybrid .hy-line-controls .hy-line-split #add-line {
+#lp-hybrid .hy-line-controls > #add-line {
   display: grid;
   place-items: center;
   width: 44px;
@@ -2791,8 +2796,11 @@ body {
   padding: 0;
   margin: 0;
   line-height: 1;
+  border: 1px solid var(--edge);
+  border-radius: 9px;
+  background: var(--paper);
 }
-#lp-hybrid .hy-line-controls .hy-line-split #add-line svg {
+#lp-hybrid .hy-line-controls > #add-line svg {
   display: block;
   width: 22px;
   height: 22px;
@@ -3837,7 +3845,7 @@ body {
 }
 /* relocated-logic-tools */
 #lp-hybrid .hy-editor .hy-section-head .hy-proposition-descriptions {
-  margin-left: auto;
+  margin-left: 0;
   flex: 0 0 34px;
   width: 34px;
   height: 34px;
@@ -9616,6 +9624,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { width:calc(36px * var(--writing-scale)); min-width:calc(36px * var(--writing-scale)); height:calc(36px * var(--writing-scale)); min-height:calc(36px * var(--writing-scale)); padding:calc(7px * var(--writing-scale)); border:1px solid var(--edge); background:transparent; color:var(--quiet); }
 #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle[aria-pressed=true] { color:var(--blue); background:var(--soft); }
 #lp-hybrid #writing-mode-toggle[hidden] { display:none !important; }
+#lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { margin-left:auto; }
 #lp-hybrid .hy-writing-mode-setting h3 { margin:0 0 12px; color:var(--quiet); font:400 12px/1.5 system-ui; }
 #lp-hybrid .hy-writing-mode-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
 #lp-hybrid .hy-writing-mode-choices button { min-width:0; min-height:44px; padding:8px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--quiet); font:13px/1.4 system-ui; cursor:pointer; }
@@ -9708,6 +9717,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
   #lp-hybrid[data-select-lines=true] .hy-row > .hy-line-select { position:absolute; left:0; top:24px; margin:0; }
   #lp-hybrid .hy-line-controls { margin:16px 0 0; flex-wrap:wrap; gap:8px; }
   #lp-hybrid .hy-line-controls .hy-button { min-width:44px; min-height:44px; }
+  #lp-hybrid .hy-line-controls > #add-line { min-height:44px; }
   #lp-hybrid .hy-preview { padding:0; white-space:pre-wrap; overflow-wrap:anywhere; font-size:max(18px,calc(20px * var(--writing-scale))); }
   #lp-hybrid #editor-settings { inset:calc(var(--visual-top,0px) + 12px) 12px auto; width:auto; max-width:none; max-height:calc(var(--visual-height,100dvh) - 24px); box-sizing:border-box; padding:16px; overflow:auto; overscroll-behavior:contain; }
   #lp-hybrid .hy-settings-head { gap:8px; }
@@ -9729,7 +9739,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
   #lp-hybrid .hy-editor > .hy-section-head > [data-action=editor] { grid-column:1; grid-row:1; }
   #lp-hybrid .hy-editor > .hy-section-head > h3 { grid-column:2 / -1; grid-row:1; }
   #lp-hybrid .hy-editor > .hy-section-head #caps-lock { grid-column:3; grid-row:2; }
-  #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { grid-column:2; grid-row:2; justify-self:end; }
+  #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { grid-column:2; grid-row:2; justify-self:end; margin-left:0; }
   #lp-hybrid .hy-editor > .hy-section-head .hy-proposition-descriptions { grid-column:4; grid-row:2; margin-left:0; }
 }
 </style>
@@ -11851,7 +11861,7 @@ function createRowElement(row, index) {
   handle.title = "Arraste para mover a linha";
   handle.setAttribute(
     "aria-label",
-    `Mover linha ${index + 1}. Arraste ou use as setas do teclado.`,
+    `Mover linha ${index + 1}. Arraste ou use as setas do teclado. Espaço ou Enter seleciona a linha.`,
   );
   handle.setAttribute("role", "button");
   handle.innerHTML =
@@ -13614,8 +13624,6 @@ async function confirmDeletion(message) {
     suppressClickUntil = 0;
   const add = document.querySelector("#add-line"),
     tools = document.createElement("div"),
-    split = document.createElement("div"),
-    select = document.createElement("button"),
     undo = document.createElement("button"),
     bulk = document.createElement("button");
   const redo = document.createElement("button"),
@@ -13623,23 +13631,18 @@ async function confirmDeletion(message) {
   undoSplit.className = "hy-line-split hy-history-split";
   redo.type = "button";
   redo.className = "hy-button hy-redo-lines";
-  redo.textContent = "↷";
+  redo.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4v6h-6M20 10a8 8 0 1 0 0 8"/></svg>';
   redo.setAttribute("aria-label", "Refazer alteração nas linhas");
   redo.title = "Refazer";
   tools.className = "hy-line-controls";
-  split.className = "hy-line-split";
   add.before(tools);
-  tools.append(split, undoSplit, bulk);
+  tools.append(add, bulk, undoSplit);
   undoSplit.append(undo, redo);
-  split.append(add, select);
   add.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
   add.setAttribute("aria-label", "Adicionar linha");
-  select.type = undo.type = bulk.type = "button";
-  select.className = "hy-button hy-select-mode";
-  select.innerHTML = '<input type="checkbox" aria-hidden="true" tabindex="-1">';
-  select.setAttribute("aria-label", "Selecionar várias linhas");
+  undo.type = bulk.type = "button";
   undo.className = "hy-button hy-undo-lines";
-  undo.textContent = "↶";
+  undo.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v6h6M4 10a8 8 0 1 1 0 8"/></svg>';
   undo.setAttribute("aria-label", "Desfazer alteração nas linhas");
   undo.title = "Desfazer";
   bulk.className = "hy-button hy-bulk-delete";
@@ -13662,11 +13665,10 @@ async function confirmDeletion(message) {
   }
   root.addEventListener("lp-record-line-change", remember);
   function updateControls() {
-    add.disabled = selectionMode;
     for (const r of selected) if (!rows.includes(r)) selected.delete(r);
+    selectionMode = selected.size > 0;
+    add.disabled = selectionMode;
     root.dataset.selectLines = String(selectionMode);
-    select.setAttribute("aria-pressed", String(selectionMode));
-    select.querySelector("input").checked = selectionMode;
     undo.disabled = !history().length;
     redo.disabled = !redoHistory().length;
     bulk.hidden = !selected.size;
@@ -13682,6 +13684,11 @@ async function confirmDeletion(message) {
       if (checkbox) checkbox.checked = selected.has(r);
     }
   }
+  function selectRow(row, toggle = false) {
+    if (toggle && selected.has(row)) selected.delete(row);
+    else selected.add(row);
+    updateControls();
+  }
   rowController.build = function (row, index) {
     const built = createRowElement(row, index),
       line = built.container,
@@ -13695,9 +13702,7 @@ async function confirmDeletion(message) {
     highlight.setAttribute("aria-hidden", "true");
     line.prepend(checkbox, highlight);
     checkbox.onchange = () => {
-      if (checkbox.checked) selected.add(row);
-      else selected.delete(row);
-      updateControls();
+      selectRow(row, true);
     };
     line.addEventListener(
       "click",
@@ -13710,9 +13715,7 @@ async function confirmDeletion(message) {
         if (selectionMode) {
           event.preventDefault();
           event.stopImmediatePropagation();
-          if (selected.has(row)) selected.delete(row);
-          else selected.add(row);
-          updateControls();
+          selectRow(row, true);
         } else if (selected.size && !selected.has(row)) {
           selected.clear();
           updateControls();
@@ -13733,19 +13736,8 @@ async function confirmDeletion(message) {
       if (event.button !== 0 || event.target === checkbox || event.target.closest(".hy-role"))
         return;
       if (event.target.closest(".hy-row-move-handle")) return;
-      if (event.target.closest('.hy-continuous-field')) {
-        cancelLineHold();
-        if (!drag && (!selectionMode || selected.has(row))) {
-          startDrag({
-            button: 0, pointerId: event.pointerId,
-            clientX: event.clientX, clientY: event.clientY,
-            preventDefault() {}, deferCapture: true,
-          }, row, line, line);
-          if (drag) drag.continuousField = true;
-        }
-        return;
-      }
-      if (event.pointerType === "touch" && event.target.closest(".hy-block")) return;
+      const field = event.target.closest('.hy-block,.hy-continuous-field'),
+        continuous = Boolean(event.target.closest('.hy-continuous-field'));
       if (event.target.closest("button") && !event.target.closest(".hy-delete-line")) return;
       if (selected.size && !selected.has(row) && !selectionMode) {
         selected.clear();
@@ -13759,7 +13751,7 @@ async function confirmDeletion(message) {
         y: event.clientY,
         deleteButton: event.target.closest(".hy-delete-line"),
       };
-      if (event.pointerType !== "touch" && line.isConnected && !drag && (!selectionMode || selected.has(row))) {
+      if ((event.pointerType !== "touch" || continuous) && line.isConnected && !drag && (!selectionMode || selected.has(row))) {
         const pointer = heldPointer;
         startDrag(
           {
@@ -13768,20 +13760,21 @@ async function confirmDeletion(message) {
             clientX: pointer.x,
             clientY: pointer.y,
             preventDefault() {},
-            deferCapture: Boolean(event.target.closest(".hy-block")),
+            deferCapture: Boolean(field),
           },
           row,
           line,
           line,
         );
+        if (drag) drag.continuousField = continuous;
       }
-      if (!drag && !event.target.closest(".hy-block")) line.setPointerCapture(event.pointerId);
+      if (!drag && !field) line.setPointerCapture(event.pointerId);
       holdTimer = setTimeout(() => {
         holdTimer = null;
         if (!heldPointer || !line.isConnected || !rows.includes(row) || drag?.ghost) return;
         holdActivated = true;
         const id = heldPointer.pointerId;
-        if (drag?.handle === line) {
+        if (heldPointer.deleteButton && drag?.handle === line) {
           cancelAnimationFrame(drag.frame);
           drag = null;
         }
@@ -13791,12 +13784,16 @@ async function confirmDeletion(message) {
           requestDeleteAll();
           return;
         }
-        selectionMode = !selectionMode;
-        if (selectionMode) selected.add(row);
-        else selected.clear();
+        selectRow(row);
+        if (!drag) {
+          startDrag({button: 0, pointerId: id, clientX: heldPointer.x,
+            clientY: heldPointer.y, preventDefault() {}, deferCapture: true}, row, line, line);
+        }
+        if (drag) {
+          drag.members = rows.filter(item => selected.has(item));
+          drag.continuousField = continuous;
+        }
         suppressClickUntil = Date.now() + 350;
-        updateControls();
-        if (line.hasPointerCapture(id)) line.releasePointerCapture(id);
       }, getHoldDelay());
     });
     line.addEventListener("pointermove", (event) => {
@@ -13846,6 +13843,12 @@ async function confirmDeletion(message) {
       if (event.target !== line) return;
       cancelLineHold();
       if (drag?.handle === line) finishDrag(event, true);
+    });
+    line.addEventListener('keydown', event => {
+      if (event.target.closest('.hy-row-move-handle') && [' ', 'Enter'].includes(event.key)) {
+        event.preventDefault();
+        if (!event.repeat) selectRow(row, true);
+      }
     });
     return built;
   };
@@ -14038,11 +14041,6 @@ async function confirmDeletion(message) {
       rowsContainer.tabIndex = -1;
       rowsContainer.focus({ preventScroll: true });
     }
-  };
-  select.onclick = () => {
-    selectionMode = !selectionMode;
-    if (!selectionMode) selected.clear();
-    updateControls();
   };
   bulk.onclick = () => deleteRows(rows.filter((r) => selected.has(r)));
   undo.onclick = () => {
@@ -20856,7 +20854,6 @@ function restoreInitialLayoutProfile() {
       const background = typeof isThemeBackgroundTarget === "function" && isThemeBackgroundTarget(e.target);
       if (e.button !== 0 || (!root.contains(e.target) && !background)) return;
       stop();
-      if (e.target.closest('.hy-continuous-field')) return;
       if (e.target.closest("button:disabled,input:disabled,[aria-disabled=true]")) return;
       const detachedGrip = e.target.closest(".hy-mod-palette[data-docked=false] .hy-mod-grip"),
         role = e.target.closest(".hy-role"),
@@ -20866,8 +20863,8 @@ function restoreInitialLayoutProfile() {
         symbol = e.pointerType !== "mouse" && e.target.closest(".hy-symbol");
       let owner = detachedGrip || role || tab || eye || symbol || row || (background ? root : null);
       if (!owner) return;
-      if (row && !role && !symbol && e.target.closest("button,input,label,select,a") &&
-          !e.target.closest(".hy-delete-line,.hy-block")) return;
+      if (row && !role && !symbol && e.target.closest("button,input,textarea,label,select,a") &&
+          !e.target.closest(".hy-delete-line,.hy-block,.hy-continuous-field")) return;
       if (row && !role && !symbol && e.target.closest(".hy-premise-add-line")) return;
       const duration = typeof getHoldDelay === "function" ? getHoldDelay() : 500,
         visual = document.createElement("div");
