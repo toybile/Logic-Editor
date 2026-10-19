@@ -1113,7 +1113,7 @@ body {
 #lp-hybrid {
   width: 100%;
   max-width: none;
-  min-height: 100dvh;
+  min-height: max(100dvh, var(--workspace-min-height, 0px));
   margin: 0;
   border-radius: 0;
   display: flex;
@@ -9458,7 +9458,7 @@ html[data-editor-theme="indigo-dark"] body { background:#0f1023; }
   --theme-shadow:0 18px 48px #05061245, inset 0 1px 0 #ffffff06;
 }
 #lp-hybrid[data-palette="ambient"] {
-  min-height:100vh;
+  min-height:max(100dvh,var(--workspace-min-height,0px));
   background:radial-gradient(ellipse 48vw 40vh at 12% 74%,var(--theme-cloud-a),transparent 100%),radial-gradient(ellipse 42vw 46vh at 83% 38%,var(--theme-cloud-b),transparent 100%),radial-gradient(ellipse 35vw 30vh at 55% 94%,var(--theme-cloud-c),transparent 100%),var(--canvas);
   background-attachment:fixed;
 }
@@ -9609,6 +9609,17 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-theme-collapse-inner { min-height:0; overflow:hidden; padding:2px; margin:-2px; }
 @media(prefers-reduced-motion:reduce) { #lp-hybrid .hy-theme-collapse,#lp-hybrid .hy-theme-section-toggle svg { transition:none; } }
 
+#lp-hybrid .hy-continuous-field { display:block; box-sizing:border-box; width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); font:calc(20px * var(--writing-scale))/1.65 "Cambria Math",serif; resize:none; overflow:hidden; overflow-wrap:anywhere; white-space:pre-wrap; }
+#lp-hybrid .hy-continuous-field:focus { outline:2px solid var(--blue); outline-offset:2px; }
+#lp-hybrid .hy-line-body:has(.hy-continuous-field) { align-items:flex-start; border:0; background:transparent; }
+#lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { width:calc(36px * var(--writing-scale)); min-width:calc(36px * var(--writing-scale)); height:calc(36px * var(--writing-scale)); min-height:calc(36px * var(--writing-scale)); padding:calc(7px * var(--writing-scale)); border:1px solid var(--edge); background:transparent; color:var(--quiet); }
+#lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle[aria-pressed=true] { color:var(--blue); background:var(--soft); }
+#lp-hybrid #writing-mode-toggle[hidden] { display:none !important; }
+#lp-hybrid .hy-writing-mode-setting h3 { margin:0 0 12px; color:var(--quiet); font:400 12px/1.5 system-ui; }
+#lp-hybrid .hy-writing-mode-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
+#lp-hybrid .hy-writing-mode-choices button { min-width:0; min-height:44px; padding:8px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--quiet); font:13px/1.4 system-ui; cursor:pointer; }
+#lp-hybrid .hy-writing-mode-choices button[aria-pressed=true] { color:var(--blue); border-color:var(--blue); background:var(--soft); }
+
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
 #lp-hybrid .hy-symbol-favorite-toggle { display:none; }
@@ -9673,6 +9684,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
   #lp-hybrid .hy-editor > .hy-section-head > h3 { flex:1; white-space:normal; min-width:0; font-size:13px; line-height:1.5; }
   #lp-hybrid .hy-editor > .hy-section-head .hy-proposition-descriptions { width:40px; min-width:40px; height:44px; flex-basis:40px; }
   #lp-hybrid .hy-editor > .hy-section-head .hy-caps-lock { width:40px; min-width:40px; height:44px; }
+  #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { width:40px; min-width:40px; height:44px; min-height:44px; }
   #lp-hybrid .hy-argument-panel > .hy-section-head > .hy-tools, #lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; flex:1 1 100%; width:100%; min-width:0; gap:6px; margin:0; padding:0; justify-content:flex-start; }
   #lp-hybrid .hy-tools :is(#number-toggle,#compact-prefix-spacing) { flex:0 0 38px; width:38px; min-height:44px; height:44px; padding:8px; }
   #lp-hybrid .hy-tools .hy-export-group { display:flex; flex:1; flex-wrap:nowrap; gap:6px; min-width:162px; margin:0 0 0 auto; }
@@ -9716,6 +9728,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
   #lp-hybrid .hy-editor > .hy-section-head > [data-action=editor] { grid-column:1; grid-row:1; }
   #lp-hybrid .hy-editor > .hy-section-head > h3 { grid-column:2 / -1; grid-row:1; }
   #lp-hybrid .hy-editor > .hy-section-head #caps-lock { grid-column:3; grid-row:2; }
+  #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { grid-column:2; grid-row:2; justify-self:end; }
   #lp-hybrid .hy-editor > .hy-section-head .hy-proposition-descriptions { grid-column:4; grid-row:2; margin-left:0; }
 }
 </style>
@@ -10720,8 +10733,11 @@ function saveArguments() {
 }
 function captureArgumentSelection() {
   const doc = argumentWorkspace.documents.find((doc) => doc.id === argumentWorkspace.activeId);
-  const index = [...rowsContainer.querySelectorAll("input")].indexOf(active);
-  if (index >= 0) doc.selection = { index, start: active.selectionStart, end: active.selectionEnd };
+  const index = rows.findIndex(row => rowElements.get(row)?.contains(active));
+  if (index >= 0) {
+    const fields = [...rowElements.get(rows[index]).querySelectorAll('.hy-block,.hy-continuous-field')];
+    doc.selection = { index, blockIndex:fields.indexOf(active), start:active.selectionStart, end:active.selectionEnd };
+  }
 }
 function showArgument(id, focusField = false) {
   if (drag) finishDrag({ pointerId: drag.pointerId });
@@ -10734,6 +10750,9 @@ function showArgument(id, focusField = false) {
   numbered = doc.numbered;
   drawRows(focusField ? (doc.selection?.index ?? 0) : undefined);
   if (focusField && doc.selection && active) {
+    const fields = rowElements.get(rows[doc.selection.index])?.querySelectorAll('.hy-block,.hy-continuous-field');
+    const selectedField = fields?.[Math.max(0,Math.min(fields.length-1,doc.selection.blockIndex || 0))];
+    if(selectedField){active=selectedField;active.focus();}
     active.setSelectionRange(
       Math.min(doc.selection.start, active.value.length),
       Math.min(doc.selection.end, active.value.length),
@@ -11368,6 +11387,53 @@ try {
   else if (!LPReturningUser) localStorage.setItem("formal-caps-lock", "true");
 } catch {}
 const blockFields = new WeakMap();
+function resizeContinuousFields() {
+  document.querySelectorAll('.hy-continuous-field').forEach(field => {
+    field.style.height = 'auto';
+    field.style.height = Math.max(44, field.scrollHeight + 2) + 'px';
+  });
+}
+function buildContinuousRow(row, body) {
+  const field = document.createElement('textarea');
+  field.className = 'hy-continuous-field';
+  field.rows = 1;
+  field.value = row.text;
+  field.autocapitalize = 'off'; field.autocomplete = 'off'; field.spellcheck = false;
+  field.setAttribute('autocorrect', 'off'); field.enterKeyHint = 'next';
+  field.setAttribute('aria-label', ui.language === 'en' ? 'Formula — continuous writing' : 'Fórmula — escrita contínua');
+  field.onfocus = () => { active = field; };
+  field.oninput = event => {
+    if (capsLock && !event?.isComposing) {
+      const start = field.value.slice(0, field.selectionStart).toUpperCase().length,
+        end = field.value.slice(0, field.selectionEnd).toUpperCase().length;
+      field.value = field.value.toUpperCase(); field.setSelectionRange(start, end);
+    }
+    row.text = field.value;
+    resizeContinuousFields(); render();
+  };
+  field.oncompositionend = () => field.oninput();
+  function nextRow(event) { event.preventDefault(); addLine(rows.indexOf(row) + 1); }
+  field.onbeforeinput = event => {
+    if (!event.isComposing && ['insertParagraph','insertLineBreak'].includes(event.inputType)) nextRow(event);
+  };
+  field.onkeydown = event => {
+    if (event.isComposing) return;
+    if (event.key === 'Enter') nextRow(event);
+  };
+  blockFields.set(field, { insert(symbol) {
+    let value = symbol;
+    const before = field.value.slice(0, field.selectionStart), after = field.value.slice(field.selectionEnd);
+    if (/^[∧∨→↔⇒⇔⊕⊻↑↓]$/u.test(symbol)) {
+      if (before && !/\s$/u.test(before)) value = ' ' + value;
+      if (!/^\s/u.test(after)) value += ' ';
+    }
+    field.setRangeText(value, field.selectionStart, field.selectionEnd, 'end');
+    field.focus({ preventScroll:true }); field.oninput();
+  }});
+  body.replaceChildren(field);
+  requestAnimationFrame(resizeContinuousFields);
+  return { first: () => field, update() { field.value = row.text; requestAnimationFrame(resizeContinuousFields); } };
+}
 function buildBlocks(row, body) {
   const composer = document.createElement("div");
   composer.className = "hy-blocks";
@@ -11525,7 +11591,8 @@ function buildBlocks(row, body) {
         if (event.isComposing) return;
         const key = event.inputType === "insertText" && event.data === " " ? " "
           : ["insertParagraph", "insertLineBreak"].includes(event.inputType) ? "Enter"
-          : event.inputType === "deleteContentBackward" && !input.value ? "Backspace" : null;
+          : event.inputType === "deleteContentBackward" && !input.value ? "Backspace"
+          : event.inputType === "deleteContentForward" && !input.value ? "Delete" : null;
         if (key) input.onkeydown({ key, preventDefault: () => event.preventDefault() });
       };
       input.onkeydown = (event) => {
@@ -11588,7 +11655,9 @@ function buildBlocks(row, body) {
           const before = previous(index),
             after = next(index);
           spliceTokens(index, 1);
-          const target = before >= 0 ? before : Math.max(0, after - 1);
+          const target = event.key === 'Delete'
+            ? (after >= 0 ? after - 1 : Math.max(0, before))
+            : (before >= 0 ? before : Math.max(0, after - 1));
           draw(target);
           sync();
         } else if (event.key === "Enter") {
@@ -11635,7 +11704,7 @@ function createRowElement(row, index) {
   remove.innerHTML =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/></svg>';
   remove.onclick = () => deleteLine(row);
-  const blocks = buildBlocks(row, body);
+  const blocks = ui.writingMode === 'continuous' ? buildContinuousRow(row, body) : buildBlocks(row, body);
   shell.append(toggle, body);
   function updateRole() {
     const isConclusion = row.role === "conclusion",
@@ -11798,8 +11867,8 @@ function createRowElement(row, index) {
     }
   });
   container.addEventListener("click", (event) => {
-    if (event.target.closest("button,input") || drag) return;
-    const inputs = body.querySelectorAll(".hy-block");
+    if (event.target.closest("button,input,textarea") || drag) return;
+    const inputs = body.querySelectorAll(".hy-block,.hy-continuous-field");
     const last = inputs[inputs.length - 1];
     if (last) {
       active = last;
@@ -12238,7 +12307,10 @@ for (const [groupName, symbols] of [["Mais comuns", commonSymbols], ...symbolGro
 <script id="argument-preview">
 function formatPrefixSpacing(text) {
   if (!ui.compactPrefixSpacing) return text;
-  return text.replace(/([¬~∼∽!∀∃∄□◇])[^\S\r\n]+(?=\S)/gu, "$1");
+  return text.replace(/([¬~∼∽!∀∃∄□◇])[^\S\r\n]+(?=\S)/gu, "$1")
+    .replace(/\([^\S\r\n]+/gu, "(")
+    .replace(/[^\S\r\n]+\)/gu, ")")
+    .replace(/([\p{L}\p{N}_'′])[^\S\r\n]+(?=\()/gu, "$1");
 }
 function argument(withNumbers = numbered) {
   let number = 0;
@@ -12845,6 +12917,10 @@ function saveUI() {
 }
 function setSection(section, open) {
   ui[section] = open;
+  if (section === 'editor') {
+    const mode = root.querySelector('#writing-mode-toggle');
+    if (mode) mode.hidden = !open;
+  }
   const panel = document.querySelector(
     section === "editor" ? "#hy-editor-content" : "#hy-argument",
   );
@@ -13375,10 +13451,10 @@ async function updateLogicValidation() {
         error.token;
       button.onclick = () => {
           if (typeof validationDialog !== "undefined" && validationDialog.open)
-            validationReturnFocus = rowElements.get(rows[error.index])?.querySelector(".hy-block");
+            validationReturnFocus = rowElements.get(rows[error.index])?.querySelector(".hy-block,.hy-continuous-field");
         if (typeof validationDialog !== "undefined" && validationDialog.open) validationDialog.close();
         setSection("editor", true);
-        const input = rowElements.get(rows[error.index])?.querySelector(".hy-block");
+          const input = rowElements.get(rows[error.index])?.querySelector(".hy-block,.hy-continuous-field");
         input?.focus();
       };
       logicPanel.append(button);
@@ -13656,6 +13732,7 @@ async function confirmDeletion(message) {
       if (event.button !== 0 || event.target === checkbox || event.target.closest(".hy-role"))
         return;
       if (event.target.closest(".hy-row-move-handle")) return;
+      if (event.target.closest('.hy-continuous-field')) return;
       if (event.pointerType === "touch" && event.target.closest(".hy-block")) return;
       if (event.target.closest("button") && !event.target.closest(".hy-delete-line")) return;
       if (selected.size && !selected.has(row) && !selectionMode) {
@@ -13971,14 +14048,15 @@ async function confirmDeletion(message) {
   let lastEdit = null,
     lastEditTime = 0;
   rowsContainer.addEventListener("beforeinput", (event) => {
-    if (!event.target.matches(".hy-block")) return;
+    if (event.defaultPrevented) return;
+    if (!event.target.matches(".hy-block,.hy-continuous-field")) return;
     const now = Date.now();
     if (lastEdit !== event.target || now - lastEditTime > 700) remember();
     lastEdit = event.target;
     lastEditTime = now;
   });
   rowsContainer.addEventListener("input", (event) => {
-    if (!event.target.matches(".hy-block")) return;
+    if (!event.target.matches(".hy-block,.hy-continuous-field")) return;
     redoHistory().length = 0;
     updateControls();
   });
@@ -15536,6 +15614,7 @@ async function confirmDeletion(message) {
         () => (ui.language = "en"),
       ],
       ["theme", "Tema", "Theme", "Claro", "Light", () => (ui.theme = "light")],
+      ['writing-mode','Modo de escrita','Writing mode','Blocos','Blocks',()=>{ui.writingMode='blocks';}],
       ["sidebar", "Barra lateral", "Sidebar", "Visível", "Visible", () => (ui.focus = false)],
       [
         "panels-visible",
@@ -17115,7 +17194,11 @@ function innerDetailEnabled(panel) {
       }
     };
     handle.ondblclick = () => set(0);
-    root.addEventListener("lp-ui-colors", apply);
+    const scheduleGeometry = () => requestAnimationFrame(() => requestAnimationFrame(apply));
+    root.addEventListener("lp-ui-colors", scheduleGeometry);
+    root.querySelector("#scale-writing").addEventListener("input", scheduleGeometry);
+    window.addEventListener("resize", scheduleGeometry);
+    panel.addEventListener("animationend", scheduleGeometry);
     const geometryObserver = new ResizeObserver(apply);
     geometryObserver.observe(panel);
     geometryObserver.observe(eye);
@@ -17202,8 +17285,8 @@ root.dataset.roleDisplay = ui.roleDisplay;
     const en = ui.language === "en";
     button.setAttribute("aria-pressed", String(ui.compactPrefixSpacing === true));
     const text = en
-      ? "Remove spaces after prefix symbols (¬ ∀ ∃)"
-      : "Remover espaços após símbolos de prefixo (¬ ∀ ∃)";
+      ? "Compact prefix symbols and parentheses (¬ ∀ ∃)"
+      : "Compactar prefixos e parênteses (¬ ∀ ∃)";
     button.setAttribute("aria-label", text);
     button.title = text;
   }
@@ -17545,8 +17628,8 @@ const LPHints = (() => {
       const doc = argumentWorkspace.documents.find((d) => d.id === argumentWorkspace.activeId),
         description = doc?.descriptions?.[element.value];
       const instructions = text(
-        "Clique em qualquer bloco para editar.\nEspaço: avançar ao próximo bloco; no último preenchido, criar outro.\nShift + Espaço: inserir um bloco após o atual.\nSetas esquerda/direita: no limite do texto, ir ao bloco vizinho.\nEnter: criar linha (fora do modo de seleção); Tab: próxima linha; Shift+Tab: linha anterior.\nBackspace ou Delete em bloco vazio: removê-lo imediatamente e voltar ao anterior (ou ao próximo, se for o primeiro). Pelo menos um bloco é mantido.",
-        "Click any block to edit.\nSpace: next block; from the last filled block, create another.\nShift + Space: insert a block after the current one.\nLeft/right arrows: at the text boundary, move to the adjacent block.\nEnter: new row (outside selection mode); Tab: next row; Shift+Tab: previous row.\nBackspace or Delete in an empty block: remove it immediately and return to the previous block (or the next one if it is first). At least one block is kept.",
+        "Clique em qualquer bloco para editar.\nEspaço: avançar ao próximo bloco; no último preenchido, criar outro.\nShift + Espaço: inserir um bloco após o atual.\nSetas esquerda/direita: no limite do texto, ir ao bloco vizinho.\nEnter: criar linha (fora do modo de seleção); Tab: próxima linha; Shift+Tab: linha anterior.\nEm bloco vazio, Backspace remove e volta ao anterior; Delete remove e mantém a posição, focando o próximo bloco disponível. Pelo menos um bloco é mantido.",
+        "Click any block to edit.\nSpace: next block; from the last filled block, create another.\nShift + Space: insert a block after the current one.\nLeft/right arrows: at the text boundary, move to the adjacent block.\nEnter: new row (outside selection mode); Tab: next row; Shift+Tab: previous row.\nIn an empty block, Backspace removes it and returns to the previous one; Delete removes it and keeps the position, focusing the next available block. At least one block is kept.",
       );
       return {
         title: description ? element.value : text("Editar bloco", "Edit block"),
@@ -17566,8 +17649,8 @@ const LPHints = (() => {
       return {
         title: text("Espaços de prefixos", "Prefix spacing"),
         body: text(
-          "Unir símbolos ao próximo termo na apresentação: ¬ A → ¬A, ∀ x → ∀x. Os blocos e a validação permanecem preservados.",
-          "Join prefix symbols to the next token in the display: ¬ A → ¬A, ∀ x → ∀x. Blocks and validation are preserved.",
+          "Compactar prefixos e parênteses na apresentação: ¬ A → ¬A, ∀ x → ∀x, F ( x ) → F(x). Os espaços entre operadores binários, a escrita e a validação são preservados.",
+          "Compact prefixes and parentheses in the display: ¬ A → ¬A, ∀ x → ∀x, F ( x ) → F(x). Spacing around binary operators, editing and validation are preserved.",
         ),
       };
     if (element.matches("[data-action=editor],[data-action=preview]"))
@@ -19070,8 +19153,8 @@ const LPHints = (() => {
       position(railWindow, state.rail);
       state.main.x = Math.max(8, before.left - base.left);
       state.main.y = state.rail.y + railWindow.offsetHeight + 12;
-      root.style.minHeight =
-        Math.max(root.offsetHeight, state.main.y + region.offsetHeight + 20) + "px";
+      root.style.setProperty('--workspace-min-height',
+        Math.max(root.offsetHeight, state.main.y + region.offsetHeight + 20) + "px");
       position(region, state.main);
       for (const element of [region, railWindow])
         root.dispatchEvent(new CustomEvent("lp-window-manual-placement", { detail: { element } }));
@@ -19410,7 +19493,7 @@ const LPHints = (() => {
     if (!model) return;
     model.x = (Number(model.x) || 0) + dx;
     model.y = (Number(model.y) || 0) + dy;
-    root.style.minHeight = Math.max(root.offsetHeight, model.y + element.offsetHeight + 16) + "px";
+    root.style.setProperty('--workspace-min-height', Math.max(root.offsetHeight, model.y + element.offsetHeight + 16) + "px");
     position(element, model);
     persist();
   });
@@ -19718,7 +19801,7 @@ const LPHints = (() => {
     restoreInitialLayoutProfile();
     root.dispatchEvent(new Event("lp-reset-library-layout"));
     root.dispatchEvent(new Event("lp-reset-panel-layout"));
-    root.style.minHeight = "";
+    root.style.removeProperty('--workspace-min-height');
     settings.hidePopover();
   };
   row.append(button);
@@ -20926,6 +21009,58 @@ globalThis.LPCategoryRowTarget = (stack, preview, cards, top, height, nextId) =>
   });
   head.after(tabs);settings.append(appearance,functionalities);
   select(ui.settingsTab==='functionalities'?1:0);applyLanguage();
+})();
+</script>
+
+<script id="writing-mode-controls">
+(() => {
+  const head = root.querySelector('.hy-editor > .hy-section-head'),
+    toggle = document.createElement('button'), setting = document.createElement('section'),
+    title = document.createElement('h3'), choices = document.createElement('div');
+  toggle.type = 'button'; toggle.id = 'writing-mode-toggle'; toggle.className = 'hy-button hy-icon-button';
+  head.querySelector('#caps-lock').before(toggle);
+  setting.className = 'hy-setting hy-writing-mode-setting';
+  title.id = 'writing-mode-label'; choices.className = 'hy-writing-mode-choices';
+  choices.setAttribute('role','group'); choices.setAttribute('aria-labelledby', title.id);
+  const labels = [['blocks','Blocos','Blocks'],['continuous','Linha contínua','Continuous line']];
+  function refresh() {
+    const continuous = ui.writingMode === 'continuous';
+    root.dataset.writingMode = continuous ? 'continuous' : 'blocks';
+    toggle.hidden = !ui.editor;
+    toggle.setAttribute('aria-pressed',String(continuous));
+    const action = continuous ? interfaceText('Escrever em blocos','Write in blocks') : interfaceText('Escrever em linha contínua','Write in a continuous line');
+    toggle.setAttribute('aria-label',action); toggle.dataset.hintText = action;
+    toggle.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + (continuous
+      ? '<rect x="3" y="5" width="5" height="14" rx="1.5"/><rect x="11" y="5" width="5" height="14" rx="1.5"/><path d="M20 5v14"/>'
+      : '<path d="M3 6h18M3 12h18M3 18h12"/>') + '</svg>';
+    title.textContent = interfaceText('Modo de escrita','Writing mode');
+    labels.forEach(([mode,pt,en],i) => {
+      choices.children[i].textContent = interfaceText(pt,en);
+      choices.children[i].setAttribute('aria-pressed',String((continuous ? 'continuous':'blocks') === mode));
+    });
+  }
+  function setMode(mode, focus=false) {
+    if (ui.writingMode === mode) return;
+    const index = Math.max(0,rows.findIndex(row => rowElements.get(row)?.contains(active)));
+    ui.writingMode = mode; saveUI(); refresh(); drawRows(); render();
+    if (focus) {
+      const fields = rowElements.get(rows[index])?.querySelectorAll('.hy-block,.hy-continuous-field'), field = fields?.[fields.length-1];
+      field?.focus({preventScroll:true}); field?.setSelectionRange(field.value.length,field.value.length);
+    }
+  }
+  for (const [mode] of labels) {
+    const button = document.createElement('button'); button.type='button'; button.dataset.writingMode = mode;
+    button.onclick = () => setMode(mode); choices.append(button);
+  }
+  toggle.onclick = () => setMode(ui.writingMode === 'continuous' ? 'blocks':'continuous',true);
+  setting.append(title,choices); root.querySelector('#settings-functionalities').prepend(setting);
+  root.addEventListener('lp-ui-colors',refresh);
+  root.querySelector('#settings-language').addEventListener('click',refresh);
+  const resize = () => requestAnimationFrame(resizeContinuousFields);
+  window.addEventListener('resize',resize);
+  root.querySelector('#scale-writing').addEventListener('input',resize);
+  new ResizeObserver(resize).observe(root.querySelector('.hy-editor'));
+  refresh();
 })();
 </script>
 
