@@ -104,8 +104,16 @@
 }
 /* logic-styles */
 #lp-hybrid .hy-logic-button {
-  background: light-dark(#edf0f8, #303746);
-  color: var(--ink);
+  background: var(--soft);
+  color: var(--blue);
+  border: 1px solid var(--edge);
+  border-radius: 9px;
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  padding: 7px;
+  flex: 0 0 34px;
+  position: relative;
 }
 #lp-hybrid .hy-logic-area {
   display: none !important;
@@ -410,8 +418,8 @@
 /* delete-dialog-styles */
 #lp-hybrid #delete-dialog {
   width: 420px;
-  max-width: calc(100vw - 32px);
-  padding: 22px;
+  max-width: calc(100vw - 24px);
+  padding: var(--dialog-inset);
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--edge);
@@ -431,7 +439,7 @@
 }
 #lp-hybrid #delete-dialog p {
   color: var(--quiet);
-  margin: 18px 0 22px;
+  margin: 16px 0;
   overflow-wrap: anywhere;
 }
 #lp-hybrid #delete-dialog .hy-delete-confirm {
@@ -684,6 +692,9 @@
   box-shadow: 0 8px 28px #00000014;
   font: 13px/1.5 "Segoe UI", sans-serif;
   text-align: center;
+  margin: 0;
+  top: auto;
+  right: auto;
 }
 #lp-hybrid .hy-row.dragging {
   opacity: 0.4;
@@ -1921,10 +1932,10 @@ body {
 }
 #lp-hybrid #rename-dialog {
   width: 420px;
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 40px);
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 32px);
   overflow: auto;
-  padding: 22px;
+  padding: var(--dialog-inset);
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--edge);
@@ -1996,7 +2007,7 @@ body {
 }
 @media (max-width: 760px) {
   #lp-hybrid #rename-dialog {
-    padding: 18px;
+    padding: var(--dialog-inset);
   }
   #lp-hybrid .hy-rename-actions .hy-button {
     min-height: 44px;
@@ -2718,10 +2729,8 @@ body {
   border-radius: 10px;
 }
 #lp-hybrid .hy-export-menu {
-  position: absolute;
+  position: fixed;
   z-index: 80;
-  right: 0;
-  top: calc(100% + 8px);
   min-width: 120px;
   padding: 6px;
   display: grid;
@@ -2731,6 +2740,10 @@ body {
   border-radius: 12px;
   box-shadow: 0 8px 24px light-dark(#26364a22, #0006);
   animation: syntax-appear 0.18s ease;
+  inset: auto;
+  margin: 0;
+  box-sizing: border-box;
+  max-width: calc(100vw - 24px);
 }
 #lp-hybrid .hy-export-menu[hidden] {
   display: none;
@@ -2744,6 +2757,10 @@ body {
 @media (prefers-reduced-motion: reduce) {
   #lp-hybrid .hy-export-menu {
     animation: none;
+    inset: auto;
+    margin: 0;
+    box-sizing: border-box;
+    max-width: calc(100vw - 24px);
   }
 }
 /* tab-hover-layout-fix */
@@ -3217,9 +3234,9 @@ body {
   display: none !important;
 }
 #lp-hybrid .hy-feature-dialog {
-  max-width: calc(100vw - 32px);
+  max-width: calc(100vw - 24px);
   width: 420px;
-  padding: 24px;
+  padding: var(--dialog-inset);
   border: 1px solid var(--edge);
   border-radius: 18px;
   background: var(--paper);
@@ -3227,8 +3244,10 @@ body {
   box-shadow: 0 16px 48px #0003;
 }
 #lp-hybrid .hy-feature-dialog .hy-button {
-  margin: 4px;
+  margin: 0;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #lp-hybrid .hy-feature-dialog::backdrop {
   background: #0004;
@@ -3403,9 +3422,9 @@ body {
 }
 #lp-hybrid .hy-examples-dialog {
   width: 520px;
-  padding: 24px;
+  padding: var(--dialog-inset);
   border-radius: 22px;
-  max-height: calc(100dvh - 40px);
+  max-height: calc(100dvh - 32px);
   overflow: auto;
 }
 #lp-hybrid .hy-examples-dialog h3 {
@@ -3762,10 +3781,12 @@ body {
   background: var(--soft);
   border-radius: 12px;
   cursor: pointer;
+  align-items: center;
 }
 #lp-hybrid .hy-import-preview p {
   color: var(--quiet);
   overflow-wrap: anywhere;
+  margin: 6px 0 0;
 }
 #lp-hybrid .hy-import-preview > div {
   display: flex;
@@ -3829,7 +3850,6 @@ body {
   border-top: 1px solid var(--edge);
 }
 /* logic-beta-badges */
-#lp-hybrid .hy-logic-button::after,
 #lp-hybrid .hy-proposition-descriptions::after {
   content: "beta";
   display: inline-block;
@@ -3842,7 +3862,17 @@ body {
   pointer-events: none;
 }
 #lp-hybrid .hy-logic-button::after {
-  margin-left: 3px;
+  content: "beta";
+  position: absolute;
+  right: -8px;
+  top: 0;
+  display: block;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: light-dark(#ffe0a9,#6a390c);
+  color: light-dark(#833900,#ffd599);
+  font: 500 9px/1.4 system-ui;
+  pointer-events: none;
 }
 #lp-hybrid .hy-editor .hy-section-head .hy-proposition-descriptions {
   position: relative;
@@ -3850,7 +3880,7 @@ body {
 #lp-hybrid .hy-proposition-descriptions::after {
   position: absolute;
   right: -9px;
-  top: -7px;
+  top: 0;
 }
 /* sidebar-last-separator */
 #lp-hybrid .hy-side .hy-library details:last-child {
@@ -4200,11 +4230,11 @@ body {
 #lp-hybrid .hy-symbol-help-dialog {
   position: fixed;
   width: 540px;
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 48px);
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 32px);
   box-sizing: border-box;
   overflow: auto;
-  padding: 24px;
+  padding: var(--dialog-inset);
   border: 1px solid var(--edge);
   border-radius: 20px;
   background: var(--paper);
@@ -4252,8 +4282,8 @@ body {
 }
 #lp-hybrid .hy-symbol-help-close {
   position: absolute;
-  top: 17px;
-  right: 17px;
+  top: var(--dialog-inset);
+  right: var(--dialog-inset);
   width: 32px;
   height: 32px;
   display: grid;
@@ -4546,7 +4576,8 @@ body {
 }
 #lp-hybrid #hy-editor-content[data-open="false"],
 #lp-hybrid #hy-argument[data-open="false"],
-#lp-hybrid .hy-editor:has(#hy-editor-content[data-open="false"]) .hy-proposition-descriptions {
+#lp-hybrid .hy-editor:has(#hy-editor-content[data-open="false"]) .hy-proposition-descriptions,
+#lp-hybrid .hy-argument-panel:has(#hy-argument[data-open="false"]) .hy-logic-button {
   display: none;
 }
 #lp-hybrid .hy-editor:has(#hy-editor-content[data-open="false"]) .hy-section-head,
@@ -5009,8 +5040,8 @@ body {
   box-sizing: border-box;
 }
 #lp-hybrid .hy-panel-appearance-dialog {
-  max-width: calc(100vw - 32px);
-  max-height: calc(100dvh - 48px);
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 32px);
   overflow: auto;
   background: var(--paper);
   color: var(--ink);
@@ -5118,7 +5149,7 @@ body {
 #lp-hybrid .hy-panel-appearance-dialog {
   box-sizing: border-box;
   width: 340px;
-  padding: 20px;
+  padding: var(--dialog-inset);
   border: 1px solid var(--edge);
   border-radius: 20px;
   box-shadow: 0 20px 60px #0003;
@@ -5128,6 +5159,7 @@ body {
 #lp-hybrid .hy-panel-appearance-dialog::backdrop {
   background: #0003;
   backdrop-filter: blur(2px);
+  pointer-events: none;
 }
 #lp-hybrid .hy-panel-appearance-dialog .hy-settings-head {
   margin: 0 0 18px;
@@ -5170,7 +5202,7 @@ body {
   border-radius: 5px;
 }
 #lp-hybrid .hy-panel-appearance-dialog .hy-color-options {
-  gap: 12px;
+  gap: 8px;
   padding: 5px 2px 16px;
   margin: 0 0 12px;
   border-bottom: 1px solid var(--edge);
@@ -6366,7 +6398,7 @@ body {
   box-sizing: border-box;
   max-height: calc(100dvh - 32px);
   overflow: auto;
-  padding: 22px;
+  padding: var(--dialog-inset);
   border: 1px solid var(--edge);
   border-radius: 20px;
   background: var(--paper);
@@ -6479,7 +6511,7 @@ body {
     gap: 4px;
   }
   #lp-hybrid #default-settings-confirmation.hy-selective-reset {
-    padding: 18px;
+    padding: var(--dialog-inset);
   }
 }
 /* modular-library-styles */
@@ -8670,7 +8702,7 @@ body {
 /* persistent-category-dividers */
 #lp-hybrid .hy-symbol-dock-stack > .hy-add-section-zone::before {
   display: block;
-  opacity: 1;
+  opacity: 0;
   height: 1px;
   top: 50%;
   background: var(--edge);
@@ -8847,8 +8879,8 @@ body {
 }
 /* reduced-general-library-margin */
 #lp-hybrid .hy-modular-library > .hy-side:has(.hy-symbol-dock-stack > .hy-mod-palette) {
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
 }
 /* library-margin-sixteen */
 #lp-hybrid .hy-symbol-dock-stack > .hy-mod-palette[data-docked="true"],
@@ -9058,9 +9090,9 @@ body {
 #lp-hybrid .hy-beta-dialog {
   box-sizing: border-box;
   width: 540px;
-  max-width: calc(100vw - 28px);
-  max-height: calc(100dvh - 28px);
-  padding: 22px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 32px);
+  padding: var(--dialog-inset);
   border: 1px solid var(--edge);
   border-radius: 22px;
   background: var(--paper);
@@ -9341,7 +9373,7 @@ body {
 }
 @media (max-width: 480px) {
   #lp-hybrid .hy-beta-dialog {
-    padding: 17px;
+    padding: var(--dialog-inset);
     border-radius: 18px;
   }
   #lp-hybrid .hy-beta-heading {
@@ -9425,27 +9457,27 @@ html[data-editor-theme="indigo-dark"] body { background:#0f1023; }
   --theme-cloud-a:#5b66de39; --theme-cloud-b:#6563be27; --theme-cloud-c:#3a61972c;
   --theme-shadow:0 18px 48px #05061245, inset 0 1px 0 #ffffff06;
 }
-#lp-hybrid[data-theme^="indigo-"] {
+#lp-hybrid[data-palette="ambient"] {
   min-height:100vh;
   background:radial-gradient(ellipse 48vw 40vh at 12% 74%,var(--theme-cloud-a),transparent 100%),radial-gradient(ellipse 42vw 46vh at 83% 38%,var(--theme-cloud-b),transparent 100%),radial-gradient(ellipse 35vw 30vh at 55% 94%,var(--theme-cloud-c),transparent 100%),var(--canvas);
   background-attachment:fixed;
 }
-#lp-hybrid[data-theme^="indigo-"] .hy-head { background:var(--theme-header); backdrop-filter:blur(16px); box-shadow:inset 0 -1px 0 var(--edge); }
-#lp-hybrid[data-theme^="indigo-"] :is(.hy-panel-frame > .hy-panel,.hy-modular-library > .hy-side,.hy-mod-palette[data-docked="false"]) { background:var(--theme-glass); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
-#lp-hybrid[data-theme^="indigo-"] :is(.hy-size-popover,.hy-card-picker-menu,.hy-feature-dialog,.hy-argument-card-editor,.hy-tab-tools) { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
-#lp-hybrid[data-theme^="indigo-"] #argument-options::before { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
-#lp-hybrid[data-theme^="indigo-"] .hy-mod-palette[data-docked="true"] { background:transparent; }
-#lp-hybrid[data-theme^="indigo-"] :is(.hy-side-heading,.hy-library-heading) { background:color-mix(in srgb,var(--soft) 80%,transparent); }
-#lp-hybrid[data-theme^="indigo-"] :is(.hy-block,.hy-symbol) { background:color-mix(in srgb,var(--paper) 90%,transparent); border-color:var(--edge); }
-#lp-hybrid[data-theme^="indigo-"] :is(.hy-block,.hy-symbol):hover { border-color:var(--blue); }
-#lp-hybrid[data-theme^="indigo-"] #argument-options [aria-checked="true"]:hover { background:color-mix(in srgb,var(--blue) 82%,var(--paper)); color:var(--paper); }
-html[data-editor-theme^="indigo-"] .lp-unified-hint { background:light-dark(#fffffff2,#191d36f5); color:light-dark(#23263e,#f3f3fc); border-color:light-dark(#dcdff1,#30344f); backdrop-filter:blur(18px); }
+#lp-hybrid[data-palette="ambient"] .hy-head { background:var(--theme-header); backdrop-filter:blur(16px); box-shadow:inset 0 -1px 0 var(--edge); }
+#lp-hybrid[data-palette="ambient"] :is(.hy-panel-frame > .hy-panel,.hy-modular-library > .hy-side,.hy-mod-palette[data-docked="false"]) { background:var(--theme-glass); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
+#lp-hybrid[data-palette="ambient"] :is(.hy-size-popover,.hy-card-picker-menu,.hy-feature-dialog,.hy-argument-card-editor,.hy-tab-tools) { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
+#lp-hybrid[data-palette="ambient"] #argument-options::before { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
+#lp-hybrid[data-palette="ambient"] .hy-mod-palette[data-docked="true"] { background:transparent; }
+#lp-hybrid[data-palette="ambient"] :is(.hy-side-heading,.hy-library-heading) { background:color-mix(in srgb,var(--soft) 80%,transparent); }
+#lp-hybrid[data-palette="ambient"] :is(.hy-block,.hy-symbol) { background:color-mix(in srgb,var(--paper) 90%,transparent); border-color:var(--edge); }
+#lp-hybrid[data-palette="ambient"] :is(.hy-block,.hy-symbol):hover { border-color:var(--blue); }
+#lp-hybrid[data-palette="ambient"] #argument-options [aria-checked="true"]:hover { background:color-mix(in srgb,var(--blue) 82%,var(--paper)); color:var(--paper); }
+html[data-editor-palette="ambient"] .lp-unified-hint { background:var(--editor-hint-paper); color:var(--editor-hint-ink); border-color:var(--editor-hint-edge); backdrop-filter:blur(18px); }
 @media (max-width:600px) {
-  #lp-hybrid[data-theme^="indigo-"] { background-size:auto; background-attachment:scroll; }
+  #lp-hybrid[data-palette="ambient"] { background-size:auto; background-attachment:scroll; }
 }
 
-#lp-hybrid[data-theme^="indigo-"] .hy-work { background:transparent; }
-#lp-hybrid[data-theme^="indigo-"] .hy-panel-frame { background:transparent; backdrop-filter:none; box-shadow:none; }
+#lp-hybrid[data-palette="ambient"] .hy-work { background:transparent; }
+#lp-hybrid[data-palette="ambient"] .hy-panel-frame { background:transparent; backdrop-filter:none; box-shadow:none; }
 /* Settings navigation and grouped controls. */
 #lp-hybrid #editor-settings { width:380px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 24px); box-sizing:border-box; padding:18px; }
 #lp-hybrid #editor-settings > .hy-settings-head { margin-bottom:16px; gap:12px; }
@@ -9479,13 +9511,13 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 }
 #lp-hybrid .hy-panel-shortcuts { padding:16px 0; border-top:1px solid var(--edge); }
 #lp-hybrid .hy-panel-shortcuts h3 { font:400 12px/1.4 system-ui; margin:0 0 8px; color:var(--quiet); }
-#lp-hybrid .hy-panel-shortcuts p { font:12px/1.5 system-ui; color:var(--quiet); margin:0 0 12px; }
+
 #lp-hybrid .hy-panel-shortcut-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
 #lp-hybrid .hy-panel-shortcut-grid button { display:flex; align-items:center; gap:8px; padding:10px; min-height:54px; text-align:left; font:12px/1.4 system-ui; color:var(--ink); background:var(--soft); border:1px solid var(--edge); border-radius:11px; }
 #lp-hybrid .hy-panel-shortcut-grid button:hover { border-color:var(--blue); color:var(--blue); }
 #lp-hybrid .hy-panel-shortcut-grid svg { width:22px; height:22px; flex-shrink:0; }
-#lp-hybrid .hy-panel-shortcuts .hy-background-theme-help { margin:10px 0 0; font-size:11px; }
-#lp-hybrid .hy-theme-dialog { width:380px; max-width:calc(100vw - 24px); padding:18px; border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); }
+
+#lp-hybrid .hy-theme-dialog { width:380px; max-width:calc(100vw - 24px); padding:var(--dialog-inset); border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); }
 #lp-hybrid .hy-theme-dialog .hy-settings-head { margin-bottom:16px; }
 #lp-hybrid .hy-theme-dialog h2 { font-size:15px; margin:0; }
 
@@ -9493,19 +9525,89 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-panel-detail-row label { margin:0; }
 #lp-hybrid .hy-panel-detail-row summary { min-width:0; padding-right:30px; }
 
-#lp-hybrid .hy-validation-dialog { position:fixed; inset:0; margin:auto; box-sizing:border-box; width:1000px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 32px); overflow:auto; padding:24px; border:1px solid var(--edge); border-radius:20px; background:var(--paper); color:var(--ink); box-shadow:0 24px 80px #0004; font:14px/1.5 system-ui; }
+#lp-hybrid .hy-validation-dialog { position:fixed; inset:0; margin:auto; box-sizing:border-box; width:1000px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 32px); overflow:auto; padding:var(--dialog-inset); border:1px solid var(--edge); border-radius:20px; background:var(--paper); color:var(--ink); box-shadow:0 24px 80px #0004; font:14px/1.5 system-ui; }
 #lp-hybrid .hy-validation-dialog::backdrop { background:#10132388; backdrop-filter:blur(5px); }
 #lp-hybrid .hy-validation-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
 #lp-hybrid .hy-validation-heading h2 { margin:0; font:500 18px/1.4 system-ui; }
 #lp-hybrid .hy-validation-preview { padding:16px; border:1px solid var(--edge); border-radius:14px; background:var(--soft); margin-bottom:16px; }
 #lp-hybrid .hy-validation-preview .hy-section-head { margin:0 0 12px; padding:0; }
-#lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; width:100%; justify-content:flex-end; gap:8px; margin:0; }
+#lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; width:100%; justify-content:flex-end; gap:8px; margin:0; border-top: 0; padding: 0; }
 #lp-hybrid .hy-validation-preview #hy-argument { display:block !important; grid-template-rows:1fr !important; opacity:1; max-height:none; }
 #lp-hybrid .hy-validation-preview #preview { white-space:pre-wrap; overflow-wrap:anywhere; }
 #lp-hybrid .hy-validation-dialog .hy-logic-button { display:none; }
 #lp-hybrid .hy-validation-dialog .hy-logic-footer { margin:0 0 16px; padding:0; }
 #lp-hybrid .hy-validation-dialog .hy-logic-panel { margin:0; }
-@media(max-width:600px) { #lp-hybrid .hy-validation-dialog { padding:16px; } #lp-hybrid .hy-validation-preview { padding:12px; } }
+@media(max-width:600px) { #lp-hybrid .hy-validation-dialog { padding:var(--dialog-inset); } #lp-hybrid .hy-validation-preview { padding:12px; } }
+
+#lp-hybrid .hy-argument-panel > .hy-section-head { flex-wrap:nowrap; overflow-x:visible; overflow-y:visible; padding-top:0; padding-bottom:0; }
+#lp-hybrid .hy-argument-panel > .hy-section-head > h3 { flex:none; white-space:nowrap; }
+#lp-hybrid .hy-argument-panel > .hy-section-head > .hy-tools { display:flex; flex:none; flex-wrap:nowrap; width:max-content; gap:8px; margin:0 0 0 auto; padding:0; }
+#lp-hybrid .hy-argument-panel > .hy-section-head > .hy-tools .hy-export-group { flex-wrap:nowrap; }
+
+/* Shared geometry keeps dialog edges and controls balanced. */
+#lp-hybrid { --dialog-inset:20px; }
+@media(max-width:600px) { #lp-hybrid { --dialog-inset:16px; } }
+#lp-hybrid dialog { scrollbar-gutter:stable both-edges; box-sizing:border-box; max-width:calc(100vw - 24px); max-height:calc(100dvh - 32px); overflow:auto; }
+#lp-hybrid dialog:not([popover]) { inset:0; margin:auto; }
+#lp-hybrid dialog > :is(h2,h3) { margin:0 0 16px; }
+#lp-hybrid dialog > :last-child { margin-bottom:0; }
+#lp-hybrid dialog form { margin:0; }
+#lp-hybrid :is(dialog,[role="dialog"]) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]) { box-sizing:border-box; max-width:100%; }
+#lp-hybrid dialog :is(.hy-icon-button,.hy-beta-close,.hy-symbol-help-close) { display:inline-grid; place-items:center; line-height:1; flex-shrink:0; }
+#lp-hybrid dialog :is(.hy-rename-actions,.hy-default-actions,.hy-beta-actions) > button { margin:0; }
+#lp-hybrid .hy-settings-section-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; box-sizing:border-box; }
+#lp-hybrid .hy-settings-section-heading .hy-settings-info { display:inline-grid; place-items:center; flex:none; width:24px; height:24px; padding:3px; border:0; border-radius:50%; background:transparent; color:var(--quiet); cursor:help; }
+#lp-hybrid .hy-settings-section-heading .hy-settings-info:hover,
+#lp-hybrid .hy-settings-section-heading .hy-settings-info:focus-visible { background:var(--soft); color:var(--blue); }
+#lp-hybrid .hy-settings-info svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; }
+
+#lp-hybrid .hy-import-preview input[type="checkbox"] { width:18px; height:18px; min-height:18px; flex:0 0 18px; margin:0; align-self:center; accent-color:var(--blue); }
+
+#lp-hybrid .hy-editor > .hy-section-head { flex-wrap:nowrap; overflow-x:visible; overflow-y:visible; }
+#lp-hybrid .hy-editor > .hy-section-head > h3 { flex:none; white-space:nowrap; }
+
+@media(max-width:760px) { #lp-hybrid .hy-editor > .hy-section-head { flex-wrap:wrap; } #lp-hybrid .hy-editor > .hy-section-head > h3 { flex:1; min-width:0; white-space:normal; } }
+#lp-hybrid .hy-validation-preview .hy-tools::before { display:none; }
+@media(max-width:760px) { #lp-hybrid .hy-argument-panel > .hy-section-head { flex-wrap:wrap; } #lp-hybrid .hy-argument-panel > .hy-section-head > .hy-tools { flex:1 1 100%; width:100%; min-width:0; flex-wrap:wrap; justify-content:flex-end; } }
+
+html[data-editor-theme="petroleum"] body { background:#0b2027; }
+#lp-hybrid[data-theme="petroleum"] { --paper:#132d35; --canvas:#0b2027; --ink:#edf8f7; --quiet:#a0b9bc; --edge:#294b53; --soft:#1c3d45; --blue:#68d8cc; --theme-glass:#132d35df; --theme-raised:#132d35f5; --theme-header:#0b2027ed; --theme-cloud-a:#318e8645; --theme-cloud-b:#318e8645; --theme-cloud-c:#318e8645; --theme-shadow:0 16px 44px #0b202730, inset 0 1px 0 #edf8f708; }
+#lp-hybrid [data-theme-value="petroleum"] .hy-theme-swatch { background:radial-gradient(at 15% 85%,#318e8645,transparent 85%),#0b2027; border-color:#294b53; }
+#lp-hybrid [data-theme-value="petroleum"] .hy-theme-swatch i { background:#132d35; border-color:#294b53; }
+
+html[data-editor-theme="graphite"] body { background:#18191d; }
+#lp-hybrid[data-theme="graphite"] { --paper:#24252b; --canvas:#18191d; --ink:#f5f0e7; --quiet:#beb7aa; --edge:#424044; --soft:#33302b; --blue:#e8b866; --theme-glass:#24252bdf; --theme-raised:#24252bf5; --theme-header:#18191ded; --theme-cloud-a:#a0753038; --theme-cloud-b:#a0753038; --theme-cloud-c:#a0753038; --theme-shadow:0 16px 44px #18191d30, inset 0 1px 0 #f5f0e708; }
+#lp-hybrid [data-theme-value="graphite"] .hy-theme-swatch { background:radial-gradient(at 15% 85%,#a0753038,transparent 85%),#18191d; border-color:#424044; }
+#lp-hybrid [data-theme-value="graphite"] .hy-theme-swatch i { background:#24252b; border-color:#424044; }
+
+html[data-editor-theme="sand"] body { background:#f2eadf; }
+#lp-hybrid[data-theme="sand"] { --paper:#fffaf2; --canvas:#f2eadf; --ink:#293b50; --quiet:#716d66; --edge:#ded4c5; --soft:#e8edf2; --blue:#416b99; --theme-glass:#fffaf2df; --theme-raised:#fffaf2f5; --theme-header:#f2eadfed; --theme-cloud-a:#6f9bb73a; --theme-cloud-b:#6f9bb73a; --theme-cloud-c:#6f9bb73a; --theme-shadow:0 16px 44px #f2eadf30, inset 0 1px 0 #293b5008; }
+#lp-hybrid [data-theme-value="sand"] .hy-theme-swatch { background:radial-gradient(at 15% 85%,#6f9bb73a,transparent 85%),#f2eadf; border-color:#ded4c5; }
+#lp-hybrid [data-theme-value="sand"] .hy-theme-swatch i { background:#fffaf2; border-color:#ded4c5; }
+
+html[data-editor-theme="sage"] body { background:#edf2e8; }
+#lp-hybrid[data-theme="sage"] { --paper:#fbfdf7; --canvas:#edf2e8; --ink:#29382c; --quiet:#657263; --edge:#d4decf; --soft:#e5ecdf; --blue:#55734a; --theme-glass:#fbfdf7df; --theme-raised:#fbfdf7f5; --theme-header:#edf2e8ed; --theme-cloud-a:#8faa6a38; --theme-cloud-b:#8faa6a38; --theme-cloud-c:#8faa6a38; --theme-shadow:0 16px 44px #edf2e830, inset 0 1px 0 #29382c08; }
+#lp-hybrid [data-theme-value="sage"] .hy-theme-swatch { background:radial-gradient(at 15% 85%,#8faa6a38,transparent 85%),#edf2e8; border-color:#d4decf; }
+#lp-hybrid [data-theme-value="sage"] .hy-theme-swatch i { background:#fbfdf7; border-color:#d4decf; }
+
+#lp-hybrid .hy-panel-appearance-dialog .hy-color-options { align-items:center; }
+#lp-hybrid .hy-panel-appearance-dialog .hy-custom-color-swatch { position:relative; display:grid; place-items:center; flex:0 0 30px; width:30px; height:30px; min-height:30px; margin:0; padding:0; border:1px solid var(--edge); border-radius:50%; background:conic-gradient(#ed6d81,#e9b45f,#82bc7c,#62b9bd,#8295e2,#c78bc3,#ed6d81); cursor:pointer; justify-content: center; }
+#lp-hybrid .hy-panel-appearance-dialog .hy-custom-color-swatch input[type="color"] { position:absolute; inset:0; width:100%; height:100%; margin:0; padding:0; border:0; opacity:0; cursor:pointer; }
+#lp-hybrid .hy-custom-color-value { width:14px; height:14px; border:2px solid var(--paper); border-radius:50%; background:var(--custom-color); pointer-events:none; }
+#lp-hybrid .hy-custom-color-swatch:focus-within { outline:2px solid var(--blue); outline-offset:3px; }
+#lp-hybrid .hy-panel-appearance-dialog .hy-color-swatch[aria-pressed="true"] { outline:2px solid var(--blue); outline-offset:2px; }
+
+#lp-hybrid .hy-panel-appearance-dialog > .hy-panel-color-label { min-height:0; margin:0 0 12px; }
+#lp-hybrid .hy-theme-column { display:grid; grid-template-rows:auto; grid-auto-rows:1fr; gap:8px; min-width:0; }
+#lp-hybrid .hy-theme-column h4 { margin:0; padding:0 0 2px; color:var(--quiet); font:400 12px/1.4 system-ui; }
+#lp-hybrid .hy-theme-column .hy-theme-option { flex:1; align-content:start; }
+#lp-hybrid .hy-theme-section-toggle { display:flex; align-items:center; gap:8px; flex:1; min-width:0; padding:0; border:0; background:transparent; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+#lp-hybrid .hy-theme-section-toggle svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; transition:transform .24s ease; }
+#lp-hybrid .hy-theme-section-toggle[aria-expanded="true"] svg { transform:rotate(90deg); }
+#lp-hybrid .hy-theme-collapse { display:grid; grid-template-rows:0fr; opacity:0; transition:grid-template-rows .26s cubic-bezier(.22,.61,.36,1),opacity .2s ease; }
+#lp-hybrid .hy-theme-collapse[data-open="true"] { grid-template-rows:1fr; opacity:1; }
+#lp-hybrid .hy-theme-collapse-inner { min-height:0; overflow:hidden; padding:2px; margin:-2px; }
+@media(prefers-reduced-motion:reduce) { #lp-hybrid .hy-theme-collapse,#lp-hybrid .hy-theme-section-toggle svg { transition:none; } }
 </style>
   </head>
   <body>
@@ -10338,6 +10440,7 @@ const favoriteNotice = (() => {
   notice.className = "hy-favorite-notice";
   notice.setAttribute("role", "status");
   notice.setAttribute("aria-live", "polite");
+  notice.setAttribute("popover", "manual");
   notice.hidden = true;
   document.querySelector("#lp-hybrid").append(notice);
   let timer, animation, hovered = false, revision = 0;
@@ -10354,7 +10457,7 @@ const favoriteNotice = (() => {
         { duration: duration(), easing: "ease-in", fill: "forwards" },
       );
       try { await animation.finished; } catch { return; }
-      if (current === revision) notice.hidden = true;
+      if (current === revision) { if (notice.matches(":popover-open")) notice.hidePopover(); notice.hidden = true; }
     }, 1000);
   }
   notice.addEventListener("pointerenter", () => {
@@ -10371,8 +10474,12 @@ const favoriteNotice = (() => {
     const current = ++revision;
     clearTimeout(timer);
     animation?.cancel();
+    if (notice.matches(":popover-open")) notice.hidePopover();
+    const parent = [...document.querySelectorAll("dialog:modal")].at(-1) || document.querySelector("#lp-hybrid");
+    if (notice.parentElement !== parent) parent.append(notice);
     notice.textContent = message;
     notice.hidden = false;
+    notice.showPopover();
     hovered = notice.matches(":hover");
     animation = notice.animate(
       [{ opacity: 0, transform: "translate(-50%, 14px)" },
@@ -12033,13 +12140,17 @@ function render() {
     localStorage.setItem("formal-argument", JSON.stringify({ rows, numbered }));
   } catch {}
 }
+function argumentNotice(message) {
+  status.textContent = "";
+  favoriteNotice(translated(message));
+}
 async function copyArgument(numbered) {
   const text = argument(numbered);
   try {
     await navigator.clipboard.writeText(text);
-    status.textContent = numbered
+    argumentNotice(numbered
       ? "Argumento copiado com números."
-      : "Argumento copiado sem números.";
+      : "Argumento copiado sem números.");
   } catch {
     setSection("preview", true);
     preview.textContent = text;
@@ -12048,7 +12159,7 @@ async function copyArgument(numbered) {
     range.selectNodeContents(preview);
     selection.removeAllRanges();
     selection.addRange(range);
-    status.textContent = "Argumento selecionado. Use Ctrl+C para copiar.";
+    argumentNotice("Argumento selecionado. Use Ctrl+C para copiar.");
   }
 }
 numberToggle.onclick = () => {
@@ -12069,7 +12180,7 @@ document.querySelector("#download").onclick = () => {
   link.download = "argumento.txt";
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  status.textContent = "Arquivo de texto gerado.";
+  argumentNotice("Arquivo de texto gerado.");
 };
 </script>
 
@@ -12630,6 +12741,8 @@ function setSection(section, open) {
     if (caps) caps.hidden = !open;
   }
   if (section === "preview") {
+    const validation = root.querySelector(".hy-logic-button");
+    if (validation) { validation.hidden = !open; validation.inert = !open; }
     const area = root.querySelector(".hy-logic-area");
     if (area) area.hidden = !open;
     const tools = root.querySelector(".hy-tools");
@@ -12638,38 +12751,67 @@ function setSection(section, open) {
   }
   saveUI();
 }
-function isDarkTheme() { return ui.theme === "dark" || ui.theme === "indigo-dark"; }
+function isDarkTheme(theme = ui.theme) { return ["dark", "indigo-dark", "petroleum", "graphite"].includes(theme); }
 const editorThemeChoices = [
   ["light", "Claro original", "Original light"],
   ["dark", "Escuro original", "Original dark"],
   ["indigo-light", "Índigo claro", "Indigo light"],
   ["indigo-dark", "Índigo escuro", "Indigo dark"],
+  ["petroleum", "Petróleo e turquesa", "Petroleum and turquoise"],
+  ["graphite", "Grafite e âmbar", "Graphite and amber"],
+  ["sand", "Areia e azul", "Sand and blue"],
+  ["sage", "Sálvia e oliva", "Sage and olive"],
 ];
 if (!editorThemeChoices.some(([value]) => value === ui.theme)) ui.theme = "light";
 const themeChoices = document.createElement("fieldset");
 themeChoices.className = "hy-theme-choices";
 const themeLegend = document.createElement("legend");
-themeLegend.textContent = interfaceText("Temas", "Themes"); themeChoices.append(themeLegend);
+const themeToggle=document.createElement("button");
+themeToggle.type="button";themeToggle.className="hy-theme-section-toggle";
+const themeToggleLabel=document.createElement("span");themeToggleLabel.textContent=interfaceText("Temas","Themes");
+themeToggle.append(themeToggleLabel);
+themeToggle.insertAdjacentHTML("beforeend",'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>');
+themeLegend.append(themeToggle);themeChoices.append(themeLegend);
 function createThemeOptions() {
 const grid = document.createElement("div"); grid.className="hy-theme-grid";
-editorThemeChoices.forEach(([value,pt,en]) => {
+for(const dark of [false,true]) {
+  const column=document.createElement("section");column.className="hy-theme-column";column.dataset.scheme=dark?"dark":"light";
+  const heading=document.createElement("h4");heading.textContent=dark?interfaceText("Escuros","Dark themes"):interfaceText("Claros","Light themes");
+  column.append(heading);
+editorThemeChoices.filter(([value])=>isDarkTheme(value)===dark).forEach(([value,pt,en]) => {
   const choice=document.createElement("button"); choice.type="button"; choice.className="hy-theme-option";
   choice.dataset.themeValue=value;
   const swatch=document.createElement("span");swatch.className="hy-theme-swatch";swatch.setAttribute("aria-hidden","true");
   swatch.innerHTML='<i></i><i></i>';
   const name=document.createElement("span");name.textContent=interfaceText(pt,en);
-  choice.append(swatch,name);choice.onclick=()=>{ui.theme=value;applyUI();};grid.append(choice);
+  choice.append(swatch,name);choice.onclick=()=>{ui.theme=value;applyUI();};column.append(choice);
 });
+  grid.append(column);
+}
   return grid;
 }
 const themeGrid=createThemeOptions();
-themeChoices.append(themeGrid);
+const themeCollapse=document.createElement("div"),themeCollapseInner=document.createElement("div");
+themeCollapse.className="hy-theme-collapse";themeCollapse.id="settings-theme-options";
+themeCollapseInner.className="hy-theme-collapse-inner";
+themeCollapseInner.append(themeGrid);themeCollapse.append(themeCollapseInner);themeChoices.append(themeCollapse);
+themeToggle.setAttribute("aria-controls",themeCollapse.id);
+function setThemeSectionOpen(open) {
+  themeToggle.setAttribute("aria-expanded",String(open));themeCollapse.dataset.open=String(open);
+  themeCollapse.inert=!open;themeCollapse.setAttribute("aria-hidden",String(!open));
+}
+setThemeSectionOpen(ui.themeSectionOpen!==false);
+themeToggle.onclick=()=>{ui.themeSectionOpen=themeToggle.getAttribute("aria-expanded")!=="true";setThemeSectionOpen(ui.themeSectionOpen);saveUI();};
 root.querySelector(".hy-settings-switches").after(themeChoices);
 function applyUI() {
   root.dispatchEvent(new Event("lp-ui-colors"));
   root.dataset.focus = String(ui.focus);
   root.dataset.theme=ui.theme;
   document.documentElement.dataset.editorTheme=ui.theme;
+  root.dataset.palette = ["light", "dark"].includes(ui.theme) ? "original" : "ambient";
+  document.documentElement.dataset.editorPalette = root.dataset.palette;
+  const paletteStyle = getComputedStyle(root);
+  for (const token of ["paper", "ink", "edge"]) document.documentElement.style.setProperty("--editor-hint-" + token, paletteStyle.getPropertyValue("--" + token));
   root.style.colorScheme = isDarkTheme() ? "dark" : "light";
   root.querySelectorAll(".hy-theme-option").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeValue===ui.theme)));
   document.documentElement.style.colorScheme = root.style.colorScheme;
@@ -12985,6 +13127,8 @@ logicPanel.setAttribute("aria-live", "polite");
 const logicButton = document.createElement("button");
 logicButton.type = "button";
 logicButton.className = "hy-button hy-logic-button";
+logicButton.classList.add("hy-icon-button");
+logicButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4 4 7 8 9 4-2 8-5 8-9V6Z"/><path d="m8 12 3 3 5-6"/></svg>';
 logicButton.setAttribute("aria-expanded", "false");
 logicButton.setAttribute("aria-controls", "logic-panel");
 const logicFooter = document.createElement("div");
@@ -13077,7 +13221,7 @@ async function updateLogicValidation() {
   if (!logicEnabled) return;
   const revision = ++logicRevision,
     words = logicText();
-  logicButton.textContent = words.button;
+  logicButton.setAttribute("aria-label", words.button);
   logicPanel.textContent = words.working;
   const snapshot = rows.map((row) => ({ ...row }));
   const result = await LPLogic.validate(snapshot, {
@@ -13158,7 +13302,7 @@ async function updateLogicValidation() {
     await view({ result, snapshot, prepared, revision });
   }
 }
-logicButton.textContent = logicText().button;
+logicButton.setAttribute("aria-label", logicText().button);
 logicButton.onclick = () => {
   openLogicValidation();
 };
@@ -13166,7 +13310,7 @@ let logicLanguage = document.documentElement.lang;
 new MutationObserver(() => {
   if (logicLanguage === document.documentElement.lang) return;
   logicLanguage = document.documentElement.lang;
-  logicButton.textContent = logicText().button;
+  logicButton.setAttribute("aria-label", logicText().button);
   scheduleLogicValidation();
 }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 </script>
@@ -13801,7 +13945,7 @@ async function confirmDeletion(message) {
       const anchor = anchors[i],
         width = Math.min(
           available,
-          Math.max(Math.min(280, available), anchor.widthRatio * available),
+          Math.max(minimumFrameWidth(frame), anchor.widthRatio * available),
         );
       frame.style.width = width + "px";
       frame.style.left = (available - width) * Math.max(0, Math.min(1, anchor.position)) + "px";
@@ -13809,10 +13953,44 @@ async function confirmDeletion(message) {
   }
   const storageKey = "formal-panel-layout-v1",
     number = (value) => Number.parseFloat(value) || 0;
+  function minimumFrameWidth(frame) {
+    const panel = frame.querySelector(".hy-panel"),
+      head = panel.querySelector(":scope > .hy-section-head"),
+      tools = head.querySelector(".hy-tools");
+    if (frame.dataset.panel === "0" || tools) {
+      const children = [...head.children].filter(node => node.getClientRects().length),
+        style = getComputedStyle(head),
+        panelStyle = getComputedStyle(panel),
+        frameStyle = getComputedStyle(frame);
+      const width = children.reduce((sum, node) => {
+        const s = getComputedStyle(node);
+        const margins = node.computedStyleMap?.();
+        return sum + Math.max(node.offsetWidth, node.scrollWidth)
+          + (margins ? number(String(margins.get("margin-left"))) : (node === tools ? 0 : number(s.marginLeft)))
+          + (margins ? number(String(margins.get("margin-right"))) : number(s.marginRight));
+      }, 0) + number(style.columnGap) * Math.max(0, children.length - 1)
+        + number(style.paddingLeft) + number(style.paddingRight)
+        + number(panelStyle.paddingLeft) + number(panelStyle.paddingRight)
+        + number(panelStyle.borderLeftWidth) + number(panelStyle.borderRightWidth)
+        + number(frameStyle.paddingLeft) + number(frameStyle.paddingRight) + 4;
+      frame.dataset.headerMinimum = String(Math.ceil(width));
+    }
+    return Math.min(board.clientWidth, number(frame.dataset.headerMinimum) || 280);
+  }
   function fit() {
     if (!layoutVisible()) return;
     const available = board.clientWidth;
+    const argumentMinimum = minimumFrameWidth(frames[1]);
+    const editorMinimum = minimumFrameWidth(frames[0]);
+    if (!manual) {
+      const columns = innerWidth >= 1440 && available >= argumentMinimum + editorMinimum + 12
+        ? `minmax(${editorMinimum}px, 1.2fr) minmax(${argumentMinimum}px, 1fr)` : "minmax(0, 1fr)";
+      if (board.style.gridTemplateColumns !== columns) board.style.gridTemplateColumns = columns;
+    }
     for (const frame of frames) {
+      const minimum = minimumFrameWidth(frame);
+      frame.style.minWidth = minimum + "px";
+      if (manual && number(frame.style.width) < minimum) frame.style.width = minimum + "px";
       if (number(frame.style.width) > available) frame.style.width = available + "px";
       if (manual)
         frame.style.left =
@@ -13949,7 +14127,7 @@ async function confirmDeletion(message) {
       if (Math.abs(left - center) < 24) left = center;
       top = Math.max(0, top + dy);
     } else {
-      const minWidth = Math.min(280, board.clientWidth);
+      const minWidth = minimumFrameWidth(frame);
       if (state.edge === "e")
         width = Math.max(minWidth, Math.min(state.width + dx, board.clientWidth - left));
       if (state.edge === "w") {
@@ -14001,7 +14179,7 @@ async function confirmDeletion(message) {
         if (event.key === "ArrowLeft" || event.key === "ArrowRight")
           frame.style.width =
             Math.max(
-              Math.min(280, board.clientWidth),
+              minimumFrameWidth(frame),
               Math.min(
                 board.clientWidth - number(frame.style.left),
                 frame.offsetWidth + (event.key === "ArrowRight" ? step : -step),
@@ -14184,6 +14362,12 @@ async function confirmDeletion(message) {
   frames.forEach((frame) => observer.observe(frame));
   observer.observe(board);
   observer.observe(board.parentElement);
+  observer.observe(argumentPanel.querySelector(":scope > .hy-section-head"));
+  observer.observe(argumentPanel.querySelector(".hy-tools"));
+  const headerObserver = new MutationObserver(() => requestAnimationFrame(fit));
+  for (const panel of [editor, argumentPanel]) headerObserver.observe(panel.querySelector(":scope > .hy-section-head"), {
+    childList: true, subtree: true, attributes: true, attributeFilter: ["hidden"],
+  });
   requestAnimationFrame(() => {
     ready = true;
     expandBoard();
@@ -14205,13 +14389,28 @@ async function confirmDeletion(message) {
   menu.hidden = true;
   menu.id = "export-formats";
   menu.setAttribute("role", "group");
+  menu.setAttribute("popover", "manual");
   menu.setAttribute("aria-label", "Formato");
   wrapper.append(menu);
   trigger.setAttribute("aria-expanded", "false");
   trigger.setAttribute("aria-controls", menu.id);
   function close() {
+    if (menu.matches(":popover-open")) menu.hidePopover();
     menu.hidden = true;
     trigger.setAttribute("aria-expanded", "false");
+  }
+  function position() {
+    if (menu.hidden) return;
+    if (!trigger.getClientRects().length) { close(); return; }
+    const b = trigger.getBoundingClientRect(), m = menu.getBoundingClientRect();
+    menu.style.left = Math.max(12, Math.min(innerWidth - m.width - 12, b.left + b.width / 2 - m.width / 2)) + "px";
+    menu.style.top = Math.max(12, b.bottom + 8 + m.height <= innerHeight - 12 ? b.bottom + 8 : b.top - m.height - 8) + "px";
+  }
+  function open() {
+    menu.hidden = false;
+    menu.showPopover();
+    trigger.setAttribute("aria-expanded", "true");
+    position();
   }
   function save(bytes) {
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" })),
@@ -14329,6 +14528,7 @@ async function confirmDeletion(message) {
         trigger.disabled = true;
         try {
           await pdf();
+          argumentNotice(interfaceText("Arquivo PDF gerado.", "PDF file generated."));
         } finally {
           trigger.disabled = false;
         }
@@ -14337,23 +14537,27 @@ async function confirmDeletion(message) {
     menu.append(button);
   }
   trigger.onclick = () => {
-    menu.hidden = !menu.hidden;
-    trigger.setAttribute("aria-expanded", String(!menu.hidden));
+    if (menu.hidden) open(); else close();
   };
   document.addEventListener("pointerdown", (event) => {
     if (!wrapper.contains(event.target)) close();
   });
   wrapper.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      if (menu.hidden) return;
+      event.preventDefault();
+      event.stopPropagation();
       close();
       trigger.focus();
     } else if (event.key === "ArrowDown") {
       event.preventDefault();
-      menu.hidden = false;
-      trigger.setAttribute("aria-expanded", "true");
+      open();
       menu.querySelector("button").focus();
     }
   });
+  window.addEventListener("resize", position);
+  document.addEventListener("scroll", position, true);
+  document.addEventListener("close", event => { if (event.target.matches("dialog")) close(); }, true);
 })();
 </script>
 
@@ -15347,8 +15551,8 @@ async function confirmDeletion(message) {
         "library-layout",
         "Disposição da biblioteca",
         "Library arrangement",
-        "Horizontal, fixa e sem janelas destacadas",
-        "Horizontal, docked, no detached windows",
+        "Horizontal, fixa, com Mais comuns aberta",
+        "Horizontal, docked, with Most common open",
         () => root.dispatchEvent(new Event("lp-reset-library-layout")),
       ],
       [
@@ -16464,7 +16668,11 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
     });
 
   }
+  let activeAppearance = null;
   function open(key) {
+    const previous = activeAppearance;
+    previous?.dismiss();
+    if (previous?.key === key) return;
     const en = ui.language === "en",
       c = config(key),
       dialog = document.createElement("dialog");
@@ -16478,10 +16686,12 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
     const colorKey = key === "editor" ? "premiseColor" : "conclusionColor",
       colorLabel = document.createElement("label");
     colorLabel.textContent = en ? "Panel color" : "Cor da janela";
+    colorLabel.className = "hy-panel-color-label";
     const color = document.createElement("input");
     color.type = "color";
+    color.id = "panel-custom-color-" + key;
+    colorLabel.htmlFor = color.id;
     color.value = ui[colorKey];
-    colorLabel.append(color);
     dialog.append(colorLabel);
     const swatches = document.createElement("div");
     swatches.className = "hy-color-options";
@@ -16497,12 +16707,25 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
       };
       swatches.append(b);
     }
+    const customColor = document.createElement("label");
+    customColor.className = "hy-custom-color-swatch";
+    customColor.style.setProperty("--custom-color", color.value);
+    color.setAttribute("aria-label", interfaceText("Escolher qualquer cor", "Choose any color"));
+    customColor.dataset.hintText = color.getAttribute("aria-label");
+    const currentColor = document.createElement("span");
+    currentColor.className = "hy-custom-color-value";
+    currentColor.setAttribute("aria-hidden", "true");
+    customColor.append(currentColor, color);
+    swatches.append(customColor);
     dialog.append(swatches);
     color.oninput = () => {
       ui[colorKey] = color.value;
+      customColor.style.setProperty("--custom-color", color.value);
+      swatches.querySelectorAll(".hy-color-swatch").forEach(button => button.setAttribute("aria-pressed", String(button.getAttribute("aria-label").toLowerCase() === color.value.toLowerCase())));
       root.dispatchEvent(new Event("lp-ui-colors"));
       saveUI();
     };
+    swatches.querySelectorAll(".hy-color-swatch").forEach(button => button.setAttribute("aria-pressed", String(button.getAttribute("aria-label").toLowerCase() === color.value.toLowerCase())));
     for (const [property, pt, english] of [
       ["external", "Traço externo", "Outer marker"],
       ["border", "Borda colorida", "Colored border"],
@@ -16587,11 +16810,21 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
     detailRow.append(label, picker);
     dialog.append(list);
     list.classList.add("hy-floating-detail-options");
-    const fromSettings = root.querySelector("#editor-settings").matches(":popover-open");
+    const settingsPanel = root.querySelector("#editor-settings");
+    const fromSettings = settingsPanel.matches(":popover-open");
+    const listeners = new AbortController();
+    let dismissed = false;
     const dismiss = () => {
-      if (fromSettings) { dialog.hidePopover(); dialog.remove(); }
-      else dialog.close();
+      if (dismissed) return;
+      dismissed = true;
+      listeners.abort();
+      if (list.matches(":popover-open")) list.hidePopover();
+      if (dialog.matches(":popover-open")) dialog.hidePopover();
+      dialog.remove();
+      if (activeAppearance?.dismiss === dismiss) activeAppearance = null;
     };
+    activeAppearance = { key, dismiss };
+    dialog.dataset.panel = key;
     dialog.querySelector("[data-close]").onclick = dismiss;
     dialog.addEventListener("click", (event) => {
       const bounds = dialog.getBoundingClientRect();
@@ -16604,17 +16837,29 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
       )
         dismiss();
     });
-    dialog.onclose = () => dialog.remove();
-    (fromSettings ? root.querySelector("#editor-settings") : root).append(dialog);
-    if (fromSettings) {
-      dialog.setAttribute("popover", "manual");
-      dialog.showPopover();
-      dialog.addEventListener("keydown", event => { if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); dismiss(); } });
-    } else dialog.showModal();
+    (fromSettings ? settingsPanel : root).append(dialog);
+    dialog.setAttribute("popover", "manual");
+    dialog.showPopover();
+    document.addEventListener("pointerdown", event => {
+      if (dialog.contains(event.target)) return;
+      if (event.target.closest("#editor-settings button,#editor-settings input,#editor-settings select,#editor-settings summary")) return;
+      dismiss();
+    }, { capture: true, signal: listeners.signal });
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (list.matches(":popover-open")) { list.hidePopover(); summary.setAttribute("aria-expanded", "false"); }
+      else dismiss();
+    }, { capture: true, signal: listeners.signal });
+    dialog.addEventListener("toggle", event => { if (event.newState === "closed") dismiss(); }, { signal: listeners.signal });
+    if (fromSettings) settingsPanel.addEventListener("toggle", event => {
+      if (event.newState === "closed") dismiss();
+    }, { signal: listeners.signal });
   }
   root.addEventListener("lp-open-panel-appearance", event => {
     const key=event.detail?.key;
-    if (["editor","preview"].includes(key) && !root.querySelector(".hy-panel-appearance-dialog")) open(key);
+    if (["editor","preview"].includes(key)) open(key);
   });
   for (const key of ["editor", "preview"]) {
     const eye = root.querySelector("[data-action=" + key + "]");
@@ -18898,7 +19143,11 @@ const LPHints = (() => {
     state.selected = "common";
     state.floating = false;
     state.railDetached = false;
-    state.panels = [];
+    state.panels = [{ id: crypto.randomUUID(), group: "common", docked: true }];
+    state.cardsVersion = 1;
+    delete pane.dataset.userClosed;
+    pane.classList.remove("hy-pane-collapsed");
+    search.value = "";
     paint();
     persist();
   });
@@ -20478,7 +20727,16 @@ globalThis.LPCategoryRowTarget = (stack, preview, cards, top, height, nextId) =>
   appearance.append(settings.querySelector('.hy-theme-choices'),settings.querySelector('.hy-setting:has(#scale-library)'),settings.querySelector('.hy-setting:has(#scale-writing)'),settings.querySelector('.hy-layout-recovery-setting'));
   const panelSection=document.createElement("section");panelSection.className="hy-panel-shortcuts";
   const title=document.createElement("h3");title.textContent=interfaceText("Personalizar painéis","Customize panels");
-  const info=document.createElement("p");info.textContent=interfaceText("Clique em um painel abaixo ou segure o olhinho dele para personalizar.","Click a panel below or hold its eye button to customize it.");
+  function infoButton(pt,en,labelPt,labelEn) {
+    const button=document.createElement("button");button.type="button";
+    button.className="hy-icon-button hy-settings-info";
+    button.setAttribute("aria-label",interfaceText(labelPt,labelEn));
+    button.dataset.hintText=interfaceText(pt,en);
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>';
+    return button;
+  }
+  title.className="hy-settings-section-heading";
+  title.append(infoButton("Clique em um painel abaixo ou segure o olhinho dele para personalizar.","Click a panel below or hold its eye button to customize it.","Informações sobre personalização dos painéis","Panel customization information"));
   const buttons=document.createElement("div");buttons.className="hy-panel-shortcut-grid";
   [["editor","Premissas e conclusões","Premises and conclusions",'<path d="M9 6h12M9 12h12M9 18h12M3 6h2M3 12h2M3 18h2"/>'],["preview","Argumento","Argument",'<path d="M14 3H5v18h14V8ZM14 3v5h5M8 12h8M8 16h8"/>']].forEach(([key,pt,en,icon])=>{
     const button=document.createElement("button");button.type="button";button.dataset.panelSettings=key;
@@ -20486,9 +20744,10 @@ globalThis.LPCategoryRowTarget = (stack, preview, cards, top, height, nextId) =>
     const name=document.createElement("span");name.textContent=interfaceText(pt,en);button.append(name);
     button.onclick=()=>{root.dispatchEvent(new CustomEvent("lp-open-panel-appearance",{detail:{key}}));};buttons.append(button);
   });
-  const backgroundInfo=document.createElement("p");backgroundInfo.className="hy-background-theme-help";
-  backgroundInfo.textContent=interfaceText("Segure uma área vazia do fundo para escolher o tema.","Hold an empty area of the background to choose a theme.");
-  panelSection.append(title,info,buttons,backgroundInfo);
+  const themeHeading=appearance.querySelector(".hy-theme-choices legend");
+  themeHeading.classList.add("hy-settings-section-heading");
+  themeHeading.append(infoButton("Segure uma área vazia do fundo para escolher o tema.","Hold an empty area of the background to choose a theme.","Informações sobre temas","Theme information"));
+  panelSection.append(title,buttons);
   appearance.querySelector(".hy-theme-choices").after(panelSection);
   functionalities.append(...settings.querySelectorAll('.hy-hover-delay-setting'));
   settings.querySelector('.hy-appearance-settings')?.remove();
@@ -20562,7 +20821,9 @@ validationControls.className = "hy-section-head";
 validationPreview.append(validationControls);
 validationDialog.append(validationHeader, validationPreview, logicFooter, logicPanel);
 root.append(validationDialog);
-root.querySelector(".hy-argument-panel .hy-tools").append(logicButton);
+root.querySelector(".hy-argument-panel .hy-section-head h3").after(logicButton);
+logicButton.hidden = !ui.preview;
+logicButton.inert = !ui.preview;
 logicButton.setAttribute("aria-haspopup", "dialog");
 logicButton.setAttribute("aria-controls", "logic-validation-dialog");
 validationDialog.id = "logic-validation-dialog";
@@ -20599,6 +20860,57 @@ validationDialog.addEventListener("click", event => {
   const b = validationDialog.getBoundingClientRect();
   if (event.clientX < b.left || event.clientX > b.right || event.clientY < b.top || event.clientY > b.bottom) validationDialog.close();
 });
+</script>
+
+<script id="window-entrance">
+// Presentation only: retain saved sizes, positions and each panel's own transforms.
+(() => {
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  if (motion.matches || !Element.prototype.animate) return;
+  const windows = [...root.querySelectorAll(
+    ".hy-modular-library, .hy-editor, .hy-argument-panel, .hy-mod-palette[data-docked='false']",
+  )].filter(node => node.getClientRects().length && getComputedStyle(node).visibility !== "hidden");
+  const animations = [];
+  let stopped = false;
+  const stop = () => {
+    stopped = true;
+    for (const animation of animations) animation.cancel();
+    for (const node of windows) node.style.removeProperty("opacity");
+    document.removeEventListener("pointerdown", pauseForPointer, true);
+    document.removeEventListener("click", stop, true);
+    document.removeEventListener("pointercancel", stop, true);
+    document.removeEventListener("keydown", stop, true);
+    motion.removeEventListener("change", stop);
+  };
+  const pauseForPointer = () => {
+    for (const animation of animations) animation.pause();
+    document.addEventListener("pointerup", () => requestAnimationFrame(stop), { capture: true, once: true });
+  };
+  for (const node of windows) node.style.opacity = "0";
+  document.addEventListener("pointerdown", pauseForPointer, true);
+  document.addEventListener("click", stop, true);
+  document.addEventListener("pointercancel", stop, true);
+  document.addEventListener("keydown", stop, true);
+  motion.addEventListener("change", stop);
+  // Let the saved workspace finish its initial layout before the entrance begins.
+  document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (stopped) return;
+    windows.forEach((node, index) => {
+      const animation = node.animate([
+        { opacity: 0, scale: ".78", offset: 0, easing: "cubic-bezier(.16,1,.3,1)" },
+        { opacity: 1, scale: "1.035 1.045", offset: .43, easing: "ease-in-out" },
+        { opacity: 1, scale: ".987 .98", offset: .64, easing: "ease-in-out" },
+        { opacity: 1, scale: "1.008 1.012", offset: .80, easing: "ease-in-out" },
+        { opacity: 1, scale: ".997 .995", offset: .92, easing: "ease-in-out" },
+        { opacity: 1, scale: "1", offset: 1 },
+      ], { duration: 820, delay: Math.min(index * 65, 260), fill: "both" });
+      animation.id = "lp-window-entrance";
+      animations.push(animation);
+      node.style.removeProperty("opacity");
+    });
+    Promise.all(animations.map(animation => animation.finished.catch(() => {}))).then(stop);
+  }))));
+})();
 </script>
   </body>
 </html>

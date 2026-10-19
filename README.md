@@ -126,7 +126,7 @@ Open the **description icon in the editing panel's header**. It lists propositio
 
 ## Validate logic — beta
 
-**Validate logic**, beside the Argument controls, opens a centered dialog with the live argument above the validation results. Its original numbering, prefix spacing, Copy and TXT/PDF Export controls remain available. Close or Escape restores the controls to the panel without changing the argument. While open, validation updates after edits. It checks **classical propositional consequence**: there must be no interpretation in which every premise is true and a conclusion is false.
+The **shield with a check mark beside the Argument title** (Validate logic) opens a centered dialog with the live argument above the validation results. Its original numbering, prefix spacing, Copy and TXT/PDF Export controls remain available. Close or Escape restores the controls to the panel without changing the argument. While open, validation updates after edits. It checks **classical propositional consequence**: there must be no interpretation in which every premise is true and a conclusion is false.
 
 - A conclusion is **valid** when it follows from the premises in every interpretation. This does not establish that the premises are factually true.
 - An invalid conclusion includes a **counterexample** assigning true/false values to proposition names. Expand **Why is this a counterexample?** to see the premises and conclusion under that assignment; expand **Connective evaluation** for the calculation steps.
@@ -343,7 +343,7 @@ Abra o **ícone de descrição no cabeçalho do painel de edição**. Ele lista 
 
 ## Validar lógica — beta
 
-**Validar lógica**, junto dos controles do Argumento, abre uma janela centralizada com o argumento acima dos resultados. Numeração, espaçamento de prefixos, Copiar e Exportar TXT/PDF continuam disponíveis. Fechar ou Escape devolve os controles ao painel sem alterar o argumento. Enquanto aberta, a validação se atualiza após alterações. A verificação considera **consequência proposicional clássica**: não pode existir uma interpretação em que todas as premissas sejam verdadeiras e uma conclusão seja falsa.
+O **escudo com uma marca de verificação junto ao título Argumento** (Validar lógica) abre uma janela centralizada com o argumento acima dos resultados. Numeração, espaçamento de prefixos, Copiar e Exportar TXT/PDF continuam disponíveis. Fechar ou Escape devolve os controles ao painel sem alterar o argumento. Enquanto aberta, a validação se atualiza após alterações. A verificação considera **consequência proposicional clássica**: não pode existir uma interpretação em que todas as premissas sejam verdadeiras e uma conclusão seja falsa.
 
 - Uma conclusão é **válida** quando decorre das premissas em todas as interpretações. Isso não estabelece a verdade factual das premissas.
 - Uma conclusão inválida apresenta um **contraexemplo** com valores verdadeiro/falso para as proposições. Expanda **Por que este é um contraexemplo?** para ver as premissas e a conclusão nessa atribuição; **Avaliação dos conectivos** mostra os passos do cálculo.
@@ -456,3 +456,28 @@ Auditoria local: 18 de outubro de 2026. Os testes de navegador abrangem edição
 
 Panel customization opened from Settings keeps Settings open. Inner detail and its selector share one row.
 A personalização aberta pelas Configurações mantém as Configurações abertas. Detalhe interno e seu seletor ficam na mesma linha.
+
+Windows appear with a short staggered scale-and-settle animation on entry and reload. Interaction cancels it immediately. The system preference for reduced motion disables it.
+As janelas surgem com uma animação breve de crescimento e estabilização ao entrar ou recarregar. Interagir a interrompe imediatamente. A preferência do sistema por movimento reduzido a desativa.
+
+First visit, Reset and Reorganize windows show the docked Most common symbol category expanded. Panel customization closes on outside click or Escape, toggles off with its own shortcut, and switches when the other panel shortcut is clicked. Settings controls remain usable; closing Settings removes its customization window.
+Primeira visita, Restaurar padrões e Reorganizar janelas mostram a categoria Mais comuns aberta na biblioteca. A personalização fecha ao clicar fora ou pressionar Escape; clicar no mesmo atalho a fecha e clicar no outro substitui o painel. Os controles das configurações continuam acessíveis; fechar as configurações remove sua janela de personalização.
+
+The Argument header stays on one row; its minimum window width follows its controls, language and writing scale. Pointer and keyboard resizing respect this minimum, and the initial layout allocates enough room. On narrow screens, header controls wrap without horizontal scrolling. Validate logic retains its beta badge. Symbol-category dividers appear only on hover/focus; library top and bottom margins gain 3px. Entrance pauses through pointer presses to preserve clicks.
+O cabeçalho do Argumento permanece em uma linha; a largura mínima acompanha os controles, o idioma e a escala de escrita. Redimensionar por mouse e teclado respeita esse limite, e a disposição inicial reserva espaço suficiente. Em telas estreitas, os controles se organizam em novas linhas sem rolagem horizontal. Validar lógica mantém a tarja beta. As divisórias das categorias aparecem somente em hover/foco; as margens superior e inferior da biblioteca aumentam 3px. A entrada pausa durante o clique para preservar a interação.
+
+Information icons beside Themes and Customize panels show the background-hold and panel-customization instructions on hover or keyboard focus. Inline explanatory paragraphs are removed. Dialogs use balanced 20px insets (16px on small screens), border-box sizing and consistent close-button alignment. Fields stay within their dialogs; import checkboxes remain centered and square.
+Ícones de informação junto de Temas e Personalizar painéis mostram as instruções do fundo e dos painéis em hover ou foco de teclado. Os parágrafos explicativos fixos foram removidos. As janelas usam margens internas equilibradas de 20px (16px em telas pequenas), dimensões que incluem bordas e alinhamento uniforme dos botões de fechar. Os campos permanecem dentro das janelas; as caixas de seleção da importação ficam quadradas e centralizadas.
+
+The Argument and Premises panels share the same header top spacing and collapsed height. Closing the Argument eye button also hides and disables Validate logic; reopening restores it. These states persist after reload. Header minimum sizes account for both panels so scaled controls remain aligned.
+Argumento e Premissas compartilham a margem superior do cabeçalho e a altura quando recolhidos. Fechar o olhinho do Argumento também oculta e desativa Validar lógica; reabrir o restaura. Esses estados persistem ao recarregar. As larguras mínimas consideram os dois painéis para manter os controles ampliados alinhados.
+
+Copy and export confirmations use the same bottom notification as symbol favorites, including inside validation. Export opens a floating top-layer format picker centered below its button, with viewport clamping and keyboard support; it does not resize or scroll the Argument panel. Validation has no divider above the argument toolbar.
+As confirmações de cópia e exportação usam a mesma notificação inferior dos favoritos de símbolos, inclusive dentro da validação. Exportar abre uma seleção flutuante sobre a página, centralizada abaixo do botão, com limites de tela e suporte ao teclado; ela não redimensiona nem faz rolar o painel de Argumento. A validação não tem divisória acima dos controles do argumento.
+
+Eight themes are available: Original light/dark, Indigo light/dark, Petroleum and turquoise, Graphite and amber, Sand and blue, and Sage and olive. Theme choices persist after reload and share the same Settings/background picker. Panel customization includes a rainbow color circle next to the presets; click or focus its native color control to choose any color. The center shows the current color, with no additional visible instructions. Validation toolbar uses the same inner inset on all sides.
+Há oito temas: Claro/Escuro originais, Índigo claro/escuro, Petróleo e turquesa, Grafite e âmbar, Areia e azul e Sálvia e oliva. A escolha persiste ao recarregar e é compartilhada entre as Configurações e o seletor aberto pelo fundo. A personalização dos painéis tem um círculo multicolorido junto às cores predefinidas; clique ou acesse seu controle nativo pelo teclado para escolher qualquer cor. O centro mostra a cor atual, sem textos adicionais visíveis. Os controles da validação usam margens internas equivalentes.
+
+
+Themes in Settings expands and collapses with a smooth animation, respecting reduced motion. Light themes occupy the left column and dark themes the right; the collapsed state persists after reload. All eight themes remain available.
+A seção Temas nas Configurações abre e fecha com animação suave, respeitando a preferência por movimento reduzido. Os temas claros ficam à esquerda e os escuros à direita; o estado recolhido persiste ao recarregar. Os oito temas continuam disponíveis.
