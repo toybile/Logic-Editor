@@ -9611,6 +9611,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 
 #lp-hybrid .hy-continuous-field { display:block; box-sizing:border-box; width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); font:calc(20px * var(--writing-scale))/1.65 "Cambria Math",serif; resize:none; overflow:hidden; overflow-wrap:anywhere; white-space:pre-wrap; }
 #lp-hybrid .hy-continuous-field:focus { outline:2px solid var(--blue); outline-offset:2px; }
+#lp-hybrid .hy-continuous-field { touch-action:pan-x; }
 #lp-hybrid .hy-line-body:has(.hy-continuous-field) { align-items:flex-start; border:0; background:transparent; }
 #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { width:calc(36px * var(--writing-scale)); min-width:calc(36px * var(--writing-scale)); height:calc(36px * var(--writing-scale)); min-height:calc(36px * var(--writing-scale)); padding:calc(7px * var(--writing-scale)); border:1px solid var(--edge); background:transparent; color:var(--quiet); }
 #lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle[aria-pressed=true] { color:var(--blue); background:var(--soft); }
@@ -13732,7 +13733,18 @@ async function confirmDeletion(message) {
       if (event.button !== 0 || event.target === checkbox || event.target.closest(".hy-role"))
         return;
       if (event.target.closest(".hy-row-move-handle")) return;
-      if (event.target.closest('.hy-continuous-field')) return;
+      if (event.target.closest('.hy-continuous-field')) {
+        cancelLineHold();
+        if (!drag && (!selectionMode || selected.has(row))) {
+          startDrag({
+            button: 0, pointerId: event.pointerId,
+            clientX: event.clientX, clientY: event.clientY,
+            preventDefault() {}, deferCapture: true,
+          }, row, line, line);
+          if (drag) drag.continuousField = true;
+        }
+        return;
+      }
       if (event.pointerType === "touch" && event.target.closest(".hy-block")) return;
       if (event.target.closest("button") && !event.target.closest(".hy-delete-line")) return;
       if (selected.size && !selected.has(row) && !selectionMode) {
@@ -13795,6 +13807,13 @@ async function confirmDeletion(message) {
       )
         cancelLineHold();
       if (drag?.handle === line) {
+        if (drag.continuousField && !drag.ghost) {
+          const dx = Math.abs(event.clientX - drag.startX),
+            dy = Math.abs(event.clientY - drag.startY);
+          // Horizontal movement keeps native text selection; vertical movement reorders.
+          if (Math.max(dx, dy) < 6) return;
+          if (dx > dy) { drag = null; return; }
+        }
         moveDrag(event);
         if (drag.ghost) suppressClickUntil = Date.now() + 350;
       }
@@ -13824,6 +13843,7 @@ async function confirmDeletion(message) {
       if (drag?.handle === line) finishDrag(event, true);
     });
     line.addEventListener("lostpointercapture", (event) => {
+      if (event.target !== line) return;
       cancelLineHold();
       if (drag?.handle === line) finishDrag(event, true);
     });
@@ -20836,6 +20856,7 @@ function restoreInitialLayoutProfile() {
       const background = typeof isThemeBackgroundTarget === "function" && isThemeBackgroundTarget(e.target);
       if (e.button !== 0 || (!root.contains(e.target) && !background)) return;
       stop();
+      if (e.target.closest('.hy-continuous-field')) return;
       if (e.target.closest("button:disabled,input:disabled,[aria-disabled=true]")) return;
       const detachedGrip = e.target.closest(".hy-mod-palette[data-docked=false] .hy-mod-grip"),
         role = e.target.closest(".hy-role"),
