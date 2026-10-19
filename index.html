@@ -9639,6 +9639,13 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-writing-mode-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
 #lp-hybrid .hy-writing-mode-choices button { min-width:0; min-height:44px; padding:8px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--quiet); font:13px/1.4 system-ui; cursor:pointer; }
 #lp-hybrid .hy-writing-mode-choices button[aria-pressed=true] { color:var(--blue); border-color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-row .hy-line-body .hy-block,
+#lp-hybrid .hy-continuous-field { font-family:var(--editor-formula-font, "Cambria Math", serif); }
+#lp-hybrid #preview { font-family:var(--preview-formula-font, "Cambria Math", serif); }
+#lp-hybrid .hy-panel-font-row { gap:14px; margin-top:18px; padding-top:18px; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-panel-font-row select { width:auto; min-width:0; max-width:58%; border:1px solid var(--edge); }
+#lp-hybrid .hy-panel-font-sample { margin-top:12px; padding:12px; text-align:center; border-radius:9px; background:var(--soft); font-size:20px; overflow-wrap:anywhere; }
+#lp-hybrid .hy-description-note { color:var(--quiet); font:13px/1.6 system-ui; margin:0 0 16px; }
 
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
@@ -14667,7 +14674,7 @@ async function confirmDeletion(message) {
     const canvas = document.createElement("canvas");
     canvas.width = 1240;
     const ctx = canvas.getContext("2d");
-    ctx.font = '32px "Cambria Math",serif';
+    ctx.font = '32px ' + getComputedStyle(preview).fontFamily;
     const lines = [];
     for (const original of argument().split("\n")) {
       let line = "";
@@ -14770,7 +14777,7 @@ async function confirmDeletion(message) {
       ctx.fillStyle = "#fff";
       ctx.fillRect(0, 0, 1240, 1754);
       ctx.fillStyle = "#20242b";
-      ctx.font = '32px "Cambria Math",serif';
+      ctx.font = '32px ' + getComputedStyle(preview).fontFamily;
       lines.slice(offset, offset + 30).forEach((line, i) => ctx.fillText(line, 80, 110 + i * 50));
       pages.push(
         Uint8Array.from(atob(canvas.toDataURL("image/jpeg", 0.95).split(",")[1]), (c) =>
@@ -15733,6 +15740,10 @@ async function confirmDeletion(message) {
       ],
       ["theme", "Tema", "Theme", "Claro", "Light", () => (ui.theme = "light")],
       ['writing-mode','Modo de escrita','Writing mode','Blocos','Blocks',()=>{ui.writingMode='blocks';}],
+      ['panel-fonts','Fontes das fórmulas','Formula fonts','Cambria Math','Cambria Math',()=>{
+        config('editor').font = config('preview').font = 'math';
+        root.dispatchEvent(new Event('lp-ui-colors'));
+      }],
       ["sidebar", "Barra lateral", "Sidebar", "Visível", "Visible", () => (ui.focus = false)],
       [
         "panels-visible",
@@ -16081,9 +16092,27 @@ async function confirmDeletion(message) {
   }
   function descriptions() {
     const doc = currentDocument();
-    return doc.descriptions && typeof doc.descriptions === "object"
+    return doc.descriptions && typeof doc.descriptions === "object" && !Array.isArray(doc.descriptions)
       ? doc.descriptions
       : Object.create(null);
+  }
+  function descriptionNames(formula) {
+    const names = new Set();
+    try {
+      LPLogic.parse(formula).atoms.forEach((a) => names.add(a));
+    } catch {
+          // Descriptions remain available while editing incomplete formulas and
+          // formulas outside the propositional validator's supported language.
+      const identifier = /[\p{L}_][\p{L}\p{M}\p{N}_′']*/gu;
+      const bound = new Set(
+        [...formula.matchAll(/[∀∃]\s*!?\s*([\p{L}_][\p{L}\p{M}\p{N}_′']*)/gu)]
+          .map((match) => match[1]),
+      );
+      for (const match of formula.matchAll(identifier)) {
+        if (!bound.has(match[0])) names.add(match[0]);
+      }
+    }
+    return names;
   }
   const bar = el("div", undefined, "hy-advanced-tools");
   root.querySelector(".hy-logic-footer").append(bar);
@@ -16092,22 +16121,9 @@ async function confirmDeletion(message) {
       const d = dialog(text("Descrição das proposições", "Proposition descriptions")),
         form = el("form"),
         names = new Set();
+      const documentAtOpen = currentDocument();
       for (const row of rows) {
-        if (!row.text.trim() || row.role === "blank") continue;
-        try {
-          LPLogic.parse(row.text).atoms.forEach((a) => names.add(a));
-        } catch {
-          // Descriptions remain available while editing incomplete formulas and
-          // formulas outside the propositional validator's supported language.
-          const identifier = /[\p{L}_][\p{L}\p{M}\p{N}_′']*/gu;
-          const bound = new Set(
-            [...row.text.matchAll(/[∀∃]\s*!?\s*([\p{L}_][\p{L}\p{M}\p{N}_′']*)/gu)]
-              .map((match) => match[1]),
-          );
-          for (const match of row.text.matchAll(identifier)) {
-            if (!bound.has(match[0])) names.add(match[0]);
-          }
-        }
+        if (row.role !== "blank") descriptionNames(row.text).forEach(name => names.add(name));
       }
       const existing = descriptions();
       Object.keys(existing).forEach((a) => names.add(a));
@@ -16121,6 +16137,11 @@ async function confirmDeletion(message) {
             ),
           ),
         );
+      d.dataset.feature = "descriptions";
+      d.append(el("p", text(
+        "Registre o significado dos símbolos. As descrições são próprias deste argumento e não alteram a validação lógica.",
+        "Record symbol meanings. Descriptions belong to this argument and do not change logical validation."
+      ), "hy-description-note"));
       const inputs = [];
       for (const atom of [...names].sort()) {
         const label = el("label", atom),
@@ -16128,6 +16149,7 @@ async function confirmDeletion(message) {
         label.dataset.userContent = "";
         input.value = typeof existing[atom] === "string" ? existing[atom] : "";
         input.maxLength = 1000;
+        input.autocomplete = "off";
         input.placeholder = text("Ex.: Está chovendo", "E.g. It is raining");
         label.append(input);
         form.append(label);
@@ -16144,7 +16166,7 @@ async function confirmDeletion(message) {
         inputs.forEach(([atom, input]) => {
           if (input.value.trim()) values[atom] = input.value.trim();
         });
-        currentDocument().descriptions = values;
+        documentAtOpen.descriptions = values;
         saveArguments();
         refreshDescriptions();
         d.close();
@@ -16155,16 +16177,30 @@ async function confirmDeletion(message) {
   );
   function refreshDescriptions() {
     const values = descriptions();
-    root.querySelectorAll(".hy-block").forEach((input) => {
-      const description = Object.hasOwn(values, input.value) ? values[input.value] : null;
-      if (description) input.title = input.value + " — " + description;
-      else input.title = text("Espaço: próximo bloco", "Space: next block");
+    const hint = names => [...names]
+      .filter(name => Object.hasOwn(values, name) && values[name])
+      .map(name => name + " — " + values[name]).join("\n");
+    root.querySelectorAll(".hy-block").forEach(input => {
+      input.dataset.hintText = Object.hasOwn(values, input.value)
+        ? input.value + " — " + values[input.value]
+        : text("Espaço: próximo bloco", "Space: next block");
     });
+    root.querySelectorAll(".hy-continuous-field").forEach(input => {
+      const content = hint(descriptionNames(input.value));
+      if (content) input.dataset.descriptionHint = content;
+      else delete input.dataset.descriptionHint;
+    });
+    const names = new Set(rows.filter(row => row.role !== "blank")
+      .flatMap(row => [...descriptionNames(row.text)]));
+    const summary = hint(names);
+    if (summary) preview.dataset.descriptionHint = summary;
+    else delete preview.dataset.descriptionHint;
   }
   new MutationObserver(refreshDescriptions).observe(root.querySelector("#rows"), {
     childList: true,
     subtree: true,
   });
+  workspaceEvents.addEventListener("saved", refreshDescriptions);
   root.querySelector("#rows").addEventListener("input", refreshDescriptions);
   bar.append(
     action(text("Comparar fórmulas", "Compare formulas"), () => {
@@ -16930,6 +16966,13 @@ const panelDetailOptions = [
   ["glow", "Luz localizada", "Localized light"],
 ];
 const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88", "#7b9e9e"];
+const panelFontOptions = [
+  ["math", "Cambria Math", '"Cambria Math", serif'],
+  ["georgia", "Georgia", 'Georgia, "Cambria Math", serif'],
+  ["times", "Times New Roman", '"Times New Roman", "Cambria Math", serif'],
+  ["sans", "Segoe UI", '"Segoe UI", "Cambria Math", sans-serif'],
+  ["mono", "Consolas", 'Consolas, "Cambria Math", monospace'],
+];
 (() => {
   const settings = document.createElement("section");
   settings.className = "hy-appearance-settings";
@@ -16992,6 +17035,8 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
       panel.dataset.internalDetail = c.detail;
       panel.dataset.externalMarker = String(c.external);
       panel.dataset.colorPanelBorder = String(c.border);
+      const font = panelFontOptions.find(([id]) => id === c.font) || panelFontOptions[0];
+      root.style.setProperty("--" + key + "-formula-font", font[2]);
     }
     root.querySelectorAll("#rows>.hy-row").forEach((row, i) => {
       let mark = row.querySelector(".hy-row-decoration");
@@ -17149,6 +17194,35 @@ const panelColorPresets = ["#7899bc", "#7a9e88", "#a28aad", "#ba9971", "#b47d88"
     picker.append(summary);
     detailRow.append(label, picker);
     dialog.append(list);
+    const fontRow = document.createElement("label"),
+      fontChoice = document.createElement("select"),
+      fontSample = document.createElement("div");
+    fontRow.className = "hy-panel-font-row";
+    fontRow.textContent = en ? "Formula font" : "Fonte das fórmulas";
+    fontChoice.setAttribute("aria-label", fontRow.textContent);
+    for (const [id, name, family] of panelFontOptions) {
+      const option = document.createElement("option");
+      option.value = id;
+      option.textContent = name;
+      option.style.fontFamily = family;
+      fontChoice.append(option);
+    }
+    fontChoice.value = panelFontOptions.some(([id]) => id === c.font) ? c.font : "math";
+    fontSample.className = "hy-panel-font-sample";
+    fontSample.textContent = "∀x(P(x) → Q(x)) ∧ ¬R";
+    const updateFont = () => {
+      fontSample.style.fontFamily = panelFontOptions.find(([id]) => id === fontChoice.value)[2];
+    };
+    fontChoice.onchange = () => {
+      c.font = fontChoice.value;
+      updateFont();
+      apply();
+      if (key === "editor") drawRows();
+      saveUI();
+    };
+    updateFont();
+    fontRow.append(fontChoice);
+    dialog.append(fontRow, fontSample);
     list.classList.add("hy-floating-detail-options");
     const settingsPanel = root.querySelector("#editor-settings");
     const fromSettings = settingsPanel.matches(":popover-open");
@@ -17753,6 +17827,10 @@ const LPHints = (() => {
         body: text("Clique para voltar ao portfólio.", "Click to return to the portfolio."),
         icon: "⌂",
       };
+    if (element.dataset.descriptionHint) return {
+      title: text("Descrição dos símbolos", "Symbol descriptions"),
+      body: element.dataset.descriptionHint,
+    };
     if (element.matches(".hy-block")) {
       const doc = argumentWorkspace.documents.find((d) => d.id === argumentWorkspace.activeId),
         description = doc?.descriptions?.[element.value];
@@ -17893,7 +17971,7 @@ const LPHints = (() => {
     const element =
       node instanceof Element
         ? node.closest(
-            "[data-hint-text],.hy-search-trigger,.hy-appearance-help,.hy-icon-button[aria-label],.hy-symbol-help,.hy-role,.hy-delete-line,.hy-block,.hy-card-picker,.hy-add-section-zone button,#hover-hints-toggle,.hy-argument-grid-add,.hy-argument-tab,#argument-options [role=menuitemradio]",
+            "[data-description-hint],[data-hint-text],.hy-search-trigger,.hy-appearance-help,.hy-icon-button[aria-label],.hy-symbol-help,.hy-role,.hy-delete-line,.hy-block,.hy-card-picker,.hy-add-section-zone button,#hover-hints-toggle,.hy-argument-grid-add,.hy-argument-tab,#argument-options [role=menuitemradio]",
           )
         : null;
     if (
