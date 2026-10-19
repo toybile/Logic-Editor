@@ -2735,10 +2735,12 @@ body {
 }
 #lp-hybrid .hy-export-menu {
   position: fixed;
+  width: max-content;
   z-index: 80;
   min-width: 120px;
   padding: 6px;
   display: grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap: 4px;
   background: var(--paper);
   border: 1px solid var(--edge);
@@ -2755,7 +2757,7 @@ body {
 }
 #lp-hybrid .hy-export-menu .hy-button {
   width: 100%;
-  justify-content: flex-start;
+  justify-content: center;
   border-radius: 8px;
   padding: 9px 12px;
 }
@@ -9540,6 +9542,13 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-validation-preview { padding:16px; border:1px solid var(--edge); border-radius:14px; background:var(--soft); margin-bottom:16px; }
 #lp-hybrid .hy-validation-preview .hy-section-head { margin:0 0 12px; padding:0; }
 #lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; width:100%; justify-content:flex-end; gap:8px; margin:0; border-top: 0; padding: 0; }
+#lp-hybrid .hy-panel-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:18px 0 0 var(--content-gutter); padding-top:14px; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-panel-actions .hy-export-group { margin-left:auto; flex-wrap:nowrap; gap:8px; min-width:0; }
+#lp-hybrid .hy-panel-actions :is(#copy,#download) { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-width:0; min-height:calc(36px * var(--writing-scale)); padding:calc(7px * var(--writing-scale)) calc(10px * var(--writing-scale)); font-size:calc(13px * var(--writing-scale)); border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); }
+#lp-hybrid .hy-panel-actions #download { border-color:color-mix(in srgb,var(--blue) 30%,var(--edge)); color:var(--blue); }
+#lp-hybrid .hy-panel-actions :is(#copy,#download) svg { width:calc(16px * var(--writing-scale)); height:calc(16px * var(--writing-scale)); flex-shrink:0; }
+#lp-hybrid .hy-panel-actions :is(#copy,#download):hover { background:var(--soft); }
+#lp-hybrid .hy-validation-preview .hy-panel-actions { display:none; }
 #lp-hybrid .hy-validation-preview #hy-argument { display:block !important; grid-template-rows:1fr !important; opacity:1; max-height:none; }
 #lp-hybrid .hy-validation-preview #preview { white-space:pre-wrap; overflow-wrap:anywhere; }
 #lp-hybrid .hy-validation-dialog .hy-logic-button { display:none; }
@@ -9718,6 +9727,10 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
   #lp-hybrid .hy-line-controls { margin:16px 0 0; flex-wrap:wrap; gap:8px; }
   #lp-hybrid .hy-line-controls .hy-button { min-width:44px; min-height:44px; }
   #lp-hybrid .hy-line-controls > #add-line { min-height:44px; }
+  #lp-hybrid .hy-panel-actions { margin-left:0; gap:8px; }
+  #lp-hybrid .hy-panel-actions :is(#copy,#download) { min-height:44px; padding:8px; font-size:12px; }
+  #lp-hybrid .hy-panel-actions :is(#copy,#download) svg { width:16px; height:16px; }
+  #lp-hybrid .hy-panel-actions .hy-logic-button { min-width:44px; min-height:44px; }
   #lp-hybrid .hy-preview { padding:0; white-space:pre-wrap; overflow-wrap:anywhere; font-size:max(18px,calc(20px * var(--writing-scale))); }
   #lp-hybrid #editor-settings { inset:calc(var(--visual-top,0px) + 12px) 12px auto; width:auto; max-width:none; max-height:calc(var(--visual-height,100dvh) - 24px); box-sizing:border-box; padding:16px; overflow:auto; overscroll-behavior:contain; }
   #lp-hybrid .hy-settings-head { gap:8px; }
@@ -14632,7 +14645,7 @@ async function confirmDeletion(message) {
     if (!trigger.getClientRects().length) { close(); return; }
     const b = trigger.getBoundingClientRect(), m = menu.getBoundingClientRect();
     menu.style.left = Math.max(12, Math.min(innerWidth - m.width - 12, b.left + b.width / 2 - m.width / 2)) + "px";
-    menu.style.top = Math.max(12, b.bottom + 8 + m.height <= innerHeight - 12 ? b.bottom + 8 : b.top - m.height - 8) + "px";
+    menu.style.top = Math.max(12, b.top - m.height - 8 >= 12 ? b.top - m.height - 8 : b.bottom + 8) + "px";
   }
   function open() {
     menu.hidden = false;
@@ -14640,19 +14653,18 @@ async function confirmDeletion(message) {
     trigger.setAttribute("aria-expanded", "true");
     position();
   }
-  function save(bytes) {
-    const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" })),
+  function save(bytes, type = 'application/pdf', name = 'argumento.pdf') {
+    const url = URL.createObjectURL(new Blob([bytes], { type })),
       link = document.createElement("a");
     link.href = url;
-    link.download = "argumento.pdf";
+    link.download = name;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  async function pdf() {
+  async function layoutArgument() {
     await document.fonts.ready;
     const canvas = document.createElement("canvas");
     canvas.width = 1240;
-    canvas.height = 1754;
     const ctx = canvas.getContext("2d");
     ctx.font = '32px "Cambria Math",serif';
     const lines = [];
@@ -14667,6 +14679,24 @@ async function confirmDeletion(message) {
       }
       lines.push(line);
     }
+    return {canvas,ctx,lines};
+  }
+  async function png() {
+    const {canvas,ctx,lines} = await layoutArgument();
+    for(let offset = 0; offset < lines.length; offset += 600) {
+      const page = lines.slice(offset, offset + 600);
+      canvas.height = Math.max(240,160 + page.length * 50);
+      ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = '#20242b'; ctx.font = '32px "Cambria Math",serif';
+      page.forEach((line,i) => ctx.fillText(line,80,100 + i * 50));
+      const blob = await new Promise(resolve => canvas.toBlob(resolve,'image/png'));
+      if (!blob) throw new Error('PNG encoding failed');
+      save(blob,'image/png',lines.length > 600 ? 'argumento-' + (offset / 600 + 1) + '.png' : 'argumento.png');
+    }
+  }
+  async function pdf() {
+    const {canvas,ctx,lines} = await layoutArgument();
+    canvas.height = 1754;
     const pages = [];
     for (let offset = 0; offset < lines.length; offset += 30) {
       ctx.fillStyle = "#fff";
@@ -14743,11 +14773,12 @@ async function confirmDeletion(message) {
     }
     save(result);
   }
-  for (const format of [".txt", ".pdf"]) {
+  for (const format of [".txt", ".pdf", ".png"]) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "hy-button";
-    button.textContent = format;
+    button.textContent = format.slice(1).toUpperCase();
+    button.setAttribute('aria-label',format);
     button.onclick = async () => {
       close();
       trigger.focus();
@@ -14755,8 +14786,9 @@ async function confirmDeletion(message) {
       else {
         trigger.disabled = true;
         try {
-          await pdf();
-          argumentNotice(interfaceText("Arquivo PDF gerado.", "PDF file generated."));
+          if(format === '.png') await png(); else await pdf();
+          const label = format.slice(1).toUpperCase();
+          argumentNotice(interfaceText('Arquivo ' + label + ' gerado.', label + ' file generated.'));
         } finally {
           trigger.disabled = false;
         }
@@ -21140,7 +21172,11 @@ validationControls.className = "hy-section-head";
 validationPreview.append(validationControls);
 validationDialog.append(validationHeader, validationPreview, logicFooter, logicPanel);
 root.append(validationDialog);
-root.querySelector(".hy-argument-panel .hy-section-head h3").after(logicButton);
+const argumentActions = document.createElement('footer');
+argumentActions.className = 'hy-panel-actions';
+const argumentOutput = root.querySelector('.hy-argument-panel .hy-export-group');
+argumentActions.append(logicButton, argumentOutput);
+root.querySelector('.hy-argument-panel .hy-preview-inner').append(argumentActions);
 logicButton.hidden = !ui.preview;
 logicButton.inert = !ui.preview;
 logicButton.setAttribute("aria-haspopup", "dialog");
@@ -21152,12 +21188,13 @@ function openLogicValidation() {
   if (validationDialog.open) return;
   const tools = root.querySelector(".hy-argument-panel .hy-tools"),
     content = root.querySelector("#hy-argument");
-  validationRestore = [tools, content].map(node => {
+  validationRestore = [tools, content, argumentOutput].map(node => {
     const marker = document.createComment("validation restore");
     node.before(marker);
     return { node, marker };
   });
   validationControls.append(tools);
+  tools.append(argumentOutput);
   validationPreview.append(content);
   logicEnabled = true;
   logicPanel.hidden = false;

@@ -17,7 +17,7 @@ Open the website or download this repository and open `index.html` in a modern b
 2. Use the **+ below the rows** to add a premise containing `A`.
 3. Add another row and click its **Premise** label to make it a **Conclusion**. Type `B`.
 4. The **Argument** panel shows the formatted result. Enable **Validate logic (beta)** to check whether the conclusion follows from the premises.
-5. Use the **file icon in the header** to save a project that can be imported later. Use **Export** in the Argument panel for `.txt` or `.pdf` output.
+5. Use the **file icon in the header** to save a project that can be imported later. Use **Export** in the Argument panel for `.txt`, `.pdf` or `.png` output.
 
 ## Writing in blocks
 
@@ -104,7 +104,7 @@ Role buttons default to **names**. Double-click cycles through names, names + sy
 
 The Argument updates as you write. The **numbered-list icon** (Number lines) toggles line numbering for the current argument. The **eye icons** independently collapse the editing area and the Argument contents; collapsing the sidebar does not toggle either eye.
 
-**Copy** places the formatted argument on the clipboard, subject to the browser's clipboard permissions. **Export** opens a menu immediately below the button:
+**Copy** places the formatted argument on the clipboard, subject to the browser's clipboard permissions. **Export** opens a compact row with TXT, PDF and PNG above the button (below it when there is no room above):
 
 | Format | Purpose | What it preserves |
 | --- | --- | --- |
@@ -112,9 +112,9 @@ The Argument updates as you write. The **numbered-list icon** (Number lines) tog
 | `.pdf` | A document to view or print | Formatted argument rendered on A4 pages; long content wraps and continues onto more pages |
 | `.lp.json` via the file menu | An editable backup | Row roles, text, argument names, numbering and proposition descriptions |
 
-PDF pages contain rendered images, so their text is not selectable. Text and PDF exports do not include the validation report or proposition descriptions and cannot be imported as editable projects.
+PNG generates an image of the formatted argument; very long content is split across numbered images. PDF pages contain rendered images, so their text is not selectable. Text and PDF exports do not include the validation report or proposition descriptions and cannot be imported as editable projects.
 
-The **prefix-spacing button immediately to the right of numbering** joins prefix symbols to the following token in the formatted Argument: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Negation variants and modal prefixes are supported too. Infix connectives keep their spaces. The setting is reversible, is saved in this browser, and applies to the preview, copied text and text/PDF exports. It does not change the editable blocks, project data or validation support for quantifiers and modal logic.
+The **prefix-spacing button immediately to the right of numbering** joins prefix symbols to the following token in the formatted Argument: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Negation variants and modal prefixes are supported too. Infix connectives keep their spaces. The setting is reversible, is saved in this browser, and applies to the preview, copied text and TXT/PDF/PNG exports. It does not change the editable blocks, project data or validation support for quantifiers and modal logic.
 
 ## Proposition descriptions — beta
 
@@ -126,7 +126,7 @@ Open the **description icon in the editing panel's header**. It lists propositio
 
 ## Validate logic — beta
 
-The **shield with a check mark beside the Argument title** (Validate logic) opens a centered dialog with the live argument above the validation results. Its original numbering, prefix spacing, Copy and TXT/PDF Export controls remain available. Close or Escape restores the controls to the panel without changing the argument. While open, validation updates after edits. It checks **classical propositional consequence**: there must be no interpretation in which every premise is true and a conclusion is false.
+The **shield with a check mark in the Argument footer** (Validate logic) opens a centered dialog with the live argument above the validation results. Its original numbering, prefix spacing, Copy and TXT/PDF/PNG Export controls remain available. Close or Escape restores the controls to the panel without changing the argument. While open, validation updates after edits. It checks **classical propositional consequence**: there must be no interpretation in which every premise is true and a conclusion is false.
 
 - A conclusion is **valid** when it follows from the premises in every interpretation. This does not establish that the premises are factually true.
 - An invalid conclusion includes a **counterexample** assigning true/false values to proposition names. Expand **Why is this a counterexample?** to see the premises and conclusion under that assignment; expand **Connective evaluation** for the calculation steps.
@@ -234,7 +234,7 @@ Abra o site ou baixe este repositório e abra `index.html` em um navegador moder
 2. Use o **+ abaixo das linhas** para adicionar uma premissa contendo `A`.
 3. Adicione outra linha e clique em **Premissa** para transformá-la em **Conclusão**. Digite `B`.
 4. O painel **Argumento** mostra o resultado formatado. Ative **Validar lógica (beta)** para verificar se a conclusão decorre das premissas.
-5. Use o **ícone de arquivo no cabeçalho** para salvar um projeto que pode ser importado depois. Use **Exportar** no Argumento para gerar `.txt` ou `.pdf`.
+5. Use o **ícone de arquivo no cabeçalho** para salvar um projeto que pode ser importado depois. Use **Exportar** no Argumento para gerar `.txt`, `.pdf` ou `.png`.
 
 ## Escrita em blocos
 
@@ -321,7 +321,7 @@ Os botões de tipo usam **nomes** por padrão em novos acessos. O duplo clique a
 
 O Argumento se atualiza durante a escrita. O **ícone de lista numerada** (Numerar linhas) alterna a numeração do argumento atual. Os **olhos** recolhem a área de edição e o conteúdo do Argumento de forma independente; recolher o menu lateral não altera esses controles.
 
-**Copiar** envia o argumento formatado para a área de transferência, conforme as permissões do navegador. **Exportar** abre um menu logo abaixo do botão:
+**Copiar** envia o argumento formatado para a área de transferência, conforme as permissões do navegador. **Exportar** abre uma faixa compacta com TXT, PDF e PNG acima do botão (abaixo quando falta espaço acima):
 
 | Formato | Finalidade | O que preserva |
 | --- | --- | --- |
@@ -329,7 +329,7 @@ O Argumento se atualiza durante a escrita. O **ícone de lista numerada** (Numer
 | `.pdf` | Documento para visualizar ou imprimir | Argumento renderizado em páginas A4; conteúdo longo quebra linhas e continua em novas páginas |
 | `.lp.json` pelo menu de arquivo | Cópia de segurança editável | Funções das linhas, texto, nomes dos argumentos, numeração e descrições de proposições |
 
-As páginas do PDF contêm imagens renderizadas; o texto não é selecionável. Exportações em texto e PDF não incluem o relatório de validação nem as descrições de proposições e não podem ser importadas como projetos editáveis.
+PNG gera uma imagem do argumento formatado; conteúdos muito longos são divididos em imagens numeradas. As páginas do PDF contêm imagens renderizadas; o texto não é selecionável. Exportações em texto e PDF não incluem o relatório de validação nem as descrições de proposições e não podem ser importadas como projetos editáveis.
 
 O **botão de espaçamento de prefixos, imediatamente à direita da enumeração**, une símbolos de prefixo ao próximo token na apresentação do Argumento: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Também contempla variantes de negação e prefixos modais. Conectivos infixos mantêm seus espaços. A opção é reversível, fica salva neste navegador e vale na prévia, na cópia e nas exportações de texto/PDF. Não altera os blocos editáveis, os dados do projeto nem o suporte da validação a quantificadores e lógica modal.
 
@@ -497,3 +497,7 @@ Na escrita contínua, arraste verticalmente de dentro da fórmula para reordenar
 Panel controls keep titles and visibility buttons on the left and auxiliary controls on the right. The editor footer separates Add from Undo/Redo; the standalone selection button was removed.
 
 Os painéis mantêm títulos e olhinhos à esquerda e os controles auxiliares à direita. O rodapé do editor separa Adicionar de Desfazer/Refazer; o botão avulso de seleção foi retirado.
+
+The selected arrangement keeps writing/formatting adjustments in the panel headers and actions in the footers. Validation, Copy and Export share the Argument footer. Button symbols are unchanged.
+
+A disposição escolhida mantém os ajustes de escrita/formatação nos cabeçalhos e as ações nos rodapés. Validação, Copiar e Exportar ficam no rodapé do Argumento. Os símbolos dos botões foram preservados.
