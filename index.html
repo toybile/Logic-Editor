@@ -18170,26 +18170,10 @@ const LPHints = (() => {
 <script id="header-hover-awareness">
 (() => {
   const settings = root.querySelector(".hy-head>[popovertarget=editor-settings]"),
-    group = document.createElement("div"),
-    notice = document.createElement("span");
+    group = document.createElement("div");
   group.className = "hy-head-end";
-  notice.className = "hy-hover-awareness";
   settings.before(group);
-  group.append(notice, settings);
-  function update() {
-    const value =
-      ui.initialLayout === "guided"
-        ? ui.language === "en"
-          ? "Click blocks to edit. Drag windows to arrange."
-          : "Clique nos blocos para editar. Arraste as janelas para organizar."
-        : ui.language === "en"
-          ? "Explore hover hints for useful shortcuts."
-          : "Explore as dicas: elas revelam atalhos.";
-    if (notice.textContent !== value) notice.textContent = value;
-  }
-  root.addEventListener("lp-ui-colors", update);
-  root.querySelector("#settings-language").addEventListener("click", update);
-  update();
+  group.append(settings);
 })();
 </script>
 
