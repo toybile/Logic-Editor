@@ -11412,11 +11412,11 @@ document.addEventListener('pointerdown',event=>{
 </script>
 
 <script id="blocks-and-rows">
-let capsLock = !LPReturningUser;
+let capsLock = false;
 try {
   const saved = localStorage.getItem("formal-caps-lock");
   if (saved !== null) capsLock = saved === "true";
-  else if (!LPReturningUser) localStorage.setItem("formal-caps-lock", "true");
+  else localStorage.setItem("formal-caps-lock", "false");
 } catch {}
 const blockFields = new WeakMap();
 function resizeContinuousFields() {
@@ -12908,6 +12908,7 @@ let ui = {
   theme: "light",
   editor: true,
   preview: true,
+  writingMode: "continuous",
   language: "pt-BR",
   premiseColor: "#7899bc",
   conclusionColor: "#7a9e88",
@@ -15739,7 +15740,7 @@ async function confirmDeletion(message) {
         () => (ui.language = "en"),
       ],
       ["theme", "Tema", "Theme", "Claro", "Light", () => (ui.theme = "light")],
-      ['writing-mode','Modo de escrita','Writing mode','Blocos','Blocks',()=>{ui.writingMode='blocks';}],
+      ['writing-mode','Modo de escrita','Writing mode','Linha contínua','Continuous writing',()=>{ui.writingMode='continuous';}],
       ['panel-fonts','Fontes das fórmulas','Formula fonts','Cambria Math','Cambria Math',()=>{
         config('editor').font = config('preview').font = 'math';
         root.dispatchEvent(new Event('lp-ui-colors'));
@@ -15808,10 +15809,10 @@ async function confirmDeletion(message) {
         "uppercase",
         "Digitação em maiúsculas",
         "Uppercase typing",
-        "Ativada",
-        "Enabled",
+        "Desativada",
+        "Disabled",
         () => {
-          if (!capsLock) root.querySelector("#caps-lock").click();
+          if (capsLock) root.querySelector("#caps-lock").click();
         },
       ],
       [
