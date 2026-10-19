@@ -165,7 +165,8 @@
 #lp-hybrid .hy-logic-values span {
   padding: 5px 9px;
   border-radius: 6px;
-  background: var(--paper);
+  background: transparent;
+  color: var(--quiet);
 }
 #lp-hybrid .hy-logic-panel summary {
   color: var(--quiet);
@@ -3953,7 +3954,7 @@ body {
   stroke-width: 1.5;
 }
 #lp-hybrid .hy-caps-lock {
-  margin-left: 12px;
+  margin-left: 0;
   font: 500 13px/1 system-ui;
 }
 #lp-hybrid .hy-tools .hy-number-toggle[aria-pressed="true"] {
@@ -16095,7 +16096,18 @@ async function confirmDeletion(message) {
         if (!row.text.trim() || row.role === "blank") continue;
         try {
           LPLogic.parse(row.text).atoms.forEach((a) => names.add(a));
-        } catch {}
+        } catch {
+          // Descriptions remain available while editing incomplete formulas and
+          // formulas outside the propositional validator's supported language.
+          const identifier = /[\p{L}_][\p{L}\p{M}\p{N}_′']*/gu;
+          const bound = new Set(
+            [...row.text.matchAll(/[∀∃]\s*!?\s*([\p{L}_][\p{L}\p{M}\p{N}_′']*)/gu)]
+              .map((match) => match[1]),
+          );
+          for (const match of row.text.matchAll(identifier)) {
+            if (!bound.has(match[0])) names.add(match[0]);
+          }
+        }
       }
       const existing = descriptions();
       Object.keys(existing).forEach((a) => names.add(a));
