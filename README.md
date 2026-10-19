@@ -112,7 +112,7 @@ The Argument updates as you write. The **numbered-list icon** (Number lines) tog
 | `.pdf` | A document to view or print | Formatted argument rendered on A4 pages; long content wraps and continues onto more pages |
 | `.lp.json` via the file menu | An editable backup | Row roles, text, argument names, numbering and proposition descriptions |
 
-PNG generates an image of the formatted argument; very long content is split across numbered images. PDF pages contain rendered images, so their text is not selectable. Text and PDF exports do not include the validation report or proposition descriptions and cannot be imported as editable projects.
+PNG captures the Argument panel as displayed, including its current theme, colors, border, lateral marker, text and button symbols, with a small margin for its shadow. Exporting from validation captures the normal Argument panel and keeps the dialog open. PDF pages contain rendered images, so their text is not selectable. Text and PDF exports do not include the validation report or proposition descriptions and cannot be imported as editable projects.
 
 The **prefix-spacing button immediately to the right of numbering** joins prefix symbols to the following token in the formatted Argument: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Negation variants and modal prefixes are supported too. Infix connectives keep their spaces. The setting is reversible, is saved in this browser, and applies to the preview, copied text and TXT/PDF/PNG exports. It does not change the editable blocks, project data or validation support for quantifiers and modal logic.
 
@@ -329,7 +329,7 @@ O Argumento se atualiza durante a escrita. O **ícone de lista numerada** (Numer
 | `.pdf` | Documento para visualizar ou imprimir | Argumento renderizado em páginas A4; conteúdo longo quebra linhas e continua em novas páginas |
 | `.lp.json` pelo menu de arquivo | Cópia de segurança editável | Funções das linhas, texto, nomes dos argumentos, numeração e descrições de proposições |
 
-PNG gera uma imagem do argumento formatado; conteúdos muito longos são divididos em imagens numeradas. As páginas do PDF contêm imagens renderizadas; o texto não é selecionável. Exportações em texto e PDF não incluem o relatório de validação nem as descrições de proposições e não podem ser importadas como projetos editáveis.
+PNG captura o painel do Argumento como aparece, incluindo tema, cores, borda, marcador lateral, texto e símbolos dos botões, com uma pequena margem para a sombra. A exportação pela validação captura o painel normal do Argumento e mantém a janela aberta. As páginas do PDF contêm imagens renderizadas; o texto não é selecionável. Exportações em texto e PDF não incluem o relatório de validação nem as descrições de proposições e não podem ser importadas como projetos editáveis.
 
 O **botão de espaçamento de prefixos, imediatamente à direita da enumeração**, une símbolos de prefixo ao próximo token na apresentação do Argumento: `¬ A` → `¬A`, `∀ x` → `∀x`, `∃ x` → `∃x`. Também contempla variantes de negação e prefixos modais. Conectivos infixos mantêm seus espaços. A opção é reversível, fica salva neste navegador e vale na prévia, na cópia e nas exportações de texto/PDF. Não altera os blocos editáveis, os dados do projeto nem o suporte da validação a quantificadores e lógica modal.
 

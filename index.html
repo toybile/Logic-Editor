@@ -14681,18 +14681,85 @@ async function confirmDeletion(message) {
     }
     return {canvas,ctx,lines};
   }
-  async function png() {
-    const {canvas,ctx,lines} = await layoutArgument();
-    for(let offset = 0; offset < lines.length; offset += 600) {
-      const page = lines.slice(offset, offset + 600);
-      canvas.height = Math.max(240,160 + page.length * 50);
-      ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = '#20242b'; ctx.font = '32px "Cambria Math",serif';
-      page.forEach((line,i) => ctx.fillText(line,80,100 + i * 50));
-      const blob = await new Promise(resolve => canvas.toBlob(resolve,'image/png'));
-      if (!blob) throw new Error('PNG encoding failed');
-      save(blob,'image/png',lines.length > 600 ? 'argumento-' + (offset / 600 + 1) + '.png' : 'argumento.png');
+  function panelImageSource(panel) {
+    const box = panel.getBoundingClientRect(), padding = 24;
+    const width = Math.ceil(box.width + padding * 2), height = Math.ceil(box.height + padding * 2);
+    const viewportUnits = value => value.replace(/(-?[\d.]+)(?:d|s|l)?v([wh])/g,
+      (_,number,axis) => Number(number) * (axis === 'w' ? innerWidth : innerHeight) / 100 + 'px');
+    function styles(source,target,pseudo) {
+      const computed = getComputedStyle(source,pseudo);
+      for (const name of computed) {
+        if (name.startsWith('--') || /^(?:(?:inset|margin|padding|border)-(?:block|inline)|(?:min-|max-)?(?:block|inline)-size|overflow-(?:block|inline))/.test(name)) continue;
+        target.style.setProperty(name,viewportUnits(computed.getPropertyValue(name)));
+      }
+      if (!pseudo && source.computedStyleMap) for (const side of ['top','right','bottom','left']) {
+        if (String(source.computedStyleMap().get('margin-'+side)) === 'auto') target.style.setProperty('margin-'+side,'auto');
+      }
+      target.style.animation = 'none'; target.style.transition = 'none';
+      return computed;
     }
+    function clone(source) {
+      if (source.nodeType !== Node.ELEMENT_NODE) return source.cloneNode(false);
+      const target = source.cloneNode(false), computed = styles(source,target);
+      if (computed.display === 'none' || source.matches('script,style,[popover]')) return null;
+      function decoration(pseudo) {
+        if (source.namespaceURI !== 'http://www.w3.org/1999/xhtml') return;
+        const computed = getComputedStyle(source,pseudo);
+        if (['none','normal'].includes(computed.content) || computed.display === 'none') return;
+        const element = document.createElement('span'); styles(source,element,pseudo);
+        if (computed.content.startsWith('"')) {
+          try { element.textContent = JSON.parse(computed.content); } catch {}
+        }
+        target.append(element);
+      }
+      decoration('::before');
+      for (const child of source.childNodes) { const copy = clone(child); if (copy) target.append(copy); }
+      decoration('::after');
+      if (source instanceof HTMLInputElement) target.setAttribute('value',source.value);
+      if (source instanceof HTMLTextAreaElement) target.textContent = source.value;
+      return target;
+    }
+    const scene = document.createElement('div');
+    scene.setAttribute('xmlns','http://www.w3.org/1999/xhtml');
+    Object.assign(scene.style,{position:'relative',width:width+'px',height:height+'px',overflow:'hidden',
+      backgroundColor:getComputedStyle(document.body).backgroundColor});
+    const ancestors = [];
+    for(let element = panel.parentElement; element && root.contains(element); element = element.parentElement) ancestors.unshift(element);
+    for(const ancestor of ancestors) {
+      const computed = getComputedStyle(ancestor), bounds = ancestor.getBoundingClientRect(), layer = document.createElement('div');
+      for(const name of ['background-color','background-image','background-position','background-size','background-repeat','background-origin','background-clip'])
+        layer.style.setProperty(name,viewportUnits(computed.getPropertyValue(name)));
+      Object.assign(layer.style,{position:'absolute',left:bounds.left-box.left+padding+'px',top:bounds.top-box.top+padding+'px',width:bounds.width+'px',height:bounds.height+'px'});
+      if (computed.backgroundAttachment === 'fixed') {
+        layer.style.backgroundSize = innerWidth+'px '+innerHeight+'px';
+        layer.style.backgroundPosition = -bounds.left+'px '+(-bounds.top)+'px';
+        layer.style.backgroundRepeat = 'no-repeat';
+      }
+      scene.append(layer);
+    }
+    const copy = clone(panel);
+    Object.assign(copy.style,{position:'absolute',inset:'auto',left:padding+'px',top:padding+'px',margin:'0',alignSelf:'auto',justifySelf:'auto',
+      width:box.width+'px',height:box.height+'px',minWidth:'0',minHeight:'0',maxWidth:'none',maxHeight:'none',
+      boxSizing:'border-box',transform:'none',translate:'none',scale:'none'});
+    scene.append(copy);
+    const serialized = new XMLSerializer().serializeToString(scene);
+    return {width,height,url:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'"><foreignObject width="100%" height="100%">'+serialized+'</foreignObject></svg>')};
+  }
+  async function png() {
+    await document.fonts.ready;
+    // Capture the enabled button, then restore the export lock before the browser paints.
+    const disabled = trigger.disabled; let source;
+    try { trigger.disabled = false; source = withArgumentPanelSnapshot(panelImageSource); }
+    finally { trigger.disabled = disabled; }
+    const image = new Image();
+    await new Promise((resolve,reject) => { image.onload = resolve; image.onerror = reject; image.src = source.url; });
+    const canvas = document.createElement('canvas'), scale = Math.max(2,devicePixelRatio || 1);
+    canvas.width = Math.ceil(source.width * scale); canvas.height = Math.ceil(source.height * scale);
+    canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
+    const blob = await new Promise(resolve => canvas.toBlob(resolve,'image/png'));
+    if (!blob) throw new Error('PNG encoding failed');
+    save(blob,'image/png','argumento.png');
   }
   async function pdf() {
     const {canvas,ctx,lines} = await layoutArgument();
@@ -21184,6 +21251,17 @@ logicButton.setAttribute("aria-controls", "logic-validation-dialog");
 validationDialog.id = "logic-validation-dialog";
 let validationRestore = [];
 let validationReturnFocus = null;
+// Measure the normal argument panel synchronously, even while its live content is in the dialog.
+function withArgumentPanelSnapshot(capture) {
+  if (!validationDialog.open) return capture(root.querySelector('.hy-argument-panel'));
+  const temporary = validationRestore.map(({node,marker}) => {
+    const current = document.createComment('snapshot restore');
+    node.before(current); marker.before(node);
+    return {node,current};
+  });
+  try { return capture(root.querySelector('.hy-argument-panel')); }
+  finally { for (const {node,current} of temporary) current.replaceWith(node); }
+}
 function openLogicValidation() {
   if (validationDialog.open) return;
   const tools = root.querySelector(".hy-argument-panel .hy-tools"),
