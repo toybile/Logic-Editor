@@ -9172,20 +9172,6 @@ html[data-editor-palette="ambient"] .lp-unified-hint { background:var(--editor-h
 #lp-hybrid[data-palette="ambient"] .hy-work { background:transparent; }
 #lp-hybrid[data-palette="ambient"] .hy-panel-frame { background:transparent; backdrop-filter:none; box-shadow:none; }
 /* Settings navigation and grouped controls. */
-#lp-hybrid #editor-settings { width:380px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 24px); box-sizing:border-box; padding:18px; }
-#lp-hybrid #editor-settings > .hy-settings-head { margin-bottom:16px; gap:12px; }
-#lp-hybrid #editor-settings .hy-settings-actions { display:flex; align-items:center; gap:6px; }
-#lp-hybrid #editor-settings .hy-settings-actions button { width:32px; height:32px; min-height:32px; padding:7px; margin:0; border-radius:9px; }
-#lp-hybrid #editor-settings .hy-settings-actions #settings-language svg { width:22px; height:16px; }
-#lp-hybrid #editor-settings .hy-settings-tabs { display:flex; gap:4px; background:var(--soft); padding:4px; border:1px solid var(--edge); border-radius:12px; margin-bottom:18px; }
-#lp-hybrid #editor-settings .hy-settings-tabs button { flex:1; min-width:0; padding:9px 6px; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); font:13px/1.4 system-ui; }
-#lp-hybrid #editor-settings .hy-settings-tabs [aria-selected="true"] { background:var(--paper); border-color:var(--edge); color:var(--blue); box-shadow:0 2px 5px light-dark(#26364a0c,#0003); }
-#lp-hybrid #editor-settings .hy-settings-panel[hidden] { display:none; }
-#lp-hybrid #editor-settings .hy-settings-panel .hy-setting { margin:0; padding:16px 0; border-top:1px solid var(--edge); }
-#lp-hybrid #editor-settings .hy-theme-choices { margin:0 0 18px; }
-#lp-hybrid #editor-settings .hy-setting-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
-#lp-hybrid #editor-settings .hy-setting-heading label { margin:0; color:var(--ink); font-size:13px; }
-#lp-hybrid #editor-settings .hy-settings-panel > .hy-hover-delay-setting { padding:15px; border:1px solid var(--edge); border-radius:12px; background:color-mix(in srgb,var(--soft) 45%,transparent); margin-bottom:12px; }
 #lp-hybrid #editor-settings .hy-layout-recovery-setting { padding-bottom:0; }
 #lp-hybrid #editor-settings .hy-layout-recovery-button { width:100%; display:flex; align-items:center; justify-content:center; gap:9px; min-height:42px; border:1px solid var(--edge); border-radius:11px; color:var(--blue); background:var(--soft); font-size:13px; }
 #lp-hybrid #editor-settings .hy-layout-recovery-button:hover { background:color-mix(in srgb,var(--blue) 12%,var(--paper)); border-color:var(--blue); }
@@ -9355,7 +9341,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-validation-dialog::backdrop { background:light-dark(#15203650,#05081385); backdrop-filter:blur(4px); }
 #lp-hybrid .hy-validation-heading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:0; padding:22px 26px; border-bottom:1px solid var(--edge); flex:none; }
 #lp-hybrid .hy-analysis-identity { display:flex; align-items:center; gap:13px; min-width:0; }
-#lp-hybrid .hy-analysis-mode-icon { display:grid; place-items:center; width:40px; height:40px; flex:none; border:1px solid var(--edge); border-radius:12px; color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-analysis-mode-icon { display:grid; place-items:center; width:40px; height:40px; padding:0; flex:none; border:1px solid var(--edge); border-radius:12px; color:var(--blue); background:var(--soft); }
 #lp-hybrid .hy-analysis-mode-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
 #lp-hybrid .hy-validation-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; letter-spacing:-.3px; }
 #lp-hybrid .hy-analysis-mode-name { margin:3px 0 0; color:var(--quiet); font-size:12px; }
@@ -9506,6 +9492,56 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
   #lp-hybrid :is(.hy-validation-dialog[open],.hy-beta-dialog[open],.hy-analysis-inspector) { animation:none; }
   #lp-hybrid .hy-validation-dialog details[data-analysis-tool] { transition:none; }
 }
+
+#lp-hybrid .hy-analysis-mode-icon:hover { border-color:var(--blue); background:color-mix(in srgb,var(--blue) 13%,var(--paper)); }
+#lp-hybrid .hy-analysis-mode-notice { padding:12px 26px; border-bottom:1px solid var(--edge); background:color-mix(in srgb,var(--blue) 7%,var(--paper)); flex:none; }
+#lp-hybrid .hy-analysis-mode-notice[hidden] { display:none; }
+#lp-hybrid .hy-analysis-mode-notice > button { display:flex; align-items:center; gap:10px; width:100%; padding:0; border:0; background:transparent; color:var(--ink); text-align:left; font:12px/1.6 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-mode-notice svg { flex:none; width:18px; height:18px; color:var(--blue); }
+#lp-hybrid .hy-analysis-mode-notice span { flex:1; }
+#lp-hybrid .hy-analysis-mode-notice strong { color:var(--blue); white-space:nowrap; font-weight:500; }
+#lp-hybrid .hy-analysis-mode-menu button { min-height:66px; }
+
+#lp-hybrid #editor-settings {
+  inset:80px 20px auto auto; width:740px; height:720px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 96px);
+  box-sizing:border-box; margin:0; padding:0; border:1px solid var(--edge); border-radius:20px; overflow:hidden;
+  background:var(--paper); color:var(--ink); box-shadow:0 20px 65px light-dark(#24364a25,#0005);
+}
+#lp-hybrid #editor-settings:popover-open { display:flex; flex-direction:column; }
+#lp-hybrid #editor-settings > .hy-settings-head { margin:0; padding:22px 24px; gap:16px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-settings-identity { display:flex; align-items:center; gap:12px; min-width:0; }
+#lp-hybrid .hy-settings-identity h2 { margin:0; font:600 17px/1.4 "Segoe UI",system-ui; letter-spacing:-.2px; }
+#lp-hybrid .hy-settings-identity-icon { display:grid; place-items:center; width:36px; height:36px; border:1px solid var(--edge); border-radius:11px; background:var(--soft); color:var(--blue); }
+#lp-hybrid .hy-settings-identity-icon svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid #editor-settings .hy-settings-actions { display:flex; align-items:center; gap:6px; }
+#lp-hybrid #editor-settings .hy-settings-actions button { width:32px; height:32px; min-height:32px; padding:7px; margin:0; border-radius:9px; }
+#lp-hybrid #editor-settings .hy-settings-actions #settings-language svg { width:22px; height:16px; }
+#lp-hybrid .hy-settings-body { display:grid; grid-template-columns:154px minmax(0,1fr); min-height:0; flex:1; }
+#lp-hybrid #editor-settings .hy-settings-tabs { display:flex; flex-direction:column; gap:6px; padding:22px 12px; background:color-mix(in srgb,var(--soft) 38%,var(--paper)); border-right:1px solid var(--edge); }
+#lp-hybrid #editor-settings .hy-settings-tabs button { display:flex; align-items:center; gap:9px; min-width:0; padding:11px 10px; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); text-align:left; font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid #editor-settings .hy-settings-tabs svg { flex:none; width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid #editor-settings .hy-settings-tabs [aria-selected="true"] { background:var(--paper); border-color:var(--edge); color:var(--blue); box-shadow:0 2px 5px light-dark(#26364a08,#0002); }
+#lp-hybrid .hy-settings-pages { min-width:0; min-height:0; overflow:auto; padding:24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid #editor-settings .hy-settings-panel[hidden] { display:none; }
+#lp-hybrid #editor-settings .hy-settings-panel .hy-setting { margin:0; padding:20px 0; border-top:1px solid var(--edge); }
+#lp-hybrid #editor-settings .hy-theme-choices { margin:0; }
+#lp-hybrid #editor-settings .hy-theme-option { min-height:76px; }
+#lp-hybrid #editor-settings .hy-setting-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+#lp-hybrid #editor-settings .hy-setting-heading label { margin:0; color:var(--ink); font-size:13px; }
+#lp-hybrid #editor-settings .hy-settings-panel > .hy-hover-delay-setting { padding:18px 0; border:0; border-bottom:1px solid var(--edge); border-radius:0; background:transparent; margin:0; }
+#lp-hybrid #editor-settings .hy-panel-shortcuts { padding:0 0 22px; border:0; }
+#lp-hybrid #editor-settings .hy-panel-shortcut-grid { margin:16px 0 22px; }
+#lp-hybrid #editor-settings .hy-panel-shortcut-grid button { min-height:54px; background:var(--paper); }
+#lp-hybrid #editor-settings .hy-panel-shortcut-grid [aria-pressed="true"] { border-color:var(--blue); color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-settings-panel-editor .hy-panel-appearance-inline { position:static; inset:auto; width:100%; max-width:none; max-height:none; height:auto; margin:0; padding:0; border:0; border-radius:0; box-shadow:none; background:transparent; overflow:visible; scrollbar-gutter:auto; }
+#lp-hybrid .hy-panel-appearance-inline > .hy-settings-head { display:none; }
+#lp-hybrid #editor-settings .hy-settings-prefix-row { display:flex; align-items:center; justify-content:space-between; gap:18px; font:13px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-settings-prefix-row input { width:17px; height:17px; accent-color:var(--blue); }
+#lp-hybrid .hy-settings-footer { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 24px; border-top:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-settings-footer #settings-default { display:flex; align-items:center; gap:8px; min-height:30px; width:auto; margin:0; margin-inline:0; padding:4px 0; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-settings-footer #settings-default svg { width:16px; height:16px; }
+#lp-hybrid .hy-settings-footer > span { color:var(--quiet); font:11px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid #editor-settings :is(button,input,select,summary):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
 
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
@@ -10355,6 +10391,29 @@ document.addEventListener("keydown", (event) => {
   }
   scope.LPCategorical={parse,evaluate,validate};
   if(typeof module!=='undefined')module.exports=scope.LPCategorical;
+})(globalThis);
+</script>
+
+<script id="logic-mode-inference">
+// Classify supported notation, not the intended semantics or truth of premises.
+(function(scope){
+  function inspect(rows,selected){
+    if(!Array.isArray(rows)||rows.length>200)return null;
+    const formulas=rows.filter(row=>row.role==='premise'||row.role==='conclusion').map(row=>row.text?.trim()).filter(Boolean);
+    if(!formulas.length||formulas.some(text=>text.length>10000))return null;
+    const parsers={propositional:scope.LPLogic.parse,syllogistic:scope.LPCategorical.parse,'first-order':scope.LPFirstOrder.parse};
+    if(!Object.hasOwn(parsers,selected))return null;
+    const fits=parser=>formulas.every(text=>{try{parser(text);return true;}catch{return false;}});
+    if(fits(parsers[selected]))return null;
+    const candidates=Object.keys(parsers).filter(mode=>mode!==selected&&fits(parsers[mode]));
+    // Zero-place predicates also form the propositional fragment of FOL.
+    // Prefer the smaller language only when the selected mode rejects the text.
+    const suggested=candidates.length===1?candidates[0]
+      :candidates.length===2&&candidates.includes('propositional')&&candidates.includes('first-order')?'propositional':null;
+    return suggested?{selected,suggested,candidates}:null;
+  }
+  scope.LPModeInference={inspect};
+  if(typeof module!=='undefined')module.exports=scope.LPModeInference;
 })(globalThis);
 </script>
 
@@ -13472,6 +13531,8 @@ async function updateLogicValidation() {
   logicButton.setAttribute("aria-label", words.button);
   resetValidationInspector();
   logicPanel.textContent = words.working;
+  const advice = LPModeInference.inspect(rows, currentLogicMode());
+  if (advice) { showValidationModeMismatch(); return; }
   if (typeof currentLogicMode === "function" && currentLogicMode() !== 'propositional') {
     updateExtendedLogicValidation(currentLogicMode());
     return;
@@ -17102,14 +17163,14 @@ const panelFontOptions = [
 
   }
   let activeAppearance = null;
-  function open(key) {
+  function open(key, container) {
     const previous = activeAppearance;
     previous?.dismiss();
-    if (previous?.key === key) return;
+    if (previous?.key === key && !container && !previous.inline) return;
     const en = ui.language === "en",
       c = config(key),
-      dialog = document.createElement("dialog");
-    dialog.className = "hy-panel-appearance-dialog";
+      dialog = document.createElement(container ? "section" : "dialog");
+    dialog.className = "hy-panel-appearance-dialog" + (container ? " hy-panel-appearance-inline" : "");
     dialog.innerHTML =
       '<div class="hy-settings-head"><h2 style="font-size:14px;margin:0">' +
       (key === "editor" ? (en ? "Premises and conclusions" : "Premissas e conclusões") : (en ? "Argument" : "Argumento")) +
@@ -17285,7 +17346,7 @@ const panelFontOptions = [
       dialog.remove();
       if (activeAppearance?.dismiss === dismiss) activeAppearance = null;
     };
-    activeAppearance = { key, dismiss };
+    activeAppearance = { key, dismiss, inline: Boolean(container) };
     dialog.dataset.panel = key;
     dialog.querySelector("[data-close]").onclick = dismiss;
     dialog.addEventListener("click", (event) => {
@@ -17299,29 +17360,35 @@ const panelFontOptions = [
       )
         dismiss();
     });
-    (fromSettings ? settingsPanel : root).append(dialog);
-    dialog.setAttribute("popover", "manual");
-    dialog.showPopover();
+    if (container) container.replaceChildren(dialog);
+    else {
+      (fromSettings ? settingsPanel : root).append(dialog);
+      dialog.setAttribute("popover", "manual");
+      dialog.showPopover();
+    }
     document.addEventListener("pointerdown", event => {
-      if (dialog.contains(event.target)) return;
+      if (container || dialog.contains(event.target)) return;
       if (event.target.closest("#editor-settings button,#editor-settings input,#editor-settings select,#editor-settings summary")) return;
       dismiss();
     }, { capture: true, signal: listeners.signal });
     document.addEventListener("keydown", event => {
       if (event.key !== "Escape") return;
+      if (container && !list.matches(":popover-open")) return;
       event.preventDefault();
       event.stopPropagation();
       if (list.matches(":popover-open")) { list.hidePopover(); summary.setAttribute("aria-expanded", "false"); }
       else dismiss();
     }, { capture: true, signal: listeners.signal });
     dialog.addEventListener("toggle", event => { if (event.newState === "closed") dismiss(); }, { signal: listeners.signal });
-    if (fromSettings) settingsPanel.addEventListener("toggle", event => {
+    if (fromSettings || container) settingsPanel.addEventListener("toggle", event => {
       if (event.newState === "closed") dismiss();
     }, { signal: listeners.signal });
   }
   root.addEventListener("lp-open-panel-appearance", event => {
     const key=event.detail?.key;
-    if (["editor","preview"].includes(key)) open(key);
+    const container = event.detail?.container;
+    if (container && (!(container instanceof HTMLElement) || !root.querySelector('#settings-panels')?.contains(container))) return;
+    if (["editor","preview"].includes(key)) open(key, container);
   });
   for (const key of ["editor", "preview"]) {
     const eye = root.querySelector("[data-action=" + key + "]");
@@ -21204,59 +21271,93 @@ globalThis.LPCategoryRowTarget = (stack, preview, cards, top, height, nextId) =>
 </script>
 
 <script id="settings-sections">
-// Keep existing settings nodes and their listeners; only their presentation changes.
+// Reuse the settings controls and their owners; navigation only redistributes them.
 (() => {
-  const settings=root.querySelector('#editor-settings');
-  const head=settings.querySelector(':scope > .hy-settings-head');
-  const switches=settings.querySelector('.hy-settings-switches');
-  const actions=document.createElement('div');actions.className='hy-settings-actions';
-  actions.append(...switches.children,head.querySelector('button'));
-  head.append(actions);switches.remove();
-  const tabs=document.createElement('div');tabs.className='hy-settings-tabs';tabs.setAttribute('role','tablist');
-  tabs.setAttribute('aria-label',interfaceText('Seções das configurações','Settings sections'));
-  const appearance=document.createElement('section'),functionalities=document.createElement('section');
-  appearance.id='settings-appearance';functionalities.id='settings-functionalities';
-  for(const panel of [appearance,functionalities]){panel.className='hy-settings-panel';panel.setAttribute('role','tabpanel');}
-  appearance.append(settings.querySelector('.hy-theme-choices'),settings.querySelector('.hy-setting:has(#scale-library)'),settings.querySelector('.hy-setting:has(#scale-writing)'),settings.querySelector('.hy-layout-recovery-setting'));
-  const panelSection=document.createElement("section");panelSection.className="hy-panel-shortcuts";
-  const title=document.createElement("h3");title.textContent=interfaceText("Personalizar painéis","Customize panels");
-  function infoButton(pt,en,labelPt,labelEn) {
-    const button=document.createElement("button");button.type="button";
-    button.className="hy-icon-button hy-settings-info";
-    button.setAttribute("aria-label",interfaceText(labelPt,labelEn));
-    button.dataset.hintText=interfaceText(pt,en);
-    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>';
-    return button;
-  }
-  title.className="hy-settings-section-heading";
-  title.append(infoButton("Clique em um painel abaixo ou segure o olhinho dele para personalizar.","Click a panel below or hold its eye button to customize it.","Informações sobre personalização dos painéis","Panel customization information"));
-  const buttons=document.createElement("div");buttons.className="hy-panel-shortcut-grid";
-  [["editor","Premissas e conclusões","Premises and conclusions",'<path d="M9 6h12M9 12h12M9 18h12M3 6h2M3 12h2M3 18h2"/>'],["preview","Argumento","Argument",'<path d="M14 3H5v18h14V8ZM14 3v5h5M8 12h8M8 16h8"/>']].forEach(([key,pt,en,icon])=>{
-    const button=document.createElement("button");button.type="button";button.dataset.panelSettings=key;
-    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';
-    const name=document.createElement("span");name.textContent=interfaceText(pt,en);button.append(name);
-    button.onclick=()=>{root.dispatchEvent(new CustomEvent("lp-open-panel-appearance",{detail:{key}}));};buttons.append(button);
-  });
-  const themeHeading=appearance.querySelector(".hy-theme-choices legend");
-  themeHeading.classList.add("hy-settings-section-heading");
-  themeHeading.append(infoButton("Segure uma área vazia do fundo para escolher o tema.","Hold an empty area of the background to choose a theme.","Informações sobre temas","Theme information"));
-  panelSection.append(title,buttons);
-  appearance.querySelector(".hy-theme-choices").after(panelSection);
-  functionalities.append(...settings.querySelectorAll('.hy-hover-delay-setting'));
+  const settings = root.querySelector('#editor-settings');
+  settings.setAttribute('role','dialog');
+  const head = settings.querySelector(':scope > .hy-settings-head');
+  const switches = settings.querySelector('.hy-settings-switches');
+  const actions = document.createElement('div'); actions.className='hy-settings-actions';
+  actions.append(...switches.children,head.querySelector('button')); head.append(actions); switches.remove();
+  const identity=document.createElement('div');identity.className='hy-settings-identity';
+  const symbol=document.createElement('span');symbol.className='hy-settings-identity-icon';
+  symbol.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M8 4v6M16 14v6"/></svg>';
+  identity.append(symbol,head.querySelector('h2'));head.prepend(identity);
+  const tabs=document.createElement('nav');tabs.className='hy-settings-tabs';tabs.setAttribute('role','tablist');tabs.setAttribute('aria-orientation','vertical');
+  const body=document.createElement('div');body.className='hy-settings-body';
+  const pages=document.createElement('div');pages.className='hy-settings-pages';
+  const definitions=[
+    ['appearance','Aparência','Appearance','<circle cx="12" cy="12" r="8"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/><path d="M9 16h6"/>'],
+    ['panels','Painéis','Panels','<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M10 4v16"/>'],
+    ['writing','Escrita','Writing','<path d="M5 5h14M12 5v14M8 19h8"/>'],
+    ['functionalities','Interações','Interactions','<path d="m5 3 14 10-7 1-3 7Z"/>'],
+  ];
+  const panels=definitions.map(([key])=>{const panel=document.createElement('section');panel.id='settings-'+key;panel.className='hy-settings-panel';panel.setAttribute('role','tabpanel');pages.append(panel);return panel;});
+  const [appearance,panelPage,writing,interactions]=panels;
+  appearance.append(settings.querySelector('.hy-theme-choices'));
+  const librarySize=settings.querySelector('.hy-setting:has(#scale-library)');
+  writing.append(settings.querySelector('.hy-setting:has(#scale-writing)'));
+  interactions.append(...settings.querySelectorAll('.hy-hover-delay-setting'));
   settings.querySelector('.hy-appearance-settings')?.remove();
-  const panels=[appearance,functionalities];
-  function select(index,focus=false){
-    panels.forEach((panel,i)=>{panel.hidden=i!==index;const tab=tabs.children[i];tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;});
-    ui.settingsTab=index===1?'functionalities':'appearance';saveUI();if(focus)tabs.children[index].focus();
+  function infoButton(pt,en,labelPt,labelEn) {
+    const button=document.createElement('button');button.type='button';button.className='hy-icon-button hy-settings-info';
+    button.setAttribute('aria-label',interfaceText(labelPt,labelEn));button.dataset.hintText=interfaceText(pt,en);
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>';return button;
   }
-  [['Aparência','Appearance'],['Funcionalidades','Functionalities']].forEach(([pt,en],i)=>{
-    const tab=document.createElement('button');tab.type='button';tab.id=panels[i].id+'-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-controls',panels[i].id);
-    tab.textContent=interfaceText(pt,en);panels[i].setAttribute('aria-labelledby',tab.id);
-    tab.onclick=()=>select(i);tab.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();select(e.key==='Home'?0:e.key==='End'?1:1-i,true);}};
-    tabs.append(tab);
+  const panelSection=document.createElement('section');panelSection.className='hy-panel-shortcuts';
+  const title=document.createElement('h3');title.className='hy-settings-section-heading';
+  const titleText=document.createElement('span');titleText.textContent=interfaceText('Personalizar painéis','Customize panels');
+  title.append(titleText,infoButton('Clique em um painel abaixo ou segure o olhinho dele para personalizar.','Click a panel below or hold its eye button to customize it.','Informações sobre personalização dos painéis','Panel customization information'));
+  const buttons=document.createElement('div');buttons.className='hy-panel-shortcut-grid';
+  const panelEditor=document.createElement('div');panelEditor.className='hy-settings-panel-editor';
+  function showPanel(key) {
+    ui.settingsPanel=key;
+    buttons.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.panelSettings===key)));
+    root.dispatchEvent(new CustomEvent('lp-open-panel-appearance',{detail:{key,container:panelEditor}}));
+  }
+  for(const [key,pt,en,path] of [
+    ['editor','Premissas e conclusões','Premises and conclusions','<path d="M9 6h12M9 12h12M9 18h12M3 6h2M3 12h2M3 18h2"/>'],
+    ['preview','Argumento','Argument','<path d="M14 3H5v18h14V8ZM14 3v5h5M8 12h8M8 16h8"/>'],
+  ]){
+    const button=document.createElement('button');button.type='button';button.dataset.panelSettings=key;
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+path+'</svg>';
+    const name=document.createElement('span');name.textContent=interfaceText(pt,en);button.append(name);
+    button.onclick=()=>{showPanel(key);saveUI();};buttons.append(button);
+  }
+  panelSection.append(title,buttons,panelEditor);panelPage.append(panelSection,librarySize,settings.querySelector('.hy-layout-recovery-setting'));
+  const themeHeading=appearance.querySelector('.hy-theme-choices legend');themeHeading.classList.add('hy-settings-section-heading');
+  themeHeading.append(infoButton('Segure uma área vazia do fundo para escolher o tema.','Hold an empty area of the background to choose a theme.','Informações sobre temas','Theme information'));
+  const prefixRow=document.createElement('label');prefixRow.className='hy-setting hy-settings-prefix-row';
+  const prefixLabel=document.createElement('span');prefixLabel.textContent=interfaceText('Compactar prefixos e parênteses','Compact prefix symbols and parentheses');
+  const prefix=document.createElement('input');prefix.type='checkbox';prefix.id='settings-compact-prefix';prefixRow.append(prefixLabel,prefix);writing.append(prefixRow);
+  const prefixButton=root.querySelector('#compact-prefix-spacing');
+  const refreshPrefix=()=>{prefix.checked=ui.compactPrefixSpacing===true;};
+  prefix.onchange=()=>{if(prefix.checked!==(ui.compactPrefixSpacing===true))prefixButton.click();refreshPrefix();};
+  new MutationObserver(refreshPrefix).observe(prefixButton,{attributes:true,attributeFilter:['aria-pressed']});refreshPrefix();
+  let selected=0;
+  function select(index,focus=false){
+    selected=index;
+    panels.forEach((panel,i)=>{panel.hidden=i!==index;const tab=tabs.children[i];tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;});
+    ui.settingsTab=definitions[index][0];saveUI();
+    if(index===1&&settings.matches(':popover-open'))showPanel(ui.settingsPanel==='preview'?'preview':'editor');
+    if(focus)tabs.children[index].focus();
+  }
+  definitions.forEach(([key,pt,en,path],index)=>{
+    const tab=document.createElement('button');tab.type='button';tab.id='settings-'+key+'-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-controls',panels[index].id);
+    tab.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+path+'</svg>';
+    const name=document.createElement('span');name.textContent=interfaceText(pt,en);tab.append(name);panels[index].setAttribute('aria-labelledby',tab.id);
+    tab.onclick=()=>select(index);tab.onkeydown=event=>{const keys=['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'];if(!keys.includes(event.key))return;event.preventDefault();select(event.key==='Home'?0:event.key==='End'?3:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?3:1))%4,true);};tabs.append(tab);
   });
-  head.after(tabs);settings.append(appearance,functionalities);
-  select(ui.settingsTab==='functionalities'?1:0);applyLanguage();
+  body.append(tabs,pages);settings.append(body);
+  const footer=document.createElement('footer');footer.className='hy-settings-footer';
+  const restore=settings.querySelector('#settings-default');restore.classList.remove('hy-icon-button');
+  const restoreLabel=document.createElement('span');restoreLabel.textContent=interfaceText('Restaurar padrões','Restore defaults');restore.append(restoreLabel);
+  const note=document.createElement('span');note.textContent=interfaceText('Alterações automáticas','Changes apply automatically');footer.append(restore,note);settings.append(footer);
+  Object.assign(translations,{'Painéis':'Panels','Escrita':'Writing','Interações':'Interactions','Alterações automáticas':'Changes apply automatically','Compactar prefixos e parênteses':'Compact prefix symbols and parentheses'});
+  tabs.setAttribute('aria-label',interfaceText('Seções das configurações','Settings sections'));
+  settings.addEventListener('toggle',event=>{if(event.newState==='open'&&selected===1)showPanel(ui.settingsPanel==='preview'?'preview':'editor');});
+  root.querySelector('#settings-language').addEventListener('click',()=>{if(selected===1&&settings.matches(':popover-open'))showPanel(ui.settingsPanel==='preview'?'preview':'editor');});
+  select(Math.max(0,definitions.findIndex(([key])=>key===ui.settingsTab)));applyLanguage();
 })();
 </script>
 
@@ -21301,7 +21402,7 @@ globalThis.LPCategoryRowTarget = (stack, preview, cards, top, height, nextId) =>
     button.onclick = () => setMode(mode); choices.append(button);
   }
   toggle.onclick = () => setMode(ui.writingMode === 'continuous' ? 'blocks':'continuous',true);
-  setting.append(title,choices); root.querySelector('#settings-functionalities').prepend(setting);
+  setting.append(title,choices); root.querySelector('#settings-writing').prepend(setting);
   root.addEventListener('lp-ui-colors',refresh);
   root.querySelector('#settings-language').addEventListener('click',refresh);
   const resize = () => requestAnimationFrame(resizeContinuousFields);
@@ -21355,7 +21456,8 @@ const validationHeader = document.createElement('header');
 validationHeader.className = 'hy-validation-heading';
 const validationIdentity = document.createElement('div');
 validationIdentity.className = 'hy-analysis-identity';
-const validationModeIcon = document.createElement('span');
+const validationModeIcon = document.createElement('button');
+validationModeIcon.type = 'button';
 validationModeIcon.className = 'hy-analysis-mode-icon';
 const validationHeadingText = document.createElement('div');
 const validationTitle = document.createElement('h2');
@@ -21412,7 +21514,12 @@ validationInspector.setAttribute('aria-labelledby', validationInspectorTitle.id)
 validationInspectorHead.append(validationBack, validationInspectorTitle);
 validationInspector.append(validationInspectorHead, validationInspectorBody);
 validationWorkspace.append(validationPreview, validationAnalysis, validationInspector);
-validationDialog.append(validationHeader, validationWorkspace, logicFooter);
+const validationModeNotice = document.createElement('div');
+validationModeNotice.className = 'hy-analysis-mode-notice';
+validationModeNotice.setAttribute('role','status');validationModeNotice.hidden=true;
+const validationModeSuggestion = document.createElement('button');validationModeSuggestion.type='button';
+validationModeNotice.append(validationModeSuggestion);
+validationDialog.append(validationHeader, validationModeNotice, validationWorkspace, logicFooter);
 root.append(validationDialog);
 
 const argumentActions = document.createElement('footer');
@@ -21466,8 +21573,29 @@ validationDialog.addEventListener('cancel', event => {
   resetValidationInspector(true);
 });
 
+function showValidationModeMismatch() {
+  logicPanel.dataset.state='mode-mismatch';
+  const card=document.createElement('section');card.className='hy-analysis-summary';
+  const heading=document.createElement('h3');heading.className='hy-analysis-result-heading';
+  heading.append(analysisIcon('guide'),document.createTextNode(interfaceText('Modo incompatível com esta escrita','Mode does not support this notation')));
+  const description=document.createElement('p');description.textContent=interfaceText('Escolha um modo compatível para analisar este argumento. As fórmulas e descrições serão preservadas.','Choose a compatible mode to analyze this argument. Formulas and descriptions will be preserved.');
+  card.append(heading,description);logicPanel.replaceChildren(card);refreshValidationWorkspace();
+}
+function refreshValidationModeAdvice() {
+  const advice=LPModeInference.inspect(rows,currentLogicMode());
+  validationModeNotice.hidden=!advice;
+  if(!advice){validationModeSuggestion.replaceChildren();return;}
+  const target=interfaceText(...logicModeShortNames[advice.suggested]), selected=interfaceText(...logicModeShortNames[advice.selected]);
+  const label=document.createElement('span');
+  label.textContent=interfaceText('Esta escrita é compatível com '+target+'. Trocar de '+selected+'?', 'This notation is compatible with '+target+'. Switch from '+selected+'?');
+  const action=document.createElement('strong');action.textContent=interfaceText('Trocar lógica','Switch logic');
+  validationModeSuggestion.replaceChildren(analysisIcon('guide'),label,action);
+  validationModeSuggestion.dataset.suggestedMode=advice.suggested;
+  validationModeSuggestion.onclick=()=>{setLogicMode(advice.suggested);validationModeIcon.focus();};
+}
 function refreshValidationWorkspace() {
   const t = interfaceText;
+  refreshValidationModeAdvice();
   validationTitle.textContent = t('Validação lógica', 'Logic validation');
   validationClose.setAttribute('aria-label', t('Fechar', 'Close'));
   validationMode.textContent = currentLogicMode() === 'syllogistic'
@@ -21476,6 +21604,8 @@ function refreshValidationWorkspace() {
       ? t('Lógica de primeira ordem', 'First-order logic')
       : t('Lógica proposicional', 'Propositional logic');
   validationModeIcon.replaceChildren(root.querySelector('.hy-mode-icon svg')?.cloneNode(true) || analysisIcon('syntax'));
+  validationModeIcon.setAttribute('aria-label',t('Alterar lógica: ','Change logic: ')+validationMode.textContent);
+  validationModeIcon.dataset.hintText=t('Escolher lógica','Choose logic');
   validationArgumentLabel.textContent = t('Argumento', 'Argument');
   validationResultLabel.textContent = t('Análise', 'Analysis');
   const count = rows.filter(row => row.role === 'premise' && row.text.trim()).length;
@@ -21643,30 +21773,42 @@ validationDialog.addEventListener('click', event => {
 })();
 </script>
 
+<script id="logic-mode-shared">
+const logicModeDefinitions = [
+  ['syllogistic','Silogística categórica','Categorical syllogistic'],
+  ['propositional','Lógica proposicional clássica','Classical propositional logic'],
+  ['first-order','Lógica de primeira ordem clássica','Classical first-order logic'],
+];
+const logicModeShortNames = {
+  syllogistic:['Silogística','Syllogistic'],
+  propositional:['Proposicional','Propositional'],
+  'first-order':['Primeira ordem','First order'],
+};
+function logicModeIcon(id) {
+  const shapes = {
+    syllogistic:'<circle cx="8" cy="14" r="5"/><circle cx="16" cy="14" r="5"/><circle cx="12" cy="7.5" r="5"/>',
+    propositional:'<circle cx="4" cy="12" r="2.5"/><circle cx="20" cy="12" r="2.5"/><path d="M7 12h10m-3-3 3 3-3 3"/>',
+    'first-order':'<path d="m5 4 7 16 7-16M8.5 12h7"/>',
+  };
+  return '<svg viewBox="0 0 24 24" aria-hidden="true">'+shapes[id]+'</svg>';
+}
+function setLogicMode(mode) {
+  if(!logicModeDefinitions.some(([id])=>id===mode))return false;
+  const doc=argumentWorkspace.documents.find(document=>document.id===argumentWorkspace.activeId);
+  if(!doc||doc.logicMode===mode)return false;
+  doc.logicMode=mode;saveArguments();
+  if(logicEnabled)updateLogicValidation();
+  return true;
+}
+</script>
+
 <script id="logic-modes">
 function currentLogicMode() {
   return argumentWorkspace.documents.find(doc => doc.id === argumentWorkspace.activeId)?.logicMode || 'propositional';
 }
 (() => {
   const t = interfaceText;
-  const modes = [
-    ['syllogistic','Silogística categórica','Categorical syllogistic'],
-    ['propositional','Lógica proposicional clássica','Classical propositional logic'],
-    ['first-order','Lógica de primeira ordem clássica','Classical first-order logic'],
-  ];
-  const shortNames = {
-    syllogistic: ['Silogística', 'Syllogistic'],
-    propositional: ['Proposicional', 'Propositional'],
-    'first-order': ['Primeira ordem', 'First order'],
-  };
-  function modeIcon(id) {
-    const shapes = {
-      syllogistic: '<circle cx="8" cy="14" r="5"/><circle cx="16" cy="14" r="5"/><circle cx="12" cy="7.5" r="5"/>',
-      propositional: '<circle cx="4" cy="12" r="2.5"/><circle cx="20" cy="12" r="2.5"/><path d="M7 12h10m-3-3 3 3-3 3"/>',
-      'first-order': '<path d="m5 4 7 16 7-16M8.5 12h7"/>',
-    };
-    return '<svg viewBox="0 0 24 24" aria-hidden="true">' + shapes[id] + '</svg>';
-  }
+  const modes=logicModeDefinitions, shortNames=logicModeShortNames, modeIcon=logicModeIcon;
   const title = root.querySelector('.hy-title strong');
   const trigger = document.createElement('button');
   trigger.id = 'logic-mode-select'; trigger.type = 'button';
@@ -21715,7 +21857,7 @@ function currentLogicMode() {
     selectedName.textContent=t(...shortNames[mode[0]]);
     selectedIcon.innerHTML=modeIcon(mode[0]);
     menu.replaceChildren();
-    for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.innerHTML=modeIcon(id);const name=document.createElement('span');name.textContent=t(pt,en);b.append(name);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{argumentWorkspace.documents.find(doc=>doc.id===argumentWorkspace.activeId).logicMode=id;menu.hidePopover();saveArguments();refresh();if(logicEnabled)updateLogicValidation();trigger.focus();};menu.append(b);}
+    for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.innerHTML=modeIcon(id);const name=document.createElement('span');name.textContent=t(pt,en);b.append(name);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{menu.hidePopover();setLogicMode(id);refresh();trigger.focus();};menu.append(b);}
 
   }
   let timer,held=false;
@@ -21744,6 +21886,38 @@ function currentLogicMode() {
   root.addEventListener('lp-ui-colors', () => requestAnimationFrame(alignDock));
   refresh();
   alignDock();
+})();
+
+// The same catalog and setter serve the header and the analysis window.
+(() => {
+  const trigger=validationModeIcon;
+  const menu=document.createElement('div');menu.id='validation-mode-options';menu.className='hy-logic-mode-menu hy-analysis-mode-menu';
+  menu.setAttribute('popover','manual');menu.setAttribute('role','menu');validationDialog.append(menu);
+  trigger.setAttribute('aria-haspopup','menu');trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-controls',menu.id);
+  function close(focus=false){if(menu.matches(':popover-open'))menu.hidePopover();trigger.setAttribute('aria-expanded','false');if(focus&&validationDialog.open)trigger.focus();}
+  function position(){if(!menu.matches(':popover-open'))return;const bounds=trigger.getBoundingClientRect();menu.style.left=Math.max(12,Math.min(innerWidth-menu.offsetWidth-12,bounds.left))+'px';menu.style.top=Math.min(innerHeight-menu.offsetHeight-12,bounds.bottom+10)+'px';}
+  trigger.onclick=()=>{
+    if(menu.matches(':popover-open')){close();return;}
+    menu.replaceChildren();
+    for(const [id,pt,en] of logicModeDefinitions){
+      const button=document.createElement('button');button.type='button';button.innerHTML=logicModeIcon(id);
+      const name=document.createElement('span');name.textContent=interfaceText(pt,en);button.append(name);
+      button.setAttribute('role','menuitemradio');button.setAttribute('aria-checked',String(id===currentLogicMode()));
+      button.onclick=()=>{close();setLogicMode(id);trigger.focus();};menu.append(button);
+    }
+    menu.showPopover();trigger.setAttribute('aria-expanded','true');position();
+    menu.querySelector('[aria-checked=true]').focus();
+  };
+  menu.addEventListener('keydown',event=>{
+    const buttons=[...menu.children],index=buttons.indexOf(document.activeElement);
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
+      event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?2:1))%3;buttons[next].focus();
+    }
+  });
+  document.addEventListener('pointerdown',event=>{if(!trigger.contains(event.target)&&!menu.contains(event.target))close();},true);
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.matches(':popover-open')){event.preventDefault();event.stopImmediatePropagation();close(true);}},true);
+  validationDialog.addEventListener('close',()=>close());window.addEventListener('resize',position);
+  menu.addEventListener('toggle',event=>trigger.setAttribute('aria-expanded',String(event.newState==='open')));
 })();
 </script>
 

@@ -96,7 +96,7 @@ const fs = require("fs"),
         if (await d.isVisible()) await p.keyboard.press("Escape");
         await d.waitFor({ state: "detached" });
         assert.equal(await d.count(), 0);
-        if (await p.locator(".hy-validation-dialog[open]").count()) await p.locator(".hy-validation-heading button").click();
+        if (await p.locator(".hy-validation-dialog[open]").count()) await p.locator(".hy-analysis-close").click();
         await p.locator("#rows>.hy-row").last().locator(".hy-block").last().fill("C");
         await p.locator(".hy-logic-button").click();
         await p.waitForFunction(

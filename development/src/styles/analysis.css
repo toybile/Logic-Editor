@@ -10,7 +10,7 @@
 #lp-hybrid .hy-validation-dialog::backdrop { background:light-dark(#15203650,#05081385); backdrop-filter:blur(4px); }
 #lp-hybrid .hy-validation-heading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:0; padding:22px 26px; border-bottom:1px solid var(--edge); flex:none; }
 #lp-hybrid .hy-analysis-identity { display:flex; align-items:center; gap:13px; min-width:0; }
-#lp-hybrid .hy-analysis-mode-icon { display:grid; place-items:center; width:40px; height:40px; flex:none; border:1px solid var(--edge); border-radius:12px; color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-analysis-mode-icon { display:grid; place-items:center; width:40px; height:40px; padding:0; flex:none; border:1px solid var(--edge); border-radius:12px; color:var(--blue); background:var(--soft); }
 #lp-hybrid .hy-analysis-mode-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
 #lp-hybrid .hy-validation-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; letter-spacing:-.3px; }
 #lp-hybrid .hy-analysis-mode-name { margin:3px 0 0; color:var(--quiet); font-size:12px; }
@@ -161,3 +161,12 @@
   #lp-hybrid :is(.hy-validation-dialog[open],.hy-beta-dialog[open],.hy-analysis-inspector) { animation:none; }
   #lp-hybrid .hy-validation-dialog details[data-analysis-tool] { transition:none; }
 }
+
+#lp-hybrid .hy-analysis-mode-icon:hover { border-color:var(--blue); background:color-mix(in srgb,var(--blue) 13%,var(--paper)); }
+#lp-hybrid .hy-analysis-mode-notice { padding:12px 26px; border-bottom:1px solid var(--edge); background:color-mix(in srgb,var(--blue) 7%,var(--paper)); flex:none; }
+#lp-hybrid .hy-analysis-mode-notice[hidden] { display:none; }
+#lp-hybrid .hy-analysis-mode-notice > button { display:flex; align-items:center; gap:10px; width:100%; padding:0; border:0; background:transparent; color:var(--ink); text-align:left; font:12px/1.6 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-mode-notice svg { flex:none; width:18px; height:18px; color:var(--blue); }
+#lp-hybrid .hy-analysis-mode-notice span { flex:1; }
+#lp-hybrid .hy-analysis-mode-notice strong { color:var(--blue); white-space:nowrap; font-weight:500; }
+#lp-hybrid .hy-analysis-mode-menu button { min-height:66px; }

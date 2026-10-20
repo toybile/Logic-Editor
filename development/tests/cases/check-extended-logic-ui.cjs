@@ -8,7 +8,7 @@ fs.mkdirSync('test-artifacts',{recursive:true});
   await p.evaluate(theme=>{ui.theme=theme;applyUI();},theme);
   async function seed(mode,premises,conclusion){await p.evaluate(({mode,premises,conclusion})=>{argumentWorkspace.documents.find(d=>d.id===argumentWorkspace.activeId).logicMode=mode;rows=[...premises.map(text=>({text,role:'premise'})),{text:conclusion,role:'conclusion'}];drawRows();render();},{mode,premises,conclusion});}
   async function open(status){await p.locator('.hy-logic-button').click();await p.waitForFunction(status=>logicPanel.dataset.state===status,status);}
-  async function close(){await p.locator('.hy-validation-heading button').click();await p.locator('.hy-panel-actions #copy').waitFor({state:'visible'});}
+  async function close(){await p.locator('.hy-analysis-close').click();await p.locator('.hy-panel-actions #copy').waitFor({state:'visible'});}
   await seed('syllogistic',['A(M,P)','A(S,M)'],'A(S,P)');await open('valid');
   await p.getByText('Semantics and limits',{exact:true}).click();assert((await p.locator('.hy-analysis-inspector').innerText()).includes('no existential import'));await p.locator('.hy-analysis-back').click();await close();
   await seed('syllogistic',['A(S,P)'],'I(S,P)');await open('invalid');
@@ -42,6 +42,6 @@ fs.mkdirSync('test-artifacts',{recursive:true});
  await pt.route('https://lp.test/**',r=>r.fulfill({contentType:'text/html',body:fs.readFileSync(path.resolve(__dirname,'../../../index.html'),'utf8')}));await pt.goto('https://lp.test');
  await pt.evaluate(()=>{argumentWorkspace.documents.find(d=>d.id===argumentWorkspace.activeId).logicMode='first-order';rows=[{text:'P(x)',role:'premise'},{text:'P(a)',role:'conclusion'}];drawRows();render();});
  await pt.locator('.hy-logic-button').click();await pt.waitForFunction(()=>logicPanel.dataset.state==='syntax-checked');assert((await pt.locator('#logic-panel').innerText()).includes('variáveis livres'));
- await pt.locator('.hy-validation-heading button').click();await pt.locator('.hy-proposition-descriptions').click();assert((await pt.locator('[data-feature=descriptions]').innerText()).includes('Domínio de discurso'));await pt.close();
+ await pt.locator('.hy-analysis-close').click();await pt.locator('.hy-proposition-descriptions').click();assert((await pt.locator('[data-feature=descriptions]').innerText()).includes('Domínio de discurso'));await pt.close();
  console.log('Desktop categorical verdicts/countermodels, FOL syntax/free variables/signatures, domain vocabulary persistence and real JSON export/import passed in light and dark themes.');
 }finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,0 +1,40 @@
+#lp-hybrid #editor-settings {
+  inset:80px 20px auto auto; width:740px; height:720px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 96px);
+  box-sizing:border-box; margin:0; padding:0; border:1px solid var(--edge); border-radius:20px; overflow:hidden;
+  background:var(--paper); color:var(--ink); box-shadow:0 20px 65px light-dark(#24364a25,#0005);
+}
+#lp-hybrid #editor-settings:popover-open { display:flex; flex-direction:column; }
+#lp-hybrid #editor-settings > .hy-settings-head { margin:0; padding:22px 24px; gap:16px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-settings-identity { display:flex; align-items:center; gap:12px; min-width:0; }
+#lp-hybrid .hy-settings-identity h2 { margin:0; font:600 17px/1.4 "Segoe UI",system-ui; letter-spacing:-.2px; }
+#lp-hybrid .hy-settings-identity-icon { display:grid; place-items:center; width:36px; height:36px; border:1px solid var(--edge); border-radius:11px; background:var(--soft); color:var(--blue); }
+#lp-hybrid .hy-settings-identity-icon svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid #editor-settings .hy-settings-actions { display:flex; align-items:center; gap:6px; }
+#lp-hybrid #editor-settings .hy-settings-actions button { width:32px; height:32px; min-height:32px; padding:7px; margin:0; border-radius:9px; }
+#lp-hybrid #editor-settings .hy-settings-actions #settings-language svg { width:22px; height:16px; }
+#lp-hybrid .hy-settings-body { display:grid; grid-template-columns:154px minmax(0,1fr); min-height:0; flex:1; }
+#lp-hybrid #editor-settings .hy-settings-tabs { display:flex; flex-direction:column; gap:6px; padding:22px 12px; background:color-mix(in srgb,var(--soft) 38%,var(--paper)); border-right:1px solid var(--edge); }
+#lp-hybrid #editor-settings .hy-settings-tabs button { display:flex; align-items:center; gap:9px; min-width:0; padding:11px 10px; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); text-align:left; font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid #editor-settings .hy-settings-tabs svg { flex:none; width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid #editor-settings .hy-settings-tabs [aria-selected="true"] { background:var(--paper); border-color:var(--edge); color:var(--blue); box-shadow:0 2px 5px light-dark(#26364a08,#0002); }
+#lp-hybrid .hy-settings-pages { min-width:0; min-height:0; overflow:auto; padding:24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid #editor-settings .hy-settings-panel[hidden] { display:none; }
+#lp-hybrid #editor-settings .hy-settings-panel .hy-setting { margin:0; padding:20px 0; border-top:1px solid var(--edge); }
+#lp-hybrid #editor-settings .hy-theme-choices { margin:0; }
+#lp-hybrid #editor-settings .hy-theme-option { min-height:76px; }
+#lp-hybrid #editor-settings .hy-setting-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+#lp-hybrid #editor-settings .hy-setting-heading label { margin:0; color:var(--ink); font-size:13px; }
+#lp-hybrid #editor-settings .hy-settings-panel > .hy-hover-delay-setting { padding:18px 0; border:0; border-bottom:1px solid var(--edge); border-radius:0; background:transparent; margin:0; }
+#lp-hybrid #editor-settings .hy-panel-shortcuts { padding:0 0 22px; border:0; }
+#lp-hybrid #editor-settings .hy-panel-shortcut-grid { margin:16px 0 22px; }
+#lp-hybrid #editor-settings .hy-panel-shortcut-grid button { min-height:54px; background:var(--paper); }
+#lp-hybrid #editor-settings .hy-panel-shortcut-grid [aria-pressed="true"] { border-color:var(--blue); color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-settings-panel-editor .hy-panel-appearance-inline { position:static; inset:auto; width:100%; max-width:none; max-height:none; height:auto; margin:0; padding:0; border:0; border-radius:0; box-shadow:none; background:transparent; overflow:visible; scrollbar-gutter:auto; }
+#lp-hybrid .hy-panel-appearance-inline > .hy-settings-head { display:none; }
+#lp-hybrid #editor-settings .hy-settings-prefix-row { display:flex; align-items:center; justify-content:space-between; gap:18px; font:13px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-settings-prefix-row input { width:17px; height:17px; accent-color:var(--blue); }
+#lp-hybrid .hy-settings-footer { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px 24px; border-top:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-settings-footer #settings-default { display:flex; align-items:center; gap:8px; min-height:30px; width:auto; margin:0; margin-inline:0; padding:4px 0; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-settings-footer #settings-default svg { width:16px; height:16px; }
+#lp-hybrid .hy-settings-footer > span { color:var(--quiet); font:11px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid #editor-settings :is(button,input,select,summary):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }

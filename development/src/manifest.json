@@ -4,6 +4,7 @@
     "styles/themes.css",
     "styles/writing.css",
     "styles/analysis.css",
+    "styles/settings.css",
     "styles/mobile.css"
   ],
   "scripts": [
@@ -26,6 +27,10 @@
     {
       "name": "categorical-logic",
       "file": "scripts/validation/categorical-logic.js"
+    },
+    {
+      "name": "logic-mode-inference",
+      "file": "scripts/validation/logic-mode-inference.js"
     },
     {
       "name": "state-and-row-drag",
@@ -246,6 +251,10 @@
     {
       "name": "mobile-viewport",
       "file": "scripts/layout/mobile-viewport.js"
+    },
+    {
+      "name": "logic-mode-shared",
+      "file": "scripts/settings/logic-mode-shared.js"
     },
     {
       "name": "logic-modes",

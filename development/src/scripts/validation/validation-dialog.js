@@ -6,7 +6,8 @@ const validationHeader = document.createElement('header');
 validationHeader.className = 'hy-validation-heading';
 const validationIdentity = document.createElement('div');
 validationIdentity.className = 'hy-analysis-identity';
-const validationModeIcon = document.createElement('span');
+const validationModeIcon = document.createElement('button');
+validationModeIcon.type = 'button';
 validationModeIcon.className = 'hy-analysis-mode-icon';
 const validationHeadingText = document.createElement('div');
 const validationTitle = document.createElement('h2');
@@ -63,7 +64,12 @@ validationInspector.setAttribute('aria-labelledby', validationInspectorTitle.id)
 validationInspectorHead.append(validationBack, validationInspectorTitle);
 validationInspector.append(validationInspectorHead, validationInspectorBody);
 validationWorkspace.append(validationPreview, validationAnalysis, validationInspector);
-validationDialog.append(validationHeader, validationWorkspace, logicFooter);
+const validationModeNotice = document.createElement('div');
+validationModeNotice.className = 'hy-analysis-mode-notice';
+validationModeNotice.setAttribute('role','status');validationModeNotice.hidden=true;
+const validationModeSuggestion = document.createElement('button');validationModeSuggestion.type='button';
+validationModeNotice.append(validationModeSuggestion);
+validationDialog.append(validationHeader, validationModeNotice, validationWorkspace, logicFooter);
 root.append(validationDialog);
 
 const argumentActions = document.createElement('footer');
@@ -117,8 +123,29 @@ validationDialog.addEventListener('cancel', event => {
   resetValidationInspector(true);
 });
 
+function showValidationModeMismatch() {
+  logicPanel.dataset.state='mode-mismatch';
+  const card=document.createElement('section');card.className='hy-analysis-summary';
+  const heading=document.createElement('h3');heading.className='hy-analysis-result-heading';
+  heading.append(analysisIcon('guide'),document.createTextNode(interfaceText('Modo incompatível com esta escrita','Mode does not support this notation')));
+  const description=document.createElement('p');description.textContent=interfaceText('Escolha um modo compatível para analisar este argumento. As fórmulas e descrições serão preservadas.','Choose a compatible mode to analyze this argument. Formulas and descriptions will be preserved.');
+  card.append(heading,description);logicPanel.replaceChildren(card);refreshValidationWorkspace();
+}
+function refreshValidationModeAdvice() {
+  const advice=LPModeInference.inspect(rows,currentLogicMode());
+  validationModeNotice.hidden=!advice;
+  if(!advice){validationModeSuggestion.replaceChildren();return;}
+  const target=interfaceText(...logicModeShortNames[advice.suggested]), selected=interfaceText(...logicModeShortNames[advice.selected]);
+  const label=document.createElement('span');
+  label.textContent=interfaceText('Esta escrita é compatível com '+target+'. Trocar de '+selected+'?', 'This notation is compatible with '+target+'. Switch from '+selected+'?');
+  const action=document.createElement('strong');action.textContent=interfaceText('Trocar lógica','Switch logic');
+  validationModeSuggestion.replaceChildren(analysisIcon('guide'),label,action);
+  validationModeSuggestion.dataset.suggestedMode=advice.suggested;
+  validationModeSuggestion.onclick=()=>{setLogicMode(advice.suggested);validationModeIcon.focus();};
+}
 function refreshValidationWorkspace() {
   const t = interfaceText;
+  refreshValidationModeAdvice();
   validationTitle.textContent = t('Validação lógica', 'Logic validation');
   validationClose.setAttribute('aria-label', t('Fechar', 'Close'));
   validationMode.textContent = currentLogicMode() === 'syllogistic'
@@ -127,6 +154,8 @@ function refreshValidationWorkspace() {
       ? t('Lógica de primeira ordem', 'First-order logic')
       : t('Lógica proposicional', 'Propositional logic');
   validationModeIcon.replaceChildren(root.querySelector('.hy-mode-icon svg')?.cloneNode(true) || analysisIcon('syntax'));
+  validationModeIcon.setAttribute('aria-label',t('Alterar lógica: ','Change logic: ')+validationMode.textContent);
+  validationModeIcon.dataset.hintText=t('Escolher lógica','Choose logic');
   validationArgumentLabel.textContent = t('Argumento', 'Argument');
   validationResultLabel.textContent = t('Análise', 'Analysis');
   const count = rows.filter(row => row.role === 'premise' && row.text.trim()).length;

@@ -38,7 +38,7 @@
     button.onclick = () => setMode(mode); choices.append(button);
   }
   toggle.onclick = () => setMode(ui.writingMode === 'continuous' ? 'blocks':'continuous',true);
-  setting.append(title,choices); root.querySelector('#settings-functionalities').prepend(setting);
+  setting.append(title,choices); root.querySelector('#settings-writing').prepend(setting);
   root.addEventListener('lp-ui-colors',refresh);
   root.querySelector('#settings-language').addEventListener('click',refresh);
   const resize = () => requestAnimationFrame(resizeContinuousFields);

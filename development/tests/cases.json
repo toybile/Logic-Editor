@@ -68,5 +68,7 @@
   "check-premise-hold-delay",
   "check-extended-logic-engines",
   "check-extended-logic-ui",
-  "check-analysis-workspace"
+  "check-analysis-workspace",
+  "check-mode-inference",
+  "check-settings-mode-advice"
 ]

@@ -102,14 +102,14 @@ const panelFontOptions = [
 
   }
   let activeAppearance = null;
-  function open(key) {
+  function open(key, container) {
     const previous = activeAppearance;
     previous?.dismiss();
-    if (previous?.key === key) return;
+    if (previous?.key === key && !container && !previous.inline) return;
     const en = ui.language === "en",
       c = config(key),
-      dialog = document.createElement("dialog");
-    dialog.className = "hy-panel-appearance-dialog";
+      dialog = document.createElement(container ? "section" : "dialog");
+    dialog.className = "hy-panel-appearance-dialog" + (container ? " hy-panel-appearance-inline" : "");
     dialog.innerHTML =
       '<div class="hy-settings-head"><h2 style="font-size:14px;margin:0">' +
       (key === "editor" ? (en ? "Premises and conclusions" : "Premissas e conclusões") : (en ? "Argument" : "Argumento")) +
@@ -285,7 +285,7 @@ const panelFontOptions = [
       dialog.remove();
       if (activeAppearance?.dismiss === dismiss) activeAppearance = null;
     };
-    activeAppearance = { key, dismiss };
+    activeAppearance = { key, dismiss, inline: Boolean(container) };
     dialog.dataset.panel = key;
     dialog.querySelector("[data-close]").onclick = dismiss;
     dialog.addEventListener("click", (event) => {
@@ -299,29 +299,35 @@ const panelFontOptions = [
       )
         dismiss();
     });
-    (fromSettings ? settingsPanel : root).append(dialog);
-    dialog.setAttribute("popover", "manual");
-    dialog.showPopover();
+    if (container) container.replaceChildren(dialog);
+    else {
+      (fromSettings ? settingsPanel : root).append(dialog);
+      dialog.setAttribute("popover", "manual");
+      dialog.showPopover();
+    }
     document.addEventListener("pointerdown", event => {
-      if (dialog.contains(event.target)) return;
+      if (container || dialog.contains(event.target)) return;
       if (event.target.closest("#editor-settings button,#editor-settings input,#editor-settings select,#editor-settings summary")) return;
       dismiss();
     }, { capture: true, signal: listeners.signal });
     document.addEventListener("keydown", event => {
       if (event.key !== "Escape") return;
+      if (container && !list.matches(":popover-open")) return;
       event.preventDefault();
       event.stopPropagation();
       if (list.matches(":popover-open")) { list.hidePopover(); summary.setAttribute("aria-expanded", "false"); }
       else dismiss();
     }, { capture: true, signal: listeners.signal });
     dialog.addEventListener("toggle", event => { if (event.newState === "closed") dismiss(); }, { signal: listeners.signal });
-    if (fromSettings) settingsPanel.addEventListener("toggle", event => {
+    if (fromSettings || container) settingsPanel.addEventListener("toggle", event => {
       if (event.newState === "closed") dismiss();
     }, { signal: listeners.signal });
   }
   root.addEventListener("lp-open-panel-appearance", event => {
     const key=event.detail?.key;
-    if (["editor","preview"].includes(key)) open(key);
+    const container = event.detail?.container;
+    if (container && (!(container instanceof HTMLElement) || !root.querySelector('#settings-panels')?.contains(container))) return;
+    if (["editor","preview"].includes(key)) open(key, container);
   });
   for (const key of ["editor", "preview"]) {
     const eye = root.querySelector("[data-action=" + key + "]");

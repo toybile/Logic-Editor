@@ -49,20 +49,6 @@ html[data-editor-palette="ambient"] .lp-unified-hint { background:var(--editor-h
 #lp-hybrid[data-palette="ambient"] .hy-work { background:transparent; }
 #lp-hybrid[data-palette="ambient"] .hy-panel-frame { background:transparent; backdrop-filter:none; box-shadow:none; }
 /* Settings navigation and grouped controls. */
-#lp-hybrid #editor-settings { width:380px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 24px); box-sizing:border-box; padding:18px; }
-#lp-hybrid #editor-settings > .hy-settings-head { margin-bottom:16px; gap:12px; }
-#lp-hybrid #editor-settings .hy-settings-actions { display:flex; align-items:center; gap:6px; }
-#lp-hybrid #editor-settings .hy-settings-actions button { width:32px; height:32px; min-height:32px; padding:7px; margin:0; border-radius:9px; }
-#lp-hybrid #editor-settings .hy-settings-actions #settings-language svg { width:22px; height:16px; }
-#lp-hybrid #editor-settings .hy-settings-tabs { display:flex; gap:4px; background:var(--soft); padding:4px; border:1px solid var(--edge); border-radius:12px; margin-bottom:18px; }
-#lp-hybrid #editor-settings .hy-settings-tabs button { flex:1; min-width:0; padding:9px 6px; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); font:13px/1.4 system-ui; }
-#lp-hybrid #editor-settings .hy-settings-tabs [aria-selected="true"] { background:var(--paper); border-color:var(--edge); color:var(--blue); box-shadow:0 2px 5px light-dark(#26364a0c,#0003); }
-#lp-hybrid #editor-settings .hy-settings-panel[hidden] { display:none; }
-#lp-hybrid #editor-settings .hy-settings-panel .hy-setting { margin:0; padding:16px 0; border-top:1px solid var(--edge); }
-#lp-hybrid #editor-settings .hy-theme-choices { margin:0 0 18px; }
-#lp-hybrid #editor-settings .hy-setting-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
-#lp-hybrid #editor-settings .hy-setting-heading label { margin:0; color:var(--ink); font-size:13px; }
-#lp-hybrid #editor-settings .hy-settings-panel > .hy-hover-delay-setting { padding:15px; border:1px solid var(--edge); border-radius:12px; background:color-mix(in srgb,var(--soft) 45%,transparent); margin-bottom:12px; }
 #lp-hybrid #editor-settings .hy-layout-recovery-setting { padding-bottom:0; }
 #lp-hybrid #editor-settings .hy-layout-recovery-button { width:100%; display:flex; align-items:center; justify-content:center; gap:9px; min-height:42px; border:1px solid var(--edge); border-radius:11px; color:var(--blue); background:var(--soft); font-size:13px; }
 #lp-hybrid #editor-settings .hy-layout-recovery-button:hover { background:color-mix(in srgb,var(--blue) 12%,var(--paper)); border-color:var(--blue); }

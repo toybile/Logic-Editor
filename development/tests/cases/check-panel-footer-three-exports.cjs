@@ -28,7 +28,7 @@ const {launch,open,assert,fs}=require('../mobile-runtime.cjs');
     fs.writeFileSync('test-artifacts/argument-export-preview.png',bytes);
    }
   }
-  if(modal){await click(p.locator('.hy-validation-heading button'));await p.locator('.hy-panel-actions #copy').waitFor({state:'visible'});}
+  if(modal){await click(p.locator('.hy-analysis-close'));await p.locator('.hy-panel-actions #copy').waitFor({state:'visible'});}
  }
  assert.deepEqual(await p.locator('#copy svg,#download svg,.hy-logic-button svg').evaluateAll(es=>es.map(e=>e.innerHTML)),icons,'SVG symbols preserved after moving controls');
  await click(p.locator('[data-action=preview]'));assert(await p.locator('.hy-panel-actions').isHidden());assert(await p.locator('#number-toggle').isHidden());await click(p.locator('[data-action=preview]'));

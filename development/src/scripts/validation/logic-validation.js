@@ -114,6 +114,8 @@ async function updateLogicValidation() {
   logicButton.setAttribute("aria-label", words.button);
   resetValidationInspector();
   logicPanel.textContent = words.working;
+  const advice = LPModeInference.inspect(rows, currentLogicMode());
+  if (advice) { showValidationModeMismatch(); return; }
   if (typeof currentLogicMode === "function" && currentLogicMode() !== 'propositional') {
     updateExtendedLogicValidation(currentLogicMode());
     return;

@@ -62,7 +62,7 @@ const fs = require("node:fs"),
       "Stale asynchronous result must not overwrite newer argument",
     );
     assert(await p.locator("#logic-panel .hy-advanced-tools").isVisible());
-    await p.locator('.hy-validation-heading button').click();
+    await p.locator('.hy-analysis-close').click();
     await p.evaluate(() => {
       window.restoreTestStorage = Storage.prototype.setItem;
       Storage.prototype.setItem = function () {

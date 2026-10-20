@@ -99,7 +99,7 @@ const fs = require("fs"),
         await d.waitFor({ state: "detached" });
         assert.equal(await d.count(), 0);
         if (await p.locator('.hy-validation-dialog').isVisible())
-          await p.locator('.hy-validation-heading button').click();
+          await p.locator('.hy-analysis-close').click();
         await p.locator("#rows>.hy-row").last().locator(".hy-block").last().fill("C");
         await p.locator('.hy-logic-button').click();
         await p.waitForFunction(

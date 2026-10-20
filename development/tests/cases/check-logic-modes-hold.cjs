@@ -16,7 +16,7 @@ fs.mkdirSync('test-artifacts',{recursive:true});
  await p.locator('.hy-logic-button').click();
  await p.waitForFunction(()=>logicPanel.dataset.state==='syntax-checked');
  assert(!(await p.locator('#logic-panel').innerText()).includes('valid argument'));
- await p.locator('.hy-validation-heading button').click();
+ await p.locator('.hy-analysis-close').click();
  await p.reload();assert.equal(await selector.getAttribute('data-mode'),'first-order');
  await selector.hover();await p.mouse.down();await p.waitForTimeout(80);
  assert.equal(await p.locator('.hy-hold-progress:popover-open').count(),0);
