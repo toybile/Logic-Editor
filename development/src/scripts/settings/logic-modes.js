@@ -83,34 +83,4 @@ function currentLogicMode() {
   alignDock();
 })();
 
-// The same catalog and setter serve the header and the analysis window.
-(() => {
-  const trigger=validationModeIcon;
-  const menu=document.createElement('div');menu.id='validation-mode-options';menu.className='hy-logic-mode-menu hy-analysis-mode-menu';
-  menu.setAttribute('popover','manual');menu.setAttribute('role','menu');validationDialog.append(menu);
-  trigger.setAttribute('aria-haspopup','menu');trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-controls',menu.id);
-  function close(focus=false){if(menu.matches(':popover-open'))menu.hidePopover();trigger.setAttribute('aria-expanded','false');if(focus&&validationDialog.open)trigger.focus();}
-  function position(){if(!menu.matches(':popover-open'))return;const bounds=trigger.getBoundingClientRect();menu.style.left=Math.max(12,Math.min(innerWidth-menu.offsetWidth-12,bounds.left))+'px';menu.style.top=Math.min(innerHeight-menu.offsetHeight-12,bounds.bottom+10)+'px';}
-  trigger.onclick=()=>{
-    if(menu.matches(':popover-open')){close();return;}
-    menu.replaceChildren();
-    for(const [id,pt,en] of logicModeDefinitions){
-      const button=document.createElement('button');button.type='button';button.innerHTML=logicModeIcon(id);
-      const name=document.createElement('span');name.textContent=interfaceText(pt,en);button.append(name);
-      button.setAttribute('role','menuitemradio');button.setAttribute('aria-checked',String(id===currentLogicMode()));
-      button.onclick=()=>{close();setLogicMode(id);trigger.focus();};menu.append(button);
-    }
-    menu.showPopover();trigger.setAttribute('aria-expanded','true');position();
-    menu.querySelector('[aria-checked=true]').focus();
-  };
-  menu.addEventListener('keydown',event=>{
-    const buttons=[...menu.children],index=buttons.indexOf(document.activeElement);
-    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
-      event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?2:1))%3;buttons[next].focus();
-    }
-  });
-  document.addEventListener('pointerdown',event=>{if(!trigger.contains(event.target)&&!menu.contains(event.target))close();},true);
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.matches(':popover-open')){event.preventDefault();event.stopImmediatePropagation();close(true);}},true);
-  validationDialog.addEventListener('close',()=>close());window.addEventListener('resize',position);
-  menu.addEventListener('toggle',event=>trigger.setAttribute('aria-expanded',String(event.newState==='open')));
-})();
+attachLogicModePicker(validationModeIcon,validationDialog,currentLogicMode,setLogicMode,'validation-mode-options');

@@ -3444,7 +3444,7 @@ body {
 #lp-hybrid .hy-examples-dialog strong {
   font-weight: 500;
 }
-#lp-hybrid .hy-examples-dialog span {
+#lp-hybrid .hy-examples-dialog > [data-example] span {
   font-family: "Cambria Math", serif;
   color: var(--quiet);
   overflow-wrap: anywhere;
@@ -9104,3 +9104,5 @@ body {
 
 #lp-hybrid .hy-compact-arguments #argument-view-toggle { position: absolute; right: calc(100% + 8px); }
 
+
+#lp-hybrid .hy-examples-identity { display:flex; align-items:center; gap:12px; min-width:0; }

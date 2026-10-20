@@ -24,3 +24,35 @@ function setLogicMode(mode) {
   if(logicEnabled)updateLogicValidation();
   return true;
 }
+
+function attachLogicModePicker(trigger, dialog, getMode, onSelect, menuId) {
+  const menu=document.createElement('div');menu.id=menuId;menu.className='hy-logic-mode-menu hy-analysis-mode-menu';
+  menu.setAttribute('popover','manual');menu.setAttribute('role','menu');dialog.append(menu);
+  trigger.setAttribute('aria-haspopup','menu');trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-controls',menu.id);
+  function close(focus=false){if(menu.matches(':popover-open'))menu.hidePopover();trigger.setAttribute('aria-expanded','false');if(focus&&dialog.open)trigger.focus();}
+  function position(){if(!menu.matches(':popover-open'))return;const bounds=trigger.getBoundingClientRect();menu.style.left=Math.max(12,Math.min(innerWidth-menu.offsetWidth-12,bounds.left))+'px';menu.style.top=Math.min(innerHeight-menu.offsetHeight-12,bounds.bottom+10)+'px';}
+  trigger.onclick=()=>{
+    if(menu.matches(':popover-open')){close();return;}
+    menu.replaceChildren();
+    for(const [id,pt,en] of logicModeDefinitions){
+      const button=document.createElement('button');button.type='button';button.innerHTML=logicModeIcon(id);
+      const name=document.createElement('span');name.textContent=interfaceText(pt,en);button.append(name);
+      button.setAttribute('role','menuitemradio');button.setAttribute('aria-checked',String(id===getMode()));
+      button.onclick=()=>{close();onSelect(id);trigger.focus();};menu.append(button);
+    }
+    menu.showPopover();trigger.setAttribute('aria-expanded','true');position();
+    menu.querySelector('[aria-checked=true]').focus();
+  };
+  menu.addEventListener('keydown',event=>{
+    const buttons=[...menu.children],index=buttons.indexOf(document.activeElement);
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
+      event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?2:1))%3;buttons[next].focus();
+    }
+  });
+  const outside=event=>{if(!trigger.contains(event.target)&&!menu.contains(event.target))close();};document.addEventListener('pointerdown',outside,true);
+  const escape=event=>{if(event.key==='Escape'&&menu.matches(':popover-open')){event.preventDefault();event.stopImmediatePropagation();close(true);}};document.addEventListener('keydown',escape,true);
+  dialog.addEventListener('close',()=>close());window.addEventListener('resize',position);
+  menu.addEventListener('toggle',event=>trigger.setAttribute('aria-expanded',String(event.newState==='open')));
+
+  return ()=>{close();menu.remove();document.removeEventListener('pointerdown',outside,true);document.removeEventListener('keydown',escape,true);window.removeEventListener('resize',position);};
+}

@@ -70,5 +70,6 @@
   "check-extended-logic-ui",
   "check-analysis-workspace",
   "check-mode-inference",
-  "check-settings-mode-advice"
+  "check-settings-mode-advice",
+  "check-mode-examples"
 ]

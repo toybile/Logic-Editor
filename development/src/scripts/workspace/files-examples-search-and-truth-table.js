@@ -297,6 +297,33 @@
       ],
     ],
   ];
+  const modeExamples = {
+    syllogistic: [
+      ['Barbara', [['A(M,P)','premise'],['A(S,M)','premise'],['A(S,P)','conclusion']]],
+      ['Celarent', [['E(M,P)','premise'],['A(S,M)','premise'],['E(S,P)','conclusion']]],
+      ['Darii', [['A(M,P)','premise'],['I(S,M)','premise'],['I(S,P)','conclusion']]],
+      ['Ferio', [['E(M,P)','premise'],['I(S,M)','premise'],['O(S,P)','conclusion']]],
+      [label('Universal sem existência','Universal without existence'), [['A(S,P)','premise'],['I(S,P)','conclusion']]],
+    ],
+    'first-order': [
+      [label('Instanciação universal','Universal instantiation'), [['∀x P(x)','premise'],['P(a)','conclusion']]],
+      [label('Predicação e condicional','Predication and conditional'), [['∀x(P(x) → Q(x))','premise'],['P(a)','premise'],['Q(a)','conclusion']]],
+      [label('Generalização existencial','Existential generalization'), [['P(a)','premise'],['∃x P(x)','conclusion']]],
+      [label('Relação simétrica','Symmetric relation'), [['∀x∀y(R(x,y) → R(y,x))','premise'],['R(a,b)','premise'],['R(b,a)','conclusion']]],
+      [label('Substituição por identidade','Identity substitution'), [['a = b','premise'],['P(a)','premise'],['P(b)','conclusion']]],
+    ],
+    propositional: examples,
+  };
+  const modeNotes = {
+    syllogistic: [
+      'A(S,P): todo S é P; E(S,P): nenhum S é P; I(S,P): algum S é P; O(S,P): algum S não é P. O verificador permite termos vazios: universais não pressupõem existência. Os quatro primeiros exemplos são válidos; o último é inválido sem uma premissa de existência.',
+      'A(S,P): every S is P; E(S,P): no S is P; I(S,P): some S is P; O(S,P): some S is not P. The checker permits empty terms: universals carry no existential import. The first four examples are valid; the last is invalid without an existence premise.',
+    ],
+    'first-order': [
+      '∀ quantifica universalmente; ∃ quantifica existencialmente; P e Q são predicados unários, R é uma relação binária, a e b são constantes. Estes exemplos ilustram inferências válidas na lógica clássica com identidade. O analisador atual verifica sintaxe, aridades e variáveis livres; ainda não prova a validade.',
+      '∀ is universal quantification; ∃ is existential quantification; P and Q are unary predicates, R is a binary relation, a and b are constants. These examples illustrate valid inferences in classical logic with identity. The current analyzer checks syntax, arities and free variables; it does not yet prove validity.',
+    ],
+  };
   const exampleHelp = [
     [
       "Modus ponens",
@@ -344,7 +371,7 @@
       "Chove and chove are different variables. Proposition descriptions help record meanings, but do not participate in logical validation.",
     ],
   ];
-  function openExampleHelp() {
+  function openExampleHelp(mode) {
     const page = document.createElement("dialog");
     page.className = "hy-feature-dialog hy-logic-mode-help hy-examples-help-dialog";
     page.setAttribute("aria-labelledby", "examples-help-title");
@@ -366,8 +393,9 @@
       "As formas abaixo pertencem à lógica proposicional clássica. ∴ indica a conclusão; ¬ significa negação, ∨ disjunção e → condicional. Uma inferência válida preserva a verdade: premissas verdadeiras não podem levar a uma conclusão falsa.",
       "These forms use classical propositional logic. ∴ marks the conclusion; ¬ means negation, ∨ disjunction, and → conditional. A valid inference preserves truth: true premises cannot lead to a false conclusion.",
     );
+    if (modeNotes[mode]) intro.textContent = label(...modeNotes[mode]);
     content.append(title, intro);
-    for (const [pt, en, formula, explanationPt, explanationEn, notePt, noteEn] of exampleHelp) {
+    for (const [pt, en, formula, explanationPt, explanationEn, notePt, noteEn] of (mode === "propositional" ? exampleHelp : modeExamples[mode].map(([name,items]) => [name,name,items.map(([text,role]) => (role === "conclusion" ? "∴ " : "")+text).join(" · "),"","","",""]))) {
       const article = document.createElement("article"),
         heading = document.createElement("h2"),
         notation = document.createElement("p"),
@@ -378,7 +406,9 @@
       notation.textContent = formula;
       explanation.textContent = label(explanationPt, explanationEn);
       note.textContent = label(notePt, noteEn);
-      article.append(heading, notation, explanation, note);
+      article.append(heading, notation);
+      if (explanation.textContent) article.append(explanation);
+      if (note.textContent) article.append(note);
       content.append(article);
     }
     const sources = document.createElement("footer");
@@ -406,13 +436,13 @@
     root.append(page);
     page.onclose = () => {
       page.remove();
-      openExamples();
+      openExamples(mode);
       requestAnimationFrame(() => root.querySelector(".hy-examples-help")?.focus());
     };
     page.showModal();
     title.focus({ preventScroll: true });
   }
-  function openExamples() {
+  function openExamples(mode = currentLogicMode()) {
     const dialog = document.createElement("dialog");
     dialog.className = "hy-feature-dialog hy-examples-dialog";
     const heading = document.createElement("h3");
@@ -427,15 +457,26 @@
       "</span>";
     help.onclick = () => {
       dialog.close();
-      openExampleHelp();
+      openExampleHelp(mode);
     };
     const head = document.createElement("div");
     head.className = "hy-examples-heading";
-    head.append(heading, help);
+    const modeButton = document.createElement('button');
+    modeButton.type = 'button';modeButton.className = 'hy-analysis-mode-icon';
+    const modeName = document.createElement('p');modeName.className = 'hy-analysis-mode-name';
+    const identity = document.createElement('div');identity.className = 'hy-examples-identity';
+    const text = document.createElement('div');text.append(heading,modeName);identity.append(modeButton,text);
+    head.append(identity, help);
     dialog.append(head);
-    for (const [name, items] of examples) {
+    function drawExamples() {
+    dialog.querySelectorAll('[data-example]').forEach(button => button.remove());
+    modeButton.innerHTML = logicModeIcon(mode);
+    const definition = logicModeDefinitions.find(([id]) => id === mode);
+    modeName.textContent = label(definition[1],definition[2]);
+    modeButton.setAttribute('aria-label',label('Sistema lógico: ','Logical system: ')+modeName.textContent);
+    for (const [name, items] of modeExamples[mode]) {
       const b = document.createElement("button");
-      b.className = "hy-button";
+      b.className = "hy-button";b.dataset.example = "";
       const title = document.createElement("strong"),
         preview = document.createElement("span");
       title.textContent = name;
@@ -449,19 +490,23 @@
           name,
           items.map(([text, role]) => ({ text, role })),
         );
+        argumentWorkspace.documents.find(doc => doc.id === id).logicMode = mode;
         showArgument(id);
         saveArguments();
         dialog.close();
       };
       dialog.append(b);
     }
+    }
+    drawExamples();
+    const disposePicker = attachLogicModePicker(modeButton,dialog,()=>mode,id=>{mode=id;drawExamples();dialog.append(close);},'examples-mode-options');
     const close = document.createElement("button");
     close.className = "hy-button";
     close.textContent = label("Fechar", "Close");
     close.onclick = () => dialog.close();
     dialog.append(close);
     root.append(dialog);
-    dialog.onclose = () => dialog.remove();
+    dialog.onclose = () => {disposePicker();dialog.remove();};
     dialog.showModal();
   }
 
