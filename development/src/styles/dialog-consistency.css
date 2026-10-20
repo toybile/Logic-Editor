@@ -16,6 +16,7 @@
 #lp-hybrid .hy-import-list strong { font-size:14px; font-weight:500; overflow-wrap:anywhere; }
 #lp-hybrid .hy-import-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:8px; padding:16px 24px; border-top:1px solid var(--edge); }
 #lp-hybrid .hy-reset-body { min-height:0; overflow:auto; padding:0 24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-feature-dialog.hy-logic-mode-help { background:rgb(from var(--theme-raised,var(--paper)) r g b); }
 #lp-hybrid .hy-logic-mode-help > header { position:sticky; top:-28px; z-index:1; padding:16px 0; margin-top:-16px; background:inherit; border-bottom:1px solid var(--edge); }
 #lp-hybrid .hy-logic-mode-help > header h2 { min-width:0; }
 
