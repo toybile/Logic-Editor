@@ -62,5 +62,6 @@
   "check-png-panel-appearance",
   "check-description-premises",
   "check-descriptions-fonts-desktop",
-  "check-writing-defaults-desktop"
+  "check-writing-defaults-desktop",
+  "check-logic-modes-hold"
 ]

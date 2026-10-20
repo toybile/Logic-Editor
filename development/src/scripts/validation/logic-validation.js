@@ -113,6 +113,14 @@ async function updateLogicValidation() {
     words = logicText();
   logicButton.setAttribute("aria-label", words.button);
   logicPanel.textContent = words.working;
+  if (typeof currentLogicMode === "function" && currentLogicMode() !== 'propositional') {
+    logicPanel.dataset.state = 'unsupported-mode';
+    logicPanel.textContent = interfaceText(
+      'O verificador deste modo ainda está em desenvolvimento. O argumento foi preservado; nenhum veredito de validade foi emitido. Você pode mudar o sistema lógico pelo título do site.',
+      'The validator for this mode is still in development. Your argument is preserved; no validity verdict has been issued. You can change the logical system from the site title.'
+    );
+    return;
+  }
   const snapshot = rows.map((row) => ({ ...row }));
   const result = await LPLogic.validate(snapshot, {
     cancelled: () => revision !== logicRevision || !logicEnabled,

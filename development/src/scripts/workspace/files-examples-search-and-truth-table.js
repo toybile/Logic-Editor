@@ -63,6 +63,7 @@
         id: d.id,
         customName: d.customName || "",
         numbered: d.numbered,
+        logicMode: d.logicMode || 'propositional',
         descriptions: d.descriptions || {},
         rows: d.rows,
       })),
@@ -88,6 +89,7 @@
           id: doc.id,
           customName: doc.customName || "",
           numbered: doc.numbered,
+          logicMode: doc.logicMode || 'propositional',
           descriptions: doc.descriptions || {},
           rows: doc.rows,
         },
@@ -223,6 +225,7 @@
           items: items.length ? items : [{ text: "", role: "premise" }],
           numbered: d.numbered !== false,
           oldId: d.id,
+          logicMode: ['propositional','syllogistic','first-order'].includes(d.logicMode) ? d.logicMode : 'propositional',
           descriptions,
         };
       });
@@ -233,6 +236,7 @@
       for (const doc of chosenDocs) {
         const id = addDocument(doc.name, doc.items, doc.numbered);
         argumentWorkspace.documents.find((d) => d.id === id).descriptions = doc.descriptions;
+        argumentWorkspace.documents.find((d) => d.id === id).logicMode = doc.logicMode;
         if (!selected || doc.oldId === data.activeId) selected = id;
       }
       showArgument(selected);

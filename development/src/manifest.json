@@ -237,6 +237,10 @@
     {
       "name": "mobile-viewport",
       "file": "scripts/layout/mobile-viewport.js"
+    },
+    {
+      "name": "logic-modes",
+      "file": "scripts/settings/logic-modes.js"
     }
   ]
 }

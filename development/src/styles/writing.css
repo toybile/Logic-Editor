@@ -17,3 +17,16 @@
 #lp-hybrid .hy-panel-font-row select { width:auto; min-width:0; max-width:58%; border:1px solid var(--edge); }
 #lp-hybrid .hy-panel-font-sample { margin-top:12px; padding:12px; text-align:center; border-radius:9px; background:var(--soft); font-size:20px; overflow-wrap:anywhere; }
 #lp-hybrid .hy-description-note { color:var(--quiet); font:13px/1.6 system-ui; margin:0 0 16px; }
+
+#lp-hybrid .hy-logic-mode-select { display:inline-flex; align-items:center; gap:8px; padding:5px 7px; border:0; border-radius:8px; background:transparent; color:var(--ink); font:inherit; cursor:pointer; }
+#lp-hybrid .hy-logic-mode-select:hover { background:var(--soft); }
+#lp-hybrid .hy-logic-mode-menu { margin:0; padding:6px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:var(--ink); box-shadow:0 12px 32px #0002; }
+#lp-hybrid .hy-logic-mode-menu button { display:block; width:100%; text-align:left; padding:11px 14px; border:0; border-radius:8px; background:transparent; color:inherit; font:13px/1.5 system-ui; cursor:pointer; }
+#lp-hybrid .hy-logic-mode-menu button:hover,#lp-hybrid .hy-logic-mode-menu [aria-checked=true] { background:var(--soft); color:var(--blue); }
+#lp-hybrid .hy-logic-mode-help { box-sizing:border-box; width:720px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 48px); padding:28px; overflow:auto; }
+#lp-hybrid .hy-logic-mode-help header { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+#lp-hybrid .hy-logic-mode-help h2 { margin:0; font-size:19px; }
+#lp-hybrid .hy-logic-mode-help h3 { font-size:15px; margin:0 0 10px; }
+#lp-hybrid .hy-logic-mode-help p { font:14px/1.7 system-ui; color:var(--quiet); }
+#lp-hybrid .hy-logic-mode-help section { padding:20px 0; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-logic-mode-help a { color:var(--blue); font-size:13px; }

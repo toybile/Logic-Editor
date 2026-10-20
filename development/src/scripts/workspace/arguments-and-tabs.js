@@ -47,6 +47,7 @@ try {
         id: doc.id,
         name: "Argumento " + (index + 1),
         autoNumber: Number.isSafeInteger(doc.autoNumber) && doc.autoNumber > 0 ? doc.autoNumber : undefined,
+        logicMode: ['propositional','syllogistic','first-order'].includes(doc.logicMode) ? doc.logicMode : 'propositional',
         customName: typeof doc.customName === "string" ? doc.customName.trim() : "",
         descriptions:
           doc.descriptions && typeof doc.descriptions === "object" ? doc.descriptions : {},

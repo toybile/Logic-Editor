@@ -4,6 +4,7 @@
   function stop() {
     if (!hold) return;
     hold.visual.remove();
+    clearTimeout(hold.revealTimer);
     cancelAnimationFrame(hold.frame);
     hold = null;
   }
@@ -17,10 +18,11 @@
       const detachedGrip = e.target.closest(".hy-mod-palette[data-docked=false] .hy-mod-grip"),
         role = e.target.closest(".hy-role"),
         tab = e.target.closest(".hy-argument-tab,#argument-options [role=menuitemradio],.hy-argument-grid-add"),
+        mode = e.target.closest('#logic-mode-select'),
         eye = e.target.closest('[data-action="editor"],[data-action="preview"]'),
         row = e.target.closest("#rows>.hy-row"),
         symbol = e.pointerType !== "mouse" && e.target.closest(".hy-symbol");
-      let owner = detachedGrip || role || tab || eye || symbol || row || (background ? root : null);
+      let owner = detachedGrip || role || tab || mode || eye || symbol || row || (background ? root : null);
       if (!owner) return;
       if (row && !role && !symbol && e.target.closest("button,input,textarea,label,select,a") &&
           !e.target.closest(".hy-delete-line,.hy-block,.hy-continuous-field")) return;
@@ -37,7 +39,7 @@
           maximumFractionDigits: 2,
         }) + " s";
       root.append(visual);
-      visual.showPopover();
+
       const g = { owner, visual, x: e.clientX, y: e.clientY, pointer: e.pointerId };
       hold = g;
       function position() {
@@ -52,14 +54,21 @@
         visual.style.top = Math.min(innerHeight - 27, r.bottom + 3) + "px";
         g.frame = requestAnimationFrame(position);
       }
-      position();
-      visual
+      const delay = tab || mode ? Math.min(180, duration * 0.4) : 0;
+      const reveal = () => {
+        if (hold !== g) return;
+        visual.showPopover();
+        position();
+        visual
         .querySelector(".hy-hold-fill")
         .animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }], {
-          duration,
+          duration: Math.max(1, duration - delay),
           easing: "linear",
           fill: "forwards",
         });
+      };
+      if (delay) g.revealTimer = setTimeout(reveal, delay);
+      else reveal();
     },
     true,
   );

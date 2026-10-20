@@ -543,3 +543,13 @@ Os testes usam o Chromium do Playwright por padrão. Opcionalmente, `LP_CHROME_P
 
 Classic scripts intentionally share browser scope and follow manifest order. This build does not bundle external runtime dependencies. Existing mobile styles and regression tests are retained; they do not imply new mobile development.
 Os scripts compartilham o escopo do navegador e seguem a ordem do manifesto. O site gerado não depende das ferramentas de desenvolvimento instaladas. Os estilos e testes de celular existentes são preservados; isso não implica novas adaptações para celular.
+
+
+## Logical modes / Modos lógicos
+
+Click the Logic Editor title to choose a logical mode for the current argument. Hold it, or choose About the modes, to open the introduction. All symbols remain available. Only classical propositional validation is currently implemented; categorical syllogistic and first-order modes preserve the argument and explicitly report that their validators are still in development. Symbol descriptions remain free annotations, not a formal interpretation. The mode is saved with the argument and included in workspace files.
+
+Clique no título do editor para escolher o modo lógico do argumento atual. Segure, ou escolha Conhecer os modos, para abrir a introdução. Todos os símbolos continuam disponíveis. Somente a validação proposicional clássica está implementada; os modos de silogística categórica e primeira ordem preservam o argumento e informam que seus verificadores estão em desenvolvimento. As descrições continuam sendo anotações livres, não uma interpretação formal. O modo é salvo com o argumento e incluído nos arquivos de trabalho.
+
+Argument tabs respond to a short click without waiting for the hold duration. Their hold indicator appears only after a brief initial delay; the configured duration of the hold action is unchanged.
+As abas de argumentos respondem ao clique curto sem aguardar o tempo de segurar. O indicador só aparece após um breve intervalo inicial; o tempo configurado para a ação permanece igual.
