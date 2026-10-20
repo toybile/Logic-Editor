@@ -8,6 +8,19 @@ function currentLogicMode() {
     ['propositional','Lógica proposicional clássica','Classical propositional logic'],
     ['first-order','Lógica de primeira ordem clássica','Classical first-order logic'],
   ];
+  const shortNames = {
+    syllogistic: ['Silogística', 'Syllogistic'],
+    propositional: ['Proposicional', 'Propositional'],
+    'first-order': ['Primeira ordem', 'First order'],
+  };
+  function modeIcon(id) {
+    const shapes = {
+      syllogistic: '<circle cx="8" cy="14" r="5"/><circle cx="16" cy="14" r="5"/><circle cx="12" cy="7.5" r="5"/>',
+      propositional: '<circle cx="4" cy="12" r="2.5"/><circle cx="20" cy="12" r="2.5"/><path d="M7 12h10m-3-3 3 3-3 3"/>',
+      'first-order': '<path d="m5 4 7 16 7-16M8.5 12h7"/>',
+    };
+    return '<svg viewBox="0 0 24 24" aria-hidden="true">' + shapes[id] + '</svg>';
+  }
   const title = root.querySelector('.hy-title strong');
   const trigger = document.createElement('button');
   trigger.id = 'logic-mode-select'; trigger.type = 'button';
@@ -15,7 +28,7 @@ function currentLogicMode() {
   const anchor = document.createElement('div'); anchor.className = 'hy-mode-anchor';
   title.before(anchor); anchor.append(title, trigger);
   const selectedName = document.createElement('span'); trigger.append(selectedName);
-  trigger.insertAdjacentHTML('afterbegin','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>');
+  const selectedIcon = document.createElement('span'); selectedIcon.className='hy-mode-icon'; trigger.prepend(selectedIcon);
   const menu = document.createElement('div'); menu.className = 'hy-logic-mode-menu';
   menu.id = 'logic-mode-options'; menu.setAttribute('popover','auto'); menu.setAttribute('role','menu'); root.append(menu);
   trigger.setAttribute('aria-haspopup','menu'); trigger.setAttribute('aria-expanded','false'); trigger.setAttribute('aria-controls',menu.id);
@@ -52,9 +65,10 @@ function currentLogicMode() {
     trigger.setAttribute('aria-label',t('Sistema lógico: ','Logical system: ')+t(mode[1],mode[2]));
     trigger.dataset.hintText=t(mode[1],mode[2])+'. '+t('Clique para escolher. Segure para conhecer os modos.','Click to choose. Hold to learn about the modes.');
     trigger.dataset.mode=mode[0];
-    selectedName.textContent=t(mode[1],mode[2]);
+    selectedName.textContent=t(...shortNames[mode[0]]);
+    selectedIcon.innerHTML=modeIcon(mode[0]);
     menu.replaceChildren();
-    for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9ZM14 3v6h6M8 13h8M8 17h5"/></svg>';const name=document.createElement('span');name.textContent=t(pt,en);b.append(name);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{argumentWorkspace.documents.find(doc=>doc.id===argumentWorkspace.activeId).logicMode=id;menu.hidePopover();saveArguments();refresh();if(logicEnabled)updateLogicValidation();trigger.focus();};menu.append(b);}
+    for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.innerHTML=modeIcon(id);const name=document.createElement('span');name.textContent=t(pt,en);b.append(name);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{argumentWorkspace.documents.find(doc=>doc.id===argumentWorkspace.activeId).logicMode=id;menu.hidePopover();saveArguments();refresh();if(logicEnabled)updateLogicValidation();trigger.focus();};menu.append(b);}
 
   }
   let timer,held=false;
