@@ -20,7 +20,7 @@
     const reviewHead=element('div','hy-text-import-review-heading'),reviewTitle=element('h3','',t('Leitura proposta','Proposed reading')),modeLabel=element('span','hy-analysis-mode-name');reviewHead.append(reviewTitle,modeLabel);
     const note=element('p','hy-text-import-note',t('Frases categóricas e condicionais simples. Pronomes, sinônimos e sentidos implícitos não são resolvidos.','Categorical sentences and simple conditionals. Pronouns, synonyms and implicit meanings are not resolved.'));
     const notice=element('p','hy-text-import-notice');notice.setAttribute('role','status');
-    const list=element('div','hy-text-import-list'),vocabulary=element('dl','hy-text-import-vocabulary');
+    const list=element('div','hy-text-import-list'),vocabulary=element('div','hy-text-import-vocabulary');
     review.append(reviewHead,note,notice,list,vocabulary);workspace.append(source,review);
     const footer=element('footer','hy-text-import-footer'),cancel=button(t('Cancelar','Cancel'),()=>dialog.close()),load=button(t('Carregar novo argumento','Load new argument'),loadArgument);load.disabled=true;footer.append(cancel,load);
     dialog.append(header,workspace,footer);root.append(dialog);
@@ -44,13 +44,16 @@
     function refresh(explicit){
       try{reading=LPNaturalText.inspect(draft,currentLogicMode());}catch(error){reading=null;load.disabled=true;notice.textContent=issue(error.message);return;}
       const definition=logicModeDefinitions.find(([id])=>id===reading.mode);modeLabel.textContent=t(definition[1],definition[2]);
+      const presentation=reading.mode==='syllogistic'?LPCategoricalPresentation.explain(reading.rows.flatMap((row,index)=>{try{return [{...LPCategorical.parse(row.text),index,text:row.text}];}catch{return [];}}),ui.language):null;
       let at=0;draft.forEach((row,index)=>{
         const card=list.children[index],formula=card.querySelector('.hy-text-import-formula');card.dataset.ignored=String(row.role==='blank');
         if(row.role==='blank'){formula.textContent='';card.dataset.error='false';return;}
-        const entry=reading.interpretations[at++];card.dataset.error=String(Boolean(entry.error));
-        formula.textContent=entry.error?t('Trecho não reconhecido; reformule ou ignore explicitamente.','Unrecognized passage; rephrase or explicitly ignore it.'):entry.formula+(entry.singular?' · '+t('indivíduo existente','existing individual'):'');
+        const currentIndex=at,entry=reading.interpretations[at++],didactic=presentation?.entries.find(item=>item.index===currentIndex);card.dataset.error=String(Boolean(entry.error));
+        formula.textContent=entry.error?t('Trecho não reconhecido; reformule ou ignore explicitamente.','Unrecognized passage; rephrase or explicitly ignore it.'):didactic?didactic.formula:entry.formula;
+        if(didactic){const explanation=element('span','hy-text-import-reading',didactic.reading);formula.append(explanation);}
       });
-      vocabulary.replaceChildren();for(const [symbol,description] of Object.entries(reading.descriptions)){vocabulary.append(element('dt','',symbol),element('dd','',description));}
+      vocabulary.replaceChildren();if(presentation)appendCategoricalVocabulary(vocabulary,presentation);
+      else if(Object.keys(reading.descriptions).length){const definitions=element('dl','hy-didactic-vocabulary');for(const [symbol,description] of Object.entries(reading.descriptions))definitions.append(element('dt','',symbol),element('dd','',description));vocabulary.append(definitions);}
       const complete=reading.rows.some(row=>row.role==='premise')&&reading.rows.some(row=>row.role==='conclusion');
       load.disabled=sourceDirty||Boolean(reading.errors.length)||!complete;
       notice.textContent=sourceDirty?t('Interprete novamente para atualizar a leitura.','Interpret again to update the reading.'):reading.errors.length?t('Há trechos não reconhecidos. Nenhum veredito de validade foi produzido.','Some passages are not recognized. No validity verdict has been produced.'):!complete?t('Indique pelo menos uma premissa e uma conclusão.','Indicate at least one premise and one conclusion.'):!explicit?t('A última frase foi sugerida como conclusão. Confira os papéis e a interpretação.','The last sentence was suggested as the conclusion. Check the roles and interpretation.'):t('Confira os papéis e a interpretação antes de carregar.','Check the roles and interpretation before loading.');

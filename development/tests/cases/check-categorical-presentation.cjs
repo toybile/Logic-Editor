@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');
+const cat=require('../../src/scripts/validation/categorical-logic.js'),fol=require('../../src/scripts/validation/first-order-syntax.js'),presentation=require('../../src/scripts/validation/categorical-presentation.js');
+const sentences=['Todo homem é mortal','Aristóteles é homem','Aristóteles é mortal'];
+const entries=sentences.map((text,index)=>({...cat.parse(text),index,text})),before=JSON.stringify(entries);
+const result=presentation.explain(entries,'pt');
+assert.deepEqual(result.entries.map(e=>e.formula),['∀x(Homem(x) → Mortal(x))','Homem(aristóteles)','Mortal(aristóteles)']);
+assert.equal(result.vocabulary.length,3);assert(result.operators.some(e=>e.symbol==='∀x'));assert(result.entries[0].reading.includes('Para todo indivíduo'));
+assert.equal(JSON.stringify(entries),before,'rendering preserves parsed statements');
+const forms=presentation.explain(['A','E','I','O'].map(form=>({form,subject:'S',predicate:'P'})),'en');
+assert.deepEqual(forms.entries.map(e=>e.formula),['∀x(S(x) → P(x))','∀x(S(x) → ¬P(x))','∃x(S(x) ∧ P(x))','∃x(S(x) ∧ ¬P(x))']);
+for(const entry of [...result.entries,...forms.entries])assert.deepEqual(fol.parse(entry.formula).freeVariables,[]);
+const negative=presentation.explain([{...cat.parse('Aristóteles não é mortal'),text:'Aristóteles não é mortal'}]);assert.equal(negative.entries[0].formula,'¬Mortal(aristóteles)');
+const collision=presentation.explain([{form:'A',subject:'ser humano',predicate:'ser_humano'},{form:'A',subject:'X',predicate:'_classe',singular:true}]);assert.equal(new Set(collision.vocabulary.map(v=>v.symbol)).size,4);for(const entry of collision.entries)assert.deepEqual(fol.parse(entry.formula).freeVariables,[]);
+const equality=presentation.explain([{form:'A',subject:'ana',predicate:'bia',singular:true},{form:'A',subject:'bia',predicate:'pessoa',singular:true}]);assert.equal(equality.entries[0].formula,'ana = bia');assert(equality.operators.some(e=>e.symbol==='='));
+console.log('Didactic predicate notation, all four categorical forms, negation, names, symbol collisions, equality, closed FOL syntax and immutability passed.');

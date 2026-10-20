@@ -20,6 +20,8 @@
 #lp-hybrid .hy-text-import-formula { grid-column:2; margin:0; overflow-wrap:anywhere; color:var(--quiet); font:14px/1.6 "Cambria Math",serif; }
 #lp-hybrid .hy-text-import-row[data-error=true] textarea { border-color:var(--red); }
 #lp-hybrid .hy-text-import-row[data-ignored=true] textarea { opacity:.55; }
-#lp-hybrid .hy-text-import-vocabulary { display:grid; grid-template-columns:auto 1fr; gap:8px 12px; font-size:12px; }
-#lp-hybrid .hy-text-import-vocabulary dd { margin:0; overflow-wrap:anywhere; color:var(--quiet); }
+#lp-hybrid .hy-text-import-vocabulary { margin-top:18px; font-size:12px; }
+#lp-hybrid .hy-text-import-vocabulary h4 { margin:0 0 12px; font-size:12px; font-weight:500; }
 #lp-hybrid .hy-text-import-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 24px; border-top:1px solid var(--edge); }
+
+#lp-hybrid .hy-text-import-reading { display:block; margin-top:6px; font:12px/1.6 "Segoe UI",system-ui; color:var(--quiet); }

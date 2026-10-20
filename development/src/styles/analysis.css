@@ -170,3 +170,15 @@
 #lp-hybrid .hy-analysis-mode-notice span { flex:1; }
 #lp-hybrid .hy-analysis-mode-notice strong { color:var(--blue); white-space:nowrap; font-weight:500; }
 #lp-hybrid .hy-analysis-mode-menu button { min-height:66px; }
+
+#lp-hybrid .hy-didactic-interpretation { padding:4px 0; }
+#lp-hybrid .hy-didactic-statement { padding:16px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-didactic-statement h4 { margin:0 0 8px; font-size:12px; color:var(--quiet); font-weight:500; }
+#lp-hybrid .hy-didactic-original { margin:0 0 10px; font-size:14px; }
+#lp-hybrid .hy-didactic-formula { margin:0 0 10px; color:var(--ink); font:19px/1.6 "Cambria Math",serif; overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-reading { margin:0; color:var(--quiet); font-size:12px; line-height:1.7; }
+#lp-hybrid .hy-didactic-interpretation > h4 { margin:20px 0 12px; font-size:13px; font-weight:500; }
+#lp-hybrid .hy-didactic-vocabulary { display:grid; grid-template-columns:minmax(90px,1fr) minmax(0,2fr); gap:10px 18px; margin:0; font-size:12px; }
+#lp-hybrid .hy-didactic-vocabulary dt { font-family:"Cambria Math",serif; overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-vocabulary dd { margin:0; color:var(--quiet); overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-conventions { margin-top:20px; }

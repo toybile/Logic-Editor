@@ -113,10 +113,19 @@ function updateExtendedLogicValidation(mode) {
       section.append(card);
     }
   }
-  if (result.entries?.some(entry=>entry.singular)) {
+  if (result.entries?.length) {
     const interpretation=node('details');interpretation.append(node('summary',t('Interpretação do texto','Text interpretation')));
-    for(const entry of result.entries) interpretation.append(node('p',t('Linha ','Line ')+(entry.index+1)+': '+entry.form+'('+entry.subject+', '+entry.predicate+')'+(entry.singular?' · '+t('sujeito individual existente','existing individual subject'):'')));
-    interpretation.append(node('p',t('Nomes próprios designam um indivíduo existente; nomes diferentes podem designar o mesmo indivíduo.','Proper names denote one existing individual; different names may denote the same individual.')));section.append(interpretation);
+    const presentation=LPCategoricalPresentation.explain(result.entries.map(entry=>({...entry,text:rows[entry.index].text})),ui.language);
+    const content=node('div','','hy-didactic-interpretation');
+    for(const entry of presentation.entries){
+      const item=node('section','','hy-didactic-statement');
+      item.append(node('h4',t('Linha ','Line ')+(entry.index+1)+' · '+(entry.role==='conclusion'?t('Conclusão','Conclusion'):t('Premissa','Premise'))),node('p',entry.text,'hy-didactic-original'),node('p',entry.formula,'hy-didactic-formula'),node('p',entry.reading,'hy-didactic-reading'));content.append(item);
+    }
+    appendCategoricalVocabulary(content,presentation);
+    const conventions=node('details','','hy-didactic-conventions');conventions.append(node('summary',t('Convenções e notação categórica','Conventions and categorical notation')));
+    conventions.append(node('p',t('Aqui, predicados começam com maiúscula, constantes com minúscula, e x é uma variável individual. Nomes próprios designam um indivíduo existente; nomes diferentes podem designar o mesmo indivíduo. Esta apresentação em predicados descreve o fragmento categórico analisado; não amplia o verificador para toda a lógica de primeira ordem.','Here, predicates start with uppercase, constants with lowercase, and x is an individual variable. Proper names denote one existing individual; different names may denote the same individual. This predicate rendering describes the analyzed categorical fragment; it does not extend the checker to all of first-order logic.')));
+    for(const entry of presentation.entries)conventions.append(node('p',t('Linha ','Line ')+(entry.index+1)+': '+entry.technical));
+    const reference=node('a',t('Referência didática: Lógica de Predicados — IME/USP','Teaching reference: Predicate Logic — IME/USP'));reference.href='https://www.ime.usp.br/~slago/IA-logicaDePredicados.pdf';reference.target='_blank';reference.rel='noopener noreferrer';conventions.append(reference);content.append(conventions);interpretation.append(content);section.append(interpretation);
   }
   section.append(node('p', t('Termos gerais podem ser vazios; universais não afirmam existência.', 'General terms may be empty; universals do not assert existence.'), 'hy-analysis-scope-note'));
   guide(t('Semântica e limites', 'Semantics and limits'), t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).', 'Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'), t('A notação formal diferencia maiúsculas de minúsculas; nas frases, palavras são normalizadas e nomes próprios designam indivíduos existentes. Não há resolução de pronomes, sinônimos ou flexões. A análise enumera regiões de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.', 'Formal notation is case-sensitive; natural-language words are normalized and proper names denote existing individuals. Pronouns, synonyms and inflections are not resolved. The analysis enumerates membership regions; it does not represent the entire Aristotelian or scholastic tradition.'));

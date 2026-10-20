@@ -9510,6 +9510,18 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-analysis-mode-notice strong { color:var(--blue); white-space:nowrap; font-weight:500; }
 #lp-hybrid .hy-analysis-mode-menu button { min-height:66px; }
 
+#lp-hybrid .hy-didactic-interpretation { padding:4px 0; }
+#lp-hybrid .hy-didactic-statement { padding:16px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-didactic-statement h4 { margin:0 0 8px; font-size:12px; color:var(--quiet); font-weight:500; }
+#lp-hybrid .hy-didactic-original { margin:0 0 10px; font-size:14px; }
+#lp-hybrid .hy-didactic-formula { margin:0 0 10px; color:var(--ink); font:19px/1.6 "Cambria Math",serif; overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-reading { margin:0; color:var(--quiet); font-size:12px; line-height:1.7; }
+#lp-hybrid .hy-didactic-interpretation > h4 { margin:20px 0 12px; font-size:13px; font-weight:500; }
+#lp-hybrid .hy-didactic-vocabulary { display:grid; grid-template-columns:minmax(90px,1fr) minmax(0,2fr); gap:10px 18px; margin:0; font-size:12px; }
+#lp-hybrid .hy-didactic-vocabulary dt { font-family:"Cambria Math",serif; overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-vocabulary dd { margin:0; color:var(--quiet); overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-conventions { margin-top:20px; }
+
 #lp-hybrid #editor-settings {
   inset:80px 20px auto auto; width:740px; height:720px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 96px);
   box-sizing:border-box; margin:0; padding:0; border:1px solid var(--edge); border-radius:20px; overflow:hidden;
@@ -9573,9 +9585,11 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-text-import-formula { grid-column:2; margin:0; overflow-wrap:anywhere; color:var(--quiet); font:14px/1.6 "Cambria Math",serif; }
 #lp-hybrid .hy-text-import-row[data-error=true] textarea { border-color:var(--red); }
 #lp-hybrid .hy-text-import-row[data-ignored=true] textarea { opacity:.55; }
-#lp-hybrid .hy-text-import-vocabulary { display:grid; grid-template-columns:auto 1fr; gap:8px 12px; font-size:12px; }
-#lp-hybrid .hy-text-import-vocabulary dd { margin:0; overflow-wrap:anywhere; color:var(--quiet); }
+#lp-hybrid .hy-text-import-vocabulary { margin-top:18px; font-size:12px; }
+#lp-hybrid .hy-text-import-vocabulary h4 { margin:0 0 12px; font-size:12px; font-weight:500; }
 #lp-hybrid .hy-text-import-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 24px; border-top:1px solid var(--edge); }
+
+#lp-hybrid .hy-text-import-reading { display:block; margin-top:6px; font:12px/1.6 "Segoe UI",system-ui; color:var(--quiet); }
 
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
@@ -10443,6 +10457,67 @@ document.addEventListener("keydown", (event) => {
   scope.LPCategorical={parse,evaluate,validate};
   if(typeof module!=='undefined')module.exports=scope.LPCategorical;
 })(globalThis);
+</script>
+
+<script id="categorical-presentation">
+// A pedagogical first-order rendering of the categorical fragment; no validity calculation.
+(function(scope){
+  function explain(entries,language='pt'){
+    const t=(pt,en)=>language==='en'?en:pt,names=new Set(entries.filter(e=>e.singular).map(e=>e.subject));
+    const vocabulary=[],symbols=new Map(),used=new Set(['x']),operators=new Set();
+    const upper=value=>value[0].toLocaleUpperCase()+value.slice(1);
+    function symbol(term,individual=false){
+      const key=(individual?'individual:':'predicate:')+term;
+      if(symbols.has(key))return symbols.get(key);
+      let base=term.normalize('NFC').replace(/[^\p{L}\p{M}\p{N}_′']/gu,'_');
+      base=individual?base.toLocaleLowerCase():upper(base);
+      if(individual? !/^\p{Ll}/u.test(base)||/^[uvwxyz][\d_′']*$/u.test(base):!/^\p{Lu}/u.test(base))base=(individual?'c_':'P_')+base;
+      let value=base,index=2;while(used.has(value))value=base+'_'+index++;used.add(value);symbols.set(key,value);
+      let label=upper(term);
+      if(individual){const original=entries.find(e=>e.singular&&e.subject===term)?.text;const match=original?.match(/^(.+?)\s+(?:não\s+é|é|is)\s/iu);if(match)label=match[1];}
+      vocabulary.push({symbol:individual?value:value+'(x)',meaning:individual?t(label+' — indivíduo nomeado',label+' — named individual'):t('x pertence à classe “'+term+'”','x belongs to the class “'+term+'”'),kind:individual?'individual':'predicate'});
+      return value;
+    }
+    const member=(term,variable)=>{if(names.has(term)){operators.add('=');return variable+' = '+symbol(term,true);}return symbol(term)+'('+variable+')';};
+    const output=entries.map(entry=>{
+      const negative=entry.form==='E'||entry.form==='O';if(negative)operators.add('¬');
+      let formula,reading;
+      if(entry.singular){
+        const constant=symbol(entry.subject,true),predicate=member(entry.predicate,constant);
+        formula=(negative?'¬':'')+(negative&&names.has(entry.predicate)?'('+predicate+')':predicate);
+        reading=t('Afirma '+(negative?'que o indivíduo não pertence':'o pertencimento do indivíduo')+' à classe indicada.','Asserts that the individual '+(negative?'does not belong':'belongs')+' to the indicated class.');
+      }else{
+        const subject=member(entry.subject,'x'),predicate=member(entry.predicate,'x');
+        const negated=negative?'¬'+(names.has(entry.predicate)?'('+predicate+')':predicate):predicate;
+        const universal=entry.form==='A'||entry.form==='E';
+        operators.add(universal?'∀x':'∃x');operators.add(universal?'→':'∧');
+        formula=(universal?'∀x':'∃x')+'('+subject+(universal?' → ':' ∧ ')+negated+')';
+        reading=universal?t('Para todo indivíduo x, se x pertence a “'+entry.subject+'”, então '+(negative?'não pertence':'pertence')+' a “'+entry.predicate+'”.','For every individual x, if x belongs to “'+entry.subject+'”, then x '+(negative?'does not belong':'belongs')+' to “'+entry.predicate+'”.'):t('Existe pelo menos um indivíduo x que pertence a “'+entry.subject+'” e '+(negative?'não pertence':'pertence')+' a “'+entry.predicate+'”.','There is at least one individual x that belongs to “'+entry.subject+'” and '+(negative?'does not belong':'belongs')+' to “'+entry.predicate+'”.');
+      }
+      return {...entry,formula,reading,technical:entry.form+'('+entry.subject+', '+entry.predicate+')'};
+    });
+    const meanings={
+      '∀x':['para todo indivíduo x','for every individual x'],
+      '∃x':['existe pelo menos um indivíduo x','there is at least one individual x'],
+      '→':['se … então …','if … then …'],
+      '∧':['e','and'],
+      '¬':['não','not'],
+      '=':['é o mesmo indivíduo que','is the same individual as'],
+    };
+    return {entries:output,vocabulary,operators:[...operators].map(symbol=>({symbol,meaning:t(...meanings[symbol])}))};
+  }
+  scope.LPCategoricalPresentation={explain};
+  if(typeof module!=='undefined')module.exports=scope.LPCategoricalPresentation;
+})(globalThis);
+
+function appendCategoricalVocabulary(host,presentation){
+  const title=document.createElement('h4'),list=document.createElement('dl');
+  title.textContent=interfaceText('Como ler os símbolos','How to read the symbols');list.className='hy-didactic-vocabulary';
+  for(const entry of [...presentation.vocabulary,...presentation.operators]){
+    const symbol=document.createElement('dt'),meaning=document.createElement('dd');symbol.textContent=entry.symbol;meaning.textContent=entry.meaning;list.append(symbol,meaning);
+  }
+  host.append(title,list);
+}
 </script>
 
 <script id="logic-mode-inference">
@@ -22147,10 +22222,19 @@ function updateExtendedLogicValidation(mode) {
       section.append(card);
     }
   }
-  if (result.entries?.some(entry=>entry.singular)) {
+  if (result.entries?.length) {
     const interpretation=node('details');interpretation.append(node('summary',t('Interpretação do texto','Text interpretation')));
-    for(const entry of result.entries) interpretation.append(node('p',t('Linha ','Line ')+(entry.index+1)+': '+entry.form+'('+entry.subject+', '+entry.predicate+')'+(entry.singular?' · '+t('sujeito individual existente','existing individual subject'):'')));
-    interpretation.append(node('p',t('Nomes próprios designam um indivíduo existente; nomes diferentes podem designar o mesmo indivíduo.','Proper names denote one existing individual; different names may denote the same individual.')));section.append(interpretation);
+    const presentation=LPCategoricalPresentation.explain(result.entries.map(entry=>({...entry,text:rows[entry.index].text})),ui.language);
+    const content=node('div','','hy-didactic-interpretation');
+    for(const entry of presentation.entries){
+      const item=node('section','','hy-didactic-statement');
+      item.append(node('h4',t('Linha ','Line ')+(entry.index+1)+' · '+(entry.role==='conclusion'?t('Conclusão','Conclusion'):t('Premissa','Premise'))),node('p',entry.text,'hy-didactic-original'),node('p',entry.formula,'hy-didactic-formula'),node('p',entry.reading,'hy-didactic-reading'));content.append(item);
+    }
+    appendCategoricalVocabulary(content,presentation);
+    const conventions=node('details','','hy-didactic-conventions');conventions.append(node('summary',t('Convenções e notação categórica','Conventions and categorical notation')));
+    conventions.append(node('p',t('Aqui, predicados começam com maiúscula, constantes com minúscula, e x é uma variável individual. Nomes próprios designam um indivíduo existente; nomes diferentes podem designar o mesmo indivíduo. Esta apresentação em predicados descreve o fragmento categórico analisado; não amplia o verificador para toda a lógica de primeira ordem.','Here, predicates start with uppercase, constants with lowercase, and x is an individual variable. Proper names denote one existing individual; different names may denote the same individual. This predicate rendering describes the analyzed categorical fragment; it does not extend the checker to all of first-order logic.')));
+    for(const entry of presentation.entries)conventions.append(node('p',t('Linha ','Line ')+(entry.index+1)+': '+entry.technical));
+    const reference=node('a',t('Referência didática: Lógica de Predicados — IME/USP','Teaching reference: Predicate Logic — IME/USP'));reference.href='https://www.ime.usp.br/~slago/IA-logicaDePredicados.pdf';reference.target='_blank';reference.rel='noopener noreferrer';conventions.append(reference);content.append(conventions);interpretation.append(content);section.append(interpretation);
   }
   section.append(node('p', t('Termos gerais podem ser vazios; universais não afirmam existência.', 'General terms may be empty; universals do not assert existence.'), 'hy-analysis-scope-note'));
   guide(t('Semântica e limites', 'Semantics and limits'), t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).', 'Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'), t('A notação formal diferencia maiúsculas de minúsculas; nas frases, palavras são normalizadas e nomes próprios designam indivíduos existentes. Não há resolução de pronomes, sinônimos ou flexões. A análise enumera regiões de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.', 'Formal notation is case-sensitive; natural-language words are normalized and proper names denote existing individuals. Pronouns, synonyms and inflections are not resolved. The analysis enumerates membership regions; it does not represent the entire Aristotelian or scholastic tradition.'));
@@ -22254,7 +22338,7 @@ function updateExtendedLogicValidation(mode) {
     const reviewHead=element('div','hy-text-import-review-heading'),reviewTitle=element('h3','',t('Leitura proposta','Proposed reading')),modeLabel=element('span','hy-analysis-mode-name');reviewHead.append(reviewTitle,modeLabel);
     const note=element('p','hy-text-import-note',t('Frases categóricas e condicionais simples. Pronomes, sinônimos e sentidos implícitos não são resolvidos.','Categorical sentences and simple conditionals. Pronouns, synonyms and implicit meanings are not resolved.'));
     const notice=element('p','hy-text-import-notice');notice.setAttribute('role','status');
-    const list=element('div','hy-text-import-list'),vocabulary=element('dl','hy-text-import-vocabulary');
+    const list=element('div','hy-text-import-list'),vocabulary=element('div','hy-text-import-vocabulary');
     review.append(reviewHead,note,notice,list,vocabulary);workspace.append(source,review);
     const footer=element('footer','hy-text-import-footer'),cancel=button(t('Cancelar','Cancel'),()=>dialog.close()),load=button(t('Carregar novo argumento','Load new argument'),loadArgument);load.disabled=true;footer.append(cancel,load);
     dialog.append(header,workspace,footer);root.append(dialog);
@@ -22278,13 +22362,16 @@ function updateExtendedLogicValidation(mode) {
     function refresh(explicit){
       try{reading=LPNaturalText.inspect(draft,currentLogicMode());}catch(error){reading=null;load.disabled=true;notice.textContent=issue(error.message);return;}
       const definition=logicModeDefinitions.find(([id])=>id===reading.mode);modeLabel.textContent=t(definition[1],definition[2]);
+      const presentation=reading.mode==='syllogistic'?LPCategoricalPresentation.explain(reading.rows.flatMap((row,index)=>{try{return [{...LPCategorical.parse(row.text),index,text:row.text}];}catch{return [];}}),ui.language):null;
       let at=0;draft.forEach((row,index)=>{
         const card=list.children[index],formula=card.querySelector('.hy-text-import-formula');card.dataset.ignored=String(row.role==='blank');
         if(row.role==='blank'){formula.textContent='';card.dataset.error='false';return;}
-        const entry=reading.interpretations[at++];card.dataset.error=String(Boolean(entry.error));
-        formula.textContent=entry.error?t('Trecho não reconhecido; reformule ou ignore explicitamente.','Unrecognized passage; rephrase or explicitly ignore it.'):entry.formula+(entry.singular?' · '+t('indivíduo existente','existing individual'):'');
+        const currentIndex=at,entry=reading.interpretations[at++],didactic=presentation?.entries.find(item=>item.index===currentIndex);card.dataset.error=String(Boolean(entry.error));
+        formula.textContent=entry.error?t('Trecho não reconhecido; reformule ou ignore explicitamente.','Unrecognized passage; rephrase or explicitly ignore it.'):didactic?didactic.formula:entry.formula;
+        if(didactic){const explanation=element('span','hy-text-import-reading',didactic.reading);formula.append(explanation);}
       });
-      vocabulary.replaceChildren();for(const [symbol,description] of Object.entries(reading.descriptions)){vocabulary.append(element('dt','',symbol),element('dd','',description));}
+      vocabulary.replaceChildren();if(presentation)appendCategoricalVocabulary(vocabulary,presentation);
+      else if(Object.keys(reading.descriptions).length){const definitions=element('dl','hy-didactic-vocabulary');for(const [symbol,description] of Object.entries(reading.descriptions))definitions.append(element('dt','',symbol),element('dd','',description));vocabulary.append(definitions);}
       const complete=reading.rows.some(row=>row.role==='premise')&&reading.rows.some(row=>row.role==='conclusion');
       load.disabled=sourceDirty||Boolean(reading.errors.length)||!complete;
       notice.textContent=sourceDirty?t('Interprete novamente para atualizar a leitura.','Interpret again to update the reading.'):reading.errors.length?t('Há trechos não reconhecidos. Nenhum veredito de validade foi produzido.','Some passages are not recognized. No validity verdict has been produced.'):!complete?t('Indique pelo menos uma premissa e uma conclusão.','Indicate at least one premise and one conclusion.'):!explicit?t('A última frase foi sugerida como conclusão. Confira os papéis e a interpretação.','The last sentence was suggested as the conclusion. Check the roles and interpretation.'):t('Confira os papéis e a interpretação antes de carregar.','Check the roles and interpretation before loading.');

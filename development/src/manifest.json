@@ -30,6 +30,10 @@
       "file": "scripts/validation/categorical-logic.js"
     },
     {
+      "name": "categorical-presentation",
+      "file": "scripts/validation/categorical-presentation.js"
+    },
+    {
       "name": "logic-mode-inference",
       "file": "scripts/validation/logic-mode-inference.js"
     },
