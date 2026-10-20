@@ -54,7 +54,7 @@
         visual.style.top = Math.min(innerHeight - 27, r.bottom + 3) + "px";
         g.frame = requestAnimationFrame(position);
       }
-      const delay = tab || mode ? Math.min(180, duration * 0.4) : 0;
+      const delay = tab || mode || e.target.closest(".hy-editor") ? Math.min(180, duration * 0.4) : 0;
       const reveal = () => {
         if (hold !== g) return;
         visual.showPopover();

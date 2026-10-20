@@ -64,5 +64,6 @@
   "check-descriptions-fonts-desktop",
   "check-writing-defaults-desktop",
   "check-logic-modes-hold",
-  "check-mode-selector-example-help"
+  "check-mode-selector-example-help",
+  "check-premise-hold-delay"
 ]
