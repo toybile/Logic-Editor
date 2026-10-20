@@ -25,7 +25,7 @@
 #lp-hybrid .hy-logic-mode-select:hover { background:var(--soft); }
 #lp-hybrid .hy-logic-mode-menu { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; width:360px; max-width:calc(100vw - 32px); box-sizing:border-box; margin:0; padding:9px; border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); box-shadow:0 12px 32px #0002; }
 #lp-hybrid .hy-logic-mode-menu button { display:flex; align-items:center; gap:10px; width:100%; min-height:58px; text-align:left; padding:10px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:inherit; font:12px/1.5 system-ui; cursor:pointer; }
-#lp-hybrid .hy-logic-mode-menu button:hover { background:var(--soft); }
+#lp-hybrid .hy-logic-mode-menu button:hover:not([aria-checked=true]) { background:var(--soft); }
 #lp-hybrid .hy-logic-mode-menu [aria-checked=true] { background:var(--blue); color:var(--paper); border-color:var(--blue); }
 #lp-hybrid .hy-logic-mode-menu svg { width:20px; height:20px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.5; }
 #lp-hybrid .hy-logic-mode-help { box-sizing:border-box; width:720px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 48px); padding:28px; overflow:auto; }
