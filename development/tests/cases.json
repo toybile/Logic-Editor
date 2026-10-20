@@ -71,5 +71,6 @@
   "check-analysis-workspace",
   "check-mode-inference",
   "check-settings-mode-advice",
-  "check-mode-examples"
+  "check-mode-examples",
+  "check-line-selection-spacing"
 ]

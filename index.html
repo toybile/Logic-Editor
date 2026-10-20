@@ -11537,12 +11537,19 @@ function buildContinuousRow(row, body) {
   };
   blockFields.set(field, { insert(symbol) {
     let value = symbol;
-    const before = field.value.slice(0, field.selectionStart), after = field.value.slice(field.selectionEnd);
+    let start = field.selectionStart;
+    const before = field.value.slice(0, start), after = field.value.slice(field.selectionEnd);
     if (/^[∧∨→↔⇒⇔⊕⊻↑↓]$/u.test(symbol)) {
       if (before && !/\s$/u.test(before)) value = ' ' + value;
       if (!/^\s/u.test(after)) value += ' ';
+    } else if (/^[¬~∼∽!∀∃∄□◇()]$/u.test(symbol)) {
+      if (ui.compactPrefixSpacing) {
+        if (symbol === ')' || (symbol === '(' && /[\p{L}\p{N}_'′]\s+$/u.test(before))) {
+          start -= before.match(/\s*$/u)[0].length;
+        }
+      } else if (!/^\s/u.test(after)) value += ' ';
     }
-    field.setRangeText(value, field.selectionStart, field.selectionEnd, 'end');
+    field.setRangeText(value, start, field.selectionEnd, 'end');
     field.focus({ preventScroll:true }); field.oninput();
   }});
   body.replaceChildren(field);
@@ -11985,6 +11992,9 @@ function createRowElement(row, index) {
     if (event.target.closest("button,input,textarea") || drag) return;
     const inputs = body.querySelectorAll(".hy-block,.hy-continuous-field");
     const last = inputs[inputs.length - 1];
+    // A drag from the field to its row produces a click on the common ancestor.
+    // Keep the native text range instead of treating that release as a row click.
+    if (last && document.activeElement === last && last.selectionStart !== last.selectionEnd) return;
     if (last) {
       active = last;
       last.focus();
