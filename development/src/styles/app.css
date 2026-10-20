@@ -407,7 +407,7 @@
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--edge);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 20px 70px #0003;
   font: 14px/1.5 system-ui;
   animation: syntax-appear 0.18s ease;
@@ -472,6 +472,10 @@
 #lp-hybrid .hy-button svg {
   width: 17px;
   height: 17px;
+
+  display: block;
+
+  flex-shrink: 0;
 }
 #lp-hybrid .hy-button[aria-pressed="true"] {
   color: var(--blue);
@@ -1924,7 +1928,7 @@ body {
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--edge);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 20px 70px #0003;
   font: 14px/1.5 system-ui;
   opacity: 0;
@@ -2739,7 +2743,10 @@ body {
   width: 100%;
   justify-content: center;
   border-radius: 8px;
-  padding: 9px 12px;
+  padding: 8px 12px;
+  height: 36px;
+  min-height: 36px;
+  font: 13px/1.4 "Segoe UI",system-ui;
 }
 @media (prefers-reduced-motion: reduce) {
   #lp-hybrid .hy-export-menu {
@@ -3228,10 +3235,14 @@ body {
   width: 420px;
   padding: var(--dialog-inset);
   border: 1px solid var(--edge);
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--paper);
   color: var(--ink);
   box-shadow: 0 16px 48px #0003;
+
+  max-height: calc(100dvh - 48px);
+
+  overflow: auto;
 }
 #lp-hybrid .hy-feature-dialog .hy-button {
   margin: 0;
@@ -3412,17 +3423,20 @@ body {
 }
 #lp-hybrid .hy-examples-dialog {
   width: 520px;
-  padding: var(--dialog-inset);
+  padding: 0;
   border-radius: 22px;
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+
+  flex-direction: column;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-examples-dialog h3 {
   margin: 0 0 18px;
   font-size: 16px;
   font-weight: 500;
 }
-#lp-hybrid .hy-examples-dialog > .hy-button {
+#lp-hybrid .hy-examples-list > .hy-button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -3437,23 +3451,17 @@ body {
     background 0.18s,
     box-shadow 0.18s;
 }
-#lp-hybrid .hy-examples-dialog > .hy-button:hover {
+#lp-hybrid .hy-examples-list > .hy-button:hover {
   background: var(--paper);
   box-shadow: 0 3px 12px light-dark(#26364a15, #0004);
 }
 #lp-hybrid .hy-examples-dialog strong {
   font-weight: 500;
 }
-#lp-hybrid .hy-examples-dialog > [data-example] span {
+#lp-hybrid .hy-examples-list > [data-example] span {
   font-family: "Cambria Math", serif;
   color: var(--quiet);
   overflow-wrap: anywhere;
-}
-#lp-hybrid .hy-examples-dialog > .hy-button:last-child {
-  align-items: center;
-  background: transparent;
-  width: auto;
-  margin: 16px 0 0 auto;
 }
 @media (prefers-reduced-motion: reduce) {
   #lp-hybrid .hy-new-argument-menu {
@@ -3760,28 +3768,18 @@ body {
 }
 #lp-hybrid .hy-import-preview {
   width: 560px;
-  max-height: calc(100dvh - 40px);
-  overflow: auto;
-}
-#lp-hybrid .hy-import-preview > label {
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  margin: 8px 0;
-  background: var(--soft);
-  border-radius: 12px;
-  cursor: pointer;
-  align-items: center;
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+
+  padding: 0;
+
+  flex-direction: column;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-import-preview p {
   color: var(--quiet);
   overflow-wrap: anywhere;
   margin: 6px 0 0;
-}
-#lp-hybrid .hy-import-preview > div {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
 }
 #lp-hybrid .hy-truth-table select {
   margin: 8px 0;
@@ -4020,8 +4018,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 18px;
+  gap: 12px;
+  margin-bottom: 0;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid var(--edge);
+
+  flex-shrink: 0;
 }
 #lp-hybrid .hy-examples-heading h3 {
   margin: 0;
@@ -4031,9 +4035,13 @@ body {
   align-items: center;
   gap: 7px;
   flex-shrink: 0;
-  padding: 8px 10px;
+  padding: 7px 9px;
   border: 1px solid var(--edge);
   border-radius: 10px;
+
+  min-height: 34px;
+
+  font-size: 12px;
 }
 #lp-hybrid .hy-examples-help svg {
   width: 18px;
@@ -4221,10 +4229,10 @@ body {
   position: fixed;
   width: 540px;
   max-width: calc(100vw - 24px);
-  max-height: calc(100dvh - 32px);
+  max-height: calc(100dvh - 48px);
   box-sizing: border-box;
-  overflow: auto;
-  padding: var(--dialog-inset);
+  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--edge);
   border-radius: 20px;
   background: var(--paper);
@@ -4232,6 +4240,7 @@ body {
   box-shadow: 0 18px 55px #0003;
   font: 14px/1.65 system-ui;
   animation: syntax-appear 0.18s ease;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-symbol-help-dialog::backdrop {
   background: #0004;
@@ -4243,7 +4252,7 @@ body {
 }
 #lp-hybrid .hy-symbol-help-dialog h1 {
   font-size: 21px;
-  margin: 0 36px 18px 0;
+  margin: 0;
   line-height: 1.4;
 }
 #lp-hybrid .hy-symbol-help-dialog article {
@@ -4269,25 +4278,6 @@ body {
 #lp-hybrid .hy-symbol-help-dialog footer a {
   display: inline-block;
   margin-top: 6px;
-}
-#lp-hybrid .hy-symbol-help-close {
-  position: absolute;
-  top: var(--dialog-inset);
-  right: var(--dialog-inset);
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--edge);
-  border-radius: 9px;
-  background: transparent;
-  color: var(--quiet);
-  font: 22px/1 system-ui;
-  cursor: pointer;
-}
-#lp-hybrid .hy-symbol-help-close:hover {
-  background: var(--soft);
-  color: var(--ink);
 }
 #lp-hybrid .hy-symbol-help-close:focus-visible {
   outline: 2px solid var(--blue);
@@ -5159,15 +5149,6 @@ body {
 #lp-hybrid .hy-panel-appearance-dialog .hy-settings-head h2 {
   font-size: 14px !important;
   font-weight: 500;
-}
-#lp-hybrid .hy-panel-appearance-dialog .hy-settings-head button {
-  width: 28px;
-  height: 28px;
-  min-height: 28px;
-  background: var(--soft);
-  border-radius: 8px;
-  padding: 0;
-  font-size: 18px;
 }
 #lp-hybrid .hy-panel-appearance-dialog label {
   min-height: 32px;
@@ -6386,21 +6367,30 @@ body {
 #lp-hybrid #default-settings-confirmation.hy-selective-reset {
   width: min(550px, calc(100vw - 24px));
   box-sizing: border-box;
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
-  padding: var(--dialog-inset);
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--edge);
   border-radius: 20px;
   background: var(--paper);
   color: var(--ink);
   box-shadow: 0 22px 70px #0003;
   font: 13px/1.5 system-ui;
+
+  flex-direction: column;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-reset-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid var(--edge);
+
+  flex-shrink: 0;
 }
 #lp-hybrid .hy-reset-head h3 {
   margin: 0;
@@ -6487,10 +6477,14 @@ body {
   margin: 16px 0;
 }
 #lp-hybrid .hy-selective-reset .hy-default-actions {
-  position: sticky;
-  bottom: -22px;
-  padding: 12px 0;
+  position: static;
+
+  padding: 16px 24px;
   background: var(--paper);
+
+  border-top: 1px solid var(--edge);
+
+  flex-shrink: 0;
 }
 @media (max-width: 420px) {
   #lp-hybrid .hy-reset-item {

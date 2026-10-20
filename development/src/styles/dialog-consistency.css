@@ -1,0 +1,29 @@
+/* Compact dialogs follow the same spacing and icon rhythm as the analysis workspace. */
+#lp-hybrid .hy-dialog-close { display:inline-flex; align-items:center; justify-content:center; flex:none; width:32px; height:32px; min-height:32px; padding:0; margin:0; border:1px solid transparent; border-radius:9px; color:var(--quiet); background:transparent; cursor:pointer; }
+#lp-hybrid .hy-dialog-close svg { display:block; flex:none; width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.7; }
+#lp-hybrid .hy-dialog-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid :is(dialog,[popover]) :is(button,input,textarea,select,summary):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+#lp-hybrid .hy-dialog-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:8px; margin-top:20px; }
+#lp-hybrid .hy-message-dialog > p { margin:0; line-height:1.7; color:var(--quiet); }
+#lp-hybrid .hy-examples-list { min-height:0; overflow:auto; padding:16px 24px 24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-examples-heading > .hy-examples-help { margin-left:auto; }
+#lp-hybrid .hy-import-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-import-heading h3 { margin:0; font:500 16px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-import-list { min-height:0; overflow:auto; padding:16px 24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-import-list > label { display:flex; align-items:flex-start; gap:12px; padding:14px; margin:8px 0; background:var(--soft); border:1px solid var(--edge); border-radius:12px; cursor:pointer; }
+#lp-hybrid .hy-import-list input[type=checkbox] { flex:none; width:17px; height:17px; margin:2px 0 0; accent-color:var(--blue); }
+#lp-hybrid .hy-import-list label > div { min-width:0; }
+#lp-hybrid .hy-import-list strong { font-size:14px; font-weight:500; overflow-wrap:anywhere; }
+#lp-hybrid .hy-import-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:8px; padding:16px 24px; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-reset-body { min-height:0; overflow:auto; padding:0 24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-logic-mode-help > header { position:sticky; top:-28px; z-index:1; padding:16px 0; margin-top:-16px; background:var(--paper); border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-logic-mode-help > header h2 { min-width:0; }
+
+#lp-hybrid :is(.hy-examples-dialog,.hy-import-preview,#default-settings-confirmation.hy-selective-reset)[open] { display:flex; }
+#lp-hybrid .hy-new-argument-menu svg { flex:none; width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid .hy-import-confirm { color:var(--blue); border-color:var(--blue); background:var(--soft); }
+
+#lp-hybrid .hy-symbol-help-dialog[open] { display:flex; flex-direction:column; }
+#lp-hybrid .hy-symbol-help-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 24px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-symbol-help-heading h1 { margin:0; min-width:0; font-size:18px; font-weight:500; }
+#lp-hybrid .hy-symbol-help-dialog > .hy-help-content { min-height:0; overflow:auto; padding:20px 24px 24px; scrollbar-width:thin; overscroll-behavior:contain; }

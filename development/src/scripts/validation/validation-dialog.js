@@ -20,7 +20,7 @@ validationDialog.setAttribute('aria-labelledby', validationTitle.id);
 const validationClose = document.createElement('button');
 validationClose.type = 'button';
 validationClose.className = 'hy-button hy-icon-button hy-analysis-close';
-validationClose.textContent = '×';
+LPDialogChrome.close(validationClose);
 validationClose.onclick = () => validationDialog.close();
 validationHeader.append(validationIdentity, validationClose);
 const validationWorkspace = document.createElement('div');

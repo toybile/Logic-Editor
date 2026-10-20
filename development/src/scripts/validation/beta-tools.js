@@ -22,6 +22,7 @@
     heading.id = "hy-beta-title-" + crypto.randomUUID();
     d.setAttribute("aria-labelledby", heading.id);
     close.classList.add("hy-beta-close");
+    LPDialogChrome.close(close);
     close.setAttribute("aria-label", text("Fechar", "Close"));
     head.append(heading, badge, close);
     d.append(head);

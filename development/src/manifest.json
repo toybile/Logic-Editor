@@ -6,12 +6,17 @@
     "styles/analysis.css",
     "styles/settings.css",
     "styles/text-import.css",
+    "styles/dialog-consistency.css",
     "styles/mobile.css"
   ],
   "scripts": [
     {
       "name": "lp-startup-update",
       "file": "scripts/core/lp-startup-update.js"
+    },
+    {
+      "name": "dialog-presentation",
+      "file": "scripts/interaction/dialog-presentation.js"
     },
     {
       "name": "position-undo-manager",

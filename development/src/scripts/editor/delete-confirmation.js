@@ -38,6 +38,7 @@ async function confirmDeletion(message) {
     }
     cancels.forEach((button) => (button.onclick = () => finish(false)));
     confirm.onclick = () => finish(true);
+    LPDialogChrome.close(cancels[0]);
     dialog.addEventListener("cancel", cancel);
     dialog.addEventListener("close", closed);
     dialog.showModal();

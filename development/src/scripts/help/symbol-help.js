@@ -423,8 +423,9 @@ const LPSymbolHelp = (() => {
     const back = document.createElement("button");
     back.type = "button";
     back.className = "hy-symbol-help-close";
+    LPDialogChrome.close(back);
     back.setAttribute("aria-label", text("Fechar explicação", "Close explanation"));
-    back.textContent = "×";
+
     back.onclick = close;
     const content = document.createElement("div");
     content.className = "hy-help-content";
@@ -497,7 +498,7 @@ const LPSymbolHelp = (() => {
         "V and F stand for true and false in these examples. Notation depends on context; similar symbols do not guarantee the same operation.",
       ),
     );
-    content.append(title, article);
+    content.append(article);
     const sources = document.createElement("footer");
     sources.append(document.createTextNode(text("Referências: ", "References: ")));
     for (const [label, url] of [
@@ -516,7 +517,7 @@ const LPSymbolHelp = (() => {
       sources.append(a);
     }
     content.append(sources);
-    page.append(back, content);
+    const header=document.createElement("header");header.className="hy-symbol-help-heading";header.append(title,back);page.append(header,content);
     page.onclose = () => {
       page.remove();
       page = null;

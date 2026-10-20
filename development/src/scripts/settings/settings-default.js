@@ -22,7 +22,7 @@
     const x = document.createElement("button");
     x.type = "button";
     x.className = "hy-button hy-icon-button";
-    x.textContent = "×";
+    LPDialogChrome.close(x);
     x.setAttribute("aria-label", en ? "Close" : "Fechar");
     x.onclick = () => dialog.close();
     header.append(title, x);
@@ -280,7 +280,8 @@
       dialog.close();
     };
     actions.append(cancel, confirm);
-    dialog.append(header, description, list, count, actions);
+    const body=document.createElement('div');body.className='hy-reset-body';body.append(description,list,count);
+    dialog.append(header,body,actions);
     root.append(dialog);
     dialog.onclose = () => {
       dialog.remove();

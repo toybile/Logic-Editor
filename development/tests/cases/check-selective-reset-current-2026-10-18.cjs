@@ -137,7 +137,9 @@ const fs = require("fs"),
     await q.setViewportSize({ width: 390, height: 850 });
     await q.waitForTimeout(250);
     assert(await q.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
-    assert(await dialog.evaluate((e) => e.scrollHeight > e.clientHeight));
+    assert(await dialog.locator(".hy-reset-body").evaluate((e) => e.scrollHeight > e.clientHeight));
+    assert(await dialog.locator(".hy-reset-head").isVisible());
+    assert(await dialog.locator(".hy-default-actions").isVisible());
     await q.screenshot({ path: "test-artifacts/selective-reset-mobile.png" });
     assert.deepEqual(errors, []);
     console.log(

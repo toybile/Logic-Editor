@@ -116,6 +116,8 @@ const panelFontOptions = [
       '</h2><button class="hy-button hy-icon-button" data-close aria-label="' +
       (en ? "Close" : "Fechar") +
       '">×</button></div>';
+    const appearanceTitle=dialog.querySelector('h2');appearanceTitle.id='panel-appearance-title-'+crypto.randomUUID();dialog.setAttribute('aria-labelledby',appearanceTitle.id);
+    LPDialogChrome.close(dialog.querySelector('[data-close]'));
     const colorKey = key === "editor" ? "premiseColor" : "conclusionColor",
       colorLabel = document.createElement("label");
     colorLabel.textContent = en ? "Panel color" : "Cor da janela";

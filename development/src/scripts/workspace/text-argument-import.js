@@ -10,7 +10,7 @@
     const icon=element('span','hy-analysis-mode-icon');icon.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h6"/></svg>';
     const heading=element('div'),title=element('h2','',t('Interpretar texto','Interpret text'));title.id='text-import-title';
     heading.append(title,element('p','hy-analysis-mode-name',t('Revisar antes de carregar','Review before loading')));identity.append(icon,heading);
-    const close=button('×',()=>dialog.close());close.classList.add('hy-analysis-close');close.setAttribute('aria-label',t('Fechar','Close'));header.append(identity,close);
+    const close=button('×',()=>dialog.close());close.classList.add('hy-analysis-close');LPDialogChrome.close(close);close.setAttribute('aria-label',t('Fechar','Close'));header.append(identity,close);
     const workspace=element('div','hy-text-import-workspace'),source=element('section','hy-text-import-source'),review=element('section','hy-text-import-review');
     const sourceLabel=element('label','hy-text-import-label',t('Texto original','Original text'));sourceLabel.htmlFor='argument-prose';
     const input=element('textarea');input.id='argument-prose';input.maxLength=20000;input.spellcheck=false;

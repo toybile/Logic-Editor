@@ -21,7 +21,7 @@ function currentLogicMode() {
     const d=document.createElement('dialog'); d.className='hy-feature-dialog hy-logic-mode-help';
     const head=document.createElement('header'), h=document.createElement('h2'),close=document.createElement('button');
     h.id='logic-modes-help-title';h.textContent=t('Modos de lógica','Logic modes');d.setAttribute('aria-labelledby',h.id);
-    close.type='button';close.className='hy-button hy-icon-button';close.textContent='×';close.setAttribute('aria-label',t('Fechar','Close'));close.onclick=()=>d.close();head.append(h,close);d.append(head);
+    close.type='button';close.className='hy-button hy-icon-button';LPDialogChrome.close(close);close.setAttribute('aria-label',t('Fechar','Close'));close.onclick=()=>d.close();head.append(h,close);d.append(head);
     const intro=document.createElement('p');intro.textContent=t('O modo pertence a este argumento e orienta sua análise. Todos os símbolos continuam disponíveis. Mudar o modo preserva fórmulas e descrições; não traduz automaticamente entre linguagens.','The mode belongs to this argument and guides its analysis. All symbols remain available. Switching preserves formulas and descriptions; it does not translate automatically between languages.');d.append(intro);
     const lessons=[
       [modes[0],

@@ -285,7 +285,8 @@
     cancel.textContent = en ? "Cancel" : "Cancelar";
     confirm.textContent = en ? "Delete all" : "Excluir todas";
     actions.append(cancel, confirm);
-    dialog.append(title, message, actions);
+    const header=document.createElement('div'),close=document.createElement('button');header.className='hy-settings-head';close.type='button';close.className='hy-button';close.setAttribute('aria-label',en?'Close':'Fechar');LPDialogChrome.close(close);close.onclick=()=>dialog.close();header.append(title,close);
+    dialog.append(header, message, actions);
     root.append(dialog);
     const accepted = await new Promise((resolve) => {
       let result = false;

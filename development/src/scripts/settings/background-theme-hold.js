@@ -9,7 +9,7 @@ function openBackgroundThemes(pointerId) {
   dialog.setAttribute('aria-labelledby',title.id);
   const close=document.createElement('button');close.type='button';close.className='hy-button hy-icon-button';close.setAttribute('aria-label',interfaceText('Fechar','Close'));
   close.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
-  close.onclick=()=>dialog.close();head.append(title,close);dialog.append(head,createThemeOptions());
+  LPDialogChrome.close(close);close.onclick=()=>dialog.close();head.append(title,close);dialog.append(head,createThemeOptions());
   let openingPointer=pointerId;
   const released=e=>{if(e.pointerId!==openingPointer)return;document.removeEventListener('pointerup',released,true);document.removeEventListener('pointercancel',released,true);requestAnimationFrame(()=>{openingPointer=undefined;});};
   if(pointerId!==undefined){document.addEventListener('pointerup',released,true);document.addEventListener('pointercancel',released,true);}

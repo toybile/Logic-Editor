@@ -14,8 +14,6 @@
 #lp-hybrid .hy-analysis-mode-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
 #lp-hybrid .hy-validation-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; letter-spacing:-.3px; }
 #lp-hybrid .hy-analysis-mode-name { margin:3px 0 0; color:var(--quiet); font-size:12px; }
-#lp-hybrid .hy-analysis-close { display:grid; place-items:center; width:32px; height:32px; min-height:32px; padding:0; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); font:23px/1 system-ui; }
-#lp-hybrid .hy-analysis-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
 #lp-hybrid .hy-analysis-workspace { display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); flex:1; min-height:0; }
 #lp-hybrid .hy-validation-preview { display:flex; flex-direction:column; gap:18px; min-width:0; min-height:0; padding:26px; border-right:1px solid var(--edge); background:color-mix(in srgb,var(--soft) 38%,var(--paper)); }
 #lp-hybrid .hy-analysis-section-label { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; font:600 12px/1.5 "Segoe UI",system-ui; color:var(--quiet); }
@@ -125,8 +123,7 @@
 #lp-hybrid .hy-beta-heading { display:flex; align-items:center; gap:10px; padding:22px 24px; margin:0; border-bottom:1px solid var(--edge); flex:none; }
 #lp-hybrid .hy-beta-heading h3 { margin:0; font:600 16px/1.5 "Segoe UI",system-ui; min-width:0; overflow-wrap:anywhere; letter-spacing:-.2px; }
 #lp-hybrid .hy-beta-tag { padding:2px 6px; flex:none; border:1px solid light-dark(#e7d6b9,#725b3b); border-radius:5px; background:light-dark(#fff5e5,#3c3325); color:light-dark(#805b25,#e9c991); font:500 10px/1.4 "Segoe UI",system-ui; }
-#lp-hybrid .hy-beta-dialog .hy-beta-close { display:grid; place-items:center; width:30px; height:30px; min-height:30px; margin:0 0 0 auto; flex:none; padding:0; border:1px solid transparent; border-radius:8px; background:transparent; color:var(--quiet); font:22px/1 system-ui; }
-#lp-hybrid .hy-beta-dialog .hy-beta-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid .hy-beta-dialog .hy-beta-close { margin-left:auto; }
 #lp-hybrid .hy-beta-dialog form { display:flex; flex-direction:column; flex:1; gap:0; min-height:0; margin:0; }
 #lp-hybrid .hy-beta-scroll { padding:24px; overflow:auto; min-height:0; flex:1; scrollbar-width:thin; overscroll-behavior:contain; }
 #lp-hybrid .hy-beta-scroll > .hy-description-note { margin:0 0 14px; font:13px/1.75 "Segoe UI",system-ui; }
@@ -169,13 +166,13 @@
 #lp-hybrid .hy-analysis-mode-notice svg { flex:none; width:18px; height:18px; color:var(--blue); }
 #lp-hybrid .hy-analysis-mode-notice span { flex:1; }
 #lp-hybrid .hy-analysis-mode-notice strong { color:var(--blue); white-space:nowrap; font-weight:500; }
-#lp-hybrid .hy-analysis-mode-menu button { min-height:66px; }
+#lp-hybrid .hy-analysis-mode-menu button { min-height:58px; }
 
 #lp-hybrid .hy-didactic-interpretation { padding:4px 0; }
 #lp-hybrid .hy-didactic-statement { padding:16px 0; border-bottom:1px solid var(--edge); }
 #lp-hybrid .hy-didactic-statement h4 { margin:0 0 8px; font-size:12px; color:var(--quiet); font-weight:500; }
-#lp-hybrid .hy-didactic-original { margin:0 0 10px; font-size:14px; }
-#lp-hybrid .hy-didactic-formula { margin:0 0 10px; color:var(--ink); font:19px/1.6 "Cambria Math",serif; overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-original, #lp-hybrid .hy-analysis-inspector-body .hy-didactic-original { margin:0 0 10px; font-size:14px; color:var(--ink); }
+#lp-hybrid .hy-didactic-formula, #lp-hybrid .hy-analysis-inspector-body .hy-didactic-formula { margin:0 0 10px; color:var(--ink); font:19px/1.6 "Cambria Math",serif; overflow-wrap:anywhere; }
 #lp-hybrid .hy-didactic-reading { margin:0; color:var(--quiet); font-size:12px; line-height:1.7; }
 #lp-hybrid .hy-didactic-interpretation > h4 { margin:20px 0 12px; font-size:13px; font-weight:500; }
 #lp-hybrid .hy-didactic-vocabulary { display:grid; grid-template-columns:minmax(90px,1fr) minmax(0,2fr); gap:10px 18px; margin:0; font-size:12px; }

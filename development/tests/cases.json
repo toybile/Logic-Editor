@@ -75,5 +75,6 @@
   "check-line-selection-spacing",
   "check-natural-text",
   "check-natural-text-ui",
-  "check-categorical-presentation"
+  "check-categorical-presentation",
+  "check-ui-window-consistency"
 ]

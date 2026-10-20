@@ -94,7 +94,7 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-argument-panel > .hy-section-head > .hy-tools .hy-export-group { flex-wrap:nowrap; }
 
 /* Shared geometry keeps dialog edges and controls balanced. */
-#lp-hybrid { --dialog-inset:20px; }
+#lp-hybrid { --dialog-inset:24px; }
 @media(max-width:600px) { #lp-hybrid { --dialog-inset:16px; } }
 #lp-hybrid dialog { scrollbar-gutter:stable both-edges; box-sizing:border-box; max-width:calc(100vw - 24px); max-height:calc(100dvh - 32px); overflow:auto; }
 #lp-hybrid dialog:not([popover]) { inset:0; margin:auto; }

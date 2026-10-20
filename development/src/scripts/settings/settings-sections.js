@@ -3,6 +3,7 @@
   const settings = root.querySelector('#editor-settings');
   settings.setAttribute('role','dialog');
   const head = settings.querySelector(':scope > .hy-settings-head');
+  LPDialogChrome.close(head.querySelector('button'));
   const switches = settings.querySelector('.hy-settings-switches');
   const actions = document.createElement('div'); actions.className='hy-settings-actions';
   actions.append(...switches.children,head.querySelector('button')); head.append(actions); switches.remove();

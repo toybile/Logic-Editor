@@ -428,7 +428,7 @@
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--edge);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 20px 70px #0003;
   font: 14px/1.5 system-ui;
   animation: syntax-appear 0.18s ease;
@@ -493,6 +493,10 @@
 #lp-hybrid .hy-button svg {
   width: 17px;
   height: 17px;
+
+  display: block;
+
+  flex-shrink: 0;
 }
 #lp-hybrid .hy-button[aria-pressed="true"] {
   color: var(--blue);
@@ -1945,7 +1949,7 @@ body {
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--edge);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 20px 70px #0003;
   font: 14px/1.5 system-ui;
   opacity: 0;
@@ -2760,7 +2764,10 @@ body {
   width: 100%;
   justify-content: center;
   border-radius: 8px;
-  padding: 9px 12px;
+  padding: 8px 12px;
+  height: 36px;
+  min-height: 36px;
+  font: 13px/1.4 "Segoe UI",system-ui;
 }
 @media (prefers-reduced-motion: reduce) {
   #lp-hybrid .hy-export-menu {
@@ -3249,10 +3256,14 @@ body {
   width: 420px;
   padding: var(--dialog-inset);
   border: 1px solid var(--edge);
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--paper);
   color: var(--ink);
   box-shadow: 0 16px 48px #0003;
+
+  max-height: calc(100dvh - 48px);
+
+  overflow: auto;
 }
 #lp-hybrid .hy-feature-dialog .hy-button {
   margin: 0;
@@ -3433,17 +3444,20 @@ body {
 }
 #lp-hybrid .hy-examples-dialog {
   width: 520px;
-  padding: var(--dialog-inset);
+  padding: 0;
   border-radius: 22px;
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+
+  flex-direction: column;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-examples-dialog h3 {
   margin: 0 0 18px;
   font-size: 16px;
   font-weight: 500;
 }
-#lp-hybrid .hy-examples-dialog > .hy-button {
+#lp-hybrid .hy-examples-list > .hy-button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -3458,23 +3472,17 @@ body {
     background 0.18s,
     box-shadow 0.18s;
 }
-#lp-hybrid .hy-examples-dialog > .hy-button:hover {
+#lp-hybrid .hy-examples-list > .hy-button:hover {
   background: var(--paper);
   box-shadow: 0 3px 12px light-dark(#26364a15, #0004);
 }
 #lp-hybrid .hy-examples-dialog strong {
   font-weight: 500;
 }
-#lp-hybrid .hy-examples-dialog > [data-example] span {
+#lp-hybrid .hy-examples-list > [data-example] span {
   font-family: "Cambria Math", serif;
   color: var(--quiet);
   overflow-wrap: anywhere;
-}
-#lp-hybrid .hy-examples-dialog > .hy-button:last-child {
-  align-items: center;
-  background: transparent;
-  width: auto;
-  margin: 16px 0 0 auto;
 }
 @media (prefers-reduced-motion: reduce) {
   #lp-hybrid .hy-new-argument-menu {
@@ -3781,28 +3789,18 @@ body {
 }
 #lp-hybrid .hy-import-preview {
   width: 560px;
-  max-height: calc(100dvh - 40px);
-  overflow: auto;
-}
-#lp-hybrid .hy-import-preview > label {
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  margin: 8px 0;
-  background: var(--soft);
-  border-radius: 12px;
-  cursor: pointer;
-  align-items: center;
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+
+  padding: 0;
+
+  flex-direction: column;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-import-preview p {
   color: var(--quiet);
   overflow-wrap: anywhere;
   margin: 6px 0 0;
-}
-#lp-hybrid .hy-import-preview > div {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
 }
 #lp-hybrid .hy-truth-table select {
   margin: 8px 0;
@@ -4041,8 +4039,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 18px;
+  gap: 12px;
+  margin-bottom: 0;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid var(--edge);
+
+  flex-shrink: 0;
 }
 #lp-hybrid .hy-examples-heading h3 {
   margin: 0;
@@ -4052,9 +4056,13 @@ body {
   align-items: center;
   gap: 7px;
   flex-shrink: 0;
-  padding: 8px 10px;
+  padding: 7px 9px;
   border: 1px solid var(--edge);
   border-radius: 10px;
+
+  min-height: 34px;
+
+  font-size: 12px;
 }
 #lp-hybrid .hy-examples-help svg {
   width: 18px;
@@ -4242,10 +4250,10 @@ body {
   position: fixed;
   width: 540px;
   max-width: calc(100vw - 24px);
-  max-height: calc(100dvh - 32px);
+  max-height: calc(100dvh - 48px);
   box-sizing: border-box;
-  overflow: auto;
-  padding: var(--dialog-inset);
+  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--edge);
   border-radius: 20px;
   background: var(--paper);
@@ -4253,6 +4261,7 @@ body {
   box-shadow: 0 18px 55px #0003;
   font: 14px/1.65 system-ui;
   animation: syntax-appear 0.18s ease;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-symbol-help-dialog::backdrop {
   background: #0004;
@@ -4264,7 +4273,7 @@ body {
 }
 #lp-hybrid .hy-symbol-help-dialog h1 {
   font-size: 21px;
-  margin: 0 36px 18px 0;
+  margin: 0;
   line-height: 1.4;
 }
 #lp-hybrid .hy-symbol-help-dialog article {
@@ -4290,25 +4299,6 @@ body {
 #lp-hybrid .hy-symbol-help-dialog footer a {
   display: inline-block;
   margin-top: 6px;
-}
-#lp-hybrid .hy-symbol-help-close {
-  position: absolute;
-  top: var(--dialog-inset);
-  right: var(--dialog-inset);
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--edge);
-  border-radius: 9px;
-  background: transparent;
-  color: var(--quiet);
-  font: 22px/1 system-ui;
-  cursor: pointer;
-}
-#lp-hybrid .hy-symbol-help-close:hover {
-  background: var(--soft);
-  color: var(--ink);
 }
 #lp-hybrid .hy-symbol-help-close:focus-visible {
   outline: 2px solid var(--blue);
@@ -5180,15 +5170,6 @@ body {
 #lp-hybrid .hy-panel-appearance-dialog .hy-settings-head h2 {
   font-size: 14px !important;
   font-weight: 500;
-}
-#lp-hybrid .hy-panel-appearance-dialog .hy-settings-head button {
-  width: 28px;
-  height: 28px;
-  min-height: 28px;
-  background: var(--soft);
-  border-radius: 8px;
-  padding: 0;
-  font-size: 18px;
 }
 #lp-hybrid .hy-panel-appearance-dialog label {
   min-height: 32px;
@@ -6407,21 +6388,30 @@ body {
 #lp-hybrid #default-settings-confirmation.hy-selective-reset {
   width: min(550px, calc(100vw - 24px));
   box-sizing: border-box;
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
-  padding: var(--dialog-inset);
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--edge);
   border-radius: 20px;
   background: var(--paper);
   color: var(--ink);
   box-shadow: 0 22px 70px #0003;
   font: 13px/1.5 system-ui;
+
+  flex-direction: column;
+  scrollbar-gutter: auto;
 }
 #lp-hybrid .hy-reset-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid var(--edge);
+
+  flex-shrink: 0;
 }
 #lp-hybrid .hy-reset-head h3 {
   margin: 0;
@@ -6508,10 +6498,14 @@ body {
   margin: 16px 0;
 }
 #lp-hybrid .hy-selective-reset .hy-default-actions {
-  position: sticky;
-  bottom: -22px;
-  padding: 12px 0;
+  position: static;
+
+  padding: 16px 24px;
   background: var(--paper);
+
+  border-top: 1px solid var(--edge);
+
+  flex-shrink: 0;
 }
 @media (max-width: 420px) {
   #lp-hybrid .hy-reset-item {
@@ -9224,7 +9218,7 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-argument-panel > .hy-section-head > .hy-tools .hy-export-group { flex-wrap:nowrap; }
 
 /* Shared geometry keeps dialog edges and controls balanced. */
-#lp-hybrid { --dialog-inset:20px; }
+#lp-hybrid { --dialog-inset:24px; }
 @media(max-width:600px) { #lp-hybrid { --dialog-inset:16px; } }
 #lp-hybrid dialog { scrollbar-gutter:stable both-edges; box-sizing:border-box; max-width:calc(100vw - 24px); max-height:calc(100dvh - 32px); overflow:auto; }
 #lp-hybrid dialog:not([popover]) { inset:0; margin:auto; }
@@ -9353,8 +9347,6 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-analysis-mode-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
 #lp-hybrid .hy-validation-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; letter-spacing:-.3px; }
 #lp-hybrid .hy-analysis-mode-name { margin:3px 0 0; color:var(--quiet); font-size:12px; }
-#lp-hybrid .hy-analysis-close { display:grid; place-items:center; width:32px; height:32px; min-height:32px; padding:0; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); font:23px/1 system-ui; }
-#lp-hybrid .hy-analysis-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
 #lp-hybrid .hy-analysis-workspace { display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); flex:1; min-height:0; }
 #lp-hybrid .hy-validation-preview { display:flex; flex-direction:column; gap:18px; min-width:0; min-height:0; padding:26px; border-right:1px solid var(--edge); background:color-mix(in srgb,var(--soft) 38%,var(--paper)); }
 #lp-hybrid .hy-analysis-section-label { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; font:600 12px/1.5 "Segoe UI",system-ui; color:var(--quiet); }
@@ -9464,8 +9456,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-beta-heading { display:flex; align-items:center; gap:10px; padding:22px 24px; margin:0; border-bottom:1px solid var(--edge); flex:none; }
 #lp-hybrid .hy-beta-heading h3 { margin:0; font:600 16px/1.5 "Segoe UI",system-ui; min-width:0; overflow-wrap:anywhere; letter-spacing:-.2px; }
 #lp-hybrid .hy-beta-tag { padding:2px 6px; flex:none; border:1px solid light-dark(#e7d6b9,#725b3b); border-radius:5px; background:light-dark(#fff5e5,#3c3325); color:light-dark(#805b25,#e9c991); font:500 10px/1.4 "Segoe UI",system-ui; }
-#lp-hybrid .hy-beta-dialog .hy-beta-close { display:grid; place-items:center; width:30px; height:30px; min-height:30px; margin:0 0 0 auto; flex:none; padding:0; border:1px solid transparent; border-radius:8px; background:transparent; color:var(--quiet); font:22px/1 system-ui; }
-#lp-hybrid .hy-beta-dialog .hy-beta-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid .hy-beta-dialog .hy-beta-close { margin-left:auto; }
 #lp-hybrid .hy-beta-dialog form { display:flex; flex-direction:column; flex:1; gap:0; min-height:0; margin:0; }
 #lp-hybrid .hy-beta-scroll { padding:24px; overflow:auto; min-height:0; flex:1; scrollbar-width:thin; overscroll-behavior:contain; }
 #lp-hybrid .hy-beta-scroll > .hy-description-note { margin:0 0 14px; font:13px/1.75 "Segoe UI",system-ui; }
@@ -9508,13 +9499,13 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-analysis-mode-notice svg { flex:none; width:18px; height:18px; color:var(--blue); }
 #lp-hybrid .hy-analysis-mode-notice span { flex:1; }
 #lp-hybrid .hy-analysis-mode-notice strong { color:var(--blue); white-space:nowrap; font-weight:500; }
-#lp-hybrid .hy-analysis-mode-menu button { min-height:66px; }
+#lp-hybrid .hy-analysis-mode-menu button { min-height:58px; }
 
 #lp-hybrid .hy-didactic-interpretation { padding:4px 0; }
 #lp-hybrid .hy-didactic-statement { padding:16px 0; border-bottom:1px solid var(--edge); }
 #lp-hybrid .hy-didactic-statement h4 { margin:0 0 8px; font-size:12px; color:var(--quiet); font-weight:500; }
-#lp-hybrid .hy-didactic-original { margin:0 0 10px; font-size:14px; }
-#lp-hybrid .hy-didactic-formula { margin:0 0 10px; color:var(--ink); font:19px/1.6 "Cambria Math",serif; overflow-wrap:anywhere; }
+#lp-hybrid .hy-didactic-original, #lp-hybrid .hy-analysis-inspector-body .hy-didactic-original { margin:0 0 10px; font-size:14px; color:var(--ink); }
+#lp-hybrid .hy-didactic-formula, #lp-hybrid .hy-analysis-inspector-body .hy-didactic-formula { margin:0 0 10px; color:var(--ink); font:19px/1.6 "Cambria Math",serif; overflow-wrap:anywhere; }
 #lp-hybrid .hy-didactic-reading { margin:0; color:var(--quiet); font-size:12px; line-height:1.7; }
 #lp-hybrid .hy-didactic-interpretation > h4 { margin:20px 0 12px; font-size:13px; font-weight:500; }
 #lp-hybrid .hy-didactic-vocabulary { display:grid; grid-template-columns:minmax(90px,1fr) minmax(0,2fr); gap:10px 18px; margin:0; font-size:12px; }
@@ -9590,6 +9581,36 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-text-import-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 24px; border-top:1px solid var(--edge); }
 
 #lp-hybrid .hy-text-import-reading { display:block; margin-top:6px; font:12px/1.6 "Segoe UI",system-ui; color:var(--quiet); }
+
+/* Compact dialogs follow the same spacing and icon rhythm as the analysis workspace. */
+#lp-hybrid .hy-dialog-close { display:inline-flex; align-items:center; justify-content:center; flex:none; width:32px; height:32px; min-height:32px; padding:0; margin:0; border:1px solid transparent; border-radius:9px; color:var(--quiet); background:transparent; cursor:pointer; }
+#lp-hybrid .hy-dialog-close svg { display:block; flex:none; width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.7; }
+#lp-hybrid .hy-dialog-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid :is(dialog,[popover]) :is(button,input,textarea,select,summary):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+#lp-hybrid .hy-dialog-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:8px; margin-top:20px; }
+#lp-hybrid .hy-message-dialog > p { margin:0; line-height:1.7; color:var(--quiet); }
+#lp-hybrid .hy-examples-list { min-height:0; overflow:auto; padding:16px 24px 24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-examples-heading > .hy-examples-help { margin-left:auto; }
+#lp-hybrid .hy-import-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-import-heading h3 { margin:0; font:500 16px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-import-list { min-height:0; overflow:auto; padding:16px 24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-import-list > label { display:flex; align-items:flex-start; gap:12px; padding:14px; margin:8px 0; background:var(--soft); border:1px solid var(--edge); border-radius:12px; cursor:pointer; }
+#lp-hybrid .hy-import-list input[type=checkbox] { flex:none; width:17px; height:17px; margin:2px 0 0; accent-color:var(--blue); }
+#lp-hybrid .hy-import-list label > div { min-width:0; }
+#lp-hybrid .hy-import-list strong { font-size:14px; font-weight:500; overflow-wrap:anywhere; }
+#lp-hybrid .hy-import-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:8px; padding:16px 24px; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-reset-body { min-height:0; overflow:auto; padding:0 24px; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-logic-mode-help > header { position:sticky; top:-28px; z-index:1; padding:16px 0; margin-top:-16px; background:var(--paper); border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-logic-mode-help > header h2 { min-width:0; }
+
+#lp-hybrid :is(.hy-examples-dialog,.hy-import-preview,#default-settings-confirmation.hy-selective-reset)[open] { display:flex; }
+#lp-hybrid .hy-new-argument-menu svg { flex:none; width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid .hy-import-confirm { color:var(--blue); border-color:var(--blue); background:var(--soft); }
+
+#lp-hybrid .hy-symbol-help-dialog[open] { display:flex; flex-direction:column; }
+#lp-hybrid .hy-symbol-help-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 24px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-symbol-help-heading h1 { margin:0; min-width:0; font-size:18px; font-weight:500; }
+#lp-hybrid .hy-symbol-help-dialog > .hy-help-content { min-height:0; overflow:auto; padding:20px 24px 24px; scrollbar-width:thin; overscroll-behavior:contain; }
 
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
@@ -9925,7 +9946,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
                 <h2 id="rename-title">Renomear argumento</h2>
                 <button
                   type="button"
-                  class="hy-button hy-icon-button"
+                  class="hy-button hy-icon-button hy-dialog-close"
                   data-rename-cancel
                   aria-label="Fechar"
                 >
@@ -10027,6 +10048,17 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
     { once: true },
   );
 })();
+</script>
+
+<script id="dialog-presentation">
+// Shared visual chrome only: callers retain their original close handlers and state.
+const LPDialogChrome = {
+  close(button) {
+    button.classList.add('hy-dialog-close');
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
+    return button;
+  },
+};
 </script>
 
 <script id="position-undo-manager">
@@ -13849,6 +13881,7 @@ async function confirmDeletion(message) {
     }
     cancels.forEach((button) => (button.onclick = () => finish(false)));
     confirm.onclick = () => finish(true);
+    LPDialogChrome.close(cancels[0]);
     dialog.addEventListener("cancel", cancel);
     dialog.addEventListener("close", closed);
     dialog.showModal();
@@ -14145,7 +14178,8 @@ async function confirmDeletion(message) {
     cancel.textContent = en ? "Cancel" : "Cancelar";
     confirm.textContent = en ? "Delete all" : "Excluir todas";
     actions.append(cancel, confirm);
-    dialog.append(title, message, actions);
+    const header=document.createElement('div'),close=document.createElement('button');header.className='hy-settings-head';close.type='button';close.className='hy-button';close.setAttribute('aria-label',en?'Close':'Fechar');LPDialogChrome.close(close);close.onclick=()=>dialog.close();header.append(title,close);
+    dialog.append(header, message, actions);
     root.append(dialog);
     const accepted = await new Promise((resolve) => {
       let result = false;
@@ -15156,14 +15190,17 @@ async function confirmDeletion(message) {
   }
   function message(text) {
     const dialog = document.createElement("dialog");
-    dialog.className = "hy-feature-dialog";
+    dialog.className = "hy-feature-dialog hy-message-dialog";
+    dialog.setAttribute("aria-label",label("Aviso","Notice"));
     const p = document.createElement("p"),
       ok = document.createElement("button");
+    p.id="workspace-message-"+crypto.randomUUID();dialog.setAttribute("aria-describedby",p.id);
     p.textContent = text;
     ok.className = "hy-button";
     ok.textContent = "OK";
     ok.onclick = () => dialog.close();
-    dialog.append(p, ok);
+    const actions=document.createElement("div");actions.className="hy-dialog-actions";actions.append(ok);
+    dialog.append(p, actions);
     root.append(dialog);
     dialog.onclose = () => {
       dialog.querySelectorAll("[popover]").forEach((p) => {
@@ -15247,7 +15284,9 @@ async function confirmDeletion(message) {
         "Escolha os argumentos para importar",
         "Choose arguments to import",
       );
-      d.append(heading);
+      heading.id='import-preview-title';d.setAttribute('aria-labelledby',heading.id);
+      const header=document.createElement('header'),list=document.createElement('div');header.className='hy-import-heading';list.className='hy-import-list';
+      const close=document.createElement('button');close.type='button';close.className='hy-button';close.setAttribute('aria-label',label('Fechar','Close'));LPDialogChrome.close(close);close.onclick=()=>d.close();header.append(heading,close);d.append(header,list);
       const selected = [];
       docs.forEach((doc, index) => {
         const card = document.createElement("label"),
@@ -15264,7 +15303,7 @@ async function confirmDeletion(message) {
           .join(" · ");
         content.append(title, preview);
         card.append(check, content);
-        d.append(card);
+        list.append(card);
         selected.push(check);
       });
       const footer = document.createElement("div"),
@@ -15281,7 +15320,7 @@ async function confirmDeletion(message) {
         accepted = true;
         d.close();
       };
-      footer.append(cancel, confirm);
+      confirm.classList.add("hy-import-confirm");footer.className="hy-import-actions";footer.append(cancel, confirm);
       d.append(footer);
       root.append(d);
       d.onclose = () => {
@@ -15501,7 +15540,7 @@ async function confirmDeletion(message) {
     back.className = "hy-button hy-icon-button";
     back.setAttribute("aria-label", label("Fechar", "Close"));
     back.title = back.getAttribute("aria-label");
-    back.textContent = "×";
+    LPDialogChrome.close(back);
     back.onclick = () => page.close();
     const content = document.createElement("div");
     content.className = "hy-example-lesson-content";
@@ -15568,6 +15607,7 @@ async function confirmDeletion(message) {
     dialog.className = "hy-feature-dialog hy-examples-dialog";
     const heading = document.createElement("h3");
     heading.textContent = label("Carregar em um novo argumento", "Load as a new argument");
+    heading.id="examples-title";dialog.setAttribute("aria-labelledby",heading.id);
     const help = document.createElement("button");
     help.type = "button";
     help.className = "hy-button hy-examples-help";
@@ -15588,7 +15628,7 @@ async function confirmDeletion(message) {
     const identity = document.createElement('div');identity.className = 'hy-examples-identity';
     const text = document.createElement('div');text.append(heading,modeName);identity.append(modeButton,text);
     head.append(identity, help);
-    dialog.append(head);
+    const list=document.createElement("div");list.className="hy-examples-list";dialog.append(head,list);
     function drawExamples() {
     dialog.querySelectorAll('[data-example]').forEach(button => button.remove());
     modeButton.innerHTML = logicModeIcon(mode);
@@ -15616,16 +15656,16 @@ async function confirmDeletion(message) {
         saveArguments();
         dialog.close();
       };
-      dialog.append(b);
+      list.append(b);
     }
     }
     drawExamples();
-    const disposePicker = attachLogicModePicker(modeButton,dialog,()=>mode,id=>{mode=id;drawExamples();dialog.append(close);},'examples-mode-options');
+    const disposePicker = attachLogicModePicker(modeButton,dialog,()=>mode,id=>{mode=id;drawExamples();},'examples-mode-options');
     const close = document.createElement("button");
     close.className = "hy-button";
-    close.textContent = label("Fechar", "Close");
+    close.setAttribute("aria-label",label("Fechar","Close"));LPDialogChrome.close(close);
     close.onclick = () => dialog.close();
-    dialog.append(close);
+    head.append(close);
     root.append(dialog);
     dialog.onclose = () => {disposePicker();dialog.remove();};
     dialog.showModal();
@@ -15652,17 +15692,15 @@ async function confirmDeletion(message) {
     addMenu.hidden = true;
     newButton.setAttribute("aria-expanded", "false");
   }
-  for (const [pt, english, action] of [
-    ["Em branco", "Blank", () => createBlank()],
-    ["Exemplo", "Example", openExamples],
-    ["Texto", "Text", () => root.dispatchEvent(new Event("lp-open-argument-text"))],
+  for (const [pt, english, action, icon] of [
+    ["Em branco", "Blank", () => createBlank(), '<path d="M14 3H5v18h14V8ZM14 3v5h5"/>'],
+    ["Exemplo", "Example", openExamples, '<path d="M4 4h6a2 2 0 0 1 2 2v15a3 3 0 0 0-3-2H4ZM20 4h-6a2 2 0 0 0-2 2v15a3 3 0 0 1 3-2h5Z"/>'],
+    ["Interpretar texto", "Interpret text", () => root.dispatchEvent(new Event("lp-open-argument-text")), '<path d="M4 5h16M4 10h16M4 15h10M4 20h6"/>'],
   ]) {
     const b = document.createElement("button");
     b.type = "button";
     b.className = "hy-button";
-    b.dataset.pt = pt;
-    b.dataset.en = english;
-    b.textContent = label(pt, english);
+    const iconNode=document.createElement("span"),caption=document.createElement("span");iconNode.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+"</svg>";caption.dataset.pt=pt;caption.dataset.en=english;caption.textContent=label(pt,english);b.append(iconNode,caption);
     b.onclick = () => {
       closeAdd();
       action();
@@ -15979,7 +16017,7 @@ async function confirmDeletion(message) {
     const x = document.createElement("button");
     x.type = "button";
     x.className = "hy-button hy-icon-button";
-    x.textContent = "×";
+    LPDialogChrome.close(x);
     x.setAttribute("aria-label", en ? "Close" : "Fechar");
     x.onclick = () => dialog.close();
     header.append(title, x);
@@ -16237,7 +16275,8 @@ async function confirmDeletion(message) {
       dialog.close();
     };
     actions.append(cancel, confirm);
-    dialog.append(header, description, list, count, actions);
+    const body=document.createElement('div');body.className='hy-reset-body';body.append(description,list,count);
+    dialog.append(header,body,actions);
     root.append(dialog);
     dialog.onclose = () => {
       dialog.remove();
@@ -16285,6 +16324,7 @@ async function confirmDeletion(message) {
     heading.id = "hy-beta-title-" + crypto.randomUUID();
     d.setAttribute("aria-labelledby", heading.id);
     close.classList.add("hy-beta-close");
+    LPDialogChrome.close(close);
     close.setAttribute("aria-label", text("Fechar", "Close"));
     head.append(heading, badge, close);
     d.append(head);
@@ -17131,8 +17171,9 @@ const LPSymbolHelp = (() => {
     const back = document.createElement("button");
     back.type = "button";
     back.className = "hy-symbol-help-close";
+    LPDialogChrome.close(back);
     back.setAttribute("aria-label", text("Fechar explicação", "Close explanation"));
-    back.textContent = "×";
+
     back.onclick = close;
     const content = document.createElement("div");
     content.className = "hy-help-content";
@@ -17205,7 +17246,7 @@ const LPSymbolHelp = (() => {
         "V and F stand for true and false in these examples. Notation depends on context; similar symbols do not guarantee the same operation.",
       ),
     );
-    content.append(title, article);
+    content.append(article);
     const sources = document.createElement("footer");
     sources.append(document.createTextNode(text("Referências: ", "References: ")));
     for (const [label, url] of [
@@ -17224,7 +17265,7 @@ const LPSymbolHelp = (() => {
       sources.append(a);
     }
     content.append(sources);
-    page.append(back, content);
+    const header=document.createElement("header");header.className="hy-symbol-help-heading";header.append(title,back);page.append(header,content);
     page.onclose = () => {
       page.remove();
       page = null;
@@ -17360,6 +17401,8 @@ const panelFontOptions = [
       '</h2><button class="hy-button hy-icon-button" data-close aria-label="' +
       (en ? "Close" : "Fechar") +
       '">×</button></div>';
+    const appearanceTitle=dialog.querySelector('h2');appearanceTitle.id='panel-appearance-title-'+crypto.randomUUID();dialog.setAttribute('aria-labelledby',appearanceTitle.id);
+    LPDialogChrome.close(dialog.querySelector('[data-close]'));
     const colorKey = key === "editor" ? "premiseColor" : "conclusionColor",
       colorLabel = document.createElement("label");
     colorLabel.textContent = en ? "Panel color" : "Cor da janela";
@@ -21459,6 +21502,7 @@ globalThis.LPCategoryRowTarget = (stack, preview, cards, top, height, nextId) =>
   const settings = root.querySelector('#editor-settings');
   settings.setAttribute('role','dialog');
   const head = settings.querySelector(':scope > .hy-settings-head');
+  LPDialogChrome.close(head.querySelector('button'));
   const switches = settings.querySelector('.hy-settings-switches');
   const actions = document.createElement('div'); actions.className='hy-settings-actions';
   actions.append(...switches.children,head.querySelector('button')); head.append(actions); switches.remove();
@@ -21608,7 +21652,7 @@ function openBackgroundThemes(pointerId) {
   dialog.setAttribute('aria-labelledby',title.id);
   const close=document.createElement('button');close.type='button';close.className='hy-button hy-icon-button';close.setAttribute('aria-label',interfaceText('Fechar','Close'));
   close.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
-  close.onclick=()=>dialog.close();head.append(title,close);dialog.append(head,createThemeOptions());
+  LPDialogChrome.close(close);close.onclick=()=>dialog.close();head.append(title,close);dialog.append(head,createThemeOptions());
   let openingPointer=pointerId;
   const released=e=>{if(e.pointerId!==openingPointer)return;document.removeEventListener('pointerup',released,true);document.removeEventListener('pointercancel',released,true);requestAnimationFrame(()=>{openingPointer=undefined;});};
   if(pointerId!==undefined){document.addEventListener('pointerup',released,true);document.addEventListener('pointercancel',released,true);}
@@ -21653,7 +21697,7 @@ validationDialog.setAttribute('aria-labelledby', validationTitle.id);
 const validationClose = document.createElement('button');
 validationClose.type = 'button';
 validationClose.className = 'hy-button hy-icon-button hy-analysis-close';
-validationClose.textContent = '×';
+LPDialogChrome.close(validationClose);
 validationClose.onclick = () => validationDialog.close();
 validationHeader.append(validationIdentity, validationClose);
 const validationWorkspace = document.createElement('div');
@@ -22041,7 +22085,7 @@ function currentLogicMode() {
     const d=document.createElement('dialog'); d.className='hy-feature-dialog hy-logic-mode-help';
     const head=document.createElement('header'), h=document.createElement('h2'),close=document.createElement('button');
     h.id='logic-modes-help-title';h.textContent=t('Modos de lógica','Logic modes');d.setAttribute('aria-labelledby',h.id);
-    close.type='button';close.className='hy-button hy-icon-button';close.textContent='×';close.setAttribute('aria-label',t('Fechar','Close'));close.onclick=()=>d.close();head.append(h,close);d.append(head);
+    close.type='button';close.className='hy-button hy-icon-button';LPDialogChrome.close(close);close.setAttribute('aria-label',t('Fechar','Close'));close.onclick=()=>d.close();head.append(h,close);d.append(head);
     const intro=document.createElement('p');intro.textContent=t('O modo pertence a este argumento e orienta sua análise. Todos os símbolos continuam disponíveis. Mudar o modo preserva fórmulas e descrições; não traduz automaticamente entre linguagens.','The mode belongs to this argument and guides its analysis. All symbols remain available. Switching preserves formulas and descriptions; it does not translate automatically between languages.');d.append(intro);
     const lessons=[
       [modes[0],
@@ -22328,7 +22372,7 @@ function updateExtendedLogicValidation(mode) {
     const icon=element('span','hy-analysis-mode-icon');icon.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h6"/></svg>';
     const heading=element('div'),title=element('h2','',t('Interpretar texto','Interpret text'));title.id='text-import-title';
     heading.append(title,element('p','hy-analysis-mode-name',t('Revisar antes de carregar','Review before loading')));identity.append(icon,heading);
-    const close=button('×',()=>dialog.close());close.classList.add('hy-analysis-close');close.setAttribute('aria-label',t('Fechar','Close'));header.append(identity,close);
+    const close=button('×',()=>dialog.close());close.classList.add('hy-analysis-close');LPDialogChrome.close(close);close.setAttribute('aria-label',t('Fechar','Close'));header.append(identity,close);
     const workspace=element('div','hy-text-import-workspace'),source=element('section','hy-text-import-source'),review=element('section','hy-text-import-review');
     const sourceLabel=element('label','hy-text-import-label',t('Texto original','Original text'));sourceLabel.htmlFor='argument-prose';
     const input=element('textarea');input.id='argument-prose';input.maxLength=20000;input.spellcheck=false;

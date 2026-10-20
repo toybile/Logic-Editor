@@ -36,14 +36,17 @@
   }
   function message(text) {
     const dialog = document.createElement("dialog");
-    dialog.className = "hy-feature-dialog";
+    dialog.className = "hy-feature-dialog hy-message-dialog";
+    dialog.setAttribute("aria-label",label("Aviso","Notice"));
     const p = document.createElement("p"),
       ok = document.createElement("button");
+    p.id="workspace-message-"+crypto.randomUUID();dialog.setAttribute("aria-describedby",p.id);
     p.textContent = text;
     ok.className = "hy-button";
     ok.textContent = "OK";
     ok.onclick = () => dialog.close();
-    dialog.append(p, ok);
+    const actions=document.createElement("div");actions.className="hy-dialog-actions";actions.append(ok);
+    dialog.append(p, actions);
     root.append(dialog);
     dialog.onclose = () => {
       dialog.querySelectorAll("[popover]").forEach((p) => {
@@ -127,7 +130,9 @@
         "Escolha os argumentos para importar",
         "Choose arguments to import",
       );
-      d.append(heading);
+      heading.id='import-preview-title';d.setAttribute('aria-labelledby',heading.id);
+      const header=document.createElement('header'),list=document.createElement('div');header.className='hy-import-heading';list.className='hy-import-list';
+      const close=document.createElement('button');close.type='button';close.className='hy-button';close.setAttribute('aria-label',label('Fechar','Close'));LPDialogChrome.close(close);close.onclick=()=>d.close();header.append(heading,close);d.append(header,list);
       const selected = [];
       docs.forEach((doc, index) => {
         const card = document.createElement("label"),
@@ -144,7 +149,7 @@
           .join(" · ");
         content.append(title, preview);
         card.append(check, content);
-        d.append(card);
+        list.append(card);
         selected.push(check);
       });
       const footer = document.createElement("div"),
@@ -161,7 +166,7 @@
         accepted = true;
         d.close();
       };
-      footer.append(cancel, confirm);
+      confirm.classList.add("hy-import-confirm");footer.className="hy-import-actions";footer.append(cancel, confirm);
       d.append(footer);
       root.append(d);
       d.onclose = () => {
@@ -381,7 +386,7 @@
     back.className = "hy-button hy-icon-button";
     back.setAttribute("aria-label", label("Fechar", "Close"));
     back.title = back.getAttribute("aria-label");
-    back.textContent = "×";
+    LPDialogChrome.close(back);
     back.onclick = () => page.close();
     const content = document.createElement("div");
     content.className = "hy-example-lesson-content";
@@ -448,6 +453,7 @@
     dialog.className = "hy-feature-dialog hy-examples-dialog";
     const heading = document.createElement("h3");
     heading.textContent = label("Carregar em um novo argumento", "Load as a new argument");
+    heading.id="examples-title";dialog.setAttribute("aria-labelledby",heading.id);
     const help = document.createElement("button");
     help.type = "button";
     help.className = "hy-button hy-examples-help";
@@ -468,7 +474,7 @@
     const identity = document.createElement('div');identity.className = 'hy-examples-identity';
     const text = document.createElement('div');text.append(heading,modeName);identity.append(modeButton,text);
     head.append(identity, help);
-    dialog.append(head);
+    const list=document.createElement("div");list.className="hy-examples-list";dialog.append(head,list);
     function drawExamples() {
     dialog.querySelectorAll('[data-example]').forEach(button => button.remove());
     modeButton.innerHTML = logicModeIcon(mode);
@@ -496,16 +502,16 @@
         saveArguments();
         dialog.close();
       };
-      dialog.append(b);
+      list.append(b);
     }
     }
     drawExamples();
-    const disposePicker = attachLogicModePicker(modeButton,dialog,()=>mode,id=>{mode=id;drawExamples();dialog.append(close);},'examples-mode-options');
+    const disposePicker = attachLogicModePicker(modeButton,dialog,()=>mode,id=>{mode=id;drawExamples();},'examples-mode-options');
     const close = document.createElement("button");
     close.className = "hy-button";
-    close.textContent = label("Fechar", "Close");
+    close.setAttribute("aria-label",label("Fechar","Close"));LPDialogChrome.close(close);
     close.onclick = () => dialog.close();
-    dialog.append(close);
+    head.append(close);
     root.append(dialog);
     dialog.onclose = () => {disposePicker();dialog.remove();};
     dialog.showModal();
@@ -532,17 +538,15 @@
     addMenu.hidden = true;
     newButton.setAttribute("aria-expanded", "false");
   }
-  for (const [pt, english, action] of [
-    ["Em branco", "Blank", () => createBlank()],
-    ["Exemplo", "Example", openExamples],
-    ["Texto", "Text", () => root.dispatchEvent(new Event("lp-open-argument-text"))],
+  for (const [pt, english, action, icon] of [
+    ["Em branco", "Blank", () => createBlank(), '<path d="M14 3H5v18h14V8ZM14 3v5h5"/>'],
+    ["Exemplo", "Example", openExamples, '<path d="M4 4h6a2 2 0 0 1 2 2v15a3 3 0 0 0-3-2H4ZM20 4h-6a2 2 0 0 0-2 2v15a3 3 0 0 1 3-2h5Z"/>'],
+    ["Interpretar texto", "Interpret text", () => root.dispatchEvent(new Event("lp-open-argument-text")), '<path d="M4 5h16M4 10h16M4 15h10M4 20h6"/>'],
   ]) {
     const b = document.createElement("button");
     b.type = "button";
     b.className = "hy-button";
-    b.dataset.pt = pt;
-    b.dataset.en = english;
-    b.textContent = label(pt, english);
+    const iconNode=document.createElement("span"),caption=document.createElement("span");iconNode.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+"</svg>";caption.dataset.pt=pt;caption.dataset.en=english;caption.textContent=label(pt,english);b.append(iconNode,caption);
     b.onclick = () => {
       closeAdd();
       action();
