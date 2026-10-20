@@ -112,6 +112,7 @@ async function updateLogicValidation() {
   const revision = ++logicRevision,
     words = logicText();
   logicButton.setAttribute("aria-label", words.button);
+  resetValidationInspector();
   logicPanel.textContent = words.working;
   if (typeof currentLogicMode === "function" && currentLogicMode() !== 'propositional') {
     updateExtendedLogicValidation(currentLogicMode());
@@ -172,6 +173,7 @@ async function updateLogicValidation() {
             (conclusion.valid ? words.yes : words.no),
         ),
       );
+      section.firstElementChild.prepend(analysisIcon(conclusion.valid ? 'valid' : 'invalid'));
       if (conclusion.counterexample) {
         section.append(logicParagraph(words.counter));
         const values = document.createElement("div");
@@ -197,6 +199,7 @@ async function updateLogicValidation() {
     if (revision !== logicRevision || !logicEnabled) return;
     await view({ result, snapshot, prepared, revision });
   }
+  refreshValidationWorkspace();
 }
 logicButton.setAttribute("aria-label", logicText().button);
 logicButton.onclick = () => {

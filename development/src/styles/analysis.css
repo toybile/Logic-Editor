@@ -1,0 +1,163 @@
+/* Analysis workspaces share the editor's surfaces, type scale and spacing. */
+#lp-hybrid .hy-validation-dialog {
+  position:fixed; inset:0; margin:auto; box-sizing:border-box;
+  width:1180px; max-width:calc(100vw - 48px); height:760px; max-height:calc(100dvh - 48px);
+  overflow:hidden; padding:0; scrollbar-gutter:auto;
+  border:1px solid var(--edge); border-radius:22px; background:var(--paper); color:var(--ink);
+  box-shadow:0 28px 90px #0004; font:13px/1.6 "Segoe UI",system-ui;
+}
+#lp-hybrid .hy-validation-dialog[open] { display:flex; flex-direction:column; animation:hy-analysis-enter .22s ease-out; }
+#lp-hybrid .hy-validation-dialog::backdrop { background:light-dark(#15203650,#05081385); backdrop-filter:blur(4px); }
+#lp-hybrid .hy-validation-heading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:0; padding:22px 26px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-analysis-identity { display:flex; align-items:center; gap:13px; min-width:0; }
+#lp-hybrid .hy-analysis-mode-icon { display:grid; place-items:center; width:40px; height:40px; flex:none; border:1px solid var(--edge); border-radius:12px; color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-analysis-mode-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid .hy-validation-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; letter-spacing:-.3px; }
+#lp-hybrid .hy-analysis-mode-name { margin:3px 0 0; color:var(--quiet); font-size:12px; }
+#lp-hybrid .hy-analysis-close { display:grid; place-items:center; width:32px; height:32px; min-height:32px; padding:0; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); font:23px/1 system-ui; }
+#lp-hybrid .hy-analysis-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid .hy-analysis-workspace { display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); flex:1; min-height:0; }
+#lp-hybrid .hy-validation-preview { display:flex; flex-direction:column; gap:18px; min-width:0; min-height:0; padding:26px; border-right:1px solid var(--edge); background:color-mix(in srgb,var(--soft) 38%,var(--paper)); }
+#lp-hybrid .hy-analysis-section-label { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; font:600 12px/1.5 "Segoe UI",system-ui; color:var(--quiet); }
+#lp-hybrid .hy-analysis-section-label h3 { margin:0; color:var(--quiet); font:inherit; }
+#lp-hybrid .hy-analysis-section-label > span { font-weight:400; font-size:11px; }
+#lp-hybrid .hy-validation-preview .hy-section-head { margin:0; padding:0; min-height:0; }
+#lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; width:100%; justify-content:flex-start; gap:8px; margin:0; border:0; padding:0; }
+#lp-hybrid .hy-validation-preview .hy-tools::before { display:none; }
+#lp-hybrid .hy-validation-preview .hy-panel-actions { display:none; }
+#lp-hybrid .hy-validation-preview #hy-argument { display:block !important; grid-template-rows:1fr !important; opacity:1; flex:1; min-height:0; max-height:none; overflow:auto; scrollbar-width:thin; }
+#lp-hybrid .hy-validation-preview .hy-preview-inner { padding:0; }
+#lp-hybrid .hy-validation-preview #preview { white-space:pre-wrap; overflow-wrap:anywhere; margin:0; padding:0; font-size:20px; line-height:1.95; }
+#lp-hybrid .hy-analysis-preview-actions { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:18px; border-top:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-analysis-preview-actions .hy-export-group { display:flex; flex-wrap:nowrap; gap:8px; margin:0; }
+#lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:34px; padding:7px 10px; border:1px solid var(--edge); border-radius:9px; color:var(--ink); background:var(--paper); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-preview-actions #download { color:var(--blue); }
+#lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) svg { width:15px; height:15px; flex:none; }
+#lp-hybrid .hy-analysis-vocabulary { display:inline-flex; align-items:center; gap:7px; padding:6px 0; min-height:34px; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-vocabulary svg { width:16px; height:16px; }
+#lp-hybrid .hy-analysis-vocabulary:hover { color:var(--blue); }
+#lp-hybrid .hy-analysis-results { padding:26px; min-width:0; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+#lp-hybrid .hy-analysis-results > .hy-analysis-section-label { margin-bottom:18px; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); align-content:start; gap:12px; padding:0; margin:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > :not(details) { grid-column:1 / -1; min-width:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > .hy-advanced-tools { grid-column:auto; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > strong { font-weight:500; padding:14px 16px; border:1px solid var(--edge); border-radius:12px; background:var(--soft); }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > p { margin:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result { margin:0; padding:18px; border:1px solid var(--edge); border-radius:15px; background:var(--soft); color:var(--ink); }
+#lp-hybrid .hy-validation-dialog .hy-logic-result[data-valid="true"] { background:light-dark(#f0f6f3,#20332f); border-color:light-dark(#cfdfd7,#355348); }
+#lp-hybrid .hy-validation-dialog .hy-logic-result[data-valid="false"] { background:light-dark(#fcf2f3,#35252e); border-color:light-dark(#ead4d9,#5d3d4b); }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel p { line-height:1.7; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result > p:first-child { display:flex; align-items:center; gap:10px; color:var(--ink); font-size:14px; font-weight:600; margin:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result > p:first-child svg { width:20px; height:20px; flex:none; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result > p:not(:first-child) { margin:14px 0 0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-values { gap:7px; margin-top:14px; }
+#lp-hybrid .hy-validation-dialog .hy-logic-values span { padding:5px 10px; border:1px solid var(--edge); border-radius:7px; color:var(--ink); background:var(--paper); font:16px/1.4 "Cambria Math",serif; }
+#lp-hybrid .hy-validation-dialog svg { fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+#lp-hybrid .hy-validation-dialog details { min-width:0; margin:0; }
+#lp-hybrid .hy-validation-dialog details > summary { display:flex; align-items:center; gap:10px; list-style:none; color:var(--ink); font-size:12px; cursor:pointer; }
+#lp-hybrid .hy-validation-dialog details > summary::-webkit-details-marker { display:none; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] { border:1px solid var(--edge); border-radius:12px; background:var(--paper); transition:border-color .18s,background .18s; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary { min-height:68px; box-sizing:border-box; padding:13px; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary svg { width:20px; height:20px; flex:none; color:var(--quiet); }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary span { flex:1; min-width:0; overflow-wrap:anywhere; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary::after { content:''; flex:none; width:5px; height:5px; margin-right:3px; border-top:1.5px solid var(--quiet); border-right:1.5px solid var(--quiet); transform:rotate(45deg); }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool]:not([data-inspected]):hover { border-color:color-mix(in srgb,var(--blue) 50%,var(--edge)); background:var(--soft); }
+#lp-hybrid .hy-validation-dialog details:not([data-analysis-tool]) { margin-top:14px; padding-top:12px; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-validation-dialog details:not([data-analysis-tool]) > summary::after { content:'+'; margin-left:auto; color:var(--quiet); }
+#lp-hybrid .hy-validation-dialog details:not([data-analysis-tool])[open] > summary::after { content:'−'; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools { margin:0; padding:0; border:0; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button { display:flex; align-items:center; justify-content:flex-start; gap:10px; width:100%; min-height:68px; margin:0; padding:13px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:var(--ink); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button svg { width:17px; height:17px; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button::after { content:''; flex:none; width:5px; height:5px; margin-left:auto; margin-right:3px; border-top:1.5px solid var(--quiet); border-right:1.5px solid var(--quiet); transform:rotate(45deg); }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button:hover { background:var(--soft); border-color:color-mix(in srgb,var(--blue) 50%,var(--edge)); }
+#lp-hybrid .hy-validation-dialog .hy-logic-footer,#lp-hybrid .hy-validation-dialog .hy-logic-button { display:none; }
+#lp-hybrid .hy-analysis-results[hidden],#lp-hybrid .hy-analysis-inspector[hidden] { display:none; }
+#lp-hybrid .hy-analysis-inspector { display:flex; flex-direction:column; min-width:0; min-height:0; animation:hy-analysis-detail-enter .2s ease-out; }
+#lp-hybrid .hy-analysis-inspector-heading { display:flex; align-items:center; gap:12px; padding:20px 26px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-analysis-inspector-heading h3 { margin:0; font:600 14px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-back { display:grid; place-items:center; flex:none; width:30px; height:30px; min-height:30px; padding:6px; border:1px solid var(--edge); border-radius:8px; background:var(--paper); color:var(--quiet); }
+#lp-hybrid .hy-analysis-back svg { width:17px; height:17px; }
+#lp-hybrid .hy-analysis-inspector-body { overflow:auto; padding:24px 26px; min-height:0; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-analysis-inspector-body details[data-inspected] { border:0; border-radius:0; background:transparent; }
+#lp-hybrid .hy-analysis-inspector-body details[data-inspected] > summary { display:none; }
+#lp-hybrid .hy-analysis-inspector-body details[data-inspected] > p:first-of-type { margin-top:0; }
+#lp-hybrid .hy-analysis-inspector-body :is(p,li) { line-height:1.8; color:var(--quiet); }
+#lp-hybrid .hy-analysis-inspector-body .hy-button { min-height:34px; padding:7px 12px; border:1px solid var(--edge); border-radius:8px; background:var(--soft); color:var(--ink); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-validation-dialog .hy-table-scroll { max-width:100%; overflow:auto; margin:14px 0; border:1px solid var(--edge); border-radius:10px; scrollbar-width:thin; }
+#lp-hybrid .hy-validation-dialog table { border-collapse:collapse; width:100%; font-size:12px; }
+#lp-hybrid .hy-validation-dialog th { background:var(--soft); font-weight:600; }
+#lp-hybrid .hy-validation-dialog :is(th,td) { padding:9px 12px; border-bottom:1px solid var(--edge); text-align:left; }
+#lp-hybrid .hy-validation-dialog select { max-width:100%; min-height:36px; padding:7px 10px; border:1px solid var(--edge); border-radius:8px; background:var(--paper); color:var(--ink); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-validation-dialog .hy-extended-logic { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:12px; overflow-wrap:anywhere; }
+#lp-hybrid .hy-extended-logic > :not(details) { grid-column:1 / -1; min-width:0; }
+#lp-hybrid .hy-extended-logic > details:only-of-type { grid-column:1 / -1; }
+#lp-hybrid .hy-analysis-summary { padding:19px; border:1px solid var(--edge); border-radius:15px; background:var(--soft); }
+#lp-hybrid .hy-analysis-summary[data-tone="valid"] { background:light-dark(#f0f6f3,#20332f); border-color:light-dark(#cfdfd7,#355348); }
+#lp-hybrid .hy-analysis-summary[data-tone="invalid"] { background:light-dark(#fcf2f3,#35252e); border-color:light-dark(#ead4d9,#5d3d4b); }
+#lp-hybrid .hy-analysis-result-heading { display:flex; align-items:flex-start; gap:10px; margin:0; font:600 16px/1.5 "Segoe UI",system-ui; letter-spacing:-.1px; }
+#lp-hybrid .hy-analysis-result-heading svg { flex:none; width:21px; height:21px; margin-top:2px; }
+#lp-hybrid .hy-analysis-summary > p { margin:11px 0 0; color:var(--quiet); }
+#lp-hybrid .hy-categorical-conclusion { padding:4px 0; }
+#lp-hybrid .hy-categorical-conclusion h4 { display:flex; align-items:center; gap:9px; margin:0; font-weight:500; font-size:13px; }
+#lp-hybrid .hy-categorical-conclusion h4 svg { flex:none; width:17px; height:17px; color:var(--quiet); }
+#lp-hybrid .hy-analysis-diagnostic { margin:0; padding:14px 16px; border:1px solid var(--edge); border-radius:12px; background:color-mix(in srgb,var(--soft) 65%,var(--paper)); }
+#lp-hybrid .hy-analysis-diagnostic p { margin:4px 0 0; }
+#lp-hybrid .hy-analysis-location { color:var(--blue); font-size:11px; font-weight:600; }
+#lp-hybrid .hy-analysis-symbols { padding:6px 0; }
+#lp-hybrid .hy-analysis-symbols h4 { margin:0 0 12px; color:var(--quiet); font-size:12px; font-weight:500; }
+#lp-hybrid .hy-analysis-symbol-list { display:flex; flex-wrap:wrap; gap:9px; }
+#lp-hybrid .hy-analysis-symbol-chip { display:flex; align-items:center; gap:9px; padding:8px 10px; border:1px solid var(--edge); border-radius:9px; }
+#lp-hybrid .hy-analysis-symbol-chip b { font:19px/1.2 "Cambria Math",serif; }
+#lp-hybrid .hy-analysis-symbol-chip small { color:var(--quiet); font-size:11px; }
+#lp-hybrid .hy-analysis-scope-note { margin:0; font-size:12px; color:var(--quiet); }
+#lp-hybrid .hy-analysis-form { display:grid; grid-template-columns:76px 1fr; align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-analysis-form code { color:var(--blue); font:15px/1.5 "Cambria Math",serif; }
+
+/* Editing meanings and comparing formulas use a shared lateral sheet. */
+#lp-hybrid .hy-beta-dialog.hy-feature-dialog {
+  position:fixed; inset:16px 16px 16px auto; margin:0; width:510px; max-width:calc(100vw - 32px);
+  height:calc(100dvh - 32px); max-height:calc(100dvh - 32px); padding:0; overflow:hidden; scrollbar-gutter:auto;
+  box-sizing:border-box; border:1px solid var(--edge); border-radius:20px; background:var(--paper); color:var(--ink);
+  box-shadow:-12px 18px 70px #0003; font:13px/1.65 "Segoe UI",system-ui;
+}
+#lp-hybrid .hy-beta-dialog[open] { display:flex; flex-direction:column; animation:hy-analysis-detail-enter .24s cubic-bezier(.2,.7,.3,1); }
+#lp-hybrid .hy-beta-dialog::backdrop { background:light-dark(#15203618,#05081340); backdrop-filter:none; }
+#lp-hybrid .hy-beta-heading { display:flex; align-items:center; gap:10px; padding:22px 24px; margin:0; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-beta-heading h3 { margin:0; font:600 16px/1.5 "Segoe UI",system-ui; min-width:0; overflow-wrap:anywhere; letter-spacing:-.2px; }
+#lp-hybrid .hy-beta-tag { padding:2px 6px; flex:none; border:1px solid light-dark(#e7d6b9,#725b3b); border-radius:5px; background:light-dark(#fff5e5,#3c3325); color:light-dark(#805b25,#e9c991); font:500 10px/1.4 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog .hy-beta-close { display:grid; place-items:center; width:30px; height:30px; min-height:30px; margin:0 0 0 auto; flex:none; padding:0; border:1px solid transparent; border-radius:8px; background:transparent; color:var(--quiet); font:22px/1 system-ui; }
+#lp-hybrid .hy-beta-dialog .hy-beta-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid .hy-beta-dialog form { display:flex; flex-direction:column; flex:1; gap:0; min-height:0; margin:0; }
+#lp-hybrid .hy-beta-scroll { padding:24px; overflow:auto; min-height:0; flex:1; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-beta-scroll > .hy-description-note { margin:0 0 14px; font:13px/1.75 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog label { display:block; margin:0; color:var(--ink); font-size:12px; font-weight:500; }
+#lp-hybrid .hy-beta-dialog input { box-sizing:border-box; width:100%; min-width:0; min-height:41px; margin:7px 0 0; padding:10px 12px; border:1px solid var(--edge); border-radius:9px; background:color-mix(in srgb,var(--soft) 45%,var(--paper)); color:var(--ink); font:400 13px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog input::placeholder { color:var(--quiet); opacity:.72; }
+#lp-hybrid .hy-beta-dialog input:focus { border-color:var(--blue); background:var(--paper); }
+#lp-hybrid .hy-beta-actions { display:flex; justify-content:flex-end; align-items:center; gap:8px; flex-wrap:wrap; padding:18px 24px; margin:0; border-top:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-button { display:inline-flex; align-items:center; justify-content:center; margin:0; min-width:76px; min-height:37px; padding:8px 15px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); font:500 12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-beta-primary { border-color:var(--blue); background:var(--blue); color:var(--paper); }
+#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-button:hover { filter:brightness(.96); }
+#lp-hybrid .hy-vocabulary-guide { margin:0 0 25px; color:var(--quiet); font-size:12px; }
+#lp-hybrid .hy-vocabulary-guide summary { cursor:pointer; color:var(--blue); }
+#lp-hybrid .hy-vocabulary-guide p { margin:10px 0 0; line-height:1.8; }
+#lp-hybrid .hy-beta-dialog .hy-domain-field { padding:16px; margin-bottom:24px; border:1px solid var(--edge); border-radius:12px; background:color-mix(in srgb,var(--soft) 40%,var(--paper)); }
+#lp-hybrid .hy-domain-field input { background:var(--paper); }
+#lp-hybrid .hy-vocabulary-group { margin:0 0 24px; }
+#lp-hybrid .hy-vocabulary-group h4 { margin:0 0 8px; color:var(--quiet); font-size:11px; font-weight:500; }
+#lp-hybrid .hy-beta-dialog .hy-symbol-field { display:grid; grid-template-columns:minmax(65px,.25fr) minmax(0,1fr); align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-symbol-identity { display:flex; flex-direction:column; align-items:flex-start; gap:4px; min-width:0; overflow-wrap:anywhere; }
+#lp-hybrid .hy-symbol-name { font:22px/1.2 "Cambria Math",serif; color:var(--blue); }
+#lp-hybrid .hy-symbol-metadata { display:block; margin:0; color:var(--quiet); font:10px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-symbol-field input { margin:0; }
+#lp-hybrid .hy-beta-formulas .hy-beta-scroll > label { margin-bottom:22px; }
+#lp-hybrid .hy-beta-formulas input { font:18px/1.6 var(--preview-formula-font,"Cambria Math",serif); }
+#lp-hybrid .hy-beta-formulas [role="status"]:not(:empty) { margin-top:24px; padding:16px; border:1px solid var(--edge); border-radius:12px; background:var(--soft); color:var(--ink); line-height:1.8; }
+#lp-hybrid :is(.hy-validation-dialog,.hy-beta-dialog) :is(button,summary,input,select):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+#lp-hybrid :is(.hy-validation-dialog,.hy-beta-dialog) button { cursor:pointer; }
+@keyframes hy-analysis-enter { from { opacity:0; transform:translateY(8px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes hy-analysis-detail-enter { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
+@media (prefers-reduced-motion:reduce) {
+  #lp-hybrid :is(.hy-validation-dialog[open],.hy-beta-dialog[open],.hy-analysis-inspector) { animation:none; }
+  #lp-hybrid .hy-validation-dialog details[data-analysis-tool] { transition:none; }
+}

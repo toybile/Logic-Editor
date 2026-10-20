@@ -42,7 +42,6 @@
 
 #lp-hybrid .hy-logic-mode-menu button:last-child { grid-column:1 / -1; width:calc(50% - 3.5px); justify-self:center; }
 
-#lp-hybrid .hy-symbol-metadata { display:block; color:var(--quiet); font:12px/1.6 system-ui; margin:3px 0 7px; }
 #lp-hybrid .hy-countermodel-table { border-collapse:collapse; width:100%; margin:12px 0 20px; font:13px/1.5 system-ui; }
 #lp-hybrid .hy-countermodel-table th,#lp-hybrid .hy-countermodel-table td { padding:8px; border-bottom:1px solid var(--edge); text-align:left; }
 #lp-hybrid .hy-countermodel-table caption { text-align:left; color:var(--quiet); margin-bottom:8px; }

@@ -3,6 +3,7 @@
     "styles/app.css",
     "styles/themes.css",
     "styles/writing.css",
+    "styles/analysis.css",
     "styles/mobile.css"
   ],
   "scripts": [

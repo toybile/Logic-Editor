@@ -82,7 +82,7 @@ const fs = require("fs"),
         await d.locator("button[type=submit]").click();
         await p.waitForFunction(() =>
           document
-            .querySelector(".hy-beta-dialog>[role=status]")
+            .querySelector(".hy-beta-dialog [role=status]")
             ?.textContent.includes("equivalent"),
         );
         await d.screenshot({
@@ -91,7 +91,7 @@ const fs = require("fs"),
         await d.locator("input").nth(1).fill("A ∧ B");
         await d.locator("button[type=submit]").click();
         await p.waitForFunction(() =>
-          document.querySelector(".hy-beta-dialog>[role=status]")?.textContent.includes("differ"),
+          document.querySelector(".hy-beta-dialog [role=status]")?.textContent.includes("differ"),
         );
         await d.locator("[role=status]").click();
         await p.keyboard.press("Escape");
@@ -106,13 +106,14 @@ const fs = require("fs"),
           () => document.querySelector("#logic-panel").dataset.state === "invalid",
         );
         const panel = p.locator("#logic-panel");
-        await panel.locator(".hy-truth-table>summary").click();
         await panel.locator(".hy-logic-result details>summary").first().click();
+        await panel.locator(".hy-truth-table>summary").click();
+        await p.locator(".hy-analysis-inspector-body table tbody tr").first().waitFor();
         await p.waitForTimeout(250);
-        await panel.screenshot({
+        await p.locator('.hy-validation-dialog').screenshot({
           path: "test-artifacts/beta-en-validation-" + width + "-" + theme + ".png",
         });
-        assert((await panel.locator("table tbody tr").count()) > 0);
+        assert((await p.locator(".hy-analysis-inspector-body table tbody tr").count()) > 0);
         assert(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
         assert.deepEqual(errors, []);
         console.log(

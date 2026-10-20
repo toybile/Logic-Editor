@@ -67,5 +67,6 @@
   "check-mode-selector-example-help",
   "check-premise-hold-delay",
   "check-extended-logic-engines",
-  "check-extended-logic-ui"
+  "check-extended-logic-ui",
+  "check-analysis-workspace"
 ]

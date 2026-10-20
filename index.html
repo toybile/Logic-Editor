@@ -9098,324 +9098,6 @@ body {
   background: light-dark(#e9ecf2, #292f39);
 }
 /* beta-windows-site-style */
-#lp-hybrid .hy-beta-dialog {
-  box-sizing: border-box;
-  width: 540px;
-  max-width: calc(100vw - 24px);
-  max-height: calc(100dvh - 32px);
-  padding: var(--dialog-inset);
-  border: 1px solid var(--edge);
-  border-radius: 22px;
-  background: var(--paper);
-  color: var(--ink);
-  box-shadow: 0 18px 60px light-dark(#35476124, #0007);
-  font:
-    13px/1.65 "Segoe UI",
-    system-ui;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-}
-#lp-hybrid .hy-beta-dialog::backdrop {
-  background: light-dark(#23365040, #080f1f88);
-  backdrop-filter: blur(5px);
-}
-#lp-hybrid .hy-beta-heading {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding-bottom: 16px;
-  margin-bottom: 18px;
-  border-bottom: 1px solid var(--edge);
-}
-#lp-hybrid .hy-beta-heading h3 {
-  font:
-    600 15px/1.5 "Segoe UI",
-    system-ui;
-  margin: 0;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-#lp-hybrid .hy-beta-tag {
-  flex-shrink: 0;
-  padding: 2px 7px;
-  border: 1px solid light-dark(#ecd7b6, #725b3b);
-  border-radius: 6px;
-  background: light-dark(#fff5e5, #3c3325);
-  color: light-dark(#805b25, #e9c991);
-  font:
-    500 10px/1.4 "Segoe UI",
-    system-ui;
-}
-#lp-hybrid .hy-beta-dialog .hy-beta-close {
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  margin: 0 0 0 auto;
-  width: 30px;
-  height: 30px;
-  min-height: 30px;
-  padding: 0;
-  border: 0;
-  border-radius: 9px;
-  background: var(--soft);
-  color: var(--quiet);
-  font: 22px/1 system-ui;
-}
-#lp-hybrid .hy-beta-dialog .hy-beta-close:hover {
-  background: color-mix(in srgb, var(--blue) 13%, var(--paper));
-  color: var(--ink);
-}
-#lp-hybrid .hy-beta-dialog form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 0;
-}
-#lp-hybrid .hy-beta-dialog label {
-  display: block;
-  margin: 0;
-  padding: 12px 14px;
-  border: 1px solid var(--edge);
-  border-radius: 13px;
-  background: color-mix(in srgb, var(--soft) 60%, var(--paper));
-  font-weight: 600;
-  color: var(--ink);
-}
-#lp-hybrid .hy-beta-dialog input {
-  margin: 8px 0 0;
-  min-height: 40px;
-  padding: 9px 11px;
-  border: 1px solid var(--edge);
-  border-radius: 9px;
-  background: var(--paper);
-  font:
-    400 13px/1.5 "Segoe UI",
-    system-ui;
-  color: var(--ink);
-}
-#lp-hybrid .hy-beta-dialog input::placeholder {
-  color: var(--quiet);
-  opacity: 0.85;
-}
-#lp-hybrid .hy-beta-dialog input:focus {
-  outline: 2px solid color-mix(in srgb, var(--blue) 28%, transparent);
-  outline-offset: 2px;
-  border-color: var(--blue);
-}
-#lp-hybrid .hy-beta-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding-top: 16px;
-  margin-top: 6px;
-  border-top: 1px solid var(--edge);
-}
-#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  min-height: 38px;
-  padding: 8px 15px;
-  border: 1px solid var(--edge);
-  border-radius: 10px;
-  background: var(--paper);
-  font:
-    500 12px/1.5 "Segoe UI",
-    system-ui;
-}
-#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-beta-primary {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: light-dark(#fff, #132033);
-}
-#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-button:hover {
-  filter: brightness(0.96);
-}
-#lp-hybrid .hy-beta-dialog > p {
-  margin: 14px 0 0;
-  color: var(--quiet);
-  overflow-wrap: anywhere;
-}
-#lp-hybrid .hy-beta-dialog > [role="status"]:not(:empty) {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border: 1px solid var(--edge);
-  border-radius: 12px;
-  background: var(--soft);
-  color: var(--ink);
-}
-#lp-hybrid .hy-logic-area .hy-logic-panel {
-  padding: 18px;
-  border-radius: 20px;
-  border: 1px solid var(--edge);
-  background: var(--paper);
-  box-shadow: 0 8px 26px light-dark(#35476112, #0003);
-  font:
-    13px/1.65 "Segoe UI",
-    system-ui;
-}
-#lp-hybrid .hy-logic-panel > .hy-logic-result {
-  margin: 0 0 14px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--edge);
-  box-shadow: none;
-}
-#lp-hybrid .hy-logic-panel .hy-logic-result[data-valid="true"] {
-  background: light-dark(#eff6f2, #25382f);
-  border-color: light-dark(#cfdfd5, #405a4b);
-}
-#lp-hybrid .hy-logic-panel .hy-logic-result[data-valid="false"] {
-  background: light-dark(#fcf1f2, #3d2b33);
-  border-color: light-dark(#e9d0d5, #65404b);
-}
-#lp-hybrid .hy-logic-panel .hy-logic-result > p:first-child {
-  font-weight: 600;
-  margin-top: 0;
-  color: var(--ink);
-}
-#lp-hybrid .hy-logic-panel p {
-  line-height: 1.7;
-}
-#lp-hybrid .hy-logic-panel details {
-  padding: 0 12px;
-  border: 1px solid var(--edge);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--soft) 45%, var(--paper));
-  margin: 10px 0;
-  min-width: 0;
-}
-#lp-hybrid .hy-logic-panel details > summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  list-style: none;
-  padding: 11px 0;
-  color: var(--ink);
-  font-weight: 500;
-  line-height: 1.5;
-  cursor: pointer;
-}
-#lp-hybrid .hy-logic-panel details > summary::-webkit-details-marker {
-  display: none;
-}
-#lp-hybrid .hy-logic-panel details > summary::after {
-  content: "";
-  width: 6px;
-  height: 6px;
-  margin-right: 3px;
-  border-right: 1.5px solid var(--quiet);
-  border-bottom: 1.5px solid var(--quiet);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-  transition: transform 0.18s ease;
-}
-#lp-hybrid .hy-logic-panel details[open] > summary::after {
-  transform: rotate(225deg);
-}
-#lp-hybrid .hy-logic-panel details[open] > summary {
-  border-bottom: 1px solid var(--edge);
-  margin-bottom: 10px;
-}
-#lp-hybrid .hy-logic-panel details > .hy-button {
-  margin: 0 0 10px;
-}
-#lp-hybrid .hy-logic-panel .hy-logic-values {
-  gap: 6px;
-  margin: 12px 0;
-}
-#lp-hybrid .hy-logic-panel .hy-logic-values span {
-  padding: 5px 9px;
-  border: 1px solid var(--edge);
-  border-radius: 8px;
-  background: var(--paper);
-  font:
-    14px/1.4 "Cambria Math",
-    serif;
-}
-#lp-hybrid .hy-logic-panel .hy-table-scroll {
-  border: 1px solid var(--edge);
-  border-radius: 10px;
-  margin: 10px 0;
-  max-width: 100%;
-  overflow: auto;
-}
-#lp-hybrid .hy-logic-panel .hy-truth-table th {
-  font-weight: 600;
-  background: var(--soft);
-}
-#lp-hybrid .hy-logic-panel .hy-truth-table td {
-  background: transparent;
-}
-#lp-hybrid
-  .hy-logic-panel
-  .hy-truth-table
-  tbody
-  tr:nth-child(even):not([data-counterexample="true"]) {
-  background: color-mix(in srgb, var(--soft) 55%, var(--paper));
-}
-#lp-hybrid .hy-logic-panel .hy-truth-table select {
-  width: 100%;
-  min-height: 38px;
-  font:
-    12px/1.5 "Segoe UI",
-    system-ui;
-}
-#lp-hybrid .hy-logic-panel .hy-button {
-  border-radius: 9px;
-  padding: 8px 12px;
-  font:
-    500 12px/1.5 "Segoe UI",
-    system-ui;
-}
-#lp-hybrid .hy-logic-panel .hy-advanced-tools {
-  padding-top: 14px;
-  margin-top: 14px;
-}
-#lp-hybrid .hy-logic-panel .hy-advanced-tools .hy-button {
-  width: 100%;
-  justify-content: center;
-  background: var(--soft);
-  border: 1px solid var(--edge);
-  margin: 0;
-}
-@media (max-width: 480px) {
-  #lp-hybrid .hy-beta-dialog {
-    padding: var(--dialog-inset);
-    border-radius: 18px;
-  }
-  #lp-hybrid .hy-beta-heading {
-    gap: 7px;
-  }
-  #lp-hybrid .hy-beta-heading h3 {
-    font-size: 14px;
-  }
-  #lp-hybrid .hy-beta-dialog label {
-    padding: 10px 11px;
-  }
-  #lp-hybrid .hy-logic-area .hy-logic-panel,
-  #lp-hybrid .hy-logic-panel > .hy-logic-result {
-    padding: 12px;
-  }
-  #lp-hybrid .hy-logic-panel details {
-    padding-inline: 10px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  #lp-hybrid .hy-logic-panel details > summary::after {
-    transition: none;
-  }
-}
-/* base styles */
-#lp-hybrid .hy-beta-formulas input {
-  font:
-    16px/1.5 "Cambria Math",
-    serif;
-}
-
 #lp-hybrid .hy-compact-arguments .hy-add-argument-wrap { display: none; }
 #lp-hybrid #argument-options [aria-checked="true"]:hover {
   background: light-dark(#526985, #d0dff1);
@@ -9536,26 +9218,12 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-panel-detail-row label { margin:0; }
 #lp-hybrid .hy-panel-detail-row summary { min-width:0; padding-right:30px; }
 
-#lp-hybrid .hy-validation-dialog { position:fixed; inset:0; margin:auto; box-sizing:border-box; width:1000px; max-width:calc(100vw - 24px); max-height:calc(100dvh - 32px); overflow:auto; padding:var(--dialog-inset); border:1px solid var(--edge); border-radius:20px; background:var(--paper); color:var(--ink); box-shadow:0 24px 80px #0004; font:14px/1.5 system-ui; }
-#lp-hybrid .hy-validation-dialog::backdrop { background:#10132388; backdrop-filter:blur(5px); }
-#lp-hybrid .hy-validation-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
-#lp-hybrid .hy-validation-heading h2 { margin:0; font:500 18px/1.4 system-ui; }
-#lp-hybrid .hy-validation-preview { padding:16px; border:1px solid var(--edge); border-radius:14px; background:var(--soft); margin-bottom:16px; }
-#lp-hybrid .hy-validation-preview .hy-section-head { margin:0 0 12px; padding:0; }
-#lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; width:100%; justify-content:flex-end; gap:8px; margin:0; border-top: 0; padding: 0; }
 #lp-hybrid .hy-panel-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:18px 0 0 var(--content-gutter); padding-top:14px; border-top:1px solid var(--edge); }
 #lp-hybrid .hy-panel-actions .hy-export-group { margin-left:auto; flex-wrap:nowrap; gap:8px; min-width:0; }
 #lp-hybrid .hy-panel-actions :is(#copy,#download) { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-width:0; min-height:calc(36px * var(--writing-scale)); padding:calc(7px * var(--writing-scale)) calc(10px * var(--writing-scale)); font-size:calc(13px * var(--writing-scale)); border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); }
 #lp-hybrid .hy-panel-actions #download { border-color:color-mix(in srgb,var(--blue) 30%,var(--edge)); color:var(--blue); }
 #lp-hybrid .hy-panel-actions :is(#copy,#download) svg { width:calc(16px * var(--writing-scale)); height:calc(16px * var(--writing-scale)); flex-shrink:0; }
 #lp-hybrid .hy-panel-actions :is(#copy,#download):hover { background:var(--soft); }
-#lp-hybrid .hy-validation-preview .hy-panel-actions { display:none; }
-#lp-hybrid .hy-validation-preview #hy-argument { display:block !important; grid-template-rows:1fr !important; opacity:1; max-height:none; }
-#lp-hybrid .hy-validation-preview #preview { white-space:pre-wrap; overflow-wrap:anywhere; }
-#lp-hybrid .hy-validation-dialog .hy-logic-button { display:none; }
-#lp-hybrid .hy-validation-dialog .hy-logic-footer { margin:0 0 16px; padding:0; }
-#lp-hybrid .hy-validation-dialog .hy-logic-panel { margin:0; }
-@media(max-width:600px) { #lp-hybrid .hy-validation-dialog { padding:var(--dialog-inset); } #lp-hybrid .hy-validation-preview { padding:12px; } }
 
 #lp-hybrid .hy-argument-panel > .hy-section-head { flex-wrap:nowrap; overflow-x:visible; overflow-y:visible; padding-top:0; padding-bottom:0; }
 #lp-hybrid .hy-argument-panel > .hy-section-head > h3 { flex:none; white-space:nowrap; }
@@ -9585,7 +9253,6 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-editor > .hy-section-head > h3 { flex:none; white-space:nowrap; }
 
 @media(max-width:760px) { #lp-hybrid .hy-editor > .hy-section-head { flex-wrap:wrap; } #lp-hybrid .hy-editor > .hy-section-head > h3 { flex:1; min-width:0; white-space:normal; } }
-#lp-hybrid .hy-validation-preview .hy-tools::before { display:none; }
 @media(max-width:760px) { #lp-hybrid .hy-argument-panel > .hy-section-head { flex-wrap:wrap; } #lp-hybrid .hy-argument-panel > .hy-section-head > .hy-tools { flex:1 1 100%; width:100%; min-width:0; flex-wrap:wrap; justify-content:flex-end; } }
 
 html[data-editor-theme="petroleum"] body { background:#0b2027; }
@@ -9671,11 +9338,174 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 
 #lp-hybrid .hy-logic-mode-menu button:last-child { grid-column:1 / -1; width:calc(50% - 3.5px); justify-self:center; }
 
-#lp-hybrid .hy-symbol-metadata { display:block; color:var(--quiet); font:12px/1.6 system-ui; margin:3px 0 7px; }
 #lp-hybrid .hy-countermodel-table { border-collapse:collapse; width:100%; margin:12px 0 20px; font:13px/1.5 system-ui; }
 #lp-hybrid .hy-countermodel-table th,#lp-hybrid .hy-countermodel-table td { padding:8px; border-bottom:1px solid var(--edge); text-align:left; }
 #lp-hybrid .hy-countermodel-table caption { text-align:left; color:var(--quiet); margin-bottom:8px; }
 #lp-hybrid .hy-extended-logic { max-width:100%; overflow-wrap:anywhere; }
+
+/* Analysis workspaces share the editor's surfaces, type scale and spacing. */
+#lp-hybrid .hy-validation-dialog {
+  position:fixed; inset:0; margin:auto; box-sizing:border-box;
+  width:1180px; max-width:calc(100vw - 48px); height:760px; max-height:calc(100dvh - 48px);
+  overflow:hidden; padding:0; scrollbar-gutter:auto;
+  border:1px solid var(--edge); border-radius:22px; background:var(--paper); color:var(--ink);
+  box-shadow:0 28px 90px #0004; font:13px/1.6 "Segoe UI",system-ui;
+}
+#lp-hybrid .hy-validation-dialog[open] { display:flex; flex-direction:column; animation:hy-analysis-enter .22s ease-out; }
+#lp-hybrid .hy-validation-dialog::backdrop { background:light-dark(#15203650,#05081385); backdrop-filter:blur(4px); }
+#lp-hybrid .hy-validation-heading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:0; padding:22px 26px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-analysis-identity { display:flex; align-items:center; gap:13px; min-width:0; }
+#lp-hybrid .hy-analysis-mode-icon { display:grid; place-items:center; width:40px; height:40px; flex:none; border:1px solid var(--edge); border-radius:12px; color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-analysis-mode-icon svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
+#lp-hybrid .hy-validation-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; letter-spacing:-.3px; }
+#lp-hybrid .hy-analysis-mode-name { margin:3px 0 0; color:var(--quiet); font-size:12px; }
+#lp-hybrid .hy-analysis-close { display:grid; place-items:center; width:32px; height:32px; min-height:32px; padding:0; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); font:23px/1 system-ui; }
+#lp-hybrid .hy-analysis-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid .hy-analysis-workspace { display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); flex:1; min-height:0; }
+#lp-hybrid .hy-validation-preview { display:flex; flex-direction:column; gap:18px; min-width:0; min-height:0; padding:26px; border-right:1px solid var(--edge); background:color-mix(in srgb,var(--soft) 38%,var(--paper)); }
+#lp-hybrid .hy-analysis-section-label { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; font:600 12px/1.5 "Segoe UI",system-ui; color:var(--quiet); }
+#lp-hybrid .hy-analysis-section-label h3 { margin:0; color:var(--quiet); font:inherit; }
+#lp-hybrid .hy-analysis-section-label > span { font-weight:400; font-size:11px; }
+#lp-hybrid .hy-validation-preview .hy-section-head { margin:0; padding:0; min-height:0; }
+#lp-hybrid .hy-validation-preview .hy-tools { display:flex; flex-wrap:wrap; width:100%; justify-content:flex-start; gap:8px; margin:0; border:0; padding:0; }
+#lp-hybrid .hy-validation-preview .hy-tools::before { display:none; }
+#lp-hybrid .hy-validation-preview .hy-panel-actions { display:none; }
+#lp-hybrid .hy-validation-preview #hy-argument { display:block !important; grid-template-rows:1fr !important; opacity:1; flex:1; min-height:0; max-height:none; overflow:auto; scrollbar-width:thin; }
+#lp-hybrid .hy-validation-preview .hy-preview-inner { padding:0; }
+#lp-hybrid .hy-validation-preview #preview { white-space:pre-wrap; overflow-wrap:anywhere; margin:0; padding:0; font-size:20px; line-height:1.95; }
+#lp-hybrid .hy-analysis-preview-actions { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:18px; border-top:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-analysis-preview-actions .hy-export-group { display:flex; flex-wrap:nowrap; gap:8px; margin:0; }
+#lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:34px; padding:7px 10px; border:1px solid var(--edge); border-radius:9px; color:var(--ink); background:var(--paper); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-preview-actions #download { color:var(--blue); }
+#lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) svg { width:15px; height:15px; flex:none; }
+#lp-hybrid .hy-analysis-vocabulary { display:inline-flex; align-items:center; gap:7px; padding:6px 0; min-height:34px; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-vocabulary svg { width:16px; height:16px; }
+#lp-hybrid .hy-analysis-vocabulary:hover { color:var(--blue); }
+#lp-hybrid .hy-analysis-results { padding:26px; min-width:0; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+#lp-hybrid .hy-analysis-results > .hy-analysis-section-label { margin-bottom:18px; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); align-content:start; gap:12px; padding:0; margin:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > :not(details) { grid-column:1 / -1; min-width:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > .hy-advanced-tools { grid-column:auto; }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > strong { font-weight:500; padding:14px 16px; border:1px solid var(--edge); border-radius:12px; background:var(--soft); }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel > p { margin:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result { margin:0; padding:18px; border:1px solid var(--edge); border-radius:15px; background:var(--soft); color:var(--ink); }
+#lp-hybrid .hy-validation-dialog .hy-logic-result[data-valid="true"] { background:light-dark(#f0f6f3,#20332f); border-color:light-dark(#cfdfd7,#355348); }
+#lp-hybrid .hy-validation-dialog .hy-logic-result[data-valid="false"] { background:light-dark(#fcf2f3,#35252e); border-color:light-dark(#ead4d9,#5d3d4b); }
+#lp-hybrid .hy-validation-dialog .hy-logic-panel p { line-height:1.7; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result > p:first-child { display:flex; align-items:center; gap:10px; color:var(--ink); font-size:14px; font-weight:600; margin:0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result > p:first-child svg { width:20px; height:20px; flex:none; }
+#lp-hybrid .hy-validation-dialog .hy-logic-result > p:not(:first-child) { margin:14px 0 0; }
+#lp-hybrid .hy-validation-dialog .hy-logic-values { gap:7px; margin-top:14px; }
+#lp-hybrid .hy-validation-dialog .hy-logic-values span { padding:5px 10px; border:1px solid var(--edge); border-radius:7px; color:var(--ink); background:var(--paper); font:16px/1.4 "Cambria Math",serif; }
+#lp-hybrid .hy-validation-dialog svg { fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+#lp-hybrid .hy-validation-dialog details { min-width:0; margin:0; }
+#lp-hybrid .hy-validation-dialog details > summary { display:flex; align-items:center; gap:10px; list-style:none; color:var(--ink); font-size:12px; cursor:pointer; }
+#lp-hybrid .hy-validation-dialog details > summary::-webkit-details-marker { display:none; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] { border:1px solid var(--edge); border-radius:12px; background:var(--paper); transition:border-color .18s,background .18s; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary { min-height:68px; box-sizing:border-box; padding:13px; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary svg { width:20px; height:20px; flex:none; color:var(--quiet); }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary span { flex:1; min-width:0; overflow-wrap:anywhere; }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool] > summary::after { content:''; flex:none; width:5px; height:5px; margin-right:3px; border-top:1.5px solid var(--quiet); border-right:1.5px solid var(--quiet); transform:rotate(45deg); }
+#lp-hybrid .hy-validation-dialog details[data-analysis-tool]:not([data-inspected]):hover { border-color:color-mix(in srgb,var(--blue) 50%,var(--edge)); background:var(--soft); }
+#lp-hybrid .hy-validation-dialog details:not([data-analysis-tool]) { margin-top:14px; padding-top:12px; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-validation-dialog details:not([data-analysis-tool]) > summary::after { content:'+'; margin-left:auto; color:var(--quiet); }
+#lp-hybrid .hy-validation-dialog details:not([data-analysis-tool])[open] > summary::after { content:'−'; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools { margin:0; padding:0; border:0; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button { display:flex; align-items:center; justify-content:flex-start; gap:10px; width:100%; min-height:68px; margin:0; padding:13px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:var(--ink); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button svg { width:17px; height:17px; }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button::after { content:''; flex:none; width:5px; height:5px; margin-left:auto; margin-right:3px; border-top:1.5px solid var(--quiet); border-right:1.5px solid var(--quiet); transform:rotate(45deg); }
+#lp-hybrid .hy-validation-dialog .hy-advanced-tools .hy-button:hover { background:var(--soft); border-color:color-mix(in srgb,var(--blue) 50%,var(--edge)); }
+#lp-hybrid .hy-validation-dialog .hy-logic-footer,#lp-hybrid .hy-validation-dialog .hy-logic-button { display:none; }
+#lp-hybrid .hy-analysis-results[hidden],#lp-hybrid .hy-analysis-inspector[hidden] { display:none; }
+#lp-hybrid .hy-analysis-inspector { display:flex; flex-direction:column; min-width:0; min-height:0; animation:hy-analysis-detail-enter .2s ease-out; }
+#lp-hybrid .hy-analysis-inspector-heading { display:flex; align-items:center; gap:12px; padding:20px 26px; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-analysis-inspector-heading h3 { margin:0; font:600 14px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-back { display:grid; place-items:center; flex:none; width:30px; height:30px; min-height:30px; padding:6px; border:1px solid var(--edge); border-radius:8px; background:var(--paper); color:var(--quiet); }
+#lp-hybrid .hy-analysis-back svg { width:17px; height:17px; }
+#lp-hybrid .hy-analysis-inspector-body { overflow:auto; padding:24px 26px; min-height:0; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-analysis-inspector-body details[data-inspected] { border:0; border-radius:0; background:transparent; }
+#lp-hybrid .hy-analysis-inspector-body details[data-inspected] > summary { display:none; }
+#lp-hybrid .hy-analysis-inspector-body details[data-inspected] > p:first-of-type { margin-top:0; }
+#lp-hybrid .hy-analysis-inspector-body :is(p,li) { line-height:1.8; color:var(--quiet); }
+#lp-hybrid .hy-analysis-inspector-body .hy-button { min-height:34px; padding:7px 12px; border:1px solid var(--edge); border-radius:8px; background:var(--soft); color:var(--ink); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-validation-dialog .hy-table-scroll { max-width:100%; overflow:auto; margin:14px 0; border:1px solid var(--edge); border-radius:10px; scrollbar-width:thin; }
+#lp-hybrid .hy-validation-dialog table { border-collapse:collapse; width:100%; font-size:12px; }
+#lp-hybrid .hy-validation-dialog th { background:var(--soft); font-weight:600; }
+#lp-hybrid .hy-validation-dialog :is(th,td) { padding:9px 12px; border-bottom:1px solid var(--edge); text-align:left; }
+#lp-hybrid .hy-validation-dialog select { max-width:100%; min-height:36px; padding:7px 10px; border:1px solid var(--edge); border-radius:8px; background:var(--paper); color:var(--ink); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-validation-dialog .hy-extended-logic { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:12px; overflow-wrap:anywhere; }
+#lp-hybrid .hy-extended-logic > :not(details) { grid-column:1 / -1; min-width:0; }
+#lp-hybrid .hy-extended-logic > details:only-of-type { grid-column:1 / -1; }
+#lp-hybrid .hy-analysis-summary { padding:19px; border:1px solid var(--edge); border-radius:15px; background:var(--soft); }
+#lp-hybrid .hy-analysis-summary[data-tone="valid"] { background:light-dark(#f0f6f3,#20332f); border-color:light-dark(#cfdfd7,#355348); }
+#lp-hybrid .hy-analysis-summary[data-tone="invalid"] { background:light-dark(#fcf2f3,#35252e); border-color:light-dark(#ead4d9,#5d3d4b); }
+#lp-hybrid .hy-analysis-result-heading { display:flex; align-items:flex-start; gap:10px; margin:0; font:600 16px/1.5 "Segoe UI",system-ui; letter-spacing:-.1px; }
+#lp-hybrid .hy-analysis-result-heading svg { flex:none; width:21px; height:21px; margin-top:2px; }
+#lp-hybrid .hy-analysis-summary > p { margin:11px 0 0; color:var(--quiet); }
+#lp-hybrid .hy-categorical-conclusion { padding:4px 0; }
+#lp-hybrid .hy-categorical-conclusion h4 { display:flex; align-items:center; gap:9px; margin:0; font-weight:500; font-size:13px; }
+#lp-hybrid .hy-categorical-conclusion h4 svg { flex:none; width:17px; height:17px; color:var(--quiet); }
+#lp-hybrid .hy-analysis-diagnostic { margin:0; padding:14px 16px; border:1px solid var(--edge); border-radius:12px; background:color-mix(in srgb,var(--soft) 65%,var(--paper)); }
+#lp-hybrid .hy-analysis-diagnostic p { margin:4px 0 0; }
+#lp-hybrid .hy-analysis-location { color:var(--blue); font-size:11px; font-weight:600; }
+#lp-hybrid .hy-analysis-symbols { padding:6px 0; }
+#lp-hybrid .hy-analysis-symbols h4 { margin:0 0 12px; color:var(--quiet); font-size:12px; font-weight:500; }
+#lp-hybrid .hy-analysis-symbol-list { display:flex; flex-wrap:wrap; gap:9px; }
+#lp-hybrid .hy-analysis-symbol-chip { display:flex; align-items:center; gap:9px; padding:8px 10px; border:1px solid var(--edge); border-radius:9px; }
+#lp-hybrid .hy-analysis-symbol-chip b { font:19px/1.2 "Cambria Math",serif; }
+#lp-hybrid .hy-analysis-symbol-chip small { color:var(--quiet); font-size:11px; }
+#lp-hybrid .hy-analysis-scope-note { margin:0; font-size:12px; color:var(--quiet); }
+#lp-hybrid .hy-analysis-form { display:grid; grid-template-columns:76px 1fr; align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-analysis-form code { color:var(--blue); font:15px/1.5 "Cambria Math",serif; }
+
+/* Editing meanings and comparing formulas use a shared lateral sheet. */
+#lp-hybrid .hy-beta-dialog.hy-feature-dialog {
+  position:fixed; inset:16px 16px 16px auto; margin:0; width:510px; max-width:calc(100vw - 32px);
+  height:calc(100dvh - 32px); max-height:calc(100dvh - 32px); padding:0; overflow:hidden; scrollbar-gutter:auto;
+  box-sizing:border-box; border:1px solid var(--edge); border-radius:20px; background:var(--paper); color:var(--ink);
+  box-shadow:-12px 18px 70px #0003; font:13px/1.65 "Segoe UI",system-ui;
+}
+#lp-hybrid .hy-beta-dialog[open] { display:flex; flex-direction:column; animation:hy-analysis-detail-enter .24s cubic-bezier(.2,.7,.3,1); }
+#lp-hybrid .hy-beta-dialog::backdrop { background:light-dark(#15203618,#05081340); backdrop-filter:none; }
+#lp-hybrid .hy-beta-heading { display:flex; align-items:center; gap:10px; padding:22px 24px; margin:0; border-bottom:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-beta-heading h3 { margin:0; font:600 16px/1.5 "Segoe UI",system-ui; min-width:0; overflow-wrap:anywhere; letter-spacing:-.2px; }
+#lp-hybrid .hy-beta-tag { padding:2px 6px; flex:none; border:1px solid light-dark(#e7d6b9,#725b3b); border-radius:5px; background:light-dark(#fff5e5,#3c3325); color:light-dark(#805b25,#e9c991); font:500 10px/1.4 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog .hy-beta-close { display:grid; place-items:center; width:30px; height:30px; min-height:30px; margin:0 0 0 auto; flex:none; padding:0; border:1px solid transparent; border-radius:8px; background:transparent; color:var(--quiet); font:22px/1 system-ui; }
+#lp-hybrid .hy-beta-dialog .hy-beta-close:hover { background:var(--soft); border-color:var(--edge); color:var(--ink); }
+#lp-hybrid .hy-beta-dialog form { display:flex; flex-direction:column; flex:1; gap:0; min-height:0; margin:0; }
+#lp-hybrid .hy-beta-scroll { padding:24px; overflow:auto; min-height:0; flex:1; scrollbar-width:thin; overscroll-behavior:contain; }
+#lp-hybrid .hy-beta-scroll > .hy-description-note { margin:0 0 14px; font:13px/1.75 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog label { display:block; margin:0; color:var(--ink); font-size:12px; font-weight:500; }
+#lp-hybrid .hy-beta-dialog input { box-sizing:border-box; width:100%; min-width:0; min-height:41px; margin:7px 0 0; padding:10px 12px; border:1px solid var(--edge); border-radius:9px; background:color-mix(in srgb,var(--soft) 45%,var(--paper)); color:var(--ink); font:400 13px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog input::placeholder { color:var(--quiet); opacity:.72; }
+#lp-hybrid .hy-beta-dialog input:focus { border-color:var(--blue); background:var(--paper); }
+#lp-hybrid .hy-beta-actions { display:flex; justify-content:flex-end; align-items:center; gap:8px; flex-wrap:wrap; padding:18px 24px; margin:0; border-top:1px solid var(--edge); flex:none; }
+#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-button { display:inline-flex; align-items:center; justify-content:center; margin:0; min-width:76px; min-height:37px; padding:8px 15px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); font:500 12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-beta-primary { border-color:var(--blue); background:var(--blue); color:var(--paper); }
+#lp-hybrid .hy-beta-dialog .hy-beta-actions .hy-button:hover { filter:brightness(.96); }
+#lp-hybrid .hy-vocabulary-guide { margin:0 0 25px; color:var(--quiet); font-size:12px; }
+#lp-hybrid .hy-vocabulary-guide summary { cursor:pointer; color:var(--blue); }
+#lp-hybrid .hy-vocabulary-guide p { margin:10px 0 0; line-height:1.8; }
+#lp-hybrid .hy-beta-dialog .hy-domain-field { padding:16px; margin-bottom:24px; border:1px solid var(--edge); border-radius:12px; background:color-mix(in srgb,var(--soft) 40%,var(--paper)); }
+#lp-hybrid .hy-domain-field input { background:var(--paper); }
+#lp-hybrid .hy-vocabulary-group { margin:0 0 24px; }
+#lp-hybrid .hy-vocabulary-group h4 { margin:0 0 8px; color:var(--quiet); font-size:11px; font-weight:500; }
+#lp-hybrid .hy-beta-dialog .hy-symbol-field { display:grid; grid-template-columns:minmax(65px,.25fr) minmax(0,1fr); align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-symbol-identity { display:flex; flex-direction:column; align-items:flex-start; gap:4px; min-width:0; overflow-wrap:anywhere; }
+#lp-hybrid .hy-symbol-name { font:22px/1.2 "Cambria Math",serif; color:var(--blue); }
+#lp-hybrid .hy-symbol-metadata { display:block; margin:0; color:var(--quiet); font:10px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-symbol-field input { margin:0; }
+#lp-hybrid .hy-beta-formulas .hy-beta-scroll > label { margin-bottom:22px; }
+#lp-hybrid .hy-beta-formulas input { font:18px/1.6 var(--preview-formula-font,"Cambria Math",serif); }
+#lp-hybrid .hy-beta-formulas [role="status"]:not(:empty) { margin-top:24px; padding:16px; border:1px solid var(--edge); border-radius:12px; background:var(--soft); color:var(--ink); line-height:1.8; }
+#lp-hybrid :is(.hy-validation-dialog,.hy-beta-dialog) :is(button,summary,input,select):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+#lp-hybrid :is(.hy-validation-dialog,.hy-beta-dialog) button { cursor:pointer; }
+@keyframes hy-analysis-enter { from { opacity:0; transform:translateY(8px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes hy-analysis-detail-enter { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
+@media (prefers-reduced-motion:reduce) {
+  #lp-hybrid :is(.hy-validation-dialog[open],.hy-beta-dialog[open],.hy-analysis-inspector) { animation:none; }
+  #lp-hybrid .hy-validation-dialog details[data-analysis-tool] { transition:none; }
+}
 
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
@@ -13640,6 +13470,7 @@ async function updateLogicValidation() {
   const revision = ++logicRevision,
     words = logicText();
   logicButton.setAttribute("aria-label", words.button);
+  resetValidationInspector();
   logicPanel.textContent = words.working;
   if (typeof currentLogicMode === "function" && currentLogicMode() !== 'propositional') {
     updateExtendedLogicValidation(currentLogicMode());
@@ -13700,6 +13531,7 @@ async function updateLogicValidation() {
             (conclusion.valid ? words.yes : words.no),
         ),
       );
+      section.firstElementChild.prepend(analysisIcon(conclusion.valid ? 'valid' : 'invalid'));
       if (conclusion.counterexample) {
         section.append(logicParagraph(words.counter));
         const values = document.createElement("div");
@@ -13725,6 +13557,7 @@ async function updateLogicValidation() {
     if (revision !== logicRevision || !logicEnabled) return;
     await view({ result, snapshot, prepared, revision });
   }
+  refreshValidationWorkspace();
 }
 logicButton.setAttribute("aria-label", logicText().button);
 logicButton.onclick = () => {
@@ -16212,7 +16045,13 @@ async function confirmDeletion(message) {
     head.append(heading, badge, close);
     d.append(head);
     root.append(d);
-    d.onclose = () => d.remove();
+    const returnFocus = document.activeElement;
+    d.onclose = () => { d.remove(); if (returnFocus?.isConnected) returnFocus.focus(); };
+    d.addEventListener('click', event => {
+      if (event.target !== d) return;
+      const rect = d.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) d.close();
+    });
     return d;
   }
   function betaActions(form, ...buttons) {
@@ -16304,88 +16143,73 @@ async function confirmDeletion(message) {
   root.querySelector(".hy-logic-footer").append(bar);
   bar.append(
     action(text("Proposições", "Propositions"), () => {
-      const d = dialog(text("Descrição das proposições", "Proposition descriptions")),
-        form = el("form"),
-        names = new Set();
       const documentAtOpen = currentDocument();
       const mode = typeof currentLogicMode === 'function' ? currentLogicMode() : 'propositional';
+      const title = mode === 'first-order' ? text('Vocabulário de primeira ordem', 'First-order vocabulary')
+        : mode === 'syllogistic' ? text('Descrição dos termos', 'Term descriptions')
+        : text('Descrição das proposições', 'Proposition descriptions');
+      const d = dialog(title), form = el('form'), scroll = el('div', undefined, 'hy-beta-scroll');
+      d.dataset.feature = 'descriptions';
+      form.className = 'hy-description-form';
+      scroll.append(el('p', text('Associe os símbolos aos seus significados. As descrições não alteram a validação lógica.', 'Associate symbols with their meanings. Descriptions do not change logical validation.'), 'hy-description-note'));
+      const guide = el('details', undefined, 'hy-vocabulary-guide');
+      guide.append(el('summary', text('Sobre as descrições', 'About descriptions')));
+      guide.append(el('p', text('As descrições são próprias deste argumento e são incluídas ao salvá-lo em arquivo.', 'Descriptions belong to this argument and are included when saving it to a file.')));
+      if (mode === 'first-order') guide.append(el('p', text('Predicados começam em maiúscula; constantes e funções, em minúscula. Variáveis ligadas não recebem descrição de símbolo. A anotação do domínio explica a intenção, mas não define uma estrutura matemática nem comprova premissas.', 'Predicates start uppercase; constants and functions start lowercase. Bound variables do not receive symbol descriptions. The domain annotation explains intent, but does not define a mathematical structure or establish premises.')));
+      scroll.append(guide);
       const signature = mode === 'first-order' ? LPFirstOrder.analyze(rows) : null;
-      const metadata = new Map((signature?.symbols || []).map(s => [s.name,s]));
+      const metadata = new Map((signature?.symbols || []).map(s => [s.name, s]));
       let domain;
       if (mode === 'first-order') {
-        d.querySelector('h3').textContent=text('Vocabulário de primeira ordem','First-order vocabulary');
-        const label=el('label',text('Domínio de discurso','Domain of discourse'));
-        domain=el('input');domain.maxLength=1000;domain.value=documentAtOpen.domainDescription || '';
-        domain.placeholder=text('Ex.: pessoas','E.g. people');label.append(domain);form.append(label);
-      } else if (mode === 'syllogistic') d.querySelector('h3').textContent=text('Descrição dos termos','Term descriptions');
-
-      for (const row of rows) {
-        if (row.role !== "blank") descriptionNames(row.text).forEach(name => names.add(name));
+        const label = el('label', text('Domínio de discurso', 'Domain of discourse'), 'hy-domain-field');
+        domain = el('input'); domain.maxLength = 1000; domain.value = documentAtOpen.domainDescription || '';
+        domain.placeholder = text('Ex.: pessoas', 'E.g. people'); label.append(domain); scroll.append(label);
       }
+      const names = new Set();
+      for (const row of rows) if (row.role !== 'blank') descriptionNames(row.text).forEach(name => names.add(name));
       const existing = descriptions();
-      Object.keys(existing).forEach((a) => names.add(a));
-      if (!names.size)
-        d.append(
-          el(
-            "p",
-            text(
-              "Digite proposições no argumento primeiro.",
-              "Enter propositions in the argument first.",
-            ),
-          ),
-        );
-      d.dataset.feature = "descriptions";
-      d.append(el("p", text(
-        "Registre o significado dos símbolos. As descrições são próprias deste argumento e não alteram a validação lógica.",
-        "Record symbol meanings. Descriptions belong to this argument and do not change logical validation."
-      ), "hy-description-note"));
-      if(mode === 'first-order') d.append(el('p',text(
-        'Predicados começam em maiúscula; constantes e funções, em minúscula. Variáveis ligadas não recebem descrição de símbolo. A anotação do domínio explica a intenção, mas não define uma estrutura matemática nem comprova premissas.',
-        'Predicates start uppercase; constants and functions start lowercase. Bound variables do not receive symbol descriptions. The domain annotation explains intent, but does not define a mathematical structure or establish premises.'
-      ),'hy-description-note'));
-      const inputs = [];
+      Object.keys(existing).forEach(name => names.add(name));
+      if (!names.size) scroll.append(el('p', text('Digite proposições no argumento primeiro.', 'Enter propositions in the argument first.'), 'hy-description-note'));
+      const groups = new Map(), inputs = [];
       for (const atom of [...names].sort()) {
-        const label = el("label", atom),
-          input = el("input");
-        label.dataset.userContent = "";
-        const symbol=metadata.get(atom);
-        if(symbol) {
-          const kind=symbol.kind==='predicate'?text('predicado','predicate'):symbol.kind==='function'?text('função','function'):text('constante','constant');
-          const detail=el('span',kind+(symbol.kind==='constant'?'':' · '+text('aridade ','arity ')+symbol.arity),'hy-symbol-metadata');
-          label.append(detail);
+        const symbol = metadata.get(atom), kind = symbol?.kind || 'term';
+        if (!groups.has(kind)) {
+          const group = el('section', undefined, 'hy-vocabulary-group');
+          const title = kind === 'predicate' ? text('Predicados', 'Predicates')
+            : kind === 'constant' ? text('Constantes', 'Constants')
+            : kind === 'function' ? text('Funções', 'Functions')
+            : mode === 'syllogistic' ? text('Termos', 'Terms') : text('Proposições', 'Propositions');
+          group.append(el('h4', title)); groups.set(kind, group); scroll.append(group);
         }
-
-        input.value = typeof existing[atom] === "string" ? existing[atom] : "";
-        input.maxLength = 1000;
-        input.autocomplete = "off";
-        input.placeholder = symbol?.kind === 'constant' ? text('Ex.: Ana','E.g. Alice')
-          : symbol?.kind === 'function' ? text('Ex.: mãe de x','E.g. mother of x')
-          : symbol?.kind === 'predicate' ? text('Ex.: x ama y','E.g. x loves y')
-          : mode === 'syllogistic' ? text('Ex.: estudantes','E.g. students')
-          : text("Ex.: Está chovendo", "E.g. It is raining");
-        label.append(input);
-        form.append(label);
-        inputs.push([atom, input]);
+        const label = el('label', undefined, 'hy-symbol-field');
+        label.dataset.userContent = '';
+        const identity = el('span', undefined, 'hy-symbol-identity');
+        identity.append(el('b', atom, 'hy-symbol-name'));
+        if (symbol) identity.append(el('span', symbol.kind === 'constant' ? text('constante', 'constant') : text('aridade ', 'arity ') + symbol.arity, 'hy-symbol-metadata'));
+        const input = el('input');
+        input.value = typeof existing[atom] === 'string' ? existing[atom] : '';
+        input.maxLength = 1000; input.autocomplete = 'off';
+        input.placeholder = symbol?.kind === 'constant' ? text('Ex.: Ana', 'E.g. Alice')
+          : symbol?.kind === 'function' ? text('Ex.: mãe de x', 'E.g. mother of x')
+          : symbol?.kind === 'predicate' ? text('Ex.: x ama y', 'E.g. x loves y')
+          : mode === 'syllogistic' ? text('Ex.: estudantes', 'E.g. students')
+          : text('Ex.: Está chovendo', 'E.g. It is raining');
+        label.append(identity, input); groups.get(kind).append(label); inputs.push([atom, input]);
       }
-      const cancel = action(text("Cancelar", "Cancel"), () => d.close()),
-        save = el("button", text("Salvar", "Save"), "hy-button");
-      save.type = "submit";
-      save.classList.add("hy-beta-primary");
+      form.append(scroll);
+      const cancel = action(text('Cancelar', 'Cancel'), () => d.close()),
+        save = el('button', text('Salvar', 'Save'), 'hy-button hy-beta-primary');
+      save.type = 'submit';
       betaActions(form, cancel, save);
-      form.onsubmit = (e) => {
-        e.preventDefault();
+      form.onsubmit = event => {
+        event.preventDefault();
         const values = Object.create(null);
-        inputs.forEach(([atom, input]) => {
-          if (input.value.trim()) values[atom] = input.value.trim();
-        });
+        inputs.forEach(([atom, input]) => { if (input.value.trim()) values[atom] = input.value.trim(); });
         documentAtOpen.descriptions = values;
         if (domain) documentAtOpen.domainDescription = domain.value.trim();
-        saveArguments();
-        refreshDescriptions();
-        d.close();
+        saveArguments(); refreshDescriptions(); d.close();
       };
-      d.append(form);
-      d.showModal();
+      d.append(form); d.showModal();
     }),
   );
   function refreshDescriptions() {
@@ -16427,7 +16251,10 @@ async function confirmDeletion(message) {
         form = el("form"),
         a = el("input"),
         b = el("input"),
-        result = el("div");
+        result = el("div"),
+        scroll = el("div", undefined, "hy-beta-scroll");
+      d.dataset.feature = 'comparison';
+      scroll.append(el('p', text('Compare o valor de duas fórmulas em todas as interpretações da lógica proposicional clássica.', 'Compare the value of two formulas in every interpretation of classical propositional logic.'), 'hy-description-note'));
       result.setAttribute("role", "status");
       form.classList.add("hy-beta-formulas");
       for (const [name, input] of [
@@ -16437,8 +16264,9 @@ async function confirmDeletion(message) {
         const label = el("label", name);
         input.required = true;
         label.append(input);
-        form.append(label);
+        scroll.append(label);
       }
+      scroll.append(result); form.append(scroll);
       const compare = el("button", text("Comparar", "Compare"), "hy-button");
       compare.type = "submit";
       compare.classList.add("hy-beta-primary");
@@ -16486,7 +16314,7 @@ async function confirmDeletion(message) {
           compare.disabled = false;
         }
       };
-      d.append(form, result);
+      d.append(form);
       d.showModal();
     }),
   );
@@ -16593,6 +16421,7 @@ async function confirmDeletion(message) {
             );
           run.disabled = false;
         });
+      redundancy.className = 'hy-redundancy';
       redundancy.append(summary, run, output);
       logicPanel.append(redundancy);
     },
@@ -21518,29 +21347,74 @@ function openBackgroundThemes(pointerId) {
 </script>
 
 <script id="validation-dialog">
-// Reuse the live preview and its controls; restore their exact positions on close.
-const validationDialog = document.createElement("dialog");
-validationDialog.className = "hy-validation-dialog";
-const validationHeader = document.createElement("header");
-validationHeader.className = "hy-validation-heading";
-const validationTitle = document.createElement("h2");
-validationTitle.id = "validation-title";
-validationTitle.textContent = interfaceText("Validação lógica", "Logic validation");
-validationDialog.setAttribute("aria-labelledby", validationTitle.id);
-const validationClose = document.createElement("button");
-validationClose.type = "button";
-validationClose.className = "hy-button hy-icon-button";
-validationClose.setAttribute("aria-label", interfaceText("Fechar", "Close"));
-validationClose.textContent = "×";
+// The argument stays in view while a detail panel presents the analysis tools.
+const validationDialog = document.createElement('dialog');
+validationDialog.className = 'hy-validation-dialog';
+validationDialog.id = 'logic-validation-dialog';
+const validationHeader = document.createElement('header');
+validationHeader.className = 'hy-validation-heading';
+const validationIdentity = document.createElement('div');
+validationIdentity.className = 'hy-analysis-identity';
+const validationModeIcon = document.createElement('span');
+validationModeIcon.className = 'hy-analysis-mode-icon';
+const validationHeadingText = document.createElement('div');
+const validationTitle = document.createElement('h2');
+validationTitle.id = 'validation-title';
+const validationMode = document.createElement('p');
+validationMode.className = 'hy-analysis-mode-name';
+validationHeadingText.append(validationTitle, validationMode);
+validationIdentity.append(validationModeIcon, validationHeadingText);
+validationDialog.setAttribute('aria-labelledby', validationTitle.id);
+const validationClose = document.createElement('button');
+validationClose.type = 'button';
+validationClose.className = 'hy-button hy-icon-button hy-analysis-close';
+validationClose.textContent = '×';
 validationClose.onclick = () => validationDialog.close();
-validationHeader.append(validationTitle, validationClose);
-const validationPreview = document.createElement("section");
-validationPreview.className = "hy-validation-preview";
-const validationControls = document.createElement("div");
-validationControls.className = "hy-section-head";
-validationPreview.append(validationControls);
-validationDialog.append(validationHeader, validationPreview, logicFooter, logicPanel);
+validationHeader.append(validationIdentity, validationClose);
+const validationWorkspace = document.createElement('div');
+validationWorkspace.className = 'hy-analysis-workspace';
+const validationPreview = document.createElement('section');
+validationPreview.className = 'hy-validation-preview';
+const validationPreviewHeading = document.createElement('div');
+validationPreviewHeading.className = 'hy-analysis-section-label';
+const validationArgumentLabel = document.createElement('h3');
+const validationRowCount = document.createElement('span');
+validationPreviewHeading.append(validationArgumentLabel, validationRowCount);
+const validationControls = document.createElement('div');
+validationControls.className = 'hy-section-head';
+const validationPreviewFooter = document.createElement('footer');
+validationPreviewFooter.className = 'hy-analysis-preview-actions';
+const validationVocabulary = document.createElement('button');
+validationVocabulary.type = 'button';
+validationVocabulary.className = 'hy-button hy-analysis-vocabulary';
+validationVocabulary.onclick = () => root.querySelector('.hy-proposition-descriptions').click();
+validationPreviewFooter.append(validationVocabulary);
+validationPreview.append(validationPreviewHeading, validationControls, validationPreviewFooter);
+const validationAnalysis = document.createElement('section');
+validationAnalysis.className = 'hy-analysis-results';
+const validationResultLabel = document.createElement('h3');
+validationResultLabel.className = 'hy-analysis-section-label';
+validationAnalysis.append(validationResultLabel, logicPanel);
+const validationInspector = document.createElement('section');
+validationInspector.className = 'hy-analysis-inspector';
+validationInspector.id = 'analysis-detail-panel';
+validationInspector.hidden = true;
+const validationInspectorHead = document.createElement('header');
+validationInspectorHead.className = 'hy-analysis-inspector-heading';
+const validationBack = document.createElement('button');
+validationBack.type = 'button';
+validationBack.className = 'hy-button hy-analysis-back';
+const validationInspectorTitle = document.createElement('h3');
+validationInspectorTitle.id = 'analysis-detail-title';
+const validationInspectorBody = document.createElement('div');
+validationInspectorBody.className = 'hy-analysis-inspector-body';
+validationInspector.setAttribute('aria-labelledby', validationInspectorTitle.id);
+validationInspectorHead.append(validationBack, validationInspectorTitle);
+validationInspector.append(validationInspectorHead, validationInspectorBody);
+validationWorkspace.append(validationPreview, validationAnalysis, validationInspector);
+validationDialog.append(validationHeader, validationWorkspace, logicFooter);
 root.append(validationDialog);
+
 const argumentActions = document.createElement('footer');
 argumentActions.className = 'hy-panel-actions';
 const argumentOutput = root.querySelector('.hy-argument-panel .hy-export-group');
@@ -21548,52 +21422,147 @@ argumentActions.append(logicButton, argumentOutput);
 root.querySelector('.hy-argument-panel .hy-preview-inner').append(argumentActions);
 logicButton.hidden = !ui.preview;
 logicButton.inert = !ui.preview;
-logicButton.setAttribute("aria-haspopup", "dialog");
-logicButton.setAttribute("aria-controls", "logic-validation-dialog");
-validationDialog.id = "logic-validation-dialog";
+logicButton.setAttribute('aria-haspopup', 'dialog');
+logicButton.setAttribute('aria-controls', validationDialog.id);
 let validationRestore = [];
 let validationReturnFocus = null;
-// Measure the normal argument panel synchronously, even while its live content is in the dialog.
+let validationDetail = null;
+
+function analysisIcon(name) {
+  const paths = {
+    table: '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9h16M9 4v16M4 14h16"/>',
+    guide: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
+    redundancy: '<path d="M8 7h12M8 12h12M8 17h7M3 7h.01M3 12h.01M3 17h.01"/>',
+    vocabulary: '<path d="M5 4h14a1 1 0 0 1 1 1v15H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2M4 17h16M9 8h7M9 12h4"/>',
+    compare: '<path d="M4 8h16m-4-4 4 4-4 4M20 16H4m4-4-4 4 4 4"/>',
+    back: '<path d="m14 6-6 6 6 6"/>',
+    valid: '<path d="m5 12 4 4 10-10"/>',
+    invalid: '<path d="m7 7 10 10M17 7 7 17"/>',
+    syntax: '<path d="m8 6-5 6 5 6M16 6l5 6-5 6"/>',
+  };
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.innerHTML = paths[name] || paths.guide;
+  return svg;
+}
+
+function resetValidationInspector(returnFocus = false) {
+  if (!validationDetail) return;
+  const { section, marker, trigger } = validationDetail;
+  validationDetail = null;
+  section.open = false;
+  delete section.dataset.inspected;
+  marker.replaceWith(section);
+  trigger.setAttribute('aria-expanded', 'false');
+  validationInspector.hidden = true;
+  validationAnalysis.hidden = false;
+  if (returnFocus) trigger.focus();
+}
+validationBack.onclick = () => resetValidationInspector(true);
+validationDialog.addEventListener('cancel', event => {
+  if (!validationDetail || root.querySelector('.hy-beta-dialog[open]')) return;
+  event.preventDefault();
+  resetValidationInspector(true);
+});
+
+function refreshValidationWorkspace() {
+  const t = interfaceText;
+  validationTitle.textContent = t('Validação lógica', 'Logic validation');
+  validationClose.setAttribute('aria-label', t('Fechar', 'Close'));
+  validationMode.textContent = currentLogicMode() === 'syllogistic'
+    ? t('Silogística categórica', 'Categorical syllogistic')
+    : currentLogicMode() === 'first-order'
+      ? t('Lógica de primeira ordem', 'First-order logic')
+      : t('Lógica proposicional', 'Propositional logic');
+  validationModeIcon.replaceChildren(root.querySelector('.hy-mode-icon svg')?.cloneNode(true) || analysisIcon('syntax'));
+  validationArgumentLabel.textContent = t('Argumento', 'Argument');
+  validationResultLabel.textContent = t('Análise', 'Analysis');
+  const count = rows.filter(row => row.role === 'premise' && row.text.trim()).length;
+  validationRowCount.textContent = count + ' ' + (count === 1 ? t('premissa', 'premise') : t('premissas', 'premises'));
+  validationVocabulary.replaceChildren(analysisIcon('vocabulary'), document.createTextNode(t('Vocabulário', 'Vocabulary')));
+  validationBack.replaceChildren(analysisIcon('back'));
+  validationBack.setAttribute('aria-label', t('Voltar à análise', 'Back to analysis'));
+  for (const section of logicPanel.querySelectorAll(':scope > details, :scope > .hy-extended-logic > details')) {
+    if (section.dataset.analysisTool) continue;
+    const summary = section.querySelector(':scope > summary');
+    if (!summary) continue;
+    const title = summary.textContent;
+    const icon = section.classList.contains('hy-truth-table') ? 'table'
+      : section.classList.contains('hy-redundancy') ? 'redundancy' : 'guide';
+    section.dataset.analysisTool = icon;
+    const caption = document.createElement('span');
+    caption.textContent = title;
+    summary.replaceChildren(analysisIcon(icon), caption);
+    summary.setAttribute('aria-controls', validationInspector.id);
+    summary.setAttribute('aria-expanded', 'false');
+    summary.addEventListener('click', event => {
+      event.preventDefault();
+      resetValidationInspector();
+      const marker = document.createComment('analysis detail');
+      section.before(marker);
+      validationDetail = { section, marker, trigger: summary };
+      section.dataset.inspected = '';
+      section.open = true;
+      summary.setAttribute('aria-expanded', 'true');
+      validationInspectorTitle.textContent = title;
+      validationInspectorBody.replaceChildren(section);
+      validationAnalysis.hidden = true;
+      validationInspector.hidden = false;
+      validationInspectorBody.scrollTop = 0;
+      validationBack.focus();
+    });
+  }
+  const compare = logicPanel.querySelector('.hy-advanced-tools button');
+  if (compare && !compare.querySelector('svg')) {
+    const label = compare.textContent;
+    compare.replaceChildren(analysisIcon('compare'), document.createTextNode(label));
+  }
+}
+
+// Exports capture the original panel geometry, even while its content is in analysis.
 function withArgumentPanelSnapshot(capture) {
   if (!validationDialog.open) return capture(root.querySelector('.hy-argument-panel'));
-  const temporary = validationRestore.map(({node,marker}) => {
+  const temporary = validationRestore.map(({ node, marker }) => {
     const current = document.createComment('snapshot restore');
     node.before(current); marker.before(node);
-    return {node,current};
+    return { node, current };
   });
   try { return capture(root.querySelector('.hy-argument-panel')); }
-  finally { for (const {node,current} of temporary) current.replaceWith(node); }
+  finally { for (const { node, current } of temporary) current.replaceWith(node); }
 }
 function openLogicValidation() {
   if (validationDialog.open) return;
-  const tools = root.querySelector(".hy-argument-panel .hy-tools"),
-    content = root.querySelector("#hy-argument");
+  const tools = root.querySelector('.hy-argument-panel .hy-tools'),
+    content = root.querySelector('#hy-argument');
   validationRestore = [tools, content, argumentOutput].map(node => {
-    const marker = document.createComment("validation restore");
+    const marker = document.createComment('validation restore');
     node.before(marker);
     return { node, marker };
   });
   validationControls.append(tools);
-  tools.append(argumentOutput);
-  validationPreview.append(content);
+  validationPreviewFooter.append(argumentOutput);
+  validationPreviewFooter.before(content);
   logicEnabled = true;
   logicPanel.hidden = false;
-  logicButton.setAttribute("aria-expanded", "true");
+  logicButton.setAttribute('aria-expanded', 'true');
+  refreshValidationWorkspace();
   validationDialog.showModal();
   updateLogicValidation();
 }
-validationDialog.addEventListener("close", () => {
+validationDialog.addEventListener('close', () => {
+  resetValidationInspector();
   logicEnabled = false;
   logicRevision++;
   clearTimeout(logicTimer);
   for (const { node, marker } of validationRestore) marker.replaceWith(node);
   validationRestore = [];
   logicPanel.hidden = true;
-  logicButton.setAttribute("aria-expanded", "false");
+  logicButton.setAttribute('aria-expanded', 'false');
   (validationReturnFocus || logicButton).focus();
   validationReturnFocus = null;
 });
-validationDialog.addEventListener("click", event => {
+validationDialog.addEventListener('click', event => {
   if (event.target !== validationDialog) return;
   const b = validationDialog.getBoundingClientRect();
   if (event.clientX < b.left || event.clientX > b.right || event.clientY < b.top || event.clientY > b.bottom) validationDialog.close();
@@ -21780,58 +21749,128 @@ function currentLogicMode() {
 
 <script id="extended-logic-view">
 function updateExtendedLogicValidation(mode) {
-  const t=interfaceText,section=document.createElement('div');section.className='hy-extended-logic';
-  const add=(tag,value,cls)=>{const node=document.createElement(tag);node.textContent=value;if(cls)node.className=cls;section.append(node);return node;};
-  const finish=status=>{logicPanel.dataset.state=status;logicPanel.replaceChildren(section);};
-  if(mode==='first-order'){
-    if(rows.length>200){add('p',t('Análise limitada a 200 linhas.','Analysis is limited to 200 rows.'));finish('limit');return;}
-    const result=LPFirstOrder.analyze(rows);
-    const messages={
-      name:t('Esperado um nome de símbolo ou variável.','Expected a symbol or variable name.'),
-      variable:t('Quantificadores de primeira ordem ligam variáveis individuais em minúsculas.','First-order quantifiers bind lowercase individual variables.'),
-      predicate:t('Use predicados com inicial maiúscula, como P(a) ou Ama(a,b).','Use uppercase-initial predicates, such as P(a) or Loves(a,b).'),
-      term:t('Os argumentos devem ser termos: variáveis, constantes ou funções com inicial minúscula.','Arguments must be terms: variables, constants or lowercase-initial functions.'),
-      signature:t('O mesmo símbolo foi usado com tipos ou números de argumentos diferentes.','The same symbol was used with different kinds or argument counts.'),
-      delimiter:t('Confira os parênteses e as vírgulas dos argumentos.','Check parentheses and argument commas.'),
-      operator:t('Confira o conectivo ou símbolo: esta escrita não pertence à sintaxe de LPO suportada.','Check the connective or symbol: this expression is outside the supported FOL syntax.'),
-      limit:t('A fórmula excede o limite desta análise.','The formula exceeds the analysis limit.'),
-    };
-    if(result.status==='errors'){
-      add('h3',t('Problemas de sintaxe ou vocabulário','Syntax or vocabulary issues'));
-      for(const error of result.errors)add('p',t('Linha ','Line ')+(error.index+1)+' · '+t('coluna ','column ')+error.column+': '+(messages[error.code]||messages.operator)+(error.token?' ['+error.token+']':''),'hy-logic-result');
-      add('p',t('Esses problemas não são um veredito de invalidade lógica.','These issues are not a verdict of logical invalidity.'));
-    }else if(result.status==='empty')add('p',t('Escreva uma fórmula para analisar.','Enter a formula to analyze.'));
-    else{
-      add('h3',t('Sintaxe de LPO verificada','First-order syntax checked'));
-      for(const entry of result.entries){if(entry.freeVariables.length)add('p',t('Linha ','Line ')+(entry.index+1)+': '+t('variáveis livres — ','free variables — ')+entry.freeVariables.join(', ')+'. '+t('A fórmula não é uma sentença fechada.','The formula is not a closed sentence.'));}
-      add('p',t('A escrita e a consistência dos símbolos foram conferidas. A validade do argumento ainda não foi determinada.','The syntax and consistency of symbols were checked. Argument validity has not been determined.'));
-      if(result.symbols.length)add('p',result.symbols.map(s=>s.name+(s.kind==='constant'?'': '/'+s.arity)).join(' · '),'hy-description-note');
-    }
-    add('p',t('Convenção: variáveis livres x, y, z, u, v, w (com índices); nomes ligados por quantificadores também são variáveis. Quantificadores têm o alcance da fórmula imediatamente seguinte; use parênteses para ampliar esse alcance. Descrições em linguagem natural não são usadas como axiomas.','Convention: free variables x, y, z, u, v, w (with indices); names bound by quantifiers are also variables. Quantifiers scope over the immediately following formula; use parentheses for a wider scope. Natural-language descriptions are not used as axioms.'),'hy-description-note');
-    finish(result.status);return;
+  const t = interfaceText, section = document.createElement('div');
+  section.className = 'hy-extended-logic';
+  function node(tag, value, cls) {
+    const element = document.createElement(tag);
+    if (value) element.textContent = value;
+    if (cls) element.className = cls;
+    return element;
   }
-  const result=LPCategorical.validate(rows);
-  add('p',t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).','Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'),'hy-description-note');
-  if(result.status==='errors'){
-    add('h3',t('Confira a forma das proposições','Check the proposition forms'));
-    for(const error of result.errors)add('p',t('Linha ','Line ')+(error.index+1)+': '+t('use A(S,P), E(S,P), I(S,P) ou O(S,P).','use A(S,P), E(S,P), I(S,P) or O(S,P).'),'hy-logic-result');
-  }else if(result.status==='limit')add('p',t('Este verificador aceita até três termos distintos e 200 linhas.','This checker accepts up to three distinct terms and 200 rows.'));
-  else if(result.status==='missingConclusion')add('p',t('Marque pelo menos uma conclusão.','Mark at least one conclusion.'));
-  else{
-    add('h3',result.status==='valid'?t('Argumento válido nesta semântica','Valid argument under these semantics'):t('Argumento inválido nesta semântica','Invalid argument under these semantics'));
-    if(!result.satisfiable)add('p',t('As premissas são conjuntamente impossíveis. As conclusões decorrem por vacuidade; isso não comprova a verdade das premissas.','The premises are jointly impossible. The conclusions follow vacuously; this does not establish the truth of the premises.'));
-    for(const conclusion of result.conclusions){
-      add('h4',t('Conclusão da linha ','Conclusion on line ')+(conclusion.index+1)+' — '+(conclusion.valid?t('decorre','follows'):t('não decorre','does not follow')));
-      if(conclusion.countermodel){
-        add('p',t('Contramodelo: todas as premissas são verdadeiras e esta conclusão é falsa.','Countermodel: all premises are true and this conclusion is false.'));
-        const table=document.createElement('table');table.className='hy-countermodel-table';
-        const caption=document.createElement('caption');caption.textContent=t('Objetos e pertencimento aos termos','Objects and term membership');table.append(caption);
-        const head=document.createElement('tr');for(const label of [t('Objeto','Object'),...result.terms]){const cell=document.createElement('th');cell.scope='col';cell.textContent=label;head.append(cell);}const thead=document.createElement('thead');thead.append(head);table.append(thead);
-        const body=document.createElement('tbody');for(const object of conclusion.countermodel){const row=document.createElement('tr');for(const label of [object.id,...result.terms.map(term=>object.terms.includes(term)?t('Sim','Yes'):t('Não','No'))]){const cell=document.createElement('td');cell.textContent=label;row.append(cell);}body.append(row);}table.append(body);section.append(table);
+  function summary(title, description, tone) {
+    const card = node('section', '', 'hy-analysis-summary');
+    card.dataset.tone = tone;
+    const heading = node('h3', '', 'hy-analysis-result-heading');
+    heading.append(analysisIcon(tone === 'valid' ? 'valid' : tone === 'invalid' ? 'invalid' : 'syntax'), node('span', title));
+    card.append(heading);
+    if (description) card.append(node('p', description));
+    section.append(card);
+    return card;
+  }
+  function guide(title, ...paragraphs) {
+    const details = node('details');
+    details.append(node('summary', title), ...paragraphs.map(p => node('p', p)));
+    section.append(details);
+  }
+  function finish(status) {
+    logicPanel.dataset.state = status;
+    logicPanel.replaceChildren(section);
+    refreshValidationWorkspace();
+  }
+  if (mode === 'first-order') {
+    if (rows.length > 200) {
+      summary(t('Limite da análise', 'Analysis limit'), t('Análise limitada a 200 linhas.', 'Analysis is limited to 200 rows.'), 'syntax');
+      finish('limit'); return;
+    }
+    const result = LPFirstOrder.analyze(rows);
+    const messages = {
+      name: t('Esperado um nome de símbolo ou variável.', 'Expected a symbol or variable name.'),
+      variable: t('Quantificadores de primeira ordem ligam variáveis individuais em minúsculas.', 'First-order quantifiers bind lowercase individual variables.'),
+      predicate: t('Use predicados com inicial maiúscula, como P(a) ou Ama(a,b).', 'Use uppercase-initial predicates, such as P(a) or Loves(a,b).'),
+      term: t('Os argumentos devem ser termos: variáveis, constantes ou funções com inicial minúscula.', 'Arguments must be terms: variables, constants or lowercase-initial functions.'),
+      signature: t('O mesmo símbolo foi usado com tipos ou números de argumentos diferentes.', 'The same symbol was used with different kinds or argument counts.'),
+      delimiter: t('Confira os parênteses e as vírgulas dos argumentos.', 'Check parentheses and argument commas.'),
+      operator: t('Confira o conectivo ou símbolo: esta escrita não pertence à sintaxe de LPO suportada.', 'Check the connective or symbol: this expression is outside the supported FOL syntax.'),
+      limit: t('A fórmula excede o limite desta análise.', 'The formula exceeds the analysis limit.'),
+    };
+    if (result.status === 'errors') {
+      summary(t('Problemas de sintaxe ou vocabulário', 'Syntax or vocabulary issues'), t('Esses problemas não são um veredito de invalidade lógica.', 'These issues are not a verdict of logical invalidity.'), 'invalid');
+      for (const error of result.errors) {
+        const item = node('div', '', 'hy-analysis-diagnostic');
+        item.append(node('span', t('Linha ', 'Line ') + (error.index + 1) + ' · ' + t('coluna ', 'column ') + error.column, 'hy-analysis-location'));
+        item.append(node('p', (messages[error.code] || messages.operator) + (error.token ? ' [' + error.token + ']' : '')));
+        section.append(item);
+      }
+    } else if (result.status === 'empty') {
+      summary(t('Nenhuma fórmula para analisar', 'No formula to analyze'), t('Escreva uma fórmula para analisar.', 'Enter a formula to analyze.'), 'syntax');
+    } else {
+      summary(t('Sintaxe de LPO verificada', 'First-order syntax checked'), t('A escrita e a consistência dos símbolos foram conferidas. A validade do argumento ainda não foi determinada.', 'The syntax and consistency of symbols were checked. Argument validity has not been determined.'), 'syntax');
+      for (const entry of result.entries) {
+        if (!entry.freeVariables.length) continue;
+        const note = node('div', '', 'hy-analysis-diagnostic');
+        note.append(node('span', t('Linha ', 'Line ') + (entry.index + 1), 'hy-analysis-location'));
+        note.append(node('p', t('variáveis livres — ', 'free variables — ') + entry.freeVariables.join(', ') + '. ' + t('A fórmula não é uma sentença fechada.', 'The formula is not a closed sentence.')));
+        section.append(note);
+      }
+      if (result.symbols.length) {
+        const symbols = node('section', '', 'hy-analysis-symbols');
+        symbols.append(node('h4', t('Símbolos identificados', 'Identified symbols')));
+        const list = node('div', '', 'hy-analysis-symbol-list');
+        for (const s of result.symbols) {
+          const chip = node('span', '', 'hy-analysis-symbol-chip');
+          const kind = s.kind === 'constant' ? t('constante', 'constant') : s.kind === 'function' ? t('função', 'function') : t('predicado', 'predicate');
+          chip.append(node('b', s.name), node('small', kind + (s.kind === 'constant' ? '' : ' · ' + t('aridade ', 'arity ') + s.arity)));
+          list.append(chip);
+        }
+        symbols.append(list); section.append(symbols);
       }
     }
+    guide(t('Convenções e limites', 'Conventions and limits'), t('Convenção: variáveis livres x, y, z, u, v, w (com índices); nomes ligados por quantificadores também são variáveis. Quantificadores têm o alcance da fórmula imediatamente seguinte; use parênteses para ampliar esse alcance. Descrições em linguagem natural não são usadas como axiomas.', 'Convention: free variables x, y, z, u, v, w (with indices); names bound by quantifiers are also variables. Quantifiers scope over the immediately following formula; use parentheses for a wider scope. Natural-language descriptions are not used as axioms.'));
+    finish(result.status); return;
   }
-  add('p',t('A: Todo S é P. E: Nenhum S é P. I: Algum S é P. O: Algum S não é P. Os nomes dos termos diferenciam maiúsculas de minúsculas. A análise enumera todas as regiões possíveis de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.','A: Every S is P. E: No S is P. I: Some S is P. O: Some S is not P. Term names are case-sensitive. The analysis enumerates all possible membership regions; it does not represent the entire Aristotelian or scholastic tradition.'),'hy-description-note');
+  const result = LPCategorical.validate(rows);
+  if (result.status === 'errors') {
+    summary(t('Confira a forma das proposições', 'Check the proposition forms'), '', 'invalid');
+    for (const error of result.errors) section.append(node('p', t('Linha ', 'Line ') + (error.index + 1) + ': ' + t('use A(S,P), E(S,P), I(S,P) ou O(S,P).', 'use A(S,P), E(S,P), I(S,P) or O(S,P).'), 'hy-analysis-diagnostic'));
+  } else if (result.status === 'limit') {
+    summary(t('Limite da análise', 'Analysis limit'), t('Este verificador aceita até três termos distintos e 200 linhas.', 'This checker accepts up to three distinct terms and 200 rows.'), 'syntax');
+  } else if (result.status === 'missingConclusion') {
+    summary(t('Conclusão não indicada', 'No conclusion indicated'), t('Marque pelo menos uma conclusão.', 'Mark at least one conclusion.'), 'syntax');
+  } else {
+    summary(result.status === 'valid' ? t('Argumento válido nesta semântica', 'Valid argument under these semantics') : t('Argumento inválido nesta semântica', 'Invalid argument under these semantics'), '', result.status);
+    if (!result.satisfiable) section.append(node('p', t('As premissas são conjuntamente impossíveis. As conclusões decorrem por vacuidade; isso não comprova a verdade das premissas.', 'The premises are jointly impossible. The conclusions follow vacuously; this does not establish the truth of the premises.'), 'hy-analysis-diagnostic'));
+    for (const conclusion of result.conclusions) {
+      const card = node('section', '', 'hy-categorical-conclusion');
+      const heading = node('h4');
+      heading.append(analysisIcon(conclusion.valid ? 'valid' : 'invalid'), node('span', t('Conclusão da linha ', 'Conclusion on line ') + (conclusion.index + 1) + ' — ' + (conclusion.valid ? t('decorre', 'follows') : t('não decorre', 'does not follow'))));
+      card.append(heading);
+      if (conclusion.countermodel) {
+        card.append(node('p', t('Contramodelo: todas as premissas são verdadeiras e esta conclusão é falsa.', 'Countermodel: all premises are true and this conclusion is false.')));
+        const scroll = node('div', '', 'hy-table-scroll');
+        const table = node('table', '', 'hy-countermodel-table');
+        table.append(node('caption', t('Objetos e pertencimento aos termos', 'Objects and term membership')));
+        const head = node('tr');
+        for (const label of [t('Objeto', 'Object'), ...result.terms]) { const cell = node('th', label); cell.scope = 'col'; head.append(cell); }
+        const thead = node('thead'); thead.append(head); table.append(thead);
+        const body = node('tbody');
+        for (const object of conclusion.countermodel) {
+          const row = node('tr');
+          for (const label of [object.id, ...result.terms.map(term => object.terms.includes(term) ? t('Sim', 'Yes') : t('Não', 'No'))]) row.append(node('td', label));
+          body.append(row);
+        }
+        table.append(body); scroll.append(table); card.append(scroll);
+      }
+      section.append(card);
+    }
+  }
+  section.append(node('p', t('Termos podem ser vazios; universais não afirmam existência.', 'Terms may be empty; universals do not assert existence.'), 'hy-analysis-scope-note'));
+  guide(t('Semântica e limites', 'Semantics and limits'), t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).', 'Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'), t('Os nomes dos termos diferenciam maiúsculas de minúsculas. A análise enumera todas as regiões possíveis de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.', 'Term names are case-sensitive. The analysis enumerates all possible membership regions; it does not represent the entire Aristotelian or scholastic tradition.'));
+  const forms = node('details');
+  forms.append(node('summary', t('Formas das proposições', 'Proposition forms')));
+  for (const [form, pt, en] of [['A(S,P)', 'Todo S é P.', 'Every S is P.'], ['E(S,P)', 'Nenhum S é P.', 'No S is P.'], ['I(S,P)', 'Algum S é P.', 'Some S is P.'], ['O(S,P)', 'Algum S não é P.', 'Some S is not P.']]) {
+    const line = node('p', '', 'hy-analysis-form'); line.append(node('code', form), node('span', t(pt, en))); forms.append(line);
+  }
+  section.append(forms);
   finish(result.status);
 }
 </script>

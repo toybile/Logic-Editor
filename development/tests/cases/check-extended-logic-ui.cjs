@@ -10,7 +10,7 @@ fs.mkdirSync('test-artifacts',{recursive:true});
   async function open(status){await p.locator('.hy-logic-button').click();await p.waitForFunction(status=>logicPanel.dataset.state===status,status);}
   async function close(){await p.locator('.hy-validation-heading button').click();await p.locator('.hy-panel-actions #copy').waitFor({state:'visible'});}
   await seed('syllogistic',['A(M,P)','A(S,M)'],'A(S,P)');await open('valid');
-  assert((await p.locator('#logic-panel').innerText()).includes('no existential import'));await close();
+  await p.getByText('Semantics and limits',{exact:true}).click();assert((await p.locator('.hy-analysis-inspector').innerText()).includes('no existential import'));await p.locator('.hy-analysis-back').click();await close();
   await seed('syllogistic',['A(S,P)'],'I(S,P)');await open('invalid');
   assert.equal(await p.locator('.hy-countermodel-table tbody tr').count(),1);await p.locator('.hy-validation-dialog').screenshot({path:'test-artifacts/categorical-'+theme+'.png'});await close();
   await seed('first-order',['∀x(P(x) → Q(x))','P(a)'],'Q(a)');await open('syntax-checked');
@@ -19,7 +19,7 @@ fs.mkdirSync('test-artifacts',{recursive:true});
   await seed('first-order',['P(a)'],'P(a,b)');await open('errors');assert((await p.locator('#logic-panel').innerText()).includes('different kinds or argument counts'));await close();
   await seed('first-order',['∀x R(x,f(a))'],'R(a,f(a))');
   await p.locator('.hy-proposition-descriptions').click();const d=p.locator('[data-feature=descriptions]');
-  assert((await d.innerText()).includes('First-order vocabulary'));assert((await d.innerText()).includes('arity 2'));assert((await d.innerText()).includes('function'));
+  assert((await d.innerText()).includes('First-order vocabulary'));assert((await d.innerText()).includes('arity 2'));assert((await d.innerText()).includes('Functions'));
   assert.equal(await d.locator('input').count(),4,'domain, R, a and f; no variable x');
   await d.getByLabel('Domain of discourse').fill('People');
   await d.locator('input').nth(1).fill('x is related to y');
