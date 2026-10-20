@@ -12,8 +12,10 @@ function currentLogicMode() {
   const trigger = document.createElement('button');
   trigger.id = 'logic-mode-select'; trigger.type = 'button';
   trigger.className = 'hy-logic-mode-select';
-  title.before(trigger); trigger.append(title);
-  const arrow = document.createElement('span'); arrow.textContent = '⌄'; arrow.setAttribute('aria-hidden','true'); trigger.append(arrow);
+  const anchor = document.createElement('div'); anchor.className = 'hy-mode-anchor';
+  title.before(anchor); anchor.append(title, trigger);
+  const selectedName = document.createElement('span'); trigger.append(selectedName);
+  trigger.insertAdjacentHTML('afterbegin','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>');
   const menu = document.createElement('div'); menu.className = 'hy-logic-mode-menu';
   menu.id = 'logic-mode-options'; menu.setAttribute('popover','auto'); menu.setAttribute('role','menu'); root.append(menu);
   trigger.setAttribute('aria-haspopup','menu'); trigger.setAttribute('aria-expanded','false'); trigger.setAttribute('aria-controls',menu.id);
@@ -50,6 +52,7 @@ function currentLogicMode() {
     trigger.setAttribute('aria-label',t('Sistema lógico: ','Logical system: ')+t(mode[1],mode[2]));
     trigger.dataset.hintText=t(mode[1],mode[2])+'. '+t('Clique para escolher. Segure para conhecer os modos.','Click to choose. Hold to learn about the modes.');
     trigger.dataset.mode=mode[0];
+    selectedName.textContent=t(mode[1],mode[2]);
     menu.replaceChildren();
     for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.textContent=t(pt,en);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{argumentWorkspace.documents.find(doc=>doc.id===argumentWorkspace.activeId).logicMode=id;menu.hidePopover();saveArguments();refresh();if(logicEnabled)updateLogicValidation();trigger.focus();};menu.append(b);}
     const info=document.createElement('button');info.type='button';info.textContent=t('Conhecer os modos','About the modes');info.setAttribute('role','menuitem');info.onclick=help;menu.append(info);

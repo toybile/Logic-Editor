@@ -339,40 +339,20 @@
       "Chove and chove are different variables. Proposition descriptions help record meanings, but do not participate in logical validation.",
     ],
   ];
-  let helpPage = null,
-    helpScroll = 0;
-  function closeExampleHelp() {
-    if (!helpPage) return;
-    helpPage.remove();
-    helpPage = null;
-    root.hidden = false;
-    root.inert = false;
-    window.scrollTo(0, helpScroll);
-    openExamples();
-    requestAnimationFrame(() => root.querySelector(".hy-examples-help")?.focus());
-  }
-  window.addEventListener("popstate", () => {
-    if (helpPage && location.hash !== "#examples-help") closeExampleHelp();
-  });
   function openExampleHelp() {
-    helpScroll = window.scrollY;
-    const page = document.createElement("main");
-    page.className = "hy-examples-help-page";
+    const page = document.createElement("dialog");
+    page.className = "hy-feature-dialog hy-logic-mode-help hy-examples-help-dialog";
     page.setAttribute("aria-labelledby", "examples-help-title");
     const back = document.createElement("button");
     back.type = "button";
-    back.className = "hy-help-back";
-    back.setAttribute("aria-label", label("Voltar aos exemplos", "Back to examples"));
+    back.className = "hy-button hy-icon-button";
+    back.setAttribute("aria-label", label("Fechar", "Close"));
     back.title = back.getAttribute("aria-label");
-    back.innerHTML =
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12"/></svg>';
-    back.onclick = () => {
-      if (history.state?.lpExampleHelp) history.back();
-      else closeExampleHelp();
-    };
+    back.textContent = "×";
+    back.onclick = () => page.close();
     const content = document.createElement("div");
-    content.className = "hy-help-content";
-    const title = document.createElement("h1");
+    content.className = "hy-example-lesson-content";
+    const title = document.createElement("h2");
     title.id = "examples-help-title";
     title.textContent = label("Entenda os exemplos", "Understanding the examples");
     title.tabIndex = -1;
@@ -415,15 +395,17 @@
       sources.append(a, document.createTextNode(" · "));
     }
     content.append(sources);
-    page.append(back, content);
-    page.style.colorScheme = isDarkTheme() ? "dark" : "light";
-    helpPage = page;
-    root.hidden = true;
-    root.inert = true;
-    document.body.append(page);
-    history.pushState({ lpExampleHelp: true }, "", "#examples-help");
+    const header = document.createElement("header");
+    header.append(title, back);
+    page.append(header, content);
+    root.append(page);
+    page.onclose = () => {
+      page.remove();
+      openExamples();
+      requestAnimationFrame(() => root.querySelector(".hy-examples-help")?.focus());
+    };
+    page.showModal();
     title.focus({ preventScroll: true });
-    page.scrollTop = 0;
   }
   function openExamples() {
     const dialog = document.createElement("dialog");
