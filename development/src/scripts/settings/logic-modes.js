@@ -24,13 +24,14 @@ function currentLogicMode() {
   const title = root.querySelector('.hy-title strong');
   const trigger = document.createElement('button');
   trigger.id = 'logic-mode-select'; trigger.type = 'button';
-  trigger.className = 'hy-logic-mode-select';
-  const anchor = document.createElement('div'); anchor.className = 'hy-mode-anchor';
-  title.before(anchor); anchor.append(title, trigger);
-  const selectedName = document.createElement('span'); trigger.append(selectedName);
-  const selectedIcon = document.createElement('span'); selectedIcon.className='hy-mode-icon'; trigger.prepend(selectedIcon);
+  trigger.className = 'hy-mode-anchor';
+  title.before(trigger); trigger.append(title);
+  const anchor = trigger;
+  const value = document.createElement('span'); value.className='hy-logic-mode-select';trigger.append(value);
+  const selectedName = document.createElement('span'); value.append(selectedName);
+  const selectedIcon = document.createElement('span'); selectedIcon.className='hy-mode-icon'; value.prepend(selectedIcon);
   const menu = document.createElement('div'); menu.className = 'hy-logic-mode-menu';
-  menu.id = 'logic-mode-options'; menu.setAttribute('popover','auto'); menu.setAttribute('role','menu'); root.append(menu);
+  menu.id = 'logic-mode-options'; menu.setAttribute('popover','manual'); menu.setAttribute('role','menu'); root.append(menu);
   trigger.setAttribute('aria-haspopup','menu'); trigger.setAttribute('aria-expanded','false'); trigger.setAttribute('aria-controls',menu.id);
   function help() {
     if(menu.matches(':popover-open'))menu.hidePopover();
@@ -76,14 +77,22 @@ function currentLogicMode() {
   trigger.addEventListener('pointerdown',e=>{if(e.button!==0)return;held=false;timer=setTimeout(()=>{held=true;help();},getHoldDelay());});
   for(const event of ['pointerup','pointercancel','pointerleave'])trigger.addEventListener(event,cancel);
   window.addEventListener('blur',cancel);
-  trigger.onclick=()=>{if(held){held=false;return;}if(menu.matches(':popover-open')){menu.hidePopover();return;}refresh();menu.showPopover();const r=trigger.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,r.left))+'px';menu.style.top=r.bottom+8+'px';};
+  trigger.onclick=()=>{if(held){held=false;return;}if(menu.matches(':popover-open')){menu.hidePopover();return;}refresh();menu.showPopover();const r=value.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,r.left+r.width/2-menu.offsetWidth/2))+'px';menu.style.top=r.bottom+8+'px';};
+  document.addEventListener('pointerdown', event => {
+    if (!trigger.contains(event.target) && !menu.contains(event.target) && menu.matches(':popover-open')) menu.hidePopover();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu.matches(':popover-open')) {
+      event.preventDefault(); event.stopPropagation(); menu.hidePopover(); trigger.focus();
+    }
+  }, true);
   menu.addEventListener('toggle',e=>trigger.setAttribute('aria-expanded',String(e.newState==='open')));
   workspaceEvents.addEventListener('saved',refresh);
   root.querySelector('#settings-language').addEventListener('click',refresh);
   const header = root.querySelector('.hy-head');
   function alignDock() {
-    trigger.style.top = header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top - 1 + 'px';
-    trigger.style.setProperty('--mode-header-background', getComputedStyle(header).backgroundColor);
+    value.style.top = header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top - 1 + 'px';
+    value.style.setProperty('--mode-header-background', getComputedStyle(header).backgroundColor);
   }
   new ResizeObserver(alignDock).observe(header);
   root.addEventListener('lp-ui-colors', () => requestAnimationFrame(alignDock));

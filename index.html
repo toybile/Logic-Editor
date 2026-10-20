@@ -9647,15 +9647,13 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-panel-font-sample { margin-top:12px; padding:12px; text-align:center; border-radius:9px; background:var(--soft); font-size:20px; overflow-wrap:anywhere; }
 #lp-hybrid .hy-description-note { color:var(--quiet); font:13px/1.6 system-ui; margin:0 0 16px; }
 
-#lp-hybrid .hy-mode-anchor { position:relative; display:flex; align-items:center; justify-content:center; align-self:stretch; width:190px; flex:0 0 190px; }
-#lp-hybrid .hy-logic-mode-select { position:absolute; top:100%; left:50%; transform:translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap:10px; width:190px; box-sizing:border-box; padding:10px 13px; border:1px solid var(--edge); border-top:0; border-radius:0 0 14px 14px; background:var(--mode-header-background,var(--paper)); color:var(--ink); font:12px/1.4 system-ui; box-shadow:0 5px 18px #00000008; cursor:pointer; }
+#lp-hybrid .hy-mode-anchor { position:relative; display:flex; align-items:center; justify-content:center; align-self:stretch; width:164px; flex:0 0 164px; padding:0; border:0; background:transparent; color:var(--ink); font:inherit; cursor:pointer; }
+#lp-hybrid .hy-logic-mode-select { position:absolute; top:100%; left:50%; transform:translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap:9px; width:164px; box-sizing:border-box; padding:10px 13px; border:1px solid var(--edge); border-top:0; border-radius:0 0 14px 14px; background:var(--mode-header-background,var(--paper)); color:var(--ink); font:12px/1.4 system-ui; box-shadow:0 5px 18px #00000008; cursor:pointer; }
 #lp-hybrid .hy-logic-mode-select svg { width:16px; height:16px; fill:none; stroke:var(--quiet); stroke-width:1.5; flex-shrink:0; }
-#lp-hybrid .hy-logic-mode-select::after { content:""; width:6px; height:6px; margin:0 2px 3px 8px; border-right:1.5px solid var(--quiet); border-bottom:1.5px solid var(--quiet); transform:rotate(45deg); transition:transform .16s ease; }
-#lp-hybrid .hy-logic-mode-select[aria-expanded=true]::after { transform:rotate(225deg); margin-bottom:-2px; }
-#lp-hybrid .hy-logic-mode-select:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+#lp-hybrid .hy-mode-anchor:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
 #lp-hybrid .hy-logic-mode-select:hover { background:var(--soft); }
-#lp-hybrid .hy-logic-mode-menu { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; width:580px; max-width:calc(100vw - 32px); box-sizing:border-box; margin:0; padding:9px; border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); box-shadow:0 12px 32px #0002; }
-#lp-hybrid .hy-logic-mode-menu button { display:flex; align-items:center; gap:10px; width:100%; min-height:72px; text-align:left; padding:12px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:inherit; font:13px/1.5 system-ui; cursor:pointer; }
+#lp-hybrid .hy-logic-mode-menu { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; width:360px; max-width:calc(100vw - 32px); box-sizing:border-box; margin:0; padding:9px; border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); box-shadow:0 12px 32px #0002; }
+#lp-hybrid .hy-logic-mode-menu button { display:flex; align-items:center; gap:10px; width:100%; min-height:58px; text-align:left; padding:10px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:inherit; font:12px/1.5 system-ui; cursor:pointer; }
 #lp-hybrid .hy-logic-mode-menu button:hover { background:var(--soft); }
 #lp-hybrid .hy-logic-mode-menu [aria-checked=true] { background:var(--blue); color:var(--paper); border-color:var(--blue); }
 #lp-hybrid .hy-logic-mode-menu svg { width:20px; height:20px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.5; }
@@ -9670,6 +9668,8 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-logic-mode-menu:popover-open { display:grid; }
 
 #lp-hybrid .hy-mode-icon { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+#lp-hybrid .hy-logic-mode-menu button:last-child { grid-column:1 / -1; width:calc(50% - 3.5px); justify-self:center; }
 
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
@@ -21502,13 +21502,14 @@ function currentLogicMode() {
   const title = root.querySelector('.hy-title strong');
   const trigger = document.createElement('button');
   trigger.id = 'logic-mode-select'; trigger.type = 'button';
-  trigger.className = 'hy-logic-mode-select';
-  const anchor = document.createElement('div'); anchor.className = 'hy-mode-anchor';
-  title.before(anchor); anchor.append(title, trigger);
-  const selectedName = document.createElement('span'); trigger.append(selectedName);
-  const selectedIcon = document.createElement('span'); selectedIcon.className='hy-mode-icon'; trigger.prepend(selectedIcon);
+  trigger.className = 'hy-mode-anchor';
+  title.before(trigger); trigger.append(title);
+  const anchor = trigger;
+  const value = document.createElement('span'); value.className='hy-logic-mode-select';trigger.append(value);
+  const selectedName = document.createElement('span'); value.append(selectedName);
+  const selectedIcon = document.createElement('span'); selectedIcon.className='hy-mode-icon'; value.prepend(selectedIcon);
   const menu = document.createElement('div'); menu.className = 'hy-logic-mode-menu';
-  menu.id = 'logic-mode-options'; menu.setAttribute('popover','auto'); menu.setAttribute('role','menu'); root.append(menu);
+  menu.id = 'logic-mode-options'; menu.setAttribute('popover','manual'); menu.setAttribute('role','menu'); root.append(menu);
   trigger.setAttribute('aria-haspopup','menu'); trigger.setAttribute('aria-expanded','false'); trigger.setAttribute('aria-controls',menu.id);
   function help() {
     if(menu.matches(':popover-open'))menu.hidePopover();
@@ -21554,14 +21555,22 @@ function currentLogicMode() {
   trigger.addEventListener('pointerdown',e=>{if(e.button!==0)return;held=false;timer=setTimeout(()=>{held=true;help();},getHoldDelay());});
   for(const event of ['pointerup','pointercancel','pointerleave'])trigger.addEventListener(event,cancel);
   window.addEventListener('blur',cancel);
-  trigger.onclick=()=>{if(held){held=false;return;}if(menu.matches(':popover-open')){menu.hidePopover();return;}refresh();menu.showPopover();const r=trigger.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,r.left))+'px';menu.style.top=r.bottom+8+'px';};
+  trigger.onclick=()=>{if(held){held=false;return;}if(menu.matches(':popover-open')){menu.hidePopover();return;}refresh();menu.showPopover();const r=value.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,r.left+r.width/2-menu.offsetWidth/2))+'px';menu.style.top=r.bottom+8+'px';};
+  document.addEventListener('pointerdown', event => {
+    if (!trigger.contains(event.target) && !menu.contains(event.target) && menu.matches(':popover-open')) menu.hidePopover();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu.matches(':popover-open')) {
+      event.preventDefault(); event.stopPropagation(); menu.hidePopover(); trigger.focus();
+    }
+  }, true);
   menu.addEventListener('toggle',e=>trigger.setAttribute('aria-expanded',String(e.newState==='open')));
   workspaceEvents.addEventListener('saved',refresh);
   root.querySelector('#settings-language').addEventListener('click',refresh);
   const header = root.querySelector('.hy-head');
   function alignDock() {
-    trigger.style.top = header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top - 1 + 'px';
-    trigger.style.setProperty('--mode-header-background', getComputedStyle(header).backgroundColor);
+    value.style.top = header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top - 1 + 'px';
+    value.style.setProperty('--mode-header-background', getComputedStyle(header).backgroundColor);
   }
   new ResizeObserver(alignDock).observe(header);
   root.addEventListener('lp-ui-colors', () => requestAnimationFrame(alignDock));
