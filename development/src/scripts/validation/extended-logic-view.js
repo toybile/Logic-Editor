@@ -81,7 +81,7 @@ function updateExtendedLogicValidation(mode) {
   const result = LPCategorical.validate(rows);
   if (result.status === 'errors') {
     summary(t('Confira a forma das proposições', 'Check the proposition forms'), '', 'invalid');
-    for (const error of result.errors) section.append(node('p', t('Linha ', 'Line ') + (error.index + 1) + ': ' + t('use A(S,P), E(S,P), I(S,P) ou O(S,P).', 'use A(S,P), E(S,P), I(S,P) or O(S,P).'), 'hy-analysis-diagnostic'));
+    for (const error of result.errors) section.append(node('p', t('Linha ', 'Line ') + (error.index + 1) + ': ' + t('escrita não reconhecida. Use uma forma como “Todo homem é mortal”, “Aristóteles é homem” ou A(S,P). Frases com orações adicionais precisam ser reformuladas.', 'notation not recognized. Use a form such as “Every human is mortal”, “Aristotle is human” or A(S,P). Sentences with additional clauses need reformulation.'), 'hy-analysis-diagnostic'));
   } else if (result.status === 'limit') {
     summary(t('Limite da análise', 'Analysis limit'), t('Este verificador aceita até três termos distintos e 200 linhas.', 'This checker accepts up to three distinct terms and 200 rows.'), 'syntax');
   } else if (result.status === 'missingConclusion') {
@@ -113,8 +113,13 @@ function updateExtendedLogicValidation(mode) {
       section.append(card);
     }
   }
-  section.append(node('p', t('Termos podem ser vazios; universais não afirmam existência.', 'Terms may be empty; universals do not assert existence.'), 'hy-analysis-scope-note'));
-  guide(t('Semântica e limites', 'Semantics and limits'), t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).', 'Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'), t('Os nomes dos termos diferenciam maiúsculas de minúsculas. A análise enumera todas as regiões possíveis de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.', 'Term names are case-sensitive. The analysis enumerates all possible membership regions; it does not represent the entire Aristotelian or scholastic tradition.'));
+  if (result.entries?.some(entry=>entry.singular)) {
+    const interpretation=node('details');interpretation.append(node('summary',t('Interpretação do texto','Text interpretation')));
+    for(const entry of result.entries) interpretation.append(node('p',t('Linha ','Line ')+(entry.index+1)+': '+entry.form+'('+entry.subject+', '+entry.predicate+')'+(entry.singular?' · '+t('sujeito individual existente','existing individual subject'):'')));
+    interpretation.append(node('p',t('Nomes próprios designam um indivíduo existente; nomes diferentes podem designar o mesmo indivíduo.','Proper names denote one existing individual; different names may denote the same individual.')));section.append(interpretation);
+  }
+  section.append(node('p', t('Termos gerais podem ser vazios; universais não afirmam existência.', 'General terms may be empty; universals do not assert existence.'), 'hy-analysis-scope-note'));
+  guide(t('Semântica e limites', 'Semantics and limits'), t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).', 'Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'), t('A notação formal diferencia maiúsculas de minúsculas; nas frases, palavras são normalizadas e nomes próprios designam indivíduos existentes. Não há resolução de pronomes, sinônimos ou flexões. A análise enumera regiões de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.', 'Formal notation is case-sensitive; natural-language words are normalized and proper names denote existing individuals. Pronouns, synonyms and inflections are not resolved. The analysis enumerates membership regions; it does not represent the entire Aristotelian or scholastic tradition.'));
   const forms = node('details');
   forms.append(node('summary', t('Formas das proposições', 'Proposition forms')));
   for (const [form, pt, en] of [['A(S,P)', 'Todo S é P.', 'Every S is P.'], ['E(S,P)', 'Nenhum S é P.', 'No S is P.'], ['I(S,P)', 'Algum S é P.', 'Some S is P.'], ['O(S,P)', 'Algum S não é P.', 'Some S is not P.']]) {

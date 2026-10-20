@@ -1,0 +1,25 @@
+#lp-hybrid .hy-text-import-dialog { width:min(1000px,calc(100vw - 48px)); max-width:none; max-height:calc(100dvh - 48px); padding:0; overflow:hidden; border-radius:22px; }
+#lp-hybrid .hy-text-import-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:24px 26px; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-text-import-identity { display:flex; align-items:center; gap:12px; }
+#lp-hybrid .hy-text-import-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; }
+#lp-hybrid .hy-text-import-workspace { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); height:min(520px,calc(100dvh - 238px)); }
+#lp-hybrid .hy-text-import-source { display:flex; flex-direction:column; gap:16px; padding:24px; min-height:0; background:color-mix(in srgb,var(--soft) 38%,var(--paper)); border-right:1px solid var(--edge); }
+#lp-hybrid .hy-text-import-label { color:var(--quiet); font-size:12px; font-weight:500; }
+#lp-hybrid .hy-text-import-source > textarea { flex:1; min-height:80px; width:100%; resize:none; }
+#lp-hybrid .hy-text-import-source > button { align-self:flex-end; }
+#lp-hybrid .hy-text-import-dialog textarea { box-sizing:border-box; padding:12px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:var(--ink); font:15px/1.6 "Segoe UI",system-ui; }
+#lp-hybrid .hy-text-import-review { min-height:0; overflow:auto; padding:24px; }
+#lp-hybrid .hy-text-import-review-heading { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; }
+#lp-hybrid .hy-text-import-review-heading h3 { margin:0; font-size:13px; font-weight:500; }
+#lp-hybrid .hy-text-import-note { margin:14px 0; color:var(--quiet); font-size:12px; line-height:1.6; }
+#lp-hybrid .hy-text-import-notice { margin:12px 0; font-size:12px; line-height:1.6; }
+#lp-hybrid .hy-text-import-notice:empty { display:none; }
+#lp-hybrid .hy-text-import-row { display:grid; grid-template-columns:100px minmax(0,1fr); gap:8px 12px; padding:12px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-text-import-row select { padding:7px 10px; margin:0; align-self:start; width:100%; background:var(--soft); color:var(--ink); border:1px solid var(--edge); border-radius:9px; font:12px "Segoe UI",system-ui; }
+#lp-hybrid .hy-text-import-row textarea { display:block; width:100%; min-height:48px; resize:vertical; }
+#lp-hybrid .hy-text-import-formula { grid-column:2; margin:0; overflow-wrap:anywhere; color:var(--quiet); font:14px/1.6 "Cambria Math",serif; }
+#lp-hybrid .hy-text-import-row[data-error=true] textarea { border-color:var(--red); }
+#lp-hybrid .hy-text-import-row[data-ignored=true] textarea { opacity:.55; }
+#lp-hybrid .hy-text-import-vocabulary { display:grid; grid-template-columns:auto 1fr; gap:8px 12px; font-size:12px; }
+#lp-hybrid .hy-text-import-vocabulary dd { margin:0; overflow-wrap:anywhere; color:var(--quiet); }
+#lp-hybrid .hy-text-import-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 24px; border-top:1px solid var(--edge); }

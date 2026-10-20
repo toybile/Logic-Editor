@@ -5,6 +5,7 @@
     "styles/writing.css",
     "styles/analysis.css",
     "styles/settings.css",
+    "styles/text-import.css",
     "styles/mobile.css"
   ],
   "scripts": [
@@ -263,6 +264,14 @@
     {
       "name": "extended-logic-view",
       "file": "scripts/validation/extended-logic-view.js"
+    },
+    {
+      "name": "natural-text-interpretation",
+      "file": "scripts/validation/natural-text-interpretation.js"
+    },
+    {
+      "name": "text-argument-import",
+      "file": "scripts/workspace/text-argument-import.js"
     }
   ]
 }

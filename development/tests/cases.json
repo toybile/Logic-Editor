@@ -72,5 +72,7 @@
   "check-mode-inference",
   "check-settings-mode-advice",
   "check-mode-examples",
-  "check-line-selection-spacing"
+  "check-line-selection-spacing",
+  "check-natural-text",
+  "check-natural-text-ui"
 ]

@@ -578,3 +578,10 @@ As abas de argumentos respondem ao clique curto sem aguardar o tempo de segurar.
 +- [Stanford Encyclopedia: existential assumptions](https://plato.stanford.edu/entries/square/)
 +- [The Logic Book: categorical syllogisms](https://alg.manifoldapp.org/read/the-logic-book-clayton/section/5fc9008d-d5fa-4db9-9423-3eb68032353a)
 +
+## Controlled natural-language arguments
+
+In categorical mode, the editor accepts sentences such as `Todo homem é mortal` and `Aristóteles é homem`, including their supported English forms. Proper names denote one existing individual; different names may co-refer. General terms may be empty and universal propositions carry no existential import. Analysis remains limited to three distinct terms (including individual subjects) and 200 rows. Formal notation is case-sensitive; natural-language terms are normalized without resolving synonyms, inflections or pronouns.
+
+Choose **+ → Text** or **File → Interpret text** to propose premises and conclusions from a paragraph. Review and edit every sentence and its role before loading it as a new argument. Supported conditionals, such as `Se chove, então venta`, can be mapped to propositions with a visible vocabulary. The last sentence is only a suggested conclusion when no explicit conclusion marker is present. Unrecognized passages block loading until they are rephrased or explicitly ignored. This is controlled-language interpretation, not unrestricted natural-language understanding or factual verification. First-order input still receives syntax analysis, not a validity proof. Text interpretation runs locally without a remote service.
+
+Semantic reference: [forall x — names and domains](https://forallx.openlogicproject.org/bookml/Ch23.html).

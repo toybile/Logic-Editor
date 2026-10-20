@@ -9551,6 +9551,32 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-settings-footer > span { color:var(--quiet); font:11px/1.5 "Segoe UI",system-ui; }
 #lp-hybrid #editor-settings :is(button,input,select,summary):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
 
+#lp-hybrid .hy-text-import-dialog { width:min(1000px,calc(100vw - 48px)); max-width:none; max-height:calc(100dvh - 48px); padding:0; overflow:hidden; border-radius:22px; }
+#lp-hybrid .hy-text-import-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:24px 26px; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-text-import-identity { display:flex; align-items:center; gap:12px; }
+#lp-hybrid .hy-text-import-heading h2 { margin:0; font:600 18px/1.4 "Segoe UI",system-ui; }
+#lp-hybrid .hy-text-import-workspace { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); height:min(520px,calc(100dvh - 238px)); }
+#lp-hybrid .hy-text-import-source { display:flex; flex-direction:column; gap:16px; padding:24px; min-height:0; background:color-mix(in srgb,var(--soft) 38%,var(--paper)); border-right:1px solid var(--edge); }
+#lp-hybrid .hy-text-import-label { color:var(--quiet); font-size:12px; font-weight:500; }
+#lp-hybrid .hy-text-import-source > textarea { flex:1; min-height:80px; width:100%; resize:none; }
+#lp-hybrid .hy-text-import-source > button { align-self:flex-end; }
+#lp-hybrid .hy-text-import-dialog textarea { box-sizing:border-box; padding:12px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:var(--ink); font:15px/1.6 "Segoe UI",system-ui; }
+#lp-hybrid .hy-text-import-review { min-height:0; overflow:auto; padding:24px; }
+#lp-hybrid .hy-text-import-review-heading { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; }
+#lp-hybrid .hy-text-import-review-heading h3 { margin:0; font-size:13px; font-weight:500; }
+#lp-hybrid .hy-text-import-note { margin:14px 0; color:var(--quiet); font-size:12px; line-height:1.6; }
+#lp-hybrid .hy-text-import-notice { margin:12px 0; font-size:12px; line-height:1.6; }
+#lp-hybrid .hy-text-import-notice:empty { display:none; }
+#lp-hybrid .hy-text-import-row { display:grid; grid-template-columns:100px minmax(0,1fr); gap:8px 12px; padding:12px 0; border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-text-import-row select { padding:7px 10px; margin:0; align-self:start; width:100%; background:var(--soft); color:var(--ink); border:1px solid var(--edge); border-radius:9px; font:12px "Segoe UI",system-ui; }
+#lp-hybrid .hy-text-import-row textarea { display:block; width:100%; min-height:48px; resize:vertical; }
+#lp-hybrid .hy-text-import-formula { grid-column:2; margin:0; overflow-wrap:anywhere; color:var(--quiet); font:14px/1.6 "Cambria Math",serif; }
+#lp-hybrid .hy-text-import-row[data-error=true] textarea { border-color:var(--red); }
+#lp-hybrid .hy-text-import-row[data-ignored=true] textarea { opacity:.55; }
+#lp-hybrid .hy-text-import-vocabulary { display:grid; grid-template-columns:auto 1fr; gap:8px 12px; font-size:12px; }
+#lp-hybrid .hy-text-import-vocabulary dd { margin:0; overflow-wrap:anywhere; color:var(--quiet); }
+#lp-hybrid .hy-text-import-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 24px; border-top:1px solid var(--edge); }
+
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
 #lp-hybrid .hy-symbol-favorite-toggle { display:none; }
@@ -10366,7 +10392,21 @@ document.addEventListener("keydown", (event) => {
       ['E',/^No\s+(.+?)\s+(?:is|are)\s+(.+?)[.]?$/iu],
       ['I',/^Some\s+(.+?)\s+(?:is|are)\s+(.+?)[.]?$/iu],
     ];
-    for(const [form,pattern] of patterns){const match=text.trim().match(pattern);if(match){if(/\s/u.test(match[1].trim())||/\s/u.test(match[2].trim()))throw Error('categorical-template');return statement(form,match[1],match[2]);}}
+    const clean = value => value.normalize('NFC').trim().replace(/\s+/gu,' ');
+    const term = value => {
+      value=clean(value);
+      // Do not reinterpret connectives, relative clauses, quantifiers or negation as a class name.
+      if (/(?:^|\s)(?:e|ou|não|que|se|todo|toda|todos|todas|algum|alguma|nenhum|nenhuma|mas|porém|porque|pois|é|são|and|or|not|if|who|which|all|every|some|no|is|are|because|therefore)(?:\s|$)/iu.test(value)) throw Error('categorical-template');
+      return /^\p{Lu}$/u.test(value) ? value : value.toLocaleLowerCase();
+    };
+    const predicate = value => term(clean(value).replace(/^(?:um|uma|a|an)\s+/iu,''));
+    for(const [form,pattern] of patterns){const match=clean(text).match(pattern);if(match)return statement(form,term(match[1]),predicate(match[2]));}
+    const singular=clean(text).match(/^(.+?)\s+(?:(não)\s+é|é|(is)\s+(not)?)\s*(.+?)[.]?$/iu);
+    if(singular){
+      const name=singular[1];
+      if(!/^\p{Lu}[\p{L}\p{M}′'-]*(?:\s+(?:(?:da|de|do|dos|das|van|von)\s+)?\p{Lu}[\p{L}\p{M}′'-]*)*$/u.test(name)||/^(?:Ele|Ela|Eles|Elas|Isso|Isto|Aquilo|O|A|Um|Uma|He|She|It|They|The|This|That)$/iu.test(name))throw Error('categorical-template');
+      return {...statement(singular[2]||singular[4]?'E':'A',term(name),predicate(singular[5])),singular:true};
+    }
     throw Error('categorical-syntax');
   }
   function evaluate(entry,regions,terms){
@@ -10383,11 +10423,14 @@ document.addEventListener("keydown", (event) => {
     const terms=[...new Set(entries.flatMap(e=>[e.subject,e.predicate]))],premises=entries.filter(e=>e.role==='premise'),conclusions=entries.filter(e=>e.role==='conclusion');
     if(!conclusions.length)return {status:'missingConclusion'};
     if(terms.length>3)return {status:'limit'};
+    const names=[...new Set(entries.filter(entry=>entry.singular).map(entry=>entry.subject))];
     const failures=new Map();let satisfiable=false;
     // Every object has one membership pattern. One representative of each
     // occupied region suffices for A/E/I/O sentences; no cardinality is asserted.
     for(let occupied=1;occupied<2**(2**terms.length);occupied++){
       const regions=Array.from({length:2**terms.length},(_,i)=>i).filter(i=>occupied&(1<<i));
+      // A proper name denotes exactly one existing object. Names may co-refer.
+      if(!names.every(name=>regions.filter(region=>region&(1<<terms.indexOf(name))).length===1))continue;
       if(!premises.every(e=>evaluate(e,regions,terms)))continue;
       satisfiable=true;
       for(const conclusion of conclusions){if(!failures.has(conclusion.index)&&!evaluate(conclusion,regions,terms)){
@@ -10395,7 +10438,7 @@ document.addEventListener("keydown", (event) => {
         failures.set(conclusion.index,domain);
       }}
     }
-    return {status:failures.size?'invalid':'valid',satisfiable,terms,conclusions:conclusions.map(e=>({index:e.index,valid:!failures.has(e.index),countermodel:failures.get(e.index)||null}))};
+    return {status:failures.size?'invalid':'valid',satisfiable,terms,names,entries,conclusions:conclusions.map(e=>({index:e.index,valid:!failures.has(e.index),countermodel:failures.get(e.index)||null}))};
   }
   scope.LPCategorical={parse,evaluate,validate};
   if(typeof module!=='undefined')module.exports=scope.LPCategorical;
@@ -15055,6 +15098,7 @@ async function confirmDeletion(message) {
     };
     dialog.showModal();
   }
+  button("Interpretar texto", "Interpret text", () => root.dispatchEvent(new Event("lp-open-argument-text")));
   button("Salvar todos os argumentos", "Save all arguments", () => {
     saveArguments();
     const data = {
@@ -15536,6 +15580,7 @@ async function confirmDeletion(message) {
   for (const [pt, english, action] of [
     ["Em branco", "Blank", () => createBlank()],
     ["Exemplo", "Example", openExamples],
+    ["Texto", "Text", () => root.dispatchEvent(new Event("lp-open-argument-text"))],
   ]) {
     const b = document.createElement("button");
     b.type = "button";
@@ -21927,8 +21972,8 @@ function currentLogicMode() {
       [modes[0],
        'Estuda inferências entre termos, por meio de proposições como “Todo S é P”, “Nenhum S é P”, “Algum S é P” e “Algum S não é P”. Num silogismo categórico há duas premissas e uma conclusão, articuladas por três termos. Exemplo: todo M é P; todo S é M; portanto, todo S é P.',
        'Studies inferences between terms through propositions such as “Every S is P”, “No S is P”, “Some S is P” and “Some S is not P”. A categorical syllogism has two premises and a conclusion involving three terms. Example: every M is P; every S is M; therefore every S is P.',
-       'As descrições identificam os termos. Pressupostos de existência e o tratamento de termos vazios precisam ser declarados. Silogística, lógica aristotélica e tradição escolástica não são expressões perfeitamente equivalentes. O verificador aceita A(S,P), E(S,P), I(S,P) e O(S,P), com até três termos. Adota domínio não vazio e permite termos vazios; universais não pressupõem existência.',
-       'Descriptions identify the terms. Existential assumptions and treatment of empty terms must be specified. Syllogistic, Aristotelian logic and the scholastic tradition are not exactly interchangeable expressions. The checker accepts A(S,P), E(S,P), I(S,P) and O(S,P), with up to three terms. It uses a nonempty domain and permits empty terms; universals carry no existential import.'],
+       'As descrições identificam os termos. Pressupostos de existência e o tratamento de termos vazios precisam ser declarados. Silogística, lógica aristotélica e tradição escolástica não são expressões perfeitamente equivalentes. O verificador aceita A(S,P), E(S,P), I(S,P) e O(S,P), com até três termos. Adota domínio não vazio e permite termos vazios; universais não pressupõem existência. Também aceita frases controladas como “Aristóteles é homem”: nomes próprios designam um indivíduo existente.',
+       'Descriptions identify the terms. Existential assumptions and treatment of empty terms must be specified. Syllogistic, Aristotelian logic and the scholastic tradition are not exactly interchangeable expressions. The checker accepts A(S,P), E(S,P), I(S,P) and O(S,P), with up to three terms. It uses a nonempty domain and permits empty terms; universals carry no existential import. It also accepts controlled sentences such as “Aristotle is human”: proper names denote one existing individual.'],
       [modes[1],
        'Trata enunciados completos como unidades, representadas por A, B, P etc. Conectivos como ¬, ∧, ∨ e → determinam como os valores de verdade se combinam. Exemplo: A → B; A; portanto, B.',
        'Treats complete statements as units represented by A, B, P and so on. Connectives such as ¬, ∧, ∨ and → determine how truth values combine. Example: A → B; A; therefore B.',
@@ -22070,7 +22115,7 @@ function updateExtendedLogicValidation(mode) {
   const result = LPCategorical.validate(rows);
   if (result.status === 'errors') {
     summary(t('Confira a forma das proposições', 'Check the proposition forms'), '', 'invalid');
-    for (const error of result.errors) section.append(node('p', t('Linha ', 'Line ') + (error.index + 1) + ': ' + t('use A(S,P), E(S,P), I(S,P) ou O(S,P).', 'use A(S,P), E(S,P), I(S,P) or O(S,P).'), 'hy-analysis-diagnostic'));
+    for (const error of result.errors) section.append(node('p', t('Linha ', 'Line ') + (error.index + 1) + ': ' + t('escrita não reconhecida. Use uma forma como “Todo homem é mortal”, “Aristóteles é homem” ou A(S,P). Frases com orações adicionais precisam ser reformuladas.', 'notation not recognized. Use a form such as “Every human is mortal”, “Aristotle is human” or A(S,P). Sentences with additional clauses need reformulation.'), 'hy-analysis-diagnostic'));
   } else if (result.status === 'limit') {
     summary(t('Limite da análise', 'Analysis limit'), t('Este verificador aceita até três termos distintos e 200 linhas.', 'This checker accepts up to three distinct terms and 200 rows.'), 'syntax');
   } else if (result.status === 'missingConclusion') {
@@ -22102,8 +22147,13 @@ function updateExtendedLogicValidation(mode) {
       section.append(card);
     }
   }
-  section.append(node('p', t('Termos podem ser vazios; universais não afirmam existência.', 'Terms may be empty; universals do not assert existence.'), 'hy-analysis-scope-note'));
-  guide(t('Semântica e limites', 'Semantics and limits'), t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).', 'Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'), t('Os nomes dos termos diferenciam maiúsculas de minúsculas. A análise enumera todas as regiões possíveis de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.', 'Term names are case-sensitive. The analysis enumerates all possible membership regions; it does not represent the entire Aristotelian or scholastic tradition.'));
+  if (result.entries?.some(entry=>entry.singular)) {
+    const interpretation=node('details');interpretation.append(node('summary',t('Interpretação do texto','Text interpretation')));
+    for(const entry of result.entries) interpretation.append(node('p',t('Linha ','Line ')+(entry.index+1)+': '+entry.form+'('+entry.subject+', '+entry.predicate+')'+(entry.singular?' · '+t('sujeito individual existente','existing individual subject'):'')));
+    interpretation.append(node('p',t('Nomes próprios designam um indivíduo existente; nomes diferentes podem designar o mesmo indivíduo.','Proper names denote one existing individual; different names may denote the same individual.')));section.append(interpretation);
+  }
+  section.append(node('p', t('Termos gerais podem ser vazios; universais não afirmam existência.', 'General terms may be empty; universals do not assert existence.'), 'hy-analysis-scope-note'));
+  guide(t('Semântica e limites', 'Semantics and limits'), t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).', 'Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'), t('A notação formal diferencia maiúsculas de minúsculas; nas frases, palavras são normalizadas e nomes próprios designam indivíduos existentes. Não há resolução de pronomes, sinônimos ou flexões. A análise enumera regiões de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.', 'Formal notation is case-sensitive; natural-language words are normalized and proper names denote existing individuals. Pronouns, synonyms and inflections are not resolved. The analysis enumerates membership regions; it does not represent the entire Aristotelian or scholastic tradition.'));
   const forms = node('details');
   forms.append(node('summary', t('Formas das proposições', 'Proposition forms')));
   for (const [form, pt, en] of [['A(S,P)', 'Todo S é P.', 'Every S is P.'], ['E(S,P)', 'Nenhum S é P.', 'No S is P.'], ['I(S,P)', 'Algum S é P.', 'Some S is P.'], ['O(S,P)', 'Algum S não é P.', 'Some S is not P.']]) {
@@ -22112,6 +22162,143 @@ function updateExtendedLogicValidation(mode) {
   section.append(forms);
   finish(result.status);
 }
+</script>
+
+<script id="natural-text-interpretation">
+// Controlled-language interpretation proposes a reading; it never supplies a validity verdict.
+(function(scope){
+  const conclusion=/^(?:logo|portanto|assim|por conseguinte|consequentemente|conclui-se que|therefore|thus|hence|consequently|∴)\s*[:,]?\s*/iu;
+  const premise=/^(?:porque|pois|uma vez que|já que|because|since)\s*[:,]?\s*/iu;
+  function split(text){
+    if(typeof text!=='string'||text.length>20000)throw Error('text-limit');
+    const parts=text.trim().replace(/^\s*(?:\d+[.)]|[-•])\s+/gmu,'')
+      .replace(/,\s*(?=(?:logo|portanto|por conseguinte|therefore|thus|hence|pois|porque|because)\s)/giu,'; ')
+      .split(/[.;\n]+/u).map(part=>part.trim()).filter(Boolean);
+    if(!parts.length)throw Error('text-empty');
+    if(parts.length>200)throw Error('text-limit');
+    let explicit=false;
+    const rows=parts.map(part=>{
+      const marked=conclusion.test(part);if(marked)explicit=true;
+      return {text:part.replace(marked?conclusion:premise,'').trim(),role:marked?'conclusion':'premise'};
+    });
+    if(!explicit)rows.at(-1).role='conclusion';
+    return {rows,explicit};
+  }
+  function formalReading(rows,mode){
+    const parser=mode==='syllogistic'?scope.LPCategorical.parse:mode==='first-order'?scope.LPFirstOrder.parse:scope.LPLogic.parse;
+    return rows.map((row,index)=>{
+      try{
+        const parsed=parser(row.text);
+        return {index,text:row.text,formula:mode==='syllogistic'?`${parsed.form}(${parsed.subject}, ${parsed.predicate})`:row.text,singular:Boolean(parsed.singular)};
+      }catch{return {index,text:row.text,error:'unsupported'};}
+    });
+  }
+  function conditionalReading(rows){
+    const atoms=new Map(),descriptions=Object.create(null);
+    function atom(value){
+      value=value.trim().replace(/\s+/gu,' ');
+      const negation=value.match(/^(?:não é o caso que|não|it is not the case that|not)\s+(.+)$/iu);
+      if(negation)return '¬'+atom(negation[1]);
+      // Nested logical clauses, questions and unresolved references are left for the user.
+      if(!value||value.length>500||/[,:;?!()∀∃→∧∨↔]/u.test(value)||/(?:^|\s)(?:se|então|e|ou|if|then|and|or|ele|ela|eles|elas|isso|he|she|they|it)(?:\s|$)/iu.test(value))throw Error('unsupported');
+      const key=value.normalize('NFC').toLocaleLowerCase();
+      if(!atoms.has(key)){const symbol='P'+(atoms.size+1);atoms.set(key,symbol);descriptions[symbol]=value;}
+      return atoms.get(key);
+    }
+    if(!rows.some(row=>/^(?:Se|If)\s+.+,\s*(?:(?:então|then)\s+)?\S/iu.test(row.text)))return null;
+    const interpretations=rows.map((row,index)=>{
+      try{
+        const conditional=row.text.match(/^(?:Se|If)\s+(.+?),\s*(?:(?:então|then)\s+)?(.+)$/iu);
+        const formula=conditional?`${atom(conditional[1])} → ${atom(conditional[2])}`:atom(row.text);
+        scope.LPLogic.parse(formula);
+        return {index,text:row.text,formula};
+      }catch{return {index,text:row.text,error:'unsupported'};}
+    });
+    return {mode:'propositional',interpretations,descriptions,translated:true};
+  }
+  function inspect(rows,preferred='syllogistic'){
+    if(!Array.isArray(rows)||rows.length>200||rows.some(row=>typeof row.text!=='string'||row.text.length>10000))throw Error('text-limit');
+    const active=rows.filter(row=>row.role!=='blank');
+    const order=[...new Set([preferred,'syllogistic','propositional','first-order'])];
+    const candidates=order.map(mode=>({mode,interpretations:formalReading(active,mode),descriptions:{},translated:false}));
+    const complete=candidates.find(candidate=>candidate.interpretations.every(entry=>!entry.error));
+    const result=complete||conditionalReading(active)||candidates.reduce((best,next)=>next.interpretations.filter(entry=>entry.error).length<best.interpretations.filter(entry=>entry.error).length?next:best);
+    return {...result,rows:active.map(row=>({...row})),errors:result.interpretations.filter(entry=>entry.error)};
+  }
+  function analyze(text,preferred){const draft=split(text);return {...inspect(draft.rows,preferred),explicitConclusion:draft.explicit};}
+  scope.LPNaturalText={split,inspect,analyze};
+  if(typeof module!=='undefined')module.exports=scope.LPNaturalText;
+})(globalThis);
+</script>
+
+<script id="text-argument-import">
+(() => {
+  const t=interfaceText;
+  root.addEventListener('lp-open-argument-text',()=>{
+    if(root.querySelector('.hy-text-import-dialog'))return;
+    const previous=document.activeElement,dialog=document.createElement('dialog');
+    dialog.className='hy-feature-dialog hy-text-import-dialog';dialog.setAttribute('aria-labelledby','text-import-title');
+    function element(tag,cls,value){const node=document.createElement(tag);if(cls)node.className=cls;if(value)node.textContent=value;return node;}
+    function button(label,handler){const node=element('button','hy-button',label);node.type='button';node.onclick=handler;return node;}
+    const header=element('header','hy-text-import-heading'),identity=element('div','hy-text-import-identity');
+    const icon=element('span','hy-analysis-mode-icon');icon.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h6"/></svg>';
+    const heading=element('div'),title=element('h2','',t('Interpretar texto','Interpret text'));title.id='text-import-title';
+    heading.append(title,element('p','hy-analysis-mode-name',t('Revisar antes de carregar','Review before loading')));identity.append(icon,heading);
+    const close=button('×',()=>dialog.close());close.classList.add('hy-analysis-close');close.setAttribute('aria-label',t('Fechar','Close'));header.append(identity,close);
+    const workspace=element('div','hy-text-import-workspace'),source=element('section','hy-text-import-source'),review=element('section','hy-text-import-review');
+    const sourceLabel=element('label','hy-text-import-label',t('Texto original','Original text'));sourceLabel.htmlFor='argument-prose';
+    const input=element('textarea');input.id='argument-prose';input.maxLength=20000;input.spellcheck=false;
+    input.placeholder=t('Todo homem é mortal. Aristóteles é homem. Logo, Aristóteles é mortal.','Every human is mortal. Aristotle is human. Therefore, Aristotle is mortal.');
+    const analyze=button(t('Interpretar','Interpret'),interpret);
+    source.append(sourceLabel,input,analyze);
+    const reviewHead=element('div','hy-text-import-review-heading'),reviewTitle=element('h3','',t('Leitura proposta','Proposed reading')),modeLabel=element('span','hy-analysis-mode-name');reviewHead.append(reviewTitle,modeLabel);
+    const note=element('p','hy-text-import-note',t('Frases categóricas e condicionais simples. Pronomes, sinônimos e sentidos implícitos não são resolvidos.','Categorical sentences and simple conditionals. Pronouns, synonyms and implicit meanings are not resolved.'));
+    const notice=element('p','hy-text-import-notice');notice.setAttribute('role','status');
+    const list=element('div','hy-text-import-list'),vocabulary=element('dl','hy-text-import-vocabulary');
+    review.append(reviewHead,note,notice,list,vocabulary);workspace.append(source,review);
+    const footer=element('footer','hy-text-import-footer'),cancel=button(t('Cancelar','Cancel'),()=>dialog.close()),load=button(t('Carregar novo argumento','Load new argument'),loadArgument);load.disabled=true;footer.append(cancel,load);
+    dialog.append(header,workspace,footer);root.append(dialog);
+    let draft=[],reading=null,sourceDirty=false;
+    input.oninput=()=>{sourceDirty=true;load.disabled=true;reading=null;notice.textContent=t('Interprete novamente para atualizar a leitura.','Interpret again to update the reading.');};
+    function issue(code){return code==='text-limit'?t('Limite: 20.000 caracteres, 200 frases e 10.000 caracteres por frase.','Limit: 20,000 characters, 200 sentences and 10,000 characters per sentence.'):t('Escreva um texto para interpretar.','Enter a text to interpret.');}
+    function interpret(){
+      try{
+        const result=LPNaturalText.analyze(input.value,currentLogicMode());sourceDirty=false;draft=result.rows.map(row=>({...row}));
+        list.replaceChildren();
+        for(const [index,row] of draft.entries()){
+          const card=element('div','hy-text-import-row'),role=element('select'),field=element('textarea'),formula=element('p','hy-text-import-formula');
+          role.setAttribute('aria-label',t('Função da frase ','Sentence role ')+(index+1));
+          for(const [id,pt,en] of [['premise','Premissa','Premise'],['conclusion','Conclusão','Conclusion'],['blank','Ignorar','Ignore']]){const option=element('option','',t(pt,en));option.value=id;role.append(option);}role.value=row.role;
+          field.value=row.text;field.rows=1;field.maxLength=10000;field.spellcheck=false;field.setAttribute('aria-label',t('Frase ','Sentence ')+(index+1));
+          role.onchange=()=>{row.role=role.value;refresh(result.explicitConclusion);};field.oninput=()=>{field.style.height="auto";field.style.height=Math.min(180,Math.max(48,field.scrollHeight+2))+"px";row.text=field.value;refresh(result.explicitConclusion);};card.append(role,field,formula);list.append(card);field.style.height=Math.min(180,Math.max(48,field.scrollHeight+2))+"px";
+        }
+        refresh(result.explicitConclusion);
+      }catch(error){reading=null;load.disabled=true;notice.textContent=issue(error.message);list.replaceChildren();vocabulary.replaceChildren();modeLabel.textContent='';}
+    }
+    function refresh(explicit){
+      try{reading=LPNaturalText.inspect(draft,currentLogicMode());}catch(error){reading=null;load.disabled=true;notice.textContent=issue(error.message);return;}
+      const definition=logicModeDefinitions.find(([id])=>id===reading.mode);modeLabel.textContent=t(definition[1],definition[2]);
+      let at=0;draft.forEach((row,index)=>{
+        const card=list.children[index],formula=card.querySelector('.hy-text-import-formula');card.dataset.ignored=String(row.role==='blank');
+        if(row.role==='blank'){formula.textContent='';card.dataset.error='false';return;}
+        const entry=reading.interpretations[at++];card.dataset.error=String(Boolean(entry.error));
+        formula.textContent=entry.error?t('Trecho não reconhecido; reformule ou ignore explicitamente.','Unrecognized passage; rephrase or explicitly ignore it.'):entry.formula+(entry.singular?' · '+t('indivíduo existente','existing individual'):'');
+      });
+      vocabulary.replaceChildren();for(const [symbol,description] of Object.entries(reading.descriptions)){vocabulary.append(element('dt','',symbol),element('dd','',description));}
+      const complete=reading.rows.some(row=>row.role==='premise')&&reading.rows.some(row=>row.role==='conclusion');
+      load.disabled=sourceDirty||Boolean(reading.errors.length)||!complete;
+      notice.textContent=sourceDirty?t('Interprete novamente para atualizar a leitura.','Interpret again to update the reading.'):reading.errors.length?t('Há trechos não reconhecidos. Nenhum veredito de validade foi produzido.','Some passages are not recognized. No validity verdict has been produced.'):!complete?t('Indique pelo menos uma premissa e uma conclusão.','Indicate at least one premise and one conclusion.'):!explicit?t('A última frase foi sugerida como conclusão. Confira os papéis e a interpretação.','The last sentence was suggested as the conclusion. Check the roles and interpretation.'):t('Confira os papéis e a interpretação antes de carregar.','Check the roles and interpretation before loading.');
+    }
+    function loadArgument(){
+      if(load.disabled||!reading)return;
+      saveArguments();
+      const doc={id:'argument-'+crypto.randomUUID(),name:t('Texto interpretado','Interpreted text'),customName:t('Texto interpretado','Interpreted text'),numbered:true,logicMode:reading.mode,descriptions:reading.descriptions,
+        rows:reading.rows.map((row,index)=>({text:reading.translated?reading.interpretations[index].formula:row.text,role:row.role}))};
+      argumentWorkspace.documents.push(doc);showArgument(doc.id,true);saveArguments();dialog.close();
+    }
+    dialog.onclose=()=>{dialog.remove();if(previous?.isConnected)previous.focus({preventScroll:true});};dialog.showModal();input.focus();
+  });
+})();
 </script>
   </body>
 </html>

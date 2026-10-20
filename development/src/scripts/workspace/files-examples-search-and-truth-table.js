@@ -53,6 +53,7 @@
     };
     dialog.showModal();
   }
+  button("Interpretar texto", "Interpret text", () => root.dispatchEvent(new Event("lp-open-argument-text")));
   button("Salvar todos os argumentos", "Save all arguments", () => {
     saveArguments();
     const data = {
@@ -534,6 +535,7 @@
   for (const [pt, english, action] of [
     ["Em branco", "Blank", () => createBlank()],
     ["Exemplo", "Example", openExamples],
+    ["Texto", "Text", () => root.dispatchEvent(new Event("lp-open-argument-text"))],
   ]) {
     const b = document.createElement("button");
     b.type = "button";

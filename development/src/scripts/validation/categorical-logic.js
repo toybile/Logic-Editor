@@ -19,7 +19,21 @@
       ['E',/^No\s+(.+?)\s+(?:is|are)\s+(.+?)[.]?$/iu],
       ['I',/^Some\s+(.+?)\s+(?:is|are)\s+(.+?)[.]?$/iu],
     ];
-    for(const [form,pattern] of patterns){const match=text.trim().match(pattern);if(match){if(/\s/u.test(match[1].trim())||/\s/u.test(match[2].trim()))throw Error('categorical-template');return statement(form,match[1],match[2]);}}
+    const clean = value => value.normalize('NFC').trim().replace(/\s+/gu,' ');
+    const term = value => {
+      value=clean(value);
+      // Do not reinterpret connectives, relative clauses, quantifiers or negation as a class name.
+      if (/(?:^|\s)(?:e|ou|não|que|se|todo|toda|todos|todas|algum|alguma|nenhum|nenhuma|mas|porém|porque|pois|é|são|and|or|not|if|who|which|all|every|some|no|is|are|because|therefore)(?:\s|$)/iu.test(value)) throw Error('categorical-template');
+      return /^\p{Lu}$/u.test(value) ? value : value.toLocaleLowerCase();
+    };
+    const predicate = value => term(clean(value).replace(/^(?:um|uma|a|an)\s+/iu,''));
+    for(const [form,pattern] of patterns){const match=clean(text).match(pattern);if(match)return statement(form,term(match[1]),predicate(match[2]));}
+    const singular=clean(text).match(/^(.+?)\s+(?:(não)\s+é|é|(is)\s+(not)?)\s*(.+?)[.]?$/iu);
+    if(singular){
+      const name=singular[1];
+      if(!/^\p{Lu}[\p{L}\p{M}′'-]*(?:\s+(?:(?:da|de|do|dos|das|van|von)\s+)?\p{Lu}[\p{L}\p{M}′'-]*)*$/u.test(name)||/^(?:Ele|Ela|Eles|Elas|Isso|Isto|Aquilo|O|A|Um|Uma|He|She|It|They|The|This|That)$/iu.test(name))throw Error('categorical-template');
+      return {...statement(singular[2]||singular[4]?'E':'A',term(name),predicate(singular[5])),singular:true};
+    }
     throw Error('categorical-syntax');
   }
   function evaluate(entry,regions,terms){
@@ -36,11 +50,14 @@
     const terms=[...new Set(entries.flatMap(e=>[e.subject,e.predicate]))],premises=entries.filter(e=>e.role==='premise'),conclusions=entries.filter(e=>e.role==='conclusion');
     if(!conclusions.length)return {status:'missingConclusion'};
     if(terms.length>3)return {status:'limit'};
+    const names=[...new Set(entries.filter(entry=>entry.singular).map(entry=>entry.subject))];
     const failures=new Map();let satisfiable=false;
     // Every object has one membership pattern. One representative of each
     // occupied region suffices for A/E/I/O sentences; no cardinality is asserted.
     for(let occupied=1;occupied<2**(2**terms.length);occupied++){
       const regions=Array.from({length:2**terms.length},(_,i)=>i).filter(i=>occupied&(1<<i));
+      // A proper name denotes exactly one existing object. Names may co-refer.
+      if(!names.every(name=>regions.filter(region=>region&(1<<terms.indexOf(name))).length===1))continue;
       if(!premises.every(e=>evaluate(e,regions,terms)))continue;
       satisfiable=true;
       for(const conclusion of conclusions){if(!failures.has(conclusion.index)&&!evaluate(conclusion,regions,terms)){
@@ -48,7 +65,7 @@
         failures.set(conclusion.index,domain);
       }}
     }
-    return {status:failures.size?'invalid':'valid',satisfiable,terms,conclusions:conclusions.map(e=>({index:e.index,valid:!failures.has(e.index),countermodel:failures.get(e.index)||null}))};
+    return {status:failures.size?'invalid':'valid',satisfiable,terms,names,entries,conclusions:conclusions.map(e=>({index:e.index,valid:!failures.has(e.index),countermodel:failures.get(e.index)||null}))};
   }
   scope.LPCategorical={parse,evaluate,validate};
   if(typeof module!=='undefined')module.exports=scope.LPCategorical;
