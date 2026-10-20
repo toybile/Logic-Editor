@@ -54,8 +54,8 @@ function currentLogicMode() {
     trigger.dataset.mode=mode[0];
     selectedName.textContent=t(mode[1],mode[2]);
     menu.replaceChildren();
-    for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.textContent=t(pt,en);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{argumentWorkspace.documents.find(doc=>doc.id===argumentWorkspace.activeId).logicMode=id;menu.hidePopover();saveArguments();refresh();if(logicEnabled)updateLogicValidation();trigger.focus();};menu.append(b);}
-    const info=document.createElement('button');info.type='button';info.textContent=t('Conhecer os modos','About the modes');info.setAttribute('role','menuitem');info.onclick=help;menu.append(info);
+    for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9ZM14 3v6h6M8 13h8M8 17h5"/></svg>';const name=document.createElement('span');name.textContent=t(pt,en);b.append(name);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{argumentWorkspace.documents.find(doc=>doc.id===argumentWorkspace.activeId).logicMode=id;menu.hidePopover();saveArguments();refresh();if(logicEnabled)updateLogicValidation();trigger.focus();};menu.append(b);}
+
   }
   let timer,held=false;
   const cancel=()=>clearTimeout(timer);
@@ -66,5 +66,13 @@ function currentLogicMode() {
   menu.addEventListener('toggle',e=>trigger.setAttribute('aria-expanded',String(e.newState==='open')));
   workspaceEvents.addEventListener('saved',refresh);
   root.querySelector('#settings-language').addEventListener('click',refresh);
+  const header = root.querySelector('.hy-head');
+  function alignDock() {
+    trigger.style.top = header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top - 1 + 'px';
+    trigger.style.setProperty('--mode-header-background', getComputedStyle(header).backgroundColor);
+  }
+  new ResizeObserver(alignDock).observe(header);
+  root.addEventListener('lp-ui-colors', () => requestAnimationFrame(alignDock));
   refresh();
+  alignDock();
 })();

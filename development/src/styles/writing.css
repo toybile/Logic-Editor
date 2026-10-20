@@ -19,15 +19,17 @@
 #lp-hybrid .hy-description-note { color:var(--quiet); font:13px/1.6 system-ui; margin:0 0 16px; }
 
 #lp-hybrid .hy-mode-anchor { position:relative; display:flex; align-items:center; align-self:stretch; }
-#lp-hybrid .hy-logic-mode-select { position:absolute; top:calc(100% + 16px); left:0; display:inline-flex; align-items:center; gap:10px; width:max-content; max-width:320px; padding:10px 13px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:var(--ink); font:12px/1.4 system-ui; box-shadow:0 5px 18px #00000008; cursor:pointer; }
+#lp-hybrid .hy-logic-mode-select { position:absolute; top:100%; left:0; display:inline-flex; align-items:center; gap:10px; width:max-content; max-width:320px; padding:10px 13px; border:1px solid var(--edge); border-top:0; border-radius:0 0 14px 14px; background:var(--mode-header-background,var(--paper)); color:var(--ink); font:12px/1.4 system-ui; box-shadow:0 5px 18px #00000008; cursor:pointer; }
 #lp-hybrid .hy-logic-mode-select svg { width:16px; height:16px; fill:none; stroke:var(--quiet); stroke-width:1.5; flex-shrink:0; }
 #lp-hybrid .hy-logic-mode-select::after { content:""; width:6px; height:6px; margin:0 2px 3px 8px; border-right:1.5px solid var(--quiet); border-bottom:1.5px solid var(--quiet); transform:rotate(45deg); transition:transform .16s ease; }
 #lp-hybrid .hy-logic-mode-select[aria-expanded=true]::after { transform:rotate(225deg); margin-bottom:-2px; }
 #lp-hybrid .hy-logic-mode-select:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
 #lp-hybrid .hy-logic-mode-select:hover { background:var(--soft); }
-#lp-hybrid .hy-logic-mode-menu { margin:0; padding:6px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:var(--ink); box-shadow:0 12px 32px #0002; }
-#lp-hybrid .hy-logic-mode-menu button { display:block; width:100%; text-align:left; padding:11px 14px; border:0; border-radius:8px; background:transparent; color:inherit; font:13px/1.5 system-ui; cursor:pointer; }
-#lp-hybrid .hy-logic-mode-menu button:hover,#lp-hybrid .hy-logic-mode-menu [aria-checked=true] { background:var(--soft); color:var(--blue); }
+#lp-hybrid .hy-logic-mode-menu { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; width:580px; max-width:calc(100vw - 32px); box-sizing:border-box; margin:0; padding:9px; border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); box-shadow:0 12px 32px #0002; }
+#lp-hybrid .hy-logic-mode-menu button { display:flex; align-items:center; gap:10px; width:100%; min-height:72px; text-align:left; padding:12px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:inherit; font:13px/1.5 system-ui; cursor:pointer; }
+#lp-hybrid .hy-logic-mode-menu button:hover { background:var(--soft); }
+#lp-hybrid .hy-logic-mode-menu [aria-checked=true] { background:var(--blue); color:var(--paper); border-color:var(--blue); }
+#lp-hybrid .hy-logic-mode-menu svg { width:20px; height:20px; flex-shrink:0; fill:none; stroke:currentColor; stroke-width:1.5; }
 #lp-hybrid .hy-logic-mode-help { box-sizing:border-box; width:720px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 48px); padding:28px; overflow:auto; }
 #lp-hybrid .hy-logic-mode-help header { display:flex; align-items:center; justify-content:space-between; gap:20px; }
 #lp-hybrid .hy-logic-mode-help h2 { margin:0; font-size:19px; }
@@ -35,3 +37,5 @@
 #lp-hybrid .hy-logic-mode-help p { font:14px/1.7 system-ui; color:var(--quiet); }
 #lp-hybrid .hy-logic-mode-help section,#lp-hybrid .hy-logic-mode-help article { padding:20px 0; border-top:1px solid var(--edge); }
 #lp-hybrid .hy-logic-mode-help a { color:var(--blue); font-size:13px; }
+
+#lp-hybrid .hy-logic-mode-menu:popover-open { display:grid; }
