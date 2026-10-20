@@ -205,7 +205,7 @@ When opened online, the editor checks its published scripts and styles with a re
 
 ## Repository and implementation
 
-`index.html` is the self-contained distribution containing HTML, CSS and JavaScript. Users need no installation or runtime dependencies: serve it on a static host or open it locally. Editable sources are organized by responsibility; a small Node generator assembles the single HTML. The `src/`, `tools/` and `tests/` directories contain the editable implementation, generator and regression suite. Edit those sources instead of appending patches to the generated HTML. This repository contains the editor; the separate portfolio menu links to it.
+`index.html` is the self-contained distribution containing HTML, CSS and JavaScript. Users need no installation or runtime dependencies: serve it on a static host or open it locally. Editable sources are organized by responsibility; a small Node generator assembles the single HTML. The `development/src/`, `development/tools/` and `development/tests/` directories contain the editable implementation, generator and regression suite. Edit those sources instead of appending patches to the generated HTML. This repository contains the editor; the separate portfolio menu links to it.
 
 Where a browser exposes `document.modelContext.registerTool`, the editor can register a read-only `get_argument` tool returning the current rows, numbering and formatted text. Ordinary browser use does not require this optional integration.
 
@@ -422,7 +422,7 @@ Ao abrir online, o editor verifica os scripts e estilos publicados por uma requi
 
 ## Repositório e implementação
 
-`index.html` é a distribuição autossuficiente com HTML, CSS e JavaScript. Quem utiliza o site não precisa instalar dependências: basta hospedá-lo ou abrir localmente. Os fontes editáveis estão organizados por responsabilidade; um pequeno gerador em Node reúne o HTML único. As pastas `src/`, `tools/` e `tests/` contêm a implementação editável, o gerador e a suíte de regressão. Edite esses fontes em vez de acrescentar correções ao HTML gerado. Este repositório contém o editor; o menu de projetos separado aponta para ele.
+`index.html` é a distribuição autossuficiente com HTML, CSS e JavaScript. Quem utiliza o site não precisa instalar dependências: basta hospedá-lo ou abrir localmente. Os fontes editáveis estão organizados por responsabilidade; um pequeno gerador em Node reúne o HTML único. As pastas `development/src/`, `development/tools/` e `development/tests/` contêm a implementação editável, o gerador e a suíte de regressão. Edite esses fontes em vez de acrescentar correções ao HTML gerado. Este repositório contém o editor; o menu de projetos separado aponta para ele.
 
 Quando o navegador oferece `document.modelContext.registerTool`, o editor pode registrar a ferramenta de leitura `get_argument`, que retorna linhas atuais, numeração e texto formatado. O uso normal no navegador não exige essa integração opcional.
 
@@ -505,12 +505,13 @@ A disposição escolhida mantém os ajustes de escrita/formatação nos cabeçal
 
 ## Development / Desenvolvimento
 
-The published entry point is `index.html`. Edit the files in `src/`, then rebuild.
-O arquivo publicado é `index.html`. Edite os arquivos em `src/` e gere o site novamente.
+The published entry point is `index.html`. Edit the files in `development/src/`, then rebuild.
+O arquivo publicado é `index.html`. Edite os arquivos em `development/src/` e gere o site novamente.
 
 Requirements / Requisitos: Node.js 22 or newer and npm.
 
 ```sh
+cd development
 npm ci
 npm run browsers:install
 npm run build
@@ -521,16 +522,16 @@ npm test
 `npm ci` installs the versions recorded in `package-lock.json`. Browser installation is needed for browser tests, not for building or using the site.
 `npm ci` instala as versões registradas em `package-lock.json`. A instalação do navegador é necessária para os testes, não para gerar ou usar o site.
 
-- `src/template.html`: page structure / estrutura da página.
-- `src/manifest.json`: source inclusion order / ordem de inclusão dos arquivos.
-- `src/styles/`: presentation and themes / aparência e temas.
-- `src/scripts/`: editing, symbols, settings, validation and workspace behavior / edição, símbolos, configurações, validação e argumentos.
-- `tools/build.cjs`: generates the standalone `index.html` / gera o `index.html` autônomo.
-- `tools/check-source.cjs`: checks JavaScript syntax and specific ownership/duplication rules / verifica sintaxe JavaScript e regras específicas contra duplicações e sobreposições.
-- `tests/cases.json`: registered regression suites / testes de regressão registrados.
-- `tests/run.cjs`: runs all registered suites, or the suite names passed as arguments / executa os testes registrados ou os nomes passados como argumentos.
+- `development/src/template.html`: page structure / estrutura da página.
+- `development/src/manifest.json`: source inclusion order / ordem de inclusão dos arquivos.
+- `development/src/styles/`: presentation and themes / aparência e temas.
+- `development/src/scripts/`: editing, symbols, settings, validation and workspace behavior / edição, símbolos, configurações, validação e argumentos.
+- `development/tools/build.cjs`: generates the standalone `index.html` / gera o `index.html` autônomo.
+- `development/tools/check-source.cjs`: checks JavaScript syntax and specific ownership/duplication rules / verifica sintaxe JavaScript e regras específicas contra duplicações e sobreposições.
+- `development/tests/cases.json`: registered regression suites / testes de regressão registrados.
+- `development/tests/run.cjs`: runs all registered suites, or the suite names passed as arguments / executa os testes registrados ou os nomes passados como argumentos.
 
-For focused checks / Para testes direcionados:
+From `development/`, for focused checks / Dentro de `development/`, para testes direcionados:
 
 ```sh
 node tests/run.cjs check-writing-defaults-desktop check-descriptions-fonts-desktop

@@ -5,11 +5,7 @@
 !/LICENSE
 !/README.md
 !/index.html
-!/package.json
-!/package-lock.json
-!/src/
-!/tools/
-!/tests/
+!/development/
 
 # Installed dependencies, generated evidence and local settings.
 node_modules/
