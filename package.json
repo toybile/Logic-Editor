@@ -1,0 +1,20 @@
+{
+  "name": "logic-editor-source",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node tools/build.cjs",
+    "check": "node tools/check-source.cjs",
+    "test": "npm run build && npm run check && node tests/run.cjs",
+    "test:exports": "npm run build && node tests/desktop-font-export.cjs",
+    "browsers:install": "playwright install chromium"
+  },
+  "devDependencies": {
+    "acorn": "8.15.0",
+    "playwright": "1.62.1",
+    "postcss": "8.5.31"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

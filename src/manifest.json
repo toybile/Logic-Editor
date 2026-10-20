@@ -1,0 +1,242 @@
+{
+  "styles": [
+    "styles/app.css",
+    "styles/themes.css",
+    "styles/writing.css",
+    "styles/mobile.css"
+  ],
+  "scripts": [
+    {
+      "name": "lp-startup-update",
+      "file": "scripts/core/lp-startup-update.js"
+    },
+    {
+      "name": "position-undo-manager",
+      "file": "scripts/core/position-undo-manager.js"
+    },
+    {
+      "name": "logic-engine",
+      "file": "scripts/validation/logic-engine.js"
+    },
+    {
+      "name": "state-and-row-drag",
+      "file": "scripts/core/state-and-row-drag.js"
+    },
+    {
+      "name": "favorite-notice",
+      "file": "scripts/interaction/favorite-notice.js"
+    },
+    {
+      "name": "arguments-and-tabs",
+      "file": "scripts/workspace/arguments-and-tabs.js"
+    },
+    {
+      "name": "blocks-and-rows",
+      "file": "scripts/editor/blocks-and-rows.js"
+    },
+    {
+      "name": "symbol-catalog",
+      "file": "scripts/library/symbol-catalog.js"
+    },
+    {
+      "name": "argument-preview",
+      "file": "scripts/editor/argument-preview.js"
+    },
+    {
+      "name": "interface-translations",
+      "file": "scripts/core/interface-translations.js"
+    },
+    {
+      "name": "settings-and-language",
+      "file": "scripts/core/settings-and-language.js"
+    },
+    {
+      "name": "logic-validation",
+      "file": "scripts/validation/logic-validation.js"
+    },
+    {
+      "name": "uppercase",
+      "file": "scripts/editor/uppercase.js"
+    },
+    {
+      "name": "delete-confirmation",
+      "file": "scripts/editor/delete-confirmation.js"
+    },
+    {
+      "name": "row-interactions",
+      "file": "scripts/editor/row-interactions.js"
+    },
+    {
+      "name": "panel-layout",
+      "file": "scripts/layout/panel-layout.js"
+    },
+    {
+      "name": "export-menu-script",
+      "file": "scripts/workspace/export-menu.js"
+    },
+    {
+      "name": "workspace-features",
+      "file": "scripts/workspace/files-examples-search-and-truth-table.js"
+    },
+    {
+      "name": "settings-default-script",
+      "file": "scripts/settings/settings-default.js"
+    },
+    {
+      "name": "completed-feature-script",
+      "file": "scripts/validation/beta-tools.js"
+    },
+    {
+      "name": "symbol-help-script",
+      "file": "scripts/help/symbol-help.js"
+    },
+    {
+      "name": "panel-appearance",
+      "file": "scripts/settings/panel-appearance.js"
+    },
+    {
+      "name": "delete-strip-labels",
+      "file": "scripts/editor/delete-strip-labels.js"
+    },
+    {
+      "name": "movable-inner-appearance-script",
+      "file": "scripts/settings/movable-inner-appearance.js"
+    },
+    {
+      "name": "scaled-block-width-refresh",
+      "file": "scripts/editor/scaled-block-width-refresh.js"
+    },
+    {
+      "name": "role-display-default",
+      "file": "scripts/editor/role-display-default.js"
+    },
+    {
+      "name": "resize-edge-row-hover-script",
+      "file": "scripts/editor/resize-edge-row-hover.js"
+    },
+    {
+      "name": "prefix-spacing-controls",
+      "file": "scripts/editor/prefix-spacing-controls.js"
+    },
+    {
+      "name": "decoration-alt-drag",
+      "file": "scripts/help/decoration-alt-drag.js"
+    },
+    {
+      "name": "unified-hover-hints-script",
+      "file": "scripts/help/unified-hover-hints.js"
+    },
+    {
+      "name": "header-hover-awareness",
+      "file": "scripts/help/header-hover-awareness.js"
+    },
+    {
+      "name": "hover-delay-setting-script",
+      "file": "scripts/settings/hover-delay-setting.js"
+    },
+    {
+      "name": "combined-home-sidebar",
+      "file": "scripts/layout/home-navigation.js"
+    },
+    {
+      "name": "external-library-heading-layout",
+      "file": "scripts/layout/external-library-heading-layout.js"
+    },
+    {
+      "name": "modular-library-script",
+      "file": "scripts/library/symbol-library.js"
+    },
+    {
+      "name": "shared-window-size-separation",
+      "file": "scripts/layout/shared-window-size-separation.js"
+    },
+    {
+      "name": "layout-recovery-control",
+      "file": "scripts/layout/layout-recovery-control.js"
+    },
+    {
+      "name": "guided-first-visit-layout",
+      "file": "scripts/layout/guided-first-visit-layout.js"
+    },
+    {
+      "name": "hand-create-window-drag",
+      "file": "scripts/library/duplicate-category-drag.js"
+    },
+    {
+      "name": "detached-grip-click-collapse",
+      "file": "scripts/library/detached-grip-click-collapse.js"
+    },
+    {
+      "name": "rail-magnet-return",
+      "file": "scripts/library/rail-magnet-return.js"
+    },
+    {
+      "name": "consistent-control-hints",
+      "file": "scripts/library/consistent-control-hints.js"
+    },
+    {
+      "name": "category-layering",
+      "file": "scripts/library/category-layering.js"
+    },
+    {
+      "name": "section-picker-popover",
+      "file": "scripts/library/section-picker-popover.js"
+    },
+    {
+      "name": "between-category-insert-controls",
+      "file": "scripts/library/between-category-insert-controls.js"
+    },
+    {
+      "name": "drag-grid-category-to-detach",
+      "file": "scripts/library/drag-grid-category-to-detach.js"
+    },
+    {
+      "name": "premise-insert-lines",
+      "file": "scripts/editor/premise-insert-lines.js"
+    },
+    {
+      "name": "release-pointer-add-line-focus",
+      "file": "scripts/library/release-pointer-add-line-focus.js"
+    },
+    {
+      "name": "palette-longhold-and-live-insert",
+      "file": "scripts/library/palette-longhold-and-live-insert.js"
+    },
+    {
+      "name": "universal-hold-progress",
+      "file": "scripts/interaction/universal-hold-progress.js"
+    },
+    {
+      "name": "smooth-category-order-helper",
+      "file": "scripts/library/smooth-category-order-helper.js"
+    },
+    {
+      "name": "category-row-overlap-reordering",
+      "file": "scripts/library/category-row-overlap-reordering.js"
+    },
+    {
+      "name": "settings-sections",
+      "file": "scripts/settings/settings-sections.js"
+    },
+    {
+      "name": "writing-mode-controls",
+      "file": "scripts/editor/writing-mode-controls.js"
+    },
+    {
+      "name": "background-theme-hold",
+      "file": "scripts/settings/background-theme-hold.js"
+    },
+    {
+      "name": "validation-dialog",
+      "file": "scripts/validation/validation-dialog.js"
+    },
+    {
+      "name": "window-entrance",
+      "file": "scripts/interaction/window-entrance.js"
+    },
+    {
+      "name": "mobile-viewport",
+      "file": "scripts/layout/mobile-viewport.js"
+    }
+  ]
+}

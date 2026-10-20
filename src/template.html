@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content" />
+    <title>Editor de Lógica</title>
+    <meta
+      name="description"
+      content="Editor de lógica online para escrever e organizar argumentos com símbolos proposicionais, modais e quantificadores. Validação de lógica proposicional clássica e exportação."
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%233d526e%22%2F%3E%3Cpath%20d%3D%22m8%2023%208-14%208%2014%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E"
+    />
+
+    <link rel="canonical" href="https://toybile.github.io/Logic-Editor/" />
+    <meta name="google-site-verification" content="PcDJQUb8Cf7hPraVUGgRf-TshovEezAP2f4vXNvDqwc" />
+
+    <!-- APP_STYLES -->
+  </head>
+  <body>
+    <div id="lp-hybrid" data-focus="false" aria-label="Editor com biblioteca lateral e modo foco">
+      <header class="hy-head">
+        <div class="hy-title">
+          <button
+            type="button"
+            class="hy-button hy-icon-button cursor-interaction"
+            data-action="focus"
+            aria-label="Ocultar biblioteca"
+            data-hint-text="Mostrar ou ocultar biblioteca"
+            aria-expanded="true"
+            aria-controls="hy-sidebar"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M9 4v16" /></svg></button
+          ><strong>Editor de Lógica</strong>
+        </div>
+        <div class="hy-argument-navigation">
+          <button type="button" class="hy-button hy-icon-button" id="argument-view-toggle" aria-label="Usar seletor compacto" aria-pressed="false" aria-controls="argument-compact-view">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01" /></svg>
+          </button>
+          <nav class="hy-argument-tabs" role="tablist" aria-label="Argumentos"></nav>
+          <div id="argument-compact-view" hidden>
+            <button type="button" class="hy-button" id="argument-select" aria-label="Argumento atual" aria-haspopup="menu" aria-expanded="false" popovertarget="argument-options"><span></span></button>
+            <div id="argument-options" popover="auto" role="menu" aria-label="Argumentos"></div>
+          </div>
+          <button
+            type="button"
+            class="hy-button hy-icon-button hy-new-argument"
+            id="new-argument"
+            aria-label="Adicionar argumento"
+            title="Adicionar argumento"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+          </button>
+        </div>
+        <button
+          type="button"
+          class="hy-button hy-icon-button"
+          popovertarget="editor-settings"
+          aria-label="Configurações"
+          title="Configurações"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4m4 0h10M3 12h10m4 0h4M3 18h4m4 0h10" /><circle cx="9" cy="6" r="2" /><circle cx="15" cy="12" r="2" /><circle cx="9" cy="18" r="2" /></svg>
+        </button>
+      </header>
+      <div class="hy-layout">
+        <aside class="hy-side" id="hy-sidebar">
+          <div class="hy-side-heading"><h3>Símbolos lógicos</h3></div>
+          <div class="hy-library" id="symbols"></div>
+          <nav class="hy-rail" aria-label="Grupos de símbolos"></nav>
+        </aside>
+        <main class="hy-work" id="argument-workspace" role="tabpanel">
+          <div class="hy-current" hidden>
+            <div class="hy-caption"></div>
+            <div class="hy-current-symbols"></div>
+          </div>
+          <section class="hy-panel hy-editor">
+            <div class="hy-section-head">
+              <button
+                type="button"
+                class="hy-button hy-icon-button cursor-interaction"
+                data-action="editor"
+                aria-label="Ocultar premissas e conclusões"
+                data-hint-text="Mostrar ou ocultar premissas e conclusões"
+                aria-expanded="true"
+                aria-controls="hy-editor-content"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
+              </button>
+              <h3>Premissas (∵) · Conclusões (∴)</h3>
+            </div>
+            <div class="hy-collapse" id="hy-editor-content" data-open="true">
+              <div class="hy-collapse-inner">
+                <div class="hy-rows" id="rows"></div>
+                <button
+                  type="button"
+                  class="hy-button hy-add cursor-interaction"
+                  id="add-line"
+                  data-action="add"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg
+                  >Linha
+                </button></div></div></section><section class="hy-panel hy-argument-panel"><div class="hy-section-head"><button
+                type="button"
+                class="hy-button hy-icon-button cursor-interaction"
+                data-action="preview"
+                aria-label="Ocultar argumento"
+                aria-expanded="true"
+                aria-controls="hy-argument"
+              ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
+              </button>
+              <h3>Argumento</h3>
+              <div class="hy-tools">
+                <button
+                  type="button"
+                  class="hy-button hy-number-toggle cursor-interaction"
+                  id="number-toggle"
+                  data-action="numbers"
+                  aria-pressed="true"
+                  aria-label="Numerar linhas"
+                  title="Numerar linhas"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path
+                      d="M10 5h10M10 12h10M10 19h10M3 4l1-1v5M3 8h3M3 11h3l-3 4h3M3 18h3l-2 2h2l-1 2H3"
+                    /></svg>
+                </button>
+                <div class="hy-export-group">
+                  <button
+                    type="button"
+                    class="hy-button cursor-interaction"
+                    id="copy"
+                    data-action="copy"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="7" width="12" height="14" rx="2" /><path d="M16 7V3H4v14h4" /></svg
+                    >Copiar
+                  </button><button
+                    type="button"
+                    class="hy-button hy-export cursor-interaction"
+                    id="download"
+                    data-action="export"
+                  ><svg viewBox="0 0 24 24" aria-hidden="true"><path
+                        d="M14 3H4v18h13v-3M14 3v5h5M14 3l5 5M11 14h11m-4-4 4 4-4 4"
+                      /></svg
+                    >Exportar
+                  </button></div></div></div><div class="hy-preview-wrap" id="hy-argument" data-open="true"><div class="hy-preview-inner"><pre class="hy-preview" id="preview"></pre></div></div></section><div id="status" class="hy-status" role="status" aria-live="polite"></div><div
+            popover
+            id="editor-settings"
+            class="hy-size-popover"
+            aria-labelledby="settings-title"
+          ><div class="hy-settings-head"><h2 id="settings-title">Configurações</h2><button
+                type="button"
+                class="hy-button hy-icon-button"
+                popovertarget="editor-settings"
+                popovertargetaction="hide"
+                aria-label="Fechar configurações"
+              ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+              </button>
+            </div>
+            <div class="hy-settings-switches">
+              <button
+                type="button"
+                class="hy-button hy-icon-button hy-language"
+                id="settings-language"
+                aria-label="Mudar para International English"
+                title="Português (Brasil)"
+              >
+                🇧🇷
+              </button>
+            </div>
+            <div class="hy-setting">
+              <label for="scale-library">Tamanho da seção de símbolos lógicos</label>
+              <div class="hy-size-range">
+                <button
+                  type="button"
+                  class="hy-step"
+                  data-scale="library"
+                  data-step="-5"
+                  aria-label="Diminuir tamanho"
+                >
+                  −</button
+                ><input
+                  id="scale-library"
+                  type="range"
+                  min="80"
+                  max="150"
+                  step="5"
+                  value="100"
+                  aria-label="Tamanho da seção de símbolos lógicos"
+                /><button
+                  type="button"
+                  class="hy-step"
+                  data-scale="library"
+                  data-step="5"
+                  aria-label="Aumentar tamanho"
+                >
+                  +</button
+                ><output for="scale-library" id="scale-library-value">100%</output>
+              </div>
+            </div>
+            <div class="hy-setting">
+              <label for="scale-writing">Tamanho dos argumentos</label>
+              <div class="hy-size-range">
+                <button
+                  type="button"
+                  class="hy-step"
+                  data-scale="writing"
+                  data-step="-5"
+                  aria-label="Diminuir tamanho"
+                >
+                  −</button
+                ><input
+                  id="scale-writing"
+                  type="range"
+                  min="80"
+                  max="150"
+                  step="5"
+                  value="100"
+                  aria-label="Tamanho dos argumentos"
+                /><button
+                  type="button"
+                  class="hy-step"
+                  data-scale="writing"
+                  data-step="5"
+                  aria-label="Aumentar tamanho"
+                >
+                  +</button
+                ><output for="scale-writing" id="scale-writing-value">100%</output>
+              </div>
+            </div>
+          </div>
+          <dialog id="rename-dialog" aria-labelledby="rename-title" aria-describedby="rename-hint">
+            <form id="rename-form">
+              <div class="hy-settings-head">
+                <h2 id="rename-title">Renomear argumento</h2>
+                <button
+                  type="button"
+                  class="hy-button hy-icon-button"
+                  data-rename-cancel
+                  aria-label="Fechar"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+                </button>
+              </div>
+              <label for="rename-name">Nome do argumento</label
+              ><input id="rename-name" type="text" autocomplete="off" />
+              <p id="rename-hint">Deixe vazio para usar a numeração automática.</p>
+              <div class="hy-rename-actions">
+                <button type="button" class="hy-button" data-rename-cancel>Cancelar</button
+                ><button type="submit" class="hy-button hy-rename-save">Salvar</button>
+              </div>
+            </form>
+          </dialog>
+        </main>
+      </div>
+    </div>
+
+    <!-- APP_SCRIPTS -->
+  </body>
+</html>

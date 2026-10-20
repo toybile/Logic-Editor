@@ -1,0 +1,31 @@
+const {launch,open,assert}=require('../mobile-runtime.cjs');
+(async()=>{const b=await launch();try{for(const width of [320,390,768]){
+const {p,c,errors,gesture,fits}=await open(b,width);await fits();
+if(await p.locator('#caps-lock').getAttribute('aria-pressed')==='false')await p.locator('#caps-lock').tap();
+const first=p.locator('#rows .hy-block').first();await first.tap();await first.fill('q');assert.equal(await first.inputValue(),'Q');
+// A software keyboard can emit input events without hardware keyboard keys.
+await p.keyboard.insertText(' ');
+assert.equal(await p.evaluate(()=>document.activeElement.className),'hy-block');
+await p.locator('#rows>.hy-row').first().locator('.hy-block').nth(1).fill('R');assert((await p.locator('#preview').textContent()).includes('Q R'));
+await p.locator('#add-line').tap();assert.equal(await p.locator('#rows>.hy-row').count(),4);
+await p.keyboard.insertText('Z');const edited=await p.evaluate(()=>JSON.stringify(rows));await p.locator('.hy-undo-lines').tap();assert.notEqual(await p.evaluate(()=>JSON.stringify(rows)),edited);await p.locator('.hy-redo-lines').tap();assert.equal(await p.evaluate(()=>JSON.stringify(rows)),edited);
+await p.locator('.hy-role').last().tap();assert.equal(await p.locator('.hy-role').last().getAttribute('aria-pressed'),'true');
+await gesture(p.locator('.hy-role').last(),0,0,250);assert(await p.locator('#rows>.hy-row').last().evaluate(e=>e.classList.contains('hy-blank-line')));
+await p.locator('.hy-role').last().tap();
+const before=await p.evaluate(()=>rows.map(r=>r.text));
+await gesture(p.locator('.hy-row-move-handle').last(),0,-190);assert.notDeepEqual(await p.evaluate(()=>rows.map(r=>r.text)),before,'immediate touch reorder');
+await p.waitForTimeout(350);
+await gesture(p.locator('#rows>.hy-row').last().locator('.hy-block').first(),0,0,250);await p.waitForTimeout(450);assert.equal(await p.locator('#lp-hybrid').getAttribute('data-select-lines'),'true');await p.locator('.hy-bulk-delete').tap();if(await p.locator('#delete-dialog').isVisible())await p.locator('#delete-dialog .hy-delete-confirm').tap();await p.waitForFunction(()=>rows.length===3);assert.equal(await p.locator('#lp-hybrid').getAttribute('data-select-lines'),'false');
+await p.locator('.hy-symbol-dock-stack .hy-symbol').first().tap();
+const sym=p.locator('.hy-symbol-dock-stack .hy-symbol').first();await gesture(sym,0,0,250);await p.locator('#notation-panel').waitFor({state:'visible'});await fits('#notation-panel');
+await p.locator('.hy-symbol-favorite-toggle').tap();assert.equal(await p.evaluate(()=>ui.modularLibrary.favorites.length),1,'favorite available by touch');
+await p.locator('.hy-card-picker').first().tap();await fits('.hy-card-picker-menu');await p.locator('.hy-card-picker-menu button').filter({hasText:/Favorites|Favoritos/}).tap();assert.equal(await p.locator('.hy-symbol-dock-stack .hy-symbol').count(),1);
+await p.locator('.hy-card-picker').first().tap();await p.locator('.hy-card-picker-menu button').filter({hasText:/Common|Comuns/}).tap();
+await p.locator('.hy-search-trigger').tap();await p.locator('.hy-symbol-search').fill('negation');assert(await p.locator('.hy-mod-search-results .hy-symbol:visible').count());await p.locator('.hy-mod-search-results .hy-symbol:visible').first().tap();await p.locator('.hy-symbol-search').fill('');await p.locator('.hy-search-trigger').tap();
+await p.locator('.hy-docked-create').first().tap();assert.equal(await p.locator('.hy-symbol-dock-stack > .hy-mod-palette').count(),2);
+await gesture(p.locator('.hy-mod-palette-head .hy-mod-grip').first());assert.equal(await p.locator('.hy-mod-palette').first().getAttribute('data-collapsed'),'true');await gesture(p.locator('.hy-mod-palette-head .hy-mod-grip').first());
+await p.locator('.hy-mod-palette-head .hy-mod-control').last().tap();assert.equal(await p.locator('.hy-mod-palette').count(),1);
+await p.locator('[data-action=editor]').tap();assert.equal(await p.locator('#hy-editor-content').getAttribute('data-open'),'false');await p.locator('[data-action=editor]').tap();
+await p.locator('[data-action=preview]').tap();assert(await p.locator('.hy-logic-button').isHidden());await p.locator('[data-action=preview]').tap();
+await fits();await p.screenshot({path:`test-artifacts/mobile-edit-${width}.png`,fullPage:true});await p.reload();assert((await p.locator('#preview').textContent()).includes('Z'));assert.deepEqual(errors,[]);await c.close();console.log(width+'px touch editing, software keys, undo/redo, roles/blank/reorder/select/delete, symbols/search/favorites/category/duplicate/collapse, eyes and persistence passed');
+}}finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});

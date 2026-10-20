@@ -1,0 +1,19 @@
+#lp-hybrid .hy-continuous-field { display:block; box-sizing:border-box; width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); font:calc(20px * var(--writing-scale))/1.65 "Cambria Math",serif; resize:none; overflow:hidden; overflow-wrap:anywhere; white-space:pre-wrap; }
+#lp-hybrid .hy-continuous-field:focus { outline:2px solid var(--blue); outline-offset:2px; }
+#lp-hybrid .hy-continuous-field { touch-action:pan-x; }
+#lp-hybrid .hy-line-body:has(.hy-continuous-field) { align-items:flex-start; border:0; background:transparent; }
+#lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { width:calc(36px * var(--writing-scale)); min-width:calc(36px * var(--writing-scale)); height:calc(36px * var(--writing-scale)); min-height:calc(36px * var(--writing-scale)); padding:calc(7px * var(--writing-scale)); border:1px solid var(--edge); background:transparent; color:var(--quiet); }
+#lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle[aria-pressed=true] { color:var(--blue); background:var(--soft); }
+#lp-hybrid #writing-mode-toggle[hidden] { display:none !important; }
+#lp-hybrid .hy-editor > .hy-section-head #writing-mode-toggle { margin-left:auto; }
+#lp-hybrid .hy-writing-mode-setting h3 { margin:0 0 12px; color:var(--quiet); font:400 12px/1.5 system-ui; }
+#lp-hybrid .hy-writing-mode-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
+#lp-hybrid .hy-writing-mode-choices button { min-width:0; min-height:44px; padding:8px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--quiet); font:13px/1.4 system-ui; cursor:pointer; }
+#lp-hybrid .hy-writing-mode-choices button[aria-pressed=true] { color:var(--blue); border-color:var(--blue); background:var(--soft); }
+#lp-hybrid .hy-row .hy-line-body .hy-block,
+#lp-hybrid .hy-continuous-field { font-family:var(--editor-formula-font, "Cambria Math", serif); }
+#lp-hybrid #preview { font-family:var(--preview-formula-font, "Cambria Math", serif); }
+#lp-hybrid .hy-panel-font-row { gap:14px; margin-top:18px; padding-top:18px; border-top:1px solid var(--edge); }
+#lp-hybrid .hy-panel-font-row select { width:auto; min-width:0; max-width:58%; border:1px solid var(--edge); }
+#lp-hybrid .hy-panel-font-sample { margin-top:12px; padding:12px; text-align:center; border-radius:9px; background:var(--soft); font-size:20px; overflow-wrap:anywhere; }
+#lp-hybrid .hy-description-note { color:var(--quiet); font:13px/1.6 system-ui; margin:0 0 16px; }
