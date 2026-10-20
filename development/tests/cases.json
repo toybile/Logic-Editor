@@ -65,5 +65,7 @@
   "check-writing-defaults-desktop",
   "check-logic-modes-hold",
   "check-mode-selector-example-help",
-  "check-premise-hold-delay"
+  "check-premise-hold-delay",
+  "check-extended-logic-engines",
+  "check-extended-logic-ui"
 ]

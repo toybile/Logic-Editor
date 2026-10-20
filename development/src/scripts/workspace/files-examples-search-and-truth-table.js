@@ -64,6 +64,7 @@
         customName: d.customName || "",
         numbered: d.numbered,
         logicMode: d.logicMode || 'propositional',
+        domainDescription: d.domainDescription || '',
         descriptions: d.descriptions || {},
         rows: d.rows,
       })),
@@ -90,6 +91,7 @@
           customName: doc.customName || "",
           numbered: doc.numbered,
           logicMode: doc.logicMode || 'propositional',
+          domainDescription: doc.domainDescription || '',
           descriptions: doc.descriptions || {},
           rows: doc.rows,
         },
@@ -205,6 +207,7 @@
           if (total > 1000000) throw Error();
           return { text: r.text, role: r.role };
         });
+        if(d.domainDescription !== undefined && (typeof d.domainDescription !== 'string' || d.domainDescription.length > 1000)) throw Error();
         const descriptions = Object.create(null);
         if (d.descriptions !== undefined) {
           if (
@@ -225,6 +228,7 @@
           items: items.length ? items : [{ text: "", role: "premise" }],
           numbered: d.numbered !== false,
           oldId: d.id,
+          domainDescription: d.domainDescription || '',
           logicMode: ['propositional','syllogistic','first-order'].includes(d.logicMode) ? d.logicMode : 'propositional',
           descriptions,
         };
@@ -237,6 +241,7 @@
         const id = addDocument(doc.name, doc.items, doc.numbered);
         argumentWorkspace.documents.find((d) => d.id === id).descriptions = doc.descriptions;
         argumentWorkspace.documents.find((d) => d.id === id).logicMode = doc.logicMode;
+        argumentWorkspace.documents.find((d) => d.id === id).domainDescription = doc.domainDescription;
         if (!selected || doc.oldId === data.activeId) selected = id;
       }
       showArgument(selected);

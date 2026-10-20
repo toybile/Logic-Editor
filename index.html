@@ -9473,7 +9473,7 @@ html[data-editor-theme="indigo-dark"] body { background:#0f1023; }
   background:radial-gradient(ellipse 48vw 40vh at 12% 74%,var(--theme-cloud-a),transparent 100%),radial-gradient(ellipse 42vw 46vh at 83% 38%,var(--theme-cloud-b),transparent 100%),radial-gradient(ellipse 35vw 30vh at 55% 94%,var(--theme-cloud-c),transparent 100%),var(--canvas);
   background-attachment:fixed;
 }
-#lp-hybrid[data-palette="ambient"] .hy-head { background:var(--theme-header); backdrop-filter:blur(16px); box-shadow:inset 0 -1px 0 var(--edge); }
+#lp-hybrid[data-palette="ambient"] .hy-head { position:relative; z-index:20; background:var(--theme-header); backdrop-filter:blur(16px); box-shadow:inset 0 -1px 0 var(--edge); }
 #lp-hybrid[data-palette="ambient"] :is(.hy-panel-frame > .hy-panel,.hy-modular-library > .hy-side,.hy-mod-palette[data-docked="false"]) { background:var(--theme-glass); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
 #lp-hybrid[data-palette="ambient"] :is(.hy-size-popover,.hy-card-picker-menu,.hy-feature-dialog,.hy-argument-card-editor,.hy-tab-tools) { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
 #lp-hybrid[data-palette="ambient"] #argument-options::before { background:var(--theme-raised); backdrop-filter:blur(18px); border-color:var(--edge); box-shadow:var(--theme-shadow); }
@@ -9670,6 +9670,12 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-mode-icon { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
 
 #lp-hybrid .hy-logic-mode-menu button:last-child { grid-column:1 / -1; width:calc(50% - 3.5px); justify-self:center; }
+
+#lp-hybrid .hy-symbol-metadata { display:block; color:var(--quiet); font:12px/1.6 system-ui; margin:3px 0 7px; }
+#lp-hybrid .hy-countermodel-table { border-collapse:collapse; width:100%; margin:12px 0 20px; font:13px/1.5 system-ui; }
+#lp-hybrid .hy-countermodel-table th,#lp-hybrid .hy-countermodel-table td { padding:8px; border-bottom:1px solid var(--edge); text-align:left; }
+#lp-hybrid .hy-countermodel-table caption { text-align:left; color:var(--quiet); margin-bottom:8px; }
+#lp-hybrid .hy-extended-logic { max-width:100%; overflow-wrap:anywhere; }
 
 /* One responsive workspace policy. Desktop window positions remain stored for later use. */
 #lp-hybrid .hy-row-move-handle { display:none; }
@@ -10368,6 +10374,160 @@ document.addEventListener("keydown", (event) => {
 })(globalThis);
 </script>
 
+<script id="first-order-syntax">
+(function(scope){
+  class SyntaxIssue extends Error {
+    constructor(code,column,token=''){super(code);Object.assign(this,{code,column,token});}
+  }
+  const binary={'↔':[1,'iff'],'⇔':[1,'iff'],'<->':[1,'iff'],'→':[2,'implies'],'⇒':[2,'implies'],'->':[2,'implies'],'∨':[3,'or'],'∧':[4,'and'],'&':[4,'and']};
+  const variable = name => /^[uvwxyz][\d_′']*$/u.test(name);
+  const upper = name => /^\p{Lu}/u.test(name);
+  function parse(text){
+    if(typeof text!=='string'||text.length>10000)throw new SyntaxIssue('limit',1);
+    const tokens=[];
+    let offset=0;
+    while(offset<text.length){
+      if(/\s/u.test(text[offset])){offset++;continue;}
+      const rest=text.slice(offset),value=rest.match(/^(?:<->|->|[\p{L}_][\p{L}\p{M}\p{N}_′']*|.)/u)?.[0];
+      if(!value)throw new SyntaxIssue('symbol',offset+1);
+      if(tokens.at(-1)&&['∀','∃','∄'].includes(tokens.at(-1).value)){
+        const compact=value.match(/^([uvwxyz][\d_′']*)(\p{Lu}[\p{L}\p{M}\p{N}_′']*)$/u);
+        if(compact){tokens.push({value:compact[1],column:offset+1},{value:compact[2],column:offset+1+compact[1].length});offset+=value.length;continue;}
+      }
+      tokens.push({value,column:offset+1});offset+=value.length;
+      if(tokens.length>1024)throw new SyntaxIssue('limit',offset);
+    }
+    let index=0,depth=0;
+    const peek=()=>tokens[index]?.value;
+    const fail=(code,token=tokens[index])=>{throw new SyntaxIssue(code,token?.column||text.length+1,token?.value||'');};
+    const take=expected=>{if(peek()!==expected)fail('delimiter');return tokens[index++];};
+    const identifier=()=>{const token=tokens[index];if(!token||!/^[_\p{L}][\p{L}\p{M}\p{N}_′']*$/u.test(token.value))fail('name');index++;return token;};
+    function term(){
+      if(++depth>96)fail('limit');
+      const name=identifier(),args=[];
+      const applied=peek()==='(';
+      if(applied){index++;if(peek()!==')'){args.push(term());while(peek()===','){index++;args.push(term());}}take(')');}
+      depth--;return {kind:'term',name:name.value,args,applied,column:name.column};
+    }
+    function unary(){
+      if(++depth>96)fail('limit');
+      let node;
+      if(['¬','~','∼','!'].includes(peek())){index++;node={op:'not',body:unary()};}
+      else if(['∀','∃','∄'].includes(peek())){
+        const q=tokens[index++],name=identifier();
+        if(upper(name.value))throw new SyntaxIssue('variable',name.column,name.value);
+        node={op:q.value==='∀'?'all':q.value==='∃'?'some':'none',variable:name.value,body:unary()};
+      }else if(peek()==='('){index++;node=expression(0);take(')');}
+      else if(['⊤','⊥'].includes(peek())){node={op:'truth',value:peek()==='⊤'};index++;}
+      else{
+        const left=term();
+        if(['=','≠'].includes(peek())){const operator=tokens[index++].value;node={op:operator==='='?'equal':'unequal',left,right:term()};}
+        else{if(!upper(left.name))throw new SyntaxIssue('predicate',left.column,left.name);node={op:'predicate',name:left.name,args:left.args,column:left.column};}
+      }
+      depth--;return node;
+    }
+    function expression(min){
+      let left=unary();
+      while(binary[peek()]&&binary[peek()][0]>=min){const [level,op]=binary[tokens[index++].value];left={op,left,right:expression(op==='implies'?level:level+1)};}
+      return left;
+    }
+    const tree=expression(0);if(index!==tokens.length)fail('operator');
+    const symbols=new Map(),freeVariables=new Set();
+    function register(name,kind,arity,column){
+      const old=symbols.get(name);
+      if(old&&(old.kind!==kind||old.arity!==arity))throw new SyntaxIssue('signature',column,name);
+      symbols.set(name,{name,kind,arity,column});
+    }
+    function visitTerm(node,bound){
+      if(upper(node.name))throw new SyntaxIssue('term',node.column,node.name);
+      if(node.applied){if(bound.has(node.name)||variable(node.name))throw new SyntaxIssue('term',node.column,node.name);register(node.name,'function',node.args.length,node.column);node.args.forEach(t=>visitTerm(t,bound));}
+      else if(bound.has(node.name)||variable(node.name)){if(!bound.has(node.name))freeVariables.add(node.name);}
+      else register(node.name,'constant',0,node.column);
+    }
+    function visit(node,bound=new Set()){
+      if(node.op==='predicate'){register(node.name,'predicate',node.args.length,node.column);node.args.forEach(t=>visitTerm(t,bound));}
+      else if(['all','some','none'].includes(node.op)){const next=new Set(bound);next.add(node.variable);visit(node.body,next);}
+      else if(node.op==='not')visit(node.body,bound);
+      else if(['equal','unequal'].includes(node.op)){visitTerm(node.left,bound);visitTerm(node.right,bound);}
+      else if(node.op!=='truth'){visit(node.left,bound);visit(node.right,bound);}
+    }
+    visit(tree);return {tree,symbols:[...symbols.values()],freeVariables:[...freeVariables]};
+  }
+  function analyze(rows){
+    const entries=[],errors=[],symbols=new Map();
+    rows.forEach((row,index)=>{
+      if(row.role==='blank'||!row.text.trim())return;
+      try{
+        const result=parse(row.text);
+        for(const symbol of result.symbols){const old=symbols.get(symbol.name);if(old&&(old.kind!==symbol.kind||old.arity!==symbol.arity))throw new SyntaxIssue('signature',symbol.column,symbol.name);}
+        result.symbols.forEach(s=>symbols.set(s.name,s));entries.push({index,role:row.role,...result});
+      }catch(error){errors.push({index,code:error.code||'limit',column:error.column||1,token:error.token||''});}
+    });
+    return {status:errors.length?'errors':entries.length?'syntax-checked':'empty',entries,errors,symbols:[...symbols.values()]};
+  }
+  scope.LPFirstOrder={parse,analyze};
+  if(typeof module!=='undefined')module.exports=scope.LPFirstOrder;
+})(globalThis);
+</script>
+
+<script id="categorical-logic">
+(function(scope){
+  function statement(form, subject, predicate) {
+    subject=subject.trim().replace(/\s+/gu,' ');predicate=predicate.trim().replace(/\s+/gu,' ');
+    const term=/^[_\p{L}][_\p{L}\p{M}\p{N} ′'-]*$/u;
+    if(!term.test(subject)||!term.test(predicate)||subject.length>240||predicate.length>240)throw Error('categorical-term');
+    return {form,subject,predicate};
+  }
+  function parse(text){
+    if(typeof text!=='string'||text.length>10000)throw Error('categorical-limit');
+    const formal=text.trim().match(/^([AEIO])\s*\(\s*([^,()]+?)\s*,\s*([^,()]+?)\s*\)$/u);
+    if(formal)return statement(formal[1],formal[2],formal[3]);
+    const patterns=[
+      ['O',/^(?:Algum|Alguma)\s+(.+?)\s+não\s+(?:é|e)\s+(.+?)[.]?$/iu],
+      ['A',/^(?:Todo|Toda)\s+(.+?)\s+(?:é|e)\s+(.+?)[.]?$/iu],
+      ['E',/^(?:Nenhum|Nenhuma)\s+(.+?)\s+(?:é|e)\s+(.+?)[.]?$/iu],
+      ['I',/^(?:Algum|Alguma)\s+(.+?)\s+(?:é|e)\s+(.+?)[.]?$/iu],
+      ['O',/^Some\s+(.+?)\s+(?:is|are)\s+not\s+(.+?)[.]?$/iu],
+      ['A',/^(?:All|Every)\s+(.+?)\s+(?:is|are)\s+(.+?)[.]?$/iu],
+      ['E',/^No\s+(.+?)\s+(?:is|are)\s+(.+?)[.]?$/iu],
+      ['I',/^Some\s+(.+?)\s+(?:is|are)\s+(.+?)[.]?$/iu],
+    ];
+    for(const [form,pattern] of patterns){const match=text.trim().match(pattern);if(match){if(/\s/u.test(match[1].trim())||/\s/u.test(match[2].trim()))throw Error('categorical-template');return statement(form,match[1],match[2]);}}
+    throw Error('categorical-syntax');
+  }
+  function evaluate(entry,regions,terms){
+    const s=terms.indexOf(entry.subject),p=terms.indexOf(entry.predicate);
+    const both=regions.some(region=>(region&(1<<s))&&(region&(1<<p)));
+    const outside=regions.some(region=>(region&(1<<s))&&!(region&(1<<p)));
+    return entry.form==='A'?!outside:entry.form==='E'?!both:entry.form==='I'?both:outside;
+  }
+  function validate(rows){
+    const entries=[],errors=[];
+    rows.forEach((row,index)=>{if(row.role==='blank'||!row.text.trim())return;try{entries.push({index,role:row.role,...parse(row.text)});}catch{errors.push({index});}});
+    if(errors.length)return {status:'errors',errors};
+    if(entries.length>200)return {status:'limit'};
+    const terms=[...new Set(entries.flatMap(e=>[e.subject,e.predicate]))],premises=entries.filter(e=>e.role==='premise'),conclusions=entries.filter(e=>e.role==='conclusion');
+    if(!conclusions.length)return {status:'missingConclusion'};
+    if(terms.length>3)return {status:'limit'};
+    const failures=new Map();let satisfiable=false;
+    // Every object has one membership pattern. One representative of each
+    // occupied region suffices for A/E/I/O sentences; no cardinality is asserted.
+    for(let occupied=1;occupied<2**(2**terms.length);occupied++){
+      const regions=Array.from({length:2**terms.length},(_,i)=>i).filter(i=>occupied&(1<<i));
+      if(!premises.every(e=>evaluate(e,regions,terms)))continue;
+      satisfiable=true;
+      for(const conclusion of conclusions){if(!failures.has(conclusion.index)&&!evaluate(conclusion,regions,terms)){
+        const domain=regions.map((region,i)=>({id:'d'+(i+1),terms:terms.filter((_,j)=>region&(1<<j))}));
+        failures.set(conclusion.index,domain);
+      }}
+    }
+    return {status:failures.size?'invalid':'valid',satisfiable,terms,conclusions:conclusions.map(e=>({index:e.index,valid:!failures.has(e.index),countermodel:failures.get(e.index)||null}))};
+  }
+  scope.LPCategorical={parse,evaluate,validate};
+  if(typeof module!=='undefined')module.exports=scope.LPCategorical;
+})(globalThis);
+</script>
+
 <script id="state-and-row-drag">
 // Stable entry points: bootstrap uses primitives until the row controller installs its behavior.
 const rowController = {};
@@ -10723,6 +10883,7 @@ try {
         autoNumber: Number.isSafeInteger(doc.autoNumber) && doc.autoNumber > 0 ? doc.autoNumber : undefined,
         logicMode: ['propositional','syllogistic','first-order'].includes(doc.logicMode) ? doc.logicMode : 'propositional',
         customName: typeof doc.customName === "string" ? doc.customName.trim() : "",
+        domainDescription: typeof doc.domainDescription === 'string' ? doc.domainDescription.slice(0,1000) : '',
         descriptions:
           doc.descriptions && typeof doc.descriptions === "object" ? doc.descriptions : {},
         rows: doc.rows.length
@@ -13481,11 +13642,7 @@ async function updateLogicValidation() {
   logicButton.setAttribute("aria-label", words.button);
   logicPanel.textContent = words.working;
   if (typeof currentLogicMode === "function" && currentLogicMode() !== 'propositional') {
-    logicPanel.dataset.state = 'unsupported-mode';
-    logicPanel.textContent = interfaceText(
-      'O verificador deste modo ainda está em desenvolvimento. O argumento foi preservado; nenhum veredito de validade foi emitido. Você pode mudar o sistema lógico pelo título do site.',
-      'The validator for this mode is still in development. Your argument is preserved; no validity verdict has been issued. You can change the logical system from the site title.'
-    );
+    updateExtendedLogicValidation(currentLogicMode());
     return;
   }
   const snapshot = rows.map((row) => ({ ...row }));
@@ -14997,6 +15154,7 @@ async function confirmDeletion(message) {
         customName: d.customName || "",
         numbered: d.numbered,
         logicMode: d.logicMode || 'propositional',
+        domainDescription: d.domainDescription || '',
         descriptions: d.descriptions || {},
         rows: d.rows,
       })),
@@ -15023,6 +15181,7 @@ async function confirmDeletion(message) {
           customName: doc.customName || "",
           numbered: doc.numbered,
           logicMode: doc.logicMode || 'propositional',
+          domainDescription: doc.domainDescription || '',
           descriptions: doc.descriptions || {},
           rows: doc.rows,
         },
@@ -15138,6 +15297,7 @@ async function confirmDeletion(message) {
           if (total > 1000000) throw Error();
           return { text: r.text, role: r.role };
         });
+        if(d.domainDescription !== undefined && (typeof d.domainDescription !== 'string' || d.domainDescription.length > 1000)) throw Error();
         const descriptions = Object.create(null);
         if (d.descriptions !== undefined) {
           if (
@@ -15158,6 +15318,7 @@ async function confirmDeletion(message) {
           items: items.length ? items : [{ text: "", role: "premise" }],
           numbered: d.numbered !== false,
           oldId: d.id,
+          domainDescription: d.domainDescription || '',
           logicMode: ['propositional','syllogistic','first-order'].includes(d.logicMode) ? d.logicMode : 'propositional',
           descriptions,
         };
@@ -15170,6 +15331,7 @@ async function confirmDeletion(message) {
         const id = addDocument(doc.name, doc.items, doc.numbered);
         argumentWorkspace.documents.find((d) => d.id === id).descriptions = doc.descriptions;
         argumentWorkspace.documents.find((d) => d.id === id).logicMode = doc.logicMode;
+        argumentWorkspace.documents.find((d) => d.id === id).domainDescription = doc.domainDescription;
         if (!selected || doc.oldId === data.activeId) selected = id;
       }
       showArgument(selected);
@@ -16118,7 +16280,11 @@ async function confirmDeletion(message) {
   }
   function descriptionNames(formula) {
     const names = new Set();
+    const mode = typeof currentLogicMode === 'function' ? currentLogicMode() : 'propositional';
     try {
+      if (mode === 'first-order') return new Set(LPFirstOrder.parse(formula).symbols.map(s => s.name));
+      if (mode === 'syllogistic') { const result=LPCategorical.parse(formula); return new Set([result.subject,result.predicate]); }
+
       LPLogic.parse(formula).atoms.forEach((a) => names.add(a));
     } catch {
           // Descriptions remain available while editing incomplete formulas and
@@ -16142,6 +16308,17 @@ async function confirmDeletion(message) {
         form = el("form"),
         names = new Set();
       const documentAtOpen = currentDocument();
+      const mode = typeof currentLogicMode === 'function' ? currentLogicMode() : 'propositional';
+      const signature = mode === 'first-order' ? LPFirstOrder.analyze(rows) : null;
+      const metadata = new Map((signature?.symbols || []).map(s => [s.name,s]));
+      let domain;
+      if (mode === 'first-order') {
+        d.querySelector('h3').textContent=text('Vocabulário de primeira ordem','First-order vocabulary');
+        const label=el('label',text('Domínio de discurso','Domain of discourse'));
+        domain=el('input');domain.maxLength=1000;domain.value=documentAtOpen.domainDescription || '';
+        domain.placeholder=text('Ex.: pessoas','E.g. people');label.append(domain);form.append(label);
+      } else if (mode === 'syllogistic') d.querySelector('h3').textContent=text('Descrição dos termos','Term descriptions');
+
       for (const row of rows) {
         if (row.role !== "blank") descriptionNames(row.text).forEach(name => names.add(name));
       }
@@ -16162,15 +16339,30 @@ async function confirmDeletion(message) {
         "Registre o significado dos símbolos. As descrições são próprias deste argumento e não alteram a validação lógica.",
         "Record symbol meanings. Descriptions belong to this argument and do not change logical validation."
       ), "hy-description-note"));
+      if(mode === 'first-order') d.append(el('p',text(
+        'Predicados começam em maiúscula; constantes e funções, em minúscula. Variáveis ligadas não recebem descrição de símbolo. A anotação do domínio explica a intenção, mas não define uma estrutura matemática nem comprova premissas.',
+        'Predicates start uppercase; constants and functions start lowercase. Bound variables do not receive symbol descriptions. The domain annotation explains intent, but does not define a mathematical structure or establish premises.'
+      ),'hy-description-note'));
       const inputs = [];
       for (const atom of [...names].sort()) {
         const label = el("label", atom),
           input = el("input");
         label.dataset.userContent = "";
+        const symbol=metadata.get(atom);
+        if(symbol) {
+          const kind=symbol.kind==='predicate'?text('predicado','predicate'):symbol.kind==='function'?text('função','function'):text('constante','constant');
+          const detail=el('span',kind+(symbol.kind==='constant'?'':' · '+text('aridade ','arity ')+symbol.arity),'hy-symbol-metadata');
+          label.append(detail);
+        }
+
         input.value = typeof existing[atom] === "string" ? existing[atom] : "";
         input.maxLength = 1000;
         input.autocomplete = "off";
-        input.placeholder = text("Ex.: Está chovendo", "E.g. It is raining");
+        input.placeholder = symbol?.kind === 'constant' ? text('Ex.: Ana','E.g. Alice')
+          : symbol?.kind === 'function' ? text('Ex.: mãe de x','E.g. mother of x')
+          : symbol?.kind === 'predicate' ? text('Ex.: x ama y','E.g. x loves y')
+          : mode === 'syllogistic' ? text('Ex.: estudantes','E.g. students')
+          : text("Ex.: Está chovendo", "E.g. It is raining");
         label.append(input);
         form.append(label);
         inputs.push([atom, input]);
@@ -16187,6 +16379,7 @@ async function confirmDeletion(message) {
           if (input.value.trim()) values[atom] = input.value.trim();
         });
         documentAtOpen.descriptions = values;
+        if (domain) documentAtOpen.domainDescription = domain.value.trim();
         saveArguments();
         refreshDescriptions();
         d.close();
@@ -16196,6 +16389,12 @@ async function confirmDeletion(message) {
     }),
   );
   function refreshDescriptions() {
+    const mode=typeof currentLogicMode === 'function' ? currentLogicMode() : 'propositional';
+    const label=mode==='first-order' ? text('Vocabulário de primeira ordem','First-order vocabulary')
+      : mode==='syllogistic' ? text('Descrição dos termos','Term descriptions')
+      : text('Descrição das proposições','Proposition descriptions');
+    proposition.setAttribute('aria-label',label);
+    proposition.dataset.hintText=label;
     const values = descriptions();
     const hint = names => [...names]
       .filter(name => Object.hasOwn(values, name) && values[name])
@@ -16404,7 +16603,7 @@ async function confirmDeletion(message) {
     "aria-label",
     text("Descrição das proposições", "Proposition descriptions"),
   );
-  proposition.title = text("Descrição das proposições", "Proposition descriptions");
+
   proposition.innerHTML =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4Z M8 8h8 M8 12h8 M8 16h4"/></svg>';
   root.querySelector(".hy-editor .hy-section-head").append(proposition);
@@ -16424,7 +16623,7 @@ async function confirmDeletion(message) {
       "aria-label",
       text("Descrição das proposições", "Proposition descriptions"),
     );
-    proposition.title = text("Descrição das proposições", "Proposition descriptions");
+  
     refreshDescriptions();
     saveArguments();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
@@ -21522,8 +21721,8 @@ function currentLogicMode() {
       [modes[0],
        'Estuda inferências entre termos, por meio de proposições como “Todo S é P”, “Nenhum S é P”, “Algum S é P” e “Algum S não é P”. Num silogismo categórico há duas premissas e uma conclusão, articuladas por três termos. Exemplo: todo M é P; todo S é M; portanto, todo S é P.',
        'Studies inferences between terms through propositions such as “Every S is P”, “No S is P”, “Some S is P” and “Some S is not P”. A categorical syllogism has two premises and a conclusion involving three terms. Example: every M is P; every S is M; therefore every S is P.',
-       'As descrições identificam os termos. Pressupostos de existência e o tratamento de termos vazios precisam ser declarados. Silogística, lógica aristotélica e tradição escolástica não são expressões perfeitamente equivalentes. A validação específica deste modo ainda está em desenvolvimento.',
-       'Descriptions identify the terms. Existential assumptions and treatment of empty terms must be specified. Syllogistic, Aristotelian logic and the scholastic tradition are not exactly interchangeable expressions. The dedicated validator for this mode is still in development.'],
+       'As descrições identificam os termos. Pressupostos de existência e o tratamento de termos vazios precisam ser declarados. Silogística, lógica aristotélica e tradição escolástica não são expressões perfeitamente equivalentes. O verificador aceita A(S,P), E(S,P), I(S,P) e O(S,P), com até três termos. Adota domínio não vazio e permite termos vazios; universais não pressupõem existência.',
+       'Descriptions identify the terms. Existential assumptions and treatment of empty terms must be specified. Syllogistic, Aristotelian logic and the scholastic tradition are not exactly interchangeable expressions. The checker accepts A(S,P), E(S,P), I(S,P) and O(S,P), with up to three terms. It uses a nonempty domain and permits empty terms; universals carry no existential import.'],
       [modes[1],
        'Trata enunciados completos como unidades, representadas por A, B, P etc. Conectivos como ¬, ∧, ∨ e → determinam como os valores de verdade se combinam. Exemplo: A → B; A; portanto, B.',
        'Treats complete statements as units represented by A, B, P and so on. Connectives such as ¬, ∧, ∨ and → determine how truth values combine. Example: A → B; A; therefore B.',
@@ -21532,8 +21731,8 @@ function currentLogicMode() {
       [modes[2],
        'Analisa a estrutura interna das afirmações: indivíduos, predicados, relações e quantificação. Em ∀x(P(x) → Q(x)), quantificamos sobre indivíduos de um domínio. Exemplo: ∀x(P(x) → Q(x)); P(a); portanto, Q(a).',
        'Analyzes the internal structure of statements: individuals, predicates, relations and quantification. In ∀x(P(x) → Q(x)), quantification ranges over individuals in a domain. Example: ∀x(P(x) → Q(x)); P(a); therefore Q(a).',
-       'Um vocabulário formal deve distinguir domínio, constantes, funções e predicados com sua aridade e ordem dos argumentos. O formulário atual ainda registra descrições livres de símbolos, não uma interpretação formal completa. A validação de primeira ordem está em desenvolvimento. Em geral, não existe um algoritmo que sempre termine decidindo todos os casos; uma busca sem resultado pode ser inconclusiva.',
-       'A formal vocabulary must distinguish domain, constants, functions and predicates with their arity and argument order. The current form still stores free symbol descriptions, not a complete formal interpretation. First-order validation is in development. In general, no algorithm always terminates deciding every case; an unsuccessful search may be inconclusive.'],
+       'Um vocabulário formal deve distinguir domínio, constantes, funções e predicados com sua aridade e ordem dos argumentos. O vocabulário identifica tipos e aridades dos símbolos e registra uma anotação do domínio. O analisador verifica sintaxe e variáveis livres; ainda não prova a validade dos argumentos. Em geral, não existe um algoritmo que sempre termine decidindo todos os casos; uma busca sem resultado pode ser inconclusiva.',
+       'A formal vocabulary must distinguish domain, constants, functions and predicates with their arity and argument order. The vocabulary identifies symbol kinds and arities and records a domain annotation. The analyzer checks syntax and free variables; it does not yet prove argument validity. In general, no algorithm always terminates deciding every case; an unsuccessful search may be inconclusive.'],
     ];
     for(const [mode,pt,en,ptNote,enNote] of lessons){const section=document.createElement('section'),heading=document.createElement('h3'),p=document.createElement('p'),note=document.createElement('p');heading.textContent=t(mode[1],mode[2]);p.textContent=t(pt,en);note.textContent=t(ptNote,enNote);section.append(heading,p,note);d.append(section);}
     const link=document.createElement('a');link.href='https://forallx.openlogicproject.org/';link.target='_blank';link.rel='noopener noreferrer';link.textContent=t('Leitura: forall x — Open Logic Project','Reading: forall x — Open Logic Project');d.append(link);
@@ -21577,6 +21776,64 @@ function currentLogicMode() {
   refresh();
   alignDock();
 })();
+</script>
+
+<script id="extended-logic-view">
+function updateExtendedLogicValidation(mode) {
+  const t=interfaceText,section=document.createElement('div');section.className='hy-extended-logic';
+  const add=(tag,value,cls)=>{const node=document.createElement(tag);node.textContent=value;if(cls)node.className=cls;section.append(node);return node;};
+  const finish=status=>{logicPanel.dataset.state=status;logicPanel.replaceChildren(section);};
+  if(mode==='first-order'){
+    if(rows.length>200){add('p',t('Análise limitada a 200 linhas.','Analysis is limited to 200 rows.'));finish('limit');return;}
+    const result=LPFirstOrder.analyze(rows);
+    const messages={
+      name:t('Esperado um nome de símbolo ou variável.','Expected a symbol or variable name.'),
+      variable:t('Quantificadores de primeira ordem ligam variáveis individuais em minúsculas.','First-order quantifiers bind lowercase individual variables.'),
+      predicate:t('Use predicados com inicial maiúscula, como P(a) ou Ama(a,b).','Use uppercase-initial predicates, such as P(a) or Loves(a,b).'),
+      term:t('Os argumentos devem ser termos: variáveis, constantes ou funções com inicial minúscula.','Arguments must be terms: variables, constants or lowercase-initial functions.'),
+      signature:t('O mesmo símbolo foi usado com tipos ou números de argumentos diferentes.','The same symbol was used with different kinds or argument counts.'),
+      delimiter:t('Confira os parênteses e as vírgulas dos argumentos.','Check parentheses and argument commas.'),
+      operator:t('Confira o conectivo ou símbolo: esta escrita não pertence à sintaxe de LPO suportada.','Check the connective or symbol: this expression is outside the supported FOL syntax.'),
+      limit:t('A fórmula excede o limite desta análise.','The formula exceeds the analysis limit.'),
+    };
+    if(result.status==='errors'){
+      add('h3',t('Problemas de sintaxe ou vocabulário','Syntax or vocabulary issues'));
+      for(const error of result.errors)add('p',t('Linha ','Line ')+(error.index+1)+' · '+t('coluna ','column ')+error.column+': '+(messages[error.code]||messages.operator)+(error.token?' ['+error.token+']':''),'hy-logic-result');
+      add('p',t('Esses problemas não são um veredito de invalidade lógica.','These issues are not a verdict of logical invalidity.'));
+    }else if(result.status==='empty')add('p',t('Escreva uma fórmula para analisar.','Enter a formula to analyze.'));
+    else{
+      add('h3',t('Sintaxe de LPO verificada','First-order syntax checked'));
+      for(const entry of result.entries){if(entry.freeVariables.length)add('p',t('Linha ','Line ')+(entry.index+1)+': '+t('variáveis livres — ','free variables — ')+entry.freeVariables.join(', ')+'. '+t('A fórmula não é uma sentença fechada.','The formula is not a closed sentence.'));}
+      add('p',t('A escrita e a consistência dos símbolos foram conferidas. A validade do argumento ainda não foi determinada.','The syntax and consistency of symbols were checked. Argument validity has not been determined.'));
+      if(result.symbols.length)add('p',result.symbols.map(s=>s.name+(s.kind==='constant'?'': '/'+s.arity)).join(' · '),'hy-description-note');
+    }
+    add('p',t('Convenção: variáveis livres x, y, z, u, v, w (com índices); nomes ligados por quantificadores também são variáveis. Quantificadores têm o alcance da fórmula imediatamente seguinte; use parênteses para ampliar esse alcance. Descrições em linguagem natural não são usadas como axiomas.','Convention: free variables x, y, z, u, v, w (with indices); names bound by quantifiers are also variables. Quantifiers scope over the immediately following formula; use parentheses for a wider scope. Natural-language descriptions are not used as axioms.'),'hy-description-note');
+    finish(result.status);return;
+  }
+  const result=LPCategorical.validate(rows);
+  add('p',t('Semântica adotada: domínio não vazio; termos podem ser vazios. A e E não pressupõem existência. Para afirmar existência, acrescente I(S,S).','Semantics: nonempty domain; terms may be empty. A and E carry no existential import. To assert existence, add I(S,S).'),'hy-description-note');
+  if(result.status==='errors'){
+    add('h3',t('Confira a forma das proposições','Check the proposition forms'));
+    for(const error of result.errors)add('p',t('Linha ','Line ')+(error.index+1)+': '+t('use A(S,P), E(S,P), I(S,P) ou O(S,P).','use A(S,P), E(S,P), I(S,P) or O(S,P).'),'hy-logic-result');
+  }else if(result.status==='limit')add('p',t('Este verificador aceita até três termos distintos e 200 linhas.','This checker accepts up to three distinct terms and 200 rows.'));
+  else if(result.status==='missingConclusion')add('p',t('Marque pelo menos uma conclusão.','Mark at least one conclusion.'));
+  else{
+    add('h3',result.status==='valid'?t('Argumento válido nesta semântica','Valid argument under these semantics'):t('Argumento inválido nesta semântica','Invalid argument under these semantics'));
+    if(!result.satisfiable)add('p',t('As premissas são conjuntamente impossíveis. As conclusões decorrem por vacuidade; isso não comprova a verdade das premissas.','The premises are jointly impossible. The conclusions follow vacuously; this does not establish the truth of the premises.'));
+    for(const conclusion of result.conclusions){
+      add('h4',t('Conclusão da linha ','Conclusion on line ')+(conclusion.index+1)+' — '+(conclusion.valid?t('decorre','follows'):t('não decorre','does not follow')));
+      if(conclusion.countermodel){
+        add('p',t('Contramodelo: todas as premissas são verdadeiras e esta conclusão é falsa.','Countermodel: all premises are true and this conclusion is false.'));
+        const table=document.createElement('table');table.className='hy-countermodel-table';
+        const caption=document.createElement('caption');caption.textContent=t('Objetos e pertencimento aos termos','Objects and term membership');table.append(caption);
+        const head=document.createElement('tr');for(const label of [t('Objeto','Object'),...result.terms]){const cell=document.createElement('th');cell.scope='col';cell.textContent=label;head.append(cell);}const thead=document.createElement('thead');thead.append(head);table.append(thead);
+        const body=document.createElement('tbody');for(const object of conclusion.countermodel){const row=document.createElement('tr');for(const label of [object.id,...result.terms.map(term=>object.terms.includes(term)?t('Sim','Yes'):t('Não','No'))]){const cell=document.createElement('td');cell.textContent=label;row.append(cell);}body.append(row);}table.append(body);section.append(table);
+      }
+    }
+  }
+  add('p',t('A: Todo S é P. E: Nenhum S é P. I: Algum S é P. O: Algum S não é P. Os nomes dos termos diferenciam maiúsculas de minúsculas. A análise enumera todas as regiões possíveis de pertencimento; não pretende representar toda a tradição aristotélica ou escolástica.','A: Every S is P. E: No S is P. I: Some S is P. O: Some S is not P. Term names are case-sensitive. The analysis enumerates all possible membership regions; it does not represent the entire Aristotelian or scholastic tradition.'),'hy-description-note');
+  finish(result.status);
+}
 </script>
   </body>
 </html>

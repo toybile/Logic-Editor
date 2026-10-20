@@ -14,7 +14,7 @@ fs.mkdirSync('test-artifacts',{recursive:true});
  assert.equal(await p.evaluate(()=>JSON.stringify(rows)),before);
  assert.equal(await p.locator('.hy-symbol').count(),symbols);
  await p.locator('.hy-logic-button').click();
- await p.waitForFunction(()=>logicPanel.dataset.state==='unsupported-mode');
+ await p.waitForFunction(()=>logicPanel.dataset.state==='syntax-checked');
  assert(!(await p.locator('#logic-panel').innerText()).includes('valid argument'));
  await p.locator('.hy-validation-heading button').click();
  await p.reload();assert.equal(await selector.getAttribute('data-mode'),'first-order');

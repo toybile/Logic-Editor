@@ -19,6 +19,14 @@
       "file": "scripts/validation/logic-engine.js"
     },
     {
+      "name": "first-order-syntax",
+      "file": "scripts/validation/first-order-syntax.js"
+    },
+    {
+      "name": "categorical-logic",
+      "file": "scripts/validation/categorical-logic.js"
+    },
+    {
       "name": "state-and-row-drag",
       "file": "scripts/core/state-and-row-drag.js"
     },
@@ -241,6 +249,10 @@
     {
       "name": "logic-modes",
       "file": "scripts/settings/logic-modes.js"
+    },
+    {
+      "name": "extended-logic-view",
+      "file": "scripts/validation/extended-logic-view.js"
     }
   ]
 }

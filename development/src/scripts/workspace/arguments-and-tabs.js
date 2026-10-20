@@ -49,6 +49,7 @@ try {
         autoNumber: Number.isSafeInteger(doc.autoNumber) && doc.autoNumber > 0 ? doc.autoNumber : undefined,
         logicMode: ['propositional','syllogistic','first-order'].includes(doc.logicMode) ? doc.logicMode : 'propositional',
         customName: typeof doc.customName === "string" ? doc.customName.trim() : "",
+        domainDescription: typeof doc.domainDescription === 'string' ? doc.domainDescription.slice(0,1000) : '',
         descriptions:
           doc.descriptions && typeof doc.descriptions === "object" ? doc.descriptions : {},
         rows: doc.rows.length

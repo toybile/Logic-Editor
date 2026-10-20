@@ -94,7 +94,11 @@
   }
   function descriptionNames(formula) {
     const names = new Set();
+    const mode = typeof currentLogicMode === 'function' ? currentLogicMode() : 'propositional';
     try {
+      if (mode === 'first-order') return new Set(LPFirstOrder.parse(formula).symbols.map(s => s.name));
+      if (mode === 'syllogistic') { const result=LPCategorical.parse(formula); return new Set([result.subject,result.predicate]); }
+
       LPLogic.parse(formula).atoms.forEach((a) => names.add(a));
     } catch {
           // Descriptions remain available while editing incomplete formulas and
@@ -118,6 +122,17 @@
         form = el("form"),
         names = new Set();
       const documentAtOpen = currentDocument();
+      const mode = typeof currentLogicMode === 'function' ? currentLogicMode() : 'propositional';
+      const signature = mode === 'first-order' ? LPFirstOrder.analyze(rows) : null;
+      const metadata = new Map((signature?.symbols || []).map(s => [s.name,s]));
+      let domain;
+      if (mode === 'first-order') {
+        d.querySelector('h3').textContent=text('Vocabulário de primeira ordem','First-order vocabulary');
+        const label=el('label',text('Domínio de discurso','Domain of discourse'));
+        domain=el('input');domain.maxLength=1000;domain.value=documentAtOpen.domainDescription || '';
+        domain.placeholder=text('Ex.: pessoas','E.g. people');label.append(domain);form.append(label);
+      } else if (mode === 'syllogistic') d.querySelector('h3').textContent=text('Descrição dos termos','Term descriptions');
+
       for (const row of rows) {
         if (row.role !== "blank") descriptionNames(row.text).forEach(name => names.add(name));
       }
@@ -138,15 +153,30 @@
         "Registre o significado dos símbolos. As descrições são próprias deste argumento e não alteram a validação lógica.",
         "Record symbol meanings. Descriptions belong to this argument and do not change logical validation."
       ), "hy-description-note"));
+      if(mode === 'first-order') d.append(el('p',text(
+        'Predicados começam em maiúscula; constantes e funções, em minúscula. Variáveis ligadas não recebem descrição de símbolo. A anotação do domínio explica a intenção, mas não define uma estrutura matemática nem comprova premissas.',
+        'Predicates start uppercase; constants and functions start lowercase. Bound variables do not receive symbol descriptions. The domain annotation explains intent, but does not define a mathematical structure or establish premises.'
+      ),'hy-description-note'));
       const inputs = [];
       for (const atom of [...names].sort()) {
         const label = el("label", atom),
           input = el("input");
         label.dataset.userContent = "";
+        const symbol=metadata.get(atom);
+        if(symbol) {
+          const kind=symbol.kind==='predicate'?text('predicado','predicate'):symbol.kind==='function'?text('função','function'):text('constante','constant');
+          const detail=el('span',kind+(symbol.kind==='constant'?'':' · '+text('aridade ','arity ')+symbol.arity),'hy-symbol-metadata');
+          label.append(detail);
+        }
+
         input.value = typeof existing[atom] === "string" ? existing[atom] : "";
         input.maxLength = 1000;
         input.autocomplete = "off";
-        input.placeholder = text("Ex.: Está chovendo", "E.g. It is raining");
+        input.placeholder = symbol?.kind === 'constant' ? text('Ex.: Ana','E.g. Alice')
+          : symbol?.kind === 'function' ? text('Ex.: mãe de x','E.g. mother of x')
+          : symbol?.kind === 'predicate' ? text('Ex.: x ama y','E.g. x loves y')
+          : mode === 'syllogistic' ? text('Ex.: estudantes','E.g. students')
+          : text("Ex.: Está chovendo", "E.g. It is raining");
         label.append(input);
         form.append(label);
         inputs.push([atom, input]);
@@ -163,6 +193,7 @@
           if (input.value.trim()) values[atom] = input.value.trim();
         });
         documentAtOpen.descriptions = values;
+        if (domain) documentAtOpen.domainDescription = domain.value.trim();
         saveArguments();
         refreshDescriptions();
         d.close();
@@ -172,6 +203,12 @@
     }),
   );
   function refreshDescriptions() {
+    const mode=typeof currentLogicMode === 'function' ? currentLogicMode() : 'propositional';
+    const label=mode==='first-order' ? text('Vocabulário de primeira ordem','First-order vocabulary')
+      : mode==='syllogistic' ? text('Descrição dos termos','Term descriptions')
+      : text('Descrição das proposições','Proposition descriptions');
+    proposition.setAttribute('aria-label',label);
+    proposition.dataset.hintText=label;
     const values = descriptions();
     const hint = names => [...names]
       .filter(name => Object.hasOwn(values, name) && values[name])
@@ -380,7 +417,7 @@
     "aria-label",
     text("Descrição das proposições", "Proposition descriptions"),
   );
-  proposition.title = text("Descrição das proposições", "Proposition descriptions");
+
   proposition.innerHTML =
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4Z M8 8h8 M8 12h8 M8 16h4"/></svg>';
   root.querySelector(".hy-editor .hy-section-head").append(proposition);
@@ -400,7 +437,7 @@
       "aria-label",
       text("Descrição das proposições", "Proposition descriptions"),
     );
-    proposition.title = text("Descrição das proposições", "Proposition descriptions");
+  
     refreshDescriptions();
     saveArguments();
   }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
