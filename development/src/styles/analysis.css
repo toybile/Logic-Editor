@@ -31,7 +31,7 @@
 #lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:34px; padding:7px 10px; border:1px solid var(--edge); border-radius:9px; color:var(--ink); background:var(--paper); font:12px/1.5 "Segoe UI",system-ui; }
 #lp-hybrid .hy-analysis-preview-actions #download { color:var(--blue); }
 #lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) svg { width:15px; height:15px; flex:none; }
-#lp-hybrid .hy-analysis-vocabulary { display:inline-flex; align-items:center; gap:7px; padding:6px 0; min-height:34px; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-vocabulary { display:inline-flex; align-items:center; gap:7px; padding:6px 9px; min-height:34px; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
 #lp-hybrid .hy-analysis-vocabulary svg { width:16px; height:16px; }
 #lp-hybrid .hy-analysis-vocabulary:hover { color:var(--blue); }
 #lp-hybrid .hy-analysis-results { padding:26px; min-width:0; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; }

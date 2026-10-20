@@ -108,11 +108,13 @@
   color: var(--blue);
   border: 1px solid var(--edge);
   border-radius: 9px;
-  width: 34px;
+  width: auto;
   height: 34px;
   min-height: 34px;
-  padding: 7px;
-  flex: 0 0 34px;
+  padding: 7px 10px;
+  flex: 0 0 auto;
+  gap: 7px;
+  white-space: nowrap;
   position: relative;
 }
 #lp-hybrid .hy-logic-area {
@@ -9364,7 +9366,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-height:34px; padding:7px 10px; border:1px solid var(--edge); border-radius:9px; color:var(--ink); background:var(--paper); font:12px/1.5 "Segoe UI",system-ui; }
 #lp-hybrid .hy-analysis-preview-actions #download { color:var(--blue); }
 #lp-hybrid .hy-analysis-preview-actions :is(#copy,#download) svg { width:15px; height:15px; flex:none; }
-#lp-hybrid .hy-analysis-vocabulary { display:inline-flex; align-items:center; gap:7px; padding:6px 0; min-height:34px; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
+#lp-hybrid .hy-analysis-vocabulary { display:inline-flex; align-items:center; gap:7px; padding:6px 9px; min-height:34px; border:0; background:transparent; color:var(--quiet); font:12px/1.5 "Segoe UI",system-ui; }
 #lp-hybrid .hy-analysis-vocabulary svg { width:16px; height:16px; }
 #lp-hybrid .hy-analysis-vocabulary:hover { color:var(--blue); }
 #lp-hybrid .hy-analysis-results { padding:26px; min-width:0; overflow:auto; overscroll-behavior:contain; scrollbar-width:thin; }
@@ -9600,7 +9602,7 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-import-list strong { font-size:14px; font-weight:500; overflow-wrap:anywhere; }
 #lp-hybrid .hy-import-actions { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:8px; padding:16px 24px; border-top:1px solid var(--edge); }
 #lp-hybrid .hy-reset-body { min-height:0; overflow:auto; padding:0 24px; scrollbar-width:thin; overscroll-behavior:contain; }
-#lp-hybrid .hy-logic-mode-help > header { position:sticky; top:-28px; z-index:1; padding:16px 0; margin-top:-16px; background:var(--paper); border-bottom:1px solid var(--edge); }
+#lp-hybrid .hy-logic-mode-help > header { position:sticky; top:-28px; z-index:1; padding:16px 0; margin-top:-16px; background:inherit; border-bottom:1px solid var(--edge); }
 #lp-hybrid .hy-logic-mode-help > header h2 { min-width:0; }
 
 #lp-hybrid :is(.hy-examples-dialog,.hy-import-preview,#default-settings-confirmation.hy-selective-reset)[open] { display:flex; }
@@ -13602,8 +13604,12 @@ logicPanel.setAttribute("aria-live", "polite");
 const logicButton = document.createElement("button");
 logicButton.type = "button";
 logicButton.className = "hy-button hy-logic-button";
-logicButton.classList.add("hy-icon-button");
+const logicButtonLabel = document.createElement("span");
+logicButtonLabel.dataset.pt = "Validar";
+logicButtonLabel.dataset.en = "Validate";
+logicButtonLabel.textContent = document.documentElement.lang === "en" ? "Validate" : "Validar";
 logicButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4 4 7 8 9 4-2 8-5 8-9V6Z"/><path d="m8 12 3 3 5-6"/></svg>';
+logicButton.append(logicButtonLabel);
 logicButton.setAttribute("aria-expanded", "false");
 logicButton.setAttribute("aria-controls", "logic-panel");
 const logicFooter = document.createElement("div");
@@ -13796,6 +13802,7 @@ let logicLanguage = document.documentElement.lang;
 new MutationObserver(() => {
   if (logicLanguage === document.documentElement.lang) return;
   logicLanguage = document.documentElement.lang;
+  logicButtonLabel.textContent = logicLanguage === "en" ? "Validate" : "Validar";
   logicButton.setAttribute("aria-label", logicText().button);
   scheduleLogicValidation();
 }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
