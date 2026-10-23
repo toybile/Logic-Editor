@@ -40,7 +40,7 @@
         "International English",
         () => (ui.language = "en"),
       ],
-      ["theme", "Tema", "Theme", "Claro", "Light", () => { ui.theme = "light"; delete ui.backgroundTranslucency; }],
+      ["theme", "Tema", "Theme", "Claro", "Light", () => { ui.theme = "light"; delete ui.themeMode; delete ui.backgroundTranslucency; }],
       ['writing-mode','Modo de escrita','Writing mode','Linha contínua','Continuous writing',()=>{ui.writingMode='continuous';}],
       ['panel-fonts','Fontes das fórmulas','Formula fonts','Cambria Math','Cambria Math',()=>{
         config('editor').font = config('preview').font = 'math';

@@ -1,5 +1,18 @@
 // Shared interface lexicon; user-authored arguments and names are excluded.
 const interfaceLanguagePairs = {
+  "Pronto": "Done",
+  "Restaurar padrão": "Restore default",
+  "Escolha uma tonalidade abaixo.": "Choose a palette below.",
+  "Acompanha o tema do navegador.": "Follows your browser theme.",
+  "Desativado": "Off",
+  "Ativado": "On",
+  "Luz e cores suaves sob os painéis.": "Soft light and colors beneath the panels.",
+  "Fundo translúcido": "Translucent background",
+  "Automático": "Automatic",
+  "Modo de exibição": "Display mode",
+  "Cores tranquilas para acompanhar o seu raciocínio.": "Calm colors to accompany your reasoning.",
+  "Do seu jeito": "Make it yours",
+  "Temas e aparência": "Themes and appearance",
   "Translucidez": "Translucency",
   "Uma nova versão está disponível.": "A new version is available.",
   "Atualizar": "Update",

@@ -127,30 +127,53 @@ const themeToggleLabel=document.createElement("span");themeToggleLabel.textConte
 themeToggle.append(themeToggleLabel);
 themeToggle.insertAdjacentHTML("beforeend",'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>');
 themeLegend.append(themeToggle);themeChoices.append(themeLegend);
-function createThemeOptions() {
-const grid = document.createElement("div"); grid.className="hy-theme-grid";
-for(const dark of [false,true]) {
-  const column=document.createElement("section");column.className="hy-theme-column";column.dataset.scheme=dark?"dark":"light";
-  const heading=document.createElement("h4");heading.textContent=dark?interfaceText("Escuros","Dark themes"):interfaceText("Claros","Light themes");
-  column.append(heading);
-editorThemeChoices.filter(([value])=>isDarkTheme(value)===dark).forEach(([value,pt,en]) => {
-  const choice=document.createElement("button"); choice.type="button"; choice.className="hy-theme-option";
-  choice.dataset.themeValue=value;
-  const swatch=document.createElement("span");swatch.className="hy-theme-swatch";swatch.setAttribute("aria-hidden","true");
-  swatch.innerHTML='<i></i><i></i>';
-  const name=document.createElement("span");name.textContent=interfaceText(pt,en);
-  choice.append(swatch,name);choice.onclick=()=>{ui.theme=value;applyUI();};column.append(choice);
-});
-  grid.append(column);
+const themeSystemScheme=matchMedia("(prefers-color-scheme: dark)");
+const themePartners={light:"dark",dark:"light","indigo-light":"indigo-dark","indigo-dark":"indigo-light",sand:"graphite",graphite:"sand",sage:"petroleum",petroleum:"sage"};
+function resolveThemeScheme(mode) {
+  const dark=mode==="auto"?themeSystemScheme.matches:mode==="dark";
+  if(isDarkTheme()!==dark)ui.theme=themePartners[ui.theme];
 }
+themeSystemScheme.addEventListener("change",()=>{if(ui.themeMode==="auto")applyUI();});
+function restoreThemeAppearance() {
+  ui.theme="light";ui.themeMode="light";delete ui.backgroundTranslucency;applyUI();
+}
+function createThemeOptions() {
   const options=document.createElement("div");options.className="hy-theme-options";
+  const modeLabel=document.createElement("h3");modeLabel.className="hy-theme-group-title";modeLabel.textContent=interfaceText("Modo de exibição","Display mode");
+  const modes=document.createElement("div");modes.className="hy-theme-modes";modes.setAttribute("role","group");modes.setAttribute("aria-label",modeLabel.textContent);
+  for(const [mode,pt,en,icon] of [["auto","Automático","Automatic",'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>'],["light","Claro","Light",icons.sun],["dark","Escuro","Dark",icons.moon]]) {
+    const button=document.createElement("button");button.type="button";button.className="hy-theme-mode";button.dataset.themeMode=mode;
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';
+    const caption=document.createElement("span");caption.textContent=interfaceText(pt,en);button.append(caption);
+    button.onclick=()=>{ui.themeMode=mode;resolveThemeScheme(mode);applyUI();};modes.append(button);
+  }
+  const modeNote=document.createElement("p");modeNote.className="hy-theme-mode-note";
+  options.append(modeLabel,modes,modeNote);
   const translucency=document.createElement("label");translucency.className="hy-theme-translucency";
-  const caption=document.createElement("span");caption.textContent=interfaceText("Translucidez","Translucency");
-  const control=document.createElement("input");control.type="checkbox";control.className="hy-theme-translucency-input";control.setAttribute("role","switch");
+  const text=document.createElement("span");text.className="hy-theme-translucency-copy";
+  const caption=document.createElement("strong");caption.textContent=interfaceText("Fundo translúcido","Translucent background");
+  const description=document.createElement("span");description.textContent=interfaceText("Luz e cores suaves sob os painéis.","Soft light and colors beneath the panels.");text.append(caption,description);
+  const status=document.createElement("span");status.className="hy-theme-translucency-status";
+  const control=document.createElement("input");control.type="checkbox";control.className="hy-theme-translucency-input";control.setAttribute("role","switch");control.setAttribute("aria-label",caption.textContent);
   control.checked=ui.backgroundTranslucency ?? !["light","dark"].includes(ui.theme);
   control.onchange=()=>{ui.backgroundTranslucency=control.checked;applyUI();};
-  translucency.append(caption,control);options.append(translucency,grid);
-  return options;
+  translucency.append(text,status,control);options.append(translucency);
+  const title=document.createElement("h3");title.className="hy-theme-group-title";title.textContent=interfaceText("Temas","Themes");options.append(title);
+  const grid=document.createElement("div");grid.className="hy-theme-grid";
+  for(const dark of [false,true]) {
+    const column=document.createElement("section");column.className="hy-theme-column";column.dataset.scheme=dark?"dark":"light";
+    const heading=document.createElement("h4");heading.textContent=dark?interfaceText("Escuros","Dark themes"):interfaceText("Claros","Light themes");column.append(heading);
+    editorThemeChoices.filter(([value])=>isDarkTheme(value)===dark).forEach(([value,pt,en])=>{
+      const choice=document.createElement("button");choice.type="button";choice.className="hy-theme-option";choice.dataset.themeValue=value;
+      const swatch=document.createElement("span");swatch.className="hy-theme-swatch";swatch.setAttribute("aria-hidden","true");
+      swatch.innerHTML='<span class="hy-theme-mini-bar"></span><span class="hy-theme-mini-side"></span><span class="hy-theme-mini-line"></span><span class="hy-theme-mini-line hy-theme-mini-short"></span>';
+      const name=document.createElement("span");name.textContent=interfaceText(pt,en);
+      choice.append(swatch,name);choice.onclick=()=>{ui.theme=value;ui.themeMode=isDarkTheme(value)?"dark":"light";applyUI();};column.append(choice);
+    });grid.append(column);
+  }
+  const footer=document.createElement("div");footer.className="hy-theme-actions";
+  const reset=document.createElement("button");reset.type="button";reset.className="hy-button hy-theme-reset";reset.textContent=interfaceText("Restaurar padrão","Restore default");reset.onclick=restoreThemeAppearance;
+  footer.append(reset);options.append(grid,footer);return options;
 }
 const themeGrid=createThemeOptions();
 const themeCollapse=document.createElement("div"),themeCollapseInner=document.createElement("div");
@@ -166,6 +189,7 @@ setThemeSectionOpen(ui.themeSectionOpen!==false);
 themeToggle.onclick=()=>{ui.themeSectionOpen=themeToggle.getAttribute("aria-expanded")!=="true";setThemeSectionOpen(ui.themeSectionOpen);saveUI();};
 root.querySelector(".hy-settings-switches").after(themeChoices);
 function applyUI() {
+  if(ui.themeMode==="auto")resolveThemeScheme("auto");
   root.dispatchEvent(new Event("lp-ui-colors"));
   root.dataset.focus = String(ui.focus);
   root.dataset.theme=ui.theme;
@@ -175,6 +199,9 @@ function applyUI() {
   const translucent=ui.backgroundTranslucency ?? root.dataset.palette === "ambient";
   root.dataset.translucency=String(translucent);
   root.querySelectorAll(".hy-theme-translucency-input").forEach(control=>control.checked=translucent);
+  root.querySelectorAll(".hy-theme-mode").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeMode===(ui.themeMode==="auto"?"auto":isDarkTheme()?"dark":"light"))));
+  root.querySelectorAll(".hy-theme-translucency-status").forEach(label=>label.textContent=translucent?interfaceText("Ativado","On"):interfaceText("Desativado","Off"));
+  root.querySelectorAll(".hy-theme-mode-note").forEach(note=>note.textContent=ui.themeMode==="auto"?interfaceText("Acompanha o tema do navegador.","Follows your browser theme."):interfaceText("Escolha uma tonalidade abaixo.","Choose a palette below."));
   const paletteStyle = getComputedStyle(root);
   for (const token of ["paper", "ink", "edge"]) document.documentElement.style.setProperty("--editor-hint-" + token, paletteStyle.getPropertyValue("--" + token));
   root.style.colorScheme = isDarkTheme() ? "dark" : "light";

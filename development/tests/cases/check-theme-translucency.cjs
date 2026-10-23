@@ -11,7 +11,7 @@ for(const theme of ['light','dark','indigo-light','indigo-dark','petroleum','gra
  assert.equal(await page.locator('.hy-theme-translucency-input').evaluateAll(es=>es.every(e=>e.checked)),true);
  await page.keyboard.press('Escape');await page.reload();assert.equal(await page.evaluate(()=>ui.backgroundTranslucency),true);assert.equal(await page.locator('#lp-hybrid').getAttribute('data-translucency'),'true');
 }
-await page.evaluate(()=>{ui.language='en';applyLanguage();openBackgroundThemes();});assert.equal(await page.locator('.hy-theme-dialog label').innerText(),'Translucency');await page.keyboard.press('Escape');
+await page.evaluate(()=>{ui.language='en';applyLanguage();openBackgroundThemes();});assert.equal(await page.locator('.hy-theme-dialog .hy-theme-translucency strong').innerText(),'Translucent background');await page.keyboard.press('Escape');
 await page.evaluate(()=>{ui.backgroundTranslucency=false;ui.theme='sage';applyUI();});await page.reload();assert.equal(await page.locator('#lp-hybrid').evaluate(e=>getComputedStyle(e).backgroundImage),'none');
 await page.setViewportSize({width:1024,height:768});await page.evaluate(()=>openBackgroundThemes());const box=await page.locator('.hy-theme-dialog').boundingBox();assert(box.x>=0&&box.x+box.width<=1024);assert.equal(await page.locator('.hy-theme-dialog .hy-theme-option').count(),8);assert.deepEqual(errors,[]);console.log('Translucency: eight themes, solid/mixed backgrounds, synchronized controls, persistence, unchanged arguments, English and desktop geometry passed');
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
