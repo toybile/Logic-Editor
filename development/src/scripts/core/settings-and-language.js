@@ -143,7 +143,14 @@ editorThemeChoices.filter(([value])=>isDarkTheme(value)===dark).forEach(([value,
 });
   grid.append(column);
 }
-  return grid;
+  const options=document.createElement("div");options.className="hy-theme-options";
+  const translucency=document.createElement("label");translucency.className="hy-theme-translucency";
+  const caption=document.createElement("span");caption.textContent=interfaceText("Translucidez","Translucency");
+  const control=document.createElement("input");control.type="checkbox";control.className="hy-theme-translucency-input";control.setAttribute("role","switch");
+  control.checked=ui.backgroundTranslucency ?? !["light","dark"].includes(ui.theme);
+  control.onchange=()=>{ui.backgroundTranslucency=control.checked;applyUI();};
+  translucency.append(caption,control);options.append(translucency,grid);
+  return options;
 }
 const themeGrid=createThemeOptions();
 const themeCollapse=document.createElement("div"),themeCollapseInner=document.createElement("div");
@@ -165,6 +172,9 @@ function applyUI() {
   document.documentElement.dataset.editorTheme=ui.theme;
   root.dataset.palette = ["light", "dark"].includes(ui.theme) ? "original" : "ambient";
   document.documentElement.dataset.editorPalette = root.dataset.palette;
+  const translucent=ui.backgroundTranslucency ?? root.dataset.palette === "ambient";
+  root.dataset.translucency=String(translucent);
+  root.querySelectorAll(".hy-theme-translucency-input").forEach(control=>control.checked=translucent);
   const paletteStyle = getComputedStyle(root);
   for (const token of ["paper", "ink", "edge"]) document.documentElement.style.setProperty("--editor-hint-" + token, paletteStyle.getPropertyValue("--" + token));
   root.style.colorScheme = isDarkTheme() ? "dark" : "light";

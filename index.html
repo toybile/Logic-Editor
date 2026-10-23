@@ -9283,6 +9283,15 @@ html[data-editor-theme="sage"] body { background:#edf2e8; }
 #lp-hybrid .hy-theme-collapse-inner { min-height:0; overflow:hidden; padding:2px; margin:-2px; }
 @media(prefers-reduced-motion:reduce) { #lp-hybrid .hy-theme-collapse,#lp-hybrid .hy-theme-section-toggle svg { transition:none; } }
 
+#lp-hybrid .hy-theme-translucency { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 14px; margin-bottom:12px; border:1px solid var(--edge); border-radius:12px; background:var(--soft); color:var(--ink); font:13px/1.5 "Segoe UI",system-ui; cursor:pointer; }
+#lp-hybrid .hy-theme-translucency-input { appearance:none; box-sizing:border-box; flex:none; width:36px; height:21px; margin:0; padding:2px; border:1px solid var(--edge); border-radius:20px; background:var(--soft); cursor:pointer; transition:background .18s; }
+#lp-hybrid .hy-theme-translucency-input::before { content:""; display:block; width:15px; height:15px; border-radius:50%; background:var(--quiet); transition:transform .18s; }
+#lp-hybrid .hy-theme-translucency-input:checked { background:var(--blue); border-color:var(--blue); }
+#lp-hybrid .hy-theme-translucency-input:checked::before { background:var(--paper); transform:translateX(15px); }
+#lp-hybrid[data-translucency="false"] { background:var(--canvas); }
+#lp-hybrid[data-palette="original"][data-translucency="true"] { background:radial-gradient(ellipse 48vw 40vh at 12% 74%,color-mix(in srgb,var(--blue) 18%,transparent),transparent 100%),radial-gradient(ellipse 42vw 46vh at 83% 38%,color-mix(in srgb,var(--blue) 12%,transparent),transparent 100%),var(--canvas); background-attachment:fixed; }
+@media(prefers-reduced-motion:reduce) { #lp-hybrid .hy-theme-translucency-input,#lp-hybrid .hy-theme-translucency-input::before { transition:none; } }
+
 #lp-hybrid .hy-continuous-field { display:block; box-sizing:border-box; width:100%; min-width:0; min-height:44px; padding:10px 12px; border:1px solid var(--edge); border-radius:9px; background:var(--paper); color:var(--ink); font:calc(20px * var(--writing-scale))/1.65 "Cambria Math",serif; resize:none; overflow:hidden; overflow-wrap:anywhere; white-space:pre-wrap; }
 #lp-hybrid .hy-continuous-field:focus { outline:2px solid var(--blue); outline-offset:2px; }
 #lp-hybrid .hy-continuous-field { touch-action:pan-x; }
@@ -12660,6 +12669,7 @@ document.querySelector("#download").onclick = () => {
 <script id="interface-translations">
 // Shared interface lexicon; user-authored arguments and names are excluded.
 const interfaceLanguagePairs = {
+  "Translucidez": "Translucency",
   "Uma nova versão está disponível.": "A new version is available.",
   "Atualizar": "Update",
   "Fechar aviso de atualização": "Dismiss update notice",
@@ -13266,7 +13276,14 @@ editorThemeChoices.filter(([value])=>isDarkTheme(value)===dark).forEach(([value,
 });
   grid.append(column);
 }
-  return grid;
+  const options=document.createElement("div");options.className="hy-theme-options";
+  const translucency=document.createElement("label");translucency.className="hy-theme-translucency";
+  const caption=document.createElement("span");caption.textContent=interfaceText("Translucidez","Translucency");
+  const control=document.createElement("input");control.type="checkbox";control.className="hy-theme-translucency-input";control.setAttribute("role","switch");
+  control.checked=ui.backgroundTranslucency ?? !["light","dark"].includes(ui.theme);
+  control.onchange=()=>{ui.backgroundTranslucency=control.checked;applyUI();};
+  translucency.append(caption,control);options.append(translucency,grid);
+  return options;
 }
 const themeGrid=createThemeOptions();
 const themeCollapse=document.createElement("div"),themeCollapseInner=document.createElement("div");
@@ -13288,6 +13305,9 @@ function applyUI() {
   document.documentElement.dataset.editorTheme=ui.theme;
   root.dataset.palette = ["light", "dark"].includes(ui.theme) ? "original" : "ambient";
   document.documentElement.dataset.editorPalette = root.dataset.palette;
+  const translucent=ui.backgroundTranslucency ?? root.dataset.palette === "ambient";
+  root.dataset.translucency=String(translucent);
+  root.querySelectorAll(".hy-theme-translucency-input").forEach(control=>control.checked=translucent);
   const paletteStyle = getComputedStyle(root);
   for (const token of ["paper", "ink", "edge"]) document.documentElement.style.setProperty("--editor-hint-" + token, paletteStyle.getPropertyValue("--" + token));
   root.style.colorScheme = isDarkTheme() ? "dark" : "light";
@@ -16043,7 +16063,7 @@ async function confirmDeletion(message) {
         "International English",
         () => (ui.language = "en"),
       ],
-      ["theme", "Tema", "Theme", "Claro", "Light", () => (ui.theme = "light")],
+      ["theme", "Tema", "Theme", "Claro", "Light", () => { ui.theme = "light"; delete ui.backgroundTranslucency; }],
       ['writing-mode','Modo de escrita','Writing mode','Linha contínua','Continuous writing',()=>{ui.writingMode='continuous';}],
       ['panel-fonts','Fontes das fórmulas','Formula fonts','Cambria Math','Cambria Math',()=>{
         config('editor').font = config('preview').font = 'math';

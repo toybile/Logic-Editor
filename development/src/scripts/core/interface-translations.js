@@ -1,5 +1,6 @@
 // Shared interface lexicon; user-authored arguments and names are excluded.
 const interfaceLanguagePairs = {
+  "Translucidez": "Translucency",
   "Uma nova versão está disponível.": "A new version is available.",
   "Atualizar": "Update",
   "Fechar aviso de atualização": "Dismiss update notice",
