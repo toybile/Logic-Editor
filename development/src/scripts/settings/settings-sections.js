@@ -54,7 +54,7 @@
   }
   panelSection.append(title,buttons,panelEditor);panelPage.append(panelSection,librarySize,settings.querySelector('.hy-layout-recovery-setting'));
   const themeHeading=appearance.querySelector('.hy-theme-choices legend');themeHeading.classList.add('hy-settings-section-heading');
-  themeHeading.append(infoButton('Segure uma área vazia do fundo para escolher o tema.','Hold an empty area of the background to choose a theme.','Informações sobre temas','Theme information'));
+  themeHeading.append(infoButton('Segure o fundo para alternar claro/escuro. Clique e segure novamente para abrir as configurações.','Hold the background to switch light/dark. Click, then hold again to open settings.','Informações sobre temas','Theme information'));
   const prefixRow=document.createElement('label');prefixRow.className='hy-setting hy-settings-prefix-row';
   const prefixLabel=document.createElement('span');prefixLabel.textContent=interfaceText('Compactar prefixos e parênteses','Compact prefix symbols and parentheses');
   const prefix=document.createElement('input');prefix.type='checkbox';prefix.id='settings-compact-prefix';prefixRow.append(prefixLabel,prefix);writing.append(prefixRow);

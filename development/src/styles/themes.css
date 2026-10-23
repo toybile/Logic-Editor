@@ -182,3 +182,7 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-theme-actions { display:flex; justify-content:center; gap:10px; margin:24px 0 0; }
 #lp-hybrid .hy-theme-actions .hy-button { min-height:38px; padding:8px 16px; color:var(--ink); border-radius:10px; font:500 12px/1.5 "Segoe UI",system-ui; }
 #lp-hybrid .hy-theme-actions .hy-theme-done { background:var(--blue); color:var(--paper); border-color:var(--blue); }
+
+.hy-background-feedback{position:fixed;inset:auto;margin:0;padding:0;border:0;width:36px;height:36px;border-radius:50%;background:conic-gradient(var(--blue) var(--hold-progress),var(--edge) 0);overflow:visible;pointer-events:none;color:var(--blue)}
+.hy-background-feedback>span{position:absolute;inset:2px;border-radius:50%;display:grid;place-items:center;background:var(--paper)}
+.hy-background-feedback svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}

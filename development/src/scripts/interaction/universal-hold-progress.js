@@ -14,6 +14,7 @@
       const background = typeof isThemeBackgroundTarget === "function" && isThemeBackgroundTarget(e.target);
       if (e.button !== 0 || (!root.contains(e.target) && !background)) return;
       stop();
+      if (background) return;
       if (e.target.closest("button:disabled,input:disabled,[aria-disabled=true]")) return;
       const detachedGrip = e.target.closest(".hy-mod-palette[data-docked=false] .hy-mod-grip"),
         role = e.target.closest(".hy-role"),
