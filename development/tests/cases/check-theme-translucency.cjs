@@ -6,6 +6,7 @@ for(const theme of ['light','dark','indigo-light','indigo-dark','petroleum','gra
  const before=await page.evaluate(()=>JSON.stringify(rows));
  await toggle.uncheck();assert.equal(await page.locator('#lp-hybrid').evaluate(e=>getComputedStyle(e).backgroundImage),'none');
  await toggle.check();assert((await page.locator('#lp-hybrid').evaluate(e=>getComputedStyle(e).backgroundImage)).includes('radial-gradient'));
+ if(['light','dark'].includes(theme)){assert.equal(await page.locator('.hy-work').evaluate(e=>getComputedStyle(e).backgroundColor),'rgba(0, 0, 0, 0)');for(const height of [900,1080,1200]){await page.setViewportSize({width:1820,height});assert(await page.locator('#lp-hybrid').evaluate(e=>e.getBoundingClientRect().height>=innerHeight));}await page.setViewportSize({width:1440,height:1000});}
  assert.equal(await page.evaluate(()=>JSON.stringify(rows)),before);
  assert.equal(await page.locator('.hy-theme-translucency-input').evaluateAll(es=>es.every(e=>e.checked)),true);
  await page.keyboard.press('Escape');await page.reload();assert.equal(await page.evaluate(()=>ui.backgroundTranslucency),true);assert.equal(await page.locator('#lp-hybrid').getAttribute('data-translucency'),'true');
