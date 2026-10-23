@@ -71,6 +71,10 @@
       "file": "scripts/core/interface-translations.js"
     },
     {
+      "name": "theme-palettes",
+      "file": "scripts/core/theme-palettes.js"
+    },
+    {
       "name": "settings-and-language",
       "file": "scripts/core/settings-and-language.js"
     },

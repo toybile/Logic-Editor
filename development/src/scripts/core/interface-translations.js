@@ -1,5 +1,13 @@
 // Shared interface lexicon; user-authored arguments and names are excluded.
 const interfaceLanguagePairs = {
+  "Ameixa e lavanda": "Plum and lavender",
+  "Rosé e vinho": "Rose and wine",
+  "Sálvia e oliva": "Sage and olive",
+  "Areia e azul": "Sand and blue",
+  "Grafite e âmbar": "Graphite and amber",
+  "Petróleo e turquesa": "Petroleum and turquoise",
+  "Índigo": "Indigo",
+  "Original": "Original",
   "Pronto": "Done",
   "Restaurar padrão": "Restore default",
   "Escolha uma tonalidade abaixo.": "Choose a palette below.",

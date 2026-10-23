@@ -106,18 +106,9 @@ function setSection(section, open) {
   }
   saveUI();
 }
-function isDarkTheme(theme = ui.theme) { return ["dark", "indigo-dark", "petroleum", "graphite"].includes(theme); }
-const editorThemeChoices = [
-  ["light", "Claro original", "Original light"],
-  ["dark", "Escuro original", "Original dark"],
-  ["indigo-light", "Índigo claro", "Indigo light"],
-  ["indigo-dark", "Índigo escuro", "Indigo dark"],
-  ["petroleum", "Petróleo e turquesa", "Petroleum and turquoise"],
-  ["graphite", "Grafite e âmbar", "Graphite and amber"],
-  ["sand", "Areia e azul", "Sand and blue"],
-  ["sage", "Sálvia e oliva", "Sage and olive"],
-];
-if (!editorThemeChoices.some(([value]) => value === ui.theme)) ui.theme = "light";
+function isDarkTheme(theme = ui.theme) { return LPThemeVariants.find(item=>item.id===theme)?.scheme === "dark"; }
+if (!LPThemeVariants.some(item=>item.id===ui.theme)) ui.theme="light";
+function currentThemeFamily() { return LPThemeFamilies.find(family=>family.light.id===ui.theme||family.dark.id===ui.theme)||LPThemeFamilies[0]; }
 const themeChoices = document.createElement("fieldset");
 themeChoices.className = "hy-theme-choices";
 const themeLegend = document.createElement("legend");
@@ -128,10 +119,9 @@ themeToggle.append(themeToggleLabel);
 themeToggle.insertAdjacentHTML("beforeend",'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>');
 themeLegend.append(themeToggle);themeChoices.append(themeLegend);
 const themeSystemScheme=matchMedia("(prefers-color-scheme: dark)");
-const themePartners={light:"dark",dark:"light","indigo-light":"indigo-dark","indigo-dark":"indigo-light",sand:"graphite",graphite:"sand",sage:"petroleum",petroleum:"sage"};
 function resolveThemeScheme(mode) {
   const dark=mode==="auto"?themeSystemScheme.matches:mode==="dark";
-  if(isDarkTheme()!==dark)ui.theme=themePartners[ui.theme];
+  ui.theme=currentThemeFamily()[dark?"dark":"light"].id;
 }
 themeSystemScheme.addEventListener("change",()=>{if(ui.themeMode==="auto")applyUI();});
 function restoreThemeAppearance() {
@@ -160,16 +150,15 @@ function createThemeOptions() {
   translucency.append(text,status,control);options.append(translucency);
   const title=document.createElement("h3");title.className="hy-theme-group-title";title.textContent=interfaceText("Temas","Themes");options.append(title);
   const grid=document.createElement("div");grid.className="hy-theme-grid";
-  for(const dark of [false,true]) {
-    const column=document.createElement("section");column.className="hy-theme-column";column.dataset.scheme=dark?"dark":"light";
-    const heading=document.createElement("h4");heading.textContent=dark?interfaceText("Escuros","Dark themes"):interfaceText("Claros","Light themes");column.append(heading);
-    editorThemeChoices.filter(([value])=>isDarkTheme(value)===dark).forEach(([value,pt,en])=>{
-      const choice=document.createElement("button");choice.type="button";choice.className="hy-theme-option";choice.dataset.themeValue=value;
-      const swatch=document.createElement("span");swatch.className="hy-theme-swatch";swatch.setAttribute("aria-hidden","true");
-      swatch.innerHTML='<span class="hy-theme-mini-bar"></span><span class="hy-theme-mini-side"></span><span class="hy-theme-mini-line"></span><span class="hy-theme-mini-line hy-theme-mini-short"></span>';
-      const name=document.createElement("span");name.textContent=interfaceText(pt,en);
-      choice.append(swatch,name);choice.onclick=()=>{ui.theme=value;ui.themeMode=isDarkTheme(value)?"dark":"light";applyUI();};column.append(choice);
-    });grid.append(column);
+  for(const family of LPThemeFamilies) {
+    const choice=document.createElement("button");choice.type="button";choice.className="hy-theme-option";choice.dataset.themeFamily=family.id;
+    const swatch=document.createElement("span");swatch.className="hy-theme-swatch";swatch.setAttribute("aria-hidden","true");
+    swatch.innerHTML='<span class="hy-theme-mini-bar"></span><span class="hy-theme-mini-side"></span><span class="hy-theme-mini-line"></span><span class="hy-theme-mini-line hy-theme-mini-short"></span>';
+    const name=document.createElement("span");name.textContent=interfaceText(family.name,family.labelEn);
+    choice.append(swatch,name);choice.onclick=()=>{
+      const dark=ui.themeMode==="auto"?themeSystemScheme.matches:isDarkTheme();
+      ui.theme=family[dark?"dark":"light"].id;applyUI();
+    };grid.append(choice);
   }
   const footer=document.createElement("div");footer.className="hy-theme-actions";
   const reset=document.createElement("button");reset.type="button";reset.className="hy-button hy-theme-reset";reset.textContent=interfaceText("Restaurar padrão","Restore default");reset.onclick=restoreThemeAppearance;
@@ -205,7 +194,12 @@ function applyUI() {
   const paletteStyle = getComputedStyle(root);
   for (const token of ["paper", "ink", "edge"]) document.documentElement.style.setProperty("--editor-hint-" + token, paletteStyle.getPropertyValue("--" + token));
   root.style.colorScheme = isDarkTheme() ? "dark" : "light";
-  root.querySelectorAll(".hy-theme-option").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeValue===ui.theme)));
+  root.querySelectorAll(".hy-theme-option").forEach(button=>{
+    const family=LPThemeFamilies.find(item=>item.id===button.dataset.themeFamily),variant=family[isDarkTheme()?"dark":"light"];
+    button.dataset.themeValue=variant.id;button.setAttribute("aria-pressed",String(family.id===currentThemeFamily().id));
+    const swatch=button.querySelector(".hy-theme-swatch");swatch.style.background=variant.canvas;swatch.style.borderColor=variant.edge;
+    swatch.style.setProperty("--mini-paper",variant.soft);swatch.style.setProperty("--mini-accent",variant.accent);swatch.style.setProperty("--mini-muted",variant.quiet);
+  });
   document.documentElement.style.colorScheme = root.style.colorScheme;
   const side = root.querySelector(".hy-side");
   side.inert = ui.focus;
