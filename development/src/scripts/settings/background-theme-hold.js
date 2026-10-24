@@ -32,6 +32,10 @@ function openBackgroundThemes(pointerId) {
   };
   function icon(name){visual.innerHTML='<span><svg viewBox="0 0 24 24">'+icons[name]+'</svg></span>';}
   function cancel(){if(gesture)clearTimeout(gesture.timer);gesture=null;cancelAnimationFrame(frame);clearTimeout(hideTimer);if(visual.matches(':popover-open'))visual.hidePopover();}
+  // Prevent the browser's multi-click word selection only on gesture background.
+  document.addEventListener('mousedown',event=>{
+    if(event.button===0&&event.detail>1&&isThemeBackgroundTarget(event.target))event.preventDefault();
+  },true);
   document.addEventListener('pointerdown',event=>{
     cancel();if(event.button!==0||!event.isPrimary||!isThemeBackgroundTarget(event.target)){lastTap=null;return;}
     const now=performance.now(),second=lastTap&&now-lastTap.time<420&&Math.hypot(event.clientX-lastTap.x,event.clientY-lastTap.y)<32;
