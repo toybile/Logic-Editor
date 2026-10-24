@@ -2328,7 +2328,7 @@ body {
 }
 /* identity-panel-styles */
 #lp-hybrid .hy-work {
-  background: light-dark(#f5f7fc, #191d25);
+  background: transparent;
   gap: 28px;
   align-items: center;
   padding: 36px clamp(16px, 4vw, 64px);
