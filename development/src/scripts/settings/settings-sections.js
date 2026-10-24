@@ -84,6 +84,6 @@
   Object.assign(translations,{'Painéis':'Panels','Escrita':'Writing','Interações':'Interactions','Alterações automáticas':'Changes apply automatically','Compactar prefixos e parênteses':'Compact prefix symbols and parentheses'});
   tabs.setAttribute('aria-label',interfaceText('Seções das configurações','Settings sections'));
   settings.addEventListener('toggle',event=>{if(event.newState==='open'&&selected===1)showPanel(ui.settingsPanel==='preview'?'preview':'editor');});
-  root.querySelector('#settings-language').addEventListener('click',()=>{if(selected===1&&settings.matches(':popover-open'))showPanel(ui.settingsPanel==='preview'?'preview':'editor');});
+  root.querySelector('#settings-language').addEventListener('languagechange',()=>{if(selected===1&&settings.matches(':popover-open'))showPanel(ui.settingsPanel==='preview'?'preview':'editor');});
   select(Math.max(0,definitions.findIndex(([key])=>key===ui.settingsTab)));applyLanguage();
 })();

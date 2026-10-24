@@ -38,3 +38,18 @@
 #lp-hybrid .hy-settings-footer #settings-default svg { width:16px; height:16px; }
 #lp-hybrid .hy-settings-footer > span { color:var(--quiet); font:11px/1.5 "Segoe UI",system-ui; }
 #lp-hybrid #editor-settings :is(button,input,select,summary):focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+
+
+/* Shared two-card language chooser; its labels are intentionally untranslated. */
+.site-language-picker{--language-bg:var(--paper,var(--bg,#fff));--language-text:var(--ink,var(--text,#242638));--language-accent:var(--blue,var(--accent,#5055b0));--language-edge:var(--edge,var(--border,#d9dce8));box-sizing:border-box;position:fixed;inset:auto;margin:0;width:min(448px,calc(100vw - 24px));max-width:none;padding:8px;border:1px solid var(--language-edge);border-radius:15px;background:var(--language-bg);color:var(--language-text);box-shadow:0 12px 34px #0002;overflow:visible}
+.site-language-picker:popover-open{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.site-language-picker::backdrop{background:transparent;backdrop-filter:none;animation:none}
+.site-language-picker .site-language-card{box-sizing:border-box;display:flex;align-items:center;justify-content:flex-start;gap:10px;min-width:0;width:auto;min-height:68px;height:auto;padding:11px;border:1px solid var(--language-edge);border-radius:10px;background:var(--language-bg);color:var(--language-text);font:500 12px/1.45 "Segoe UI",system-ui;text-align:left;cursor:pointer;white-space:normal;transition:background .15s,border-color .15s}
+.site-language-picker .site-language-card:hover,.site-language-picker .site-language-card[aria-checked="true"]{border-color:var(--language-accent);background:color-mix(in srgb,var(--language-accent) 12%,var(--language-bg))}
+.site-language-picker .site-language-card:focus-visible{outline:2px solid var(--language-accent);outline-offset:-3px}
+.site-language-picker .site-language-flag{display:grid;place-items:center;flex:none;width:28px;height:20px;line-height:0}
+.site-language-picker .site-language-flag svg{display:block;width:28px;height:20px;fill:none;stroke:none}
+.site-language-picker .site-language-name{min-width:0;overflow-wrap:normal}
+#settings-language>svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6}
+#lp-hybrid #editor-settings .hy-settings-actions #settings-language>svg{width:20px;height:20px}
+@media(prefers-reduced-motion:reduce){.site-language-picker .site-language-card{transition:none}}
