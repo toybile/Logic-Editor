@@ -1,0 +1,11 @@
+#lp-hybrid .hy-window-actions { display:inline-flex; align-items:center; gap:6px; flex:none; }
+#lp-hybrid .hy-window-actions .hy-dialog-close { position:static !important; margin:0; }
+#lp-hybrid .hy-window-maximize { display:inline-flex; align-items:center; justify-content:center; flex:none; width:32px; height:32px; min-height:32px; padding:7px; border:1px solid transparent; border-radius:9px; background:transparent; color:var(--quiet); cursor:pointer; }
+#lp-hybrid .hy-window-maximize:hover { background:var(--soft); color:var(--blue); }
+#lp-hybrid .hy-window-maximize:focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+#lp-hybrid .hy-window-maximize svg { display:block; width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+#lp-hybrid .hy-theme-dialog > .hy-window-actions { position:absolute; right:16px; top:16px; }
+#lp-hybrid :is(dialog,#editor-settings).hy-window-maximized { position:fixed !important; inset:12px !important; margin:0 !important; width:calc(100vw - 24px) !important; height:calc(100dvh - 24px) !important; max-width:none !important; max-height:none !important; box-sizing:border-box; }
+#lp-hybrid .hy-panel-frame.hy-window-maximized { display:block !important; position:fixed !important; inset:12px !important; margin:0 !important; width:calc(100vw - 24px) !important; height:calc(100dvh - 24px) !important; min-width:0 !important; max-width:none !important; max-height:none !important; box-sizing:border-box; padding:12px !important; border:0; overflow:auto; background:var(--canvas); color:var(--ink); }
+#lp-hybrid .hy-panel-frame.hy-window-maximized > .hy-panel { min-height:100%; width:100%; box-sizing:border-box; }
+#lp-hybrid .hy-maximize-placeholder { visibility:hidden; }

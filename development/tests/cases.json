@@ -78,5 +78,6 @@
   "check-categorical-presentation",
   "check-ui-window-consistency",
   "check-validation-expanded",
-  "check-argument-guide"
+  "check-argument-guide",
+  "check-window-maximize"
 ]

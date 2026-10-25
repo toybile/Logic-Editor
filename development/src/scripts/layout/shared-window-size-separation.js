@@ -101,6 +101,7 @@
     save();
   }
   function update() {
+    if (root.dataset.windowMaximized === "true") { scheduled = false; return; }
     scheduled = false;
     if (root.hidden || !root.getClientRects().length) return;
     if (Date.now() < resetUntil) {

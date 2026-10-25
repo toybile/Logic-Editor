@@ -8,7 +8,8 @@
     "styles/text-import.css",
     "styles/dialog-consistency.css",
     "styles/mobile.css",
-    "styles/argument-guide.css"
+    "styles/argument-guide.css",
+    "styles/window-maximize.css"
   ],
   "scripts": [
     {
@@ -298,6 +299,10 @@
     {
       "name": "argument-guide",
       "file": "scripts/help/argument-guide.js"
+    },
+    {
+      "name": "window-maximize",
+      "file": "scripts/interaction/window-maximize.js"
     }
   ]
 }

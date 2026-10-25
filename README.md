@@ -89,6 +89,8 @@ The library's main grip moves/collapses it; its title is centered between the gr
 
 ## Movable, resizable panels
 
+The square button in window headings maximizes the main panels and dialogs. Click it again to restore the previous size and position. Maximizing is temporary and does not replace your saved panel arrangement.
+
 - **Move a panel:** press and hold for about **0.05 seconds** on an empty, noninteractive area, then drag. The movement cursor identifies available areas. Text, rows, buttons and logic results have their own interactions.
 - **Resize horizontally:** drag the left or right edge. There is no vertical resize control; height follows the content.
 - Panels snap near the horizontal center. Their horizontal position and width adapt proportionally when the sidebar opens/closes or the available viewport width changes. Width is constrained to the available workspace, including when interface scaling changes.
@@ -305,6 +307,8 @@ A **lupa** abre a busca no cabeçalho e dá foco ao campo. A busca mostra uma gr
 A alça principal move/recolhe a biblioteca; o título fica centralizado entre ela e a busca. No desktop, setas com foco na alça movem a janela; Home ou duplo clique na alça principal restaura a biblioteca acoplada. Telas estreitas empilham as janelas. Restaurar padrões pode redefinir a disposição sem apagar Favoritos, Recentes ou argumentos.
 
 ## Painéis movíveis e redimensionáveis
+
+O botão quadrado nos cabeçalhos maximiza os painéis principais e as janelas. Clique novamente para restaurar o tamanho e a posição anteriores. A maximização é temporária e não substitui a disposição salva dos painéis.
 
 - **Mover um painel:** pressione e segure por aproximadamente **0,05 segundo** em uma área vazia, sem interação, e arraste. O cursor de movimento identifica áreas disponíveis. Textos, linhas, botões e resultados lógicos têm suas próprias interações.
 - **Alterar a largura:** arraste a borda esquerda ou direita. Não há redimensionamento vertical; a altura acompanha o conteúdo.

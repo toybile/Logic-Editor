@@ -57,7 +57,7 @@
     }
   }
   function layoutVisible() {
-    return !root.hidden && board.getClientRects().length > 0 && board.clientWidth > 0;
+    return root.dataset.windowMaximized !== "true" && !root.hidden && board.getClientRects().length > 0 && board.clientWidth > 0;
   }
   function captureAnchors() {
     const width = board.clientWidth;
@@ -217,6 +217,7 @@
     pending = null;
   }
   function start(event, frame, edge = "") {
+    if (root.dataset.windowMaximized === "true") return;
     if (compactLayout()) return;
     const before = layoutSnapshot();
     freeLayout();
