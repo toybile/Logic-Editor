@@ -19,11 +19,10 @@
       const detachedGrip = e.target.closest(".hy-mod-palette[data-docked=false] .hy-mod-grip"),
         role = e.target.closest(".hy-role"),
         tab = e.target.closest(".hy-argument-tab,#argument-options [role=menuitemradio],.hy-argument-grid-add"),
-        mode = e.target.closest('#logic-mode-select'),
         eye = e.target.closest('[data-action="editor"],[data-action="preview"]'),
         row = e.target.closest("#rows>.hy-row"),
         symbol = e.pointerType !== "mouse" && e.target.closest(".hy-symbol");
-      let owner = detachedGrip || role || tab || mode || eye || symbol || row || (background ? root : null);
+      let owner = detachedGrip || role || tab || eye || symbol || row || (background ? root : null);
       if (!owner) return;
       if (row && !role && !symbol && e.target.closest("button,input,textarea,label,select,a") &&
           !e.target.closest(".hy-delete-line,.hy-block,.hy-continuous-field")) return;
@@ -55,7 +54,7 @@
         visual.style.top = Math.min(innerHeight - 27, r.bottom + 3) + "px";
         g.frame = requestAnimationFrame(position);
       }
-      const delay = tab || mode || e.target.closest(".hy-editor") ? Math.min(180, duration * 0.4) : 0;
+      const delay = tab || e.target.closest(".hy-editor") ? Math.min(180, duration * 0.4) : 0;
       const reveal = () => {
         if (hold !== g) return;
         visual.showPopover();

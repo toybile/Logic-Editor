@@ -547,9 +547,9 @@ Os scripts compartilham o escopo do navegador e seguem a ordem do manifesto. O s
 
 ## Logical modes / Modos lógicos
 
-Choose the current argument's logical system below the Logic Editor title, or from the icon beside the validation heading. Hold the selector for an introduction. The choice is saved with the argument. All symbols remain available. A mode notice proposes a switch when the syntax clearly requires another supported system; it never silently rewrites the argument.
+Choose the current argument's logical system from the icon beside the validation heading; choose the mode of a new example in the examples window. Help in examples opens the introduction. The choice is saved with the argument. All symbols remain available. A mode notice proposes a switch when the syntax clearly requires another supported system; it never silently rewrites the argument.
 
-Escolha o sistema lógico do argumento abaixo de Logic Editor ou pelo ícone junto do título da validação. Segure o seletor para abrir a introdução. A escolha é salva com o argumento. Todos os símbolos continuam disponíveis. Um aviso propõe a troca quando a sintaxe requer claramente outro sistema suportado; o argumento nunca é reescrito silenciosamente.
+Escolha o sistema lógico do argumento pelo ícone junto do título da validação; escolha o modo de um novo exemplo na janela dos exemplos. A Ajuda dos exemplos abre a introdução. A escolha é salva com o argumento. Todos os símbolos continuam disponíveis. Um aviso propõe a troca quando a sintaxe requer claramente outro sistema suportado; o argumento nunca é reescrito silenciosamente.
 
 | System / Sistema | Method / Método | Result / Resultado |
 | --- | --- | --- |

@@ -9196,16 +9196,15 @@ html[data-editor-palette="ambient"] .lp-unified-hint { background:var(--editor-h
 #lp-hybrid #editor-settings .hy-layout-recovery-button:hover { background:color-mix(in srgb,var(--blue) 12%,var(--paper)); border-color:var(--blue); }
 #lp-hybrid #editor-settings .hy-layout-recovery-button svg { width:18px; height:18px; flex-shrink:0; }
 /* Scrollbars follow the active surface and keep a visible draggable thumb. */
-html { scrollbar-width:thin; scrollbar-color:light-dark(#a5b0c2,#596582) transparent; }
-#lp-hybrid * { scrollbar-width:thin; scrollbar-color:color-mix(in srgb,var(--quiet) 52%,var(--paper)) transparent; }
-html::-webkit-scrollbar, #lp-hybrid ::-webkit-scrollbar { width:9px; height:9px; }
-html::-webkit-scrollbar-track, #lp-hybrid ::-webkit-scrollbar-track { background:transparent; }
-html::-webkit-scrollbar-thumb { background:light-dark(#a5b0c2,#596582); border:2px solid transparent; background-clip:content-box; border-radius:20px; }
-#lp-hybrid ::-webkit-scrollbar-thumb { background:color-mix(in srgb,var(--quiet) 52%,var(--paper)); border:2px solid transparent; background-clip:content-box; border-radius:20px; }
-#lp-hybrid ::-webkit-scrollbar-thumb:hover { background-color:var(--quiet); }
-html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { background:transparent; }
+html, body, #lp-hybrid, #lp-hybrid * { scrollbar-width:thin; scrollbar-color:color-mix(in srgb,var(--editor-scrollbar-accent,#3d526e) 48%,transparent) transparent; }
+html::-webkit-scrollbar, body::-webkit-scrollbar, #lp-hybrid ::-webkit-scrollbar { width:6px; height:6px; }
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track, #lp-hybrid ::-webkit-scrollbar-track { background:transparent; }
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, #lp-hybrid ::-webkit-scrollbar-thumb { background:color-mix(in srgb,var(--editor-scrollbar-accent,#3d526e) 48%,transparent); border:0; border-radius:999px; }
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover, #lp-hybrid ::-webkit-scrollbar-thumb:hover { background:color-mix(in srgb,var(--editor-scrollbar-accent,#3d526e) 76%,transparent); }
+html::-webkit-scrollbar-button, body::-webkit-scrollbar-button, #lp-hybrid ::-webkit-scrollbar-button { display:none !important; width:0 !important; height:0 !important; }
+html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { background:transparent; }
 @supports selector(::-webkit-scrollbar) {
-  html, #lp-hybrid * { scrollbar-width:auto; scrollbar-color:auto; }
+  html, body, #lp-hybrid, #lp-hybrid * { scrollbar-width:auto !important; scrollbar-color:auto !important; }
 }
 #lp-hybrid .hy-panel-shortcuts { padding:16px 0; border-top:1px solid var(--edge); }
 #lp-hybrid .hy-panel-shortcuts h3 { font:400 12px/1.4 system-ui; margin:0 0 8px; color:var(--quiet); }
@@ -9333,11 +9332,6 @@ html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { backgrou
 #lp-hybrid .hy-panel-font-sample { margin-top:12px; padding:12px; text-align:center; border-radius:9px; background:var(--soft); font-size:20px; overflow-wrap:anywhere; }
 #lp-hybrid .hy-description-note { color:var(--quiet); font:13px/1.6 system-ui; margin:0 0 16px; }
 
-#lp-hybrid .hy-mode-anchor { position:relative; display:flex; align-items:center; justify-content:center; align-self:stretch; width:164px; flex:0 0 164px; padding:0; border:0; background:transparent; color:var(--ink); font:inherit; cursor:pointer; }
-#lp-hybrid .hy-logic-mode-select { position:absolute; top:100%; left:50%; transform:translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap:9px; width:164px; box-sizing:border-box; padding:10px 13px; border:1px solid var(--edge); border-top:0; border-radius:0 0 14px 14px; background:var(--mode-header-background,var(--paper)); color:var(--ink); font:12px/1.4 system-ui; box-shadow:0 5px 18px #00000008; cursor:pointer; }
-#lp-hybrid .hy-logic-mode-select svg { width:16px; height:16px; fill:none; stroke:var(--quiet); stroke-width:1.5; flex-shrink:0; }
-#lp-hybrid .hy-mode-anchor:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
-#lp-hybrid .hy-logic-mode-select:hover { background:var(--soft); }
 #lp-hybrid .hy-logic-mode-menu { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; width:360px; max-width:calc(100vw - 32px); box-sizing:border-box; margin:0; padding:9px; border:1px solid var(--edge); border-radius:16px; background:var(--paper); color:var(--ink); box-shadow:0 12px 32px #0002; }
 #lp-hybrid .hy-logic-mode-menu button { display:flex; align-items:center; gap:10px; width:100%; min-height:58px; text-align:left; padding:10px; border:1px solid var(--edge); border-radius:12px; background:var(--paper); color:inherit; font:12px/1.5 system-ui; cursor:pointer; }
 #lp-hybrid .hy-logic-mode-menu button:hover:not([aria-checked=true]) { background:var(--soft); }
@@ -14023,6 +14017,7 @@ function applyUI() {
   root.querySelectorAll(".hy-theme-translucency-status").forEach(label=>label.textContent=translucent?interfaceText("Ativado","On"):interfaceText("Desativado","Off"));
   root.querySelectorAll(".hy-theme-mode-note").forEach(note=>note.textContent=ui.themeMode==="auto"?interfaceText("Acompanha o tema do navegador.","Follows your browser theme."):interfaceText("Escolha uma tonalidade abaixo.","Choose a palette below."));
   const paletteStyle = getComputedStyle(root);
+  document.documentElement.style.setProperty("--editor-scrollbar-accent", paletteStyle.getPropertyValue("--blue").trim());
   for (const token of ["paper", "ink", "edge"]) document.documentElement.style.setProperty("--editor-hint-" + token, paletteStyle.getPropertyValue("--" + token));
   root.style.colorScheme = isDarkTheme() ? "dark" : "light";
   root.querySelectorAll(".hy-theme-option").forEach(button=>{
@@ -22135,11 +22130,10 @@ function restoreInitialLayoutProfile() {
       const detachedGrip = e.target.closest(".hy-mod-palette[data-docked=false] .hy-mod-grip"),
         role = e.target.closest(".hy-role"),
         tab = e.target.closest(".hy-argument-tab,#argument-options [role=menuitemradio],.hy-argument-grid-add"),
-        mode = e.target.closest('#logic-mode-select'),
         eye = e.target.closest('[data-action="editor"],[data-action="preview"]'),
         row = e.target.closest("#rows>.hy-row"),
         symbol = e.pointerType !== "mouse" && e.target.closest(".hy-symbol");
-      let owner = detachedGrip || role || tab || mode || eye || symbol || row || (background ? root : null);
+      let owner = detachedGrip || role || tab || eye || symbol || row || (background ? root : null);
       if (!owner) return;
       if (row && !role && !symbol && e.target.closest("button,input,textarea,label,select,a") &&
           !e.target.closest(".hy-delete-line,.hy-block,.hy-continuous-field")) return;
@@ -22171,7 +22165,7 @@ function restoreInitialLayoutProfile() {
         visual.style.top = Math.min(innerHeight - 27, r.bottom + 3) + "px";
         g.frame = requestAnimationFrame(position);
       }
-      const delay = tab || mode || e.target.closest(".hy-editor") ? Math.min(180, duration * 0.4) : 0;
+      const delay = tab || e.target.closest(".hy-editor") ? Math.min(180, duration * 0.4) : 0;
       const reveal = () => {
         if (hold !== g) return;
         visual.showPopover();
@@ -22830,6 +22824,7 @@ function attachLogicModePicker(trigger, dialog, getMode, onSelect, menuId) {
     menu.querySelector('[aria-checked=true]').focus();
   };
   menu.addEventListener('keydown',event=>{
+    if(event.key==='Tab'){close();trigger.focus({preventScroll:true});return;}
     const buttons=[...menu.children],index=buttons.indexOf(document.activeElement);
     if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
       event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?2:1))%3;buttons[next].focus();
@@ -22848,93 +22843,6 @@ function attachLogicModePicker(trigger, dialog, getMode, onSelect, menuId) {
 function currentLogicMode() {
   return argumentWorkspace.documents.find(doc => doc.id === argumentWorkspace.activeId)?.logicMode || 'propositional';
 }
-(() => {
-  const t = interfaceText;
-  const modes=logicModeDefinitions, shortNames=logicModeShortNames, modeIcon=logicModeIcon;
-  const title = root.querySelector('.hy-title strong');
-  const trigger = document.createElement('button');
-  trigger.id = 'logic-mode-select'; trigger.type = 'button';
-  trigger.className = 'hy-mode-anchor';
-  title.before(trigger); trigger.append(title);
-  const anchor = trigger;
-  const value = document.createElement('span'); value.className='hy-logic-mode-select';trigger.append(value);
-  const selectedName = document.createElement('span'); value.append(selectedName);
-  const selectedIcon = document.createElement('span'); selectedIcon.className='hy-mode-icon'; value.prepend(selectedIcon);
-  const menu = document.createElement('div'); menu.className = 'hy-logic-mode-menu';
-  menu.id = 'logic-mode-options'; menu.setAttribute('popover','manual'); menu.setAttribute('role','menu'); root.append(menu);
-  trigger.setAttribute('aria-haspopup','menu'); trigger.setAttribute('aria-expanded','false'); trigger.setAttribute('aria-controls',menu.id);
-  function help() {
-    if(menu.matches(':popover-open'))menu.hidePopover();
-    const d=document.createElement('dialog'); d.className='hy-feature-dialog hy-logic-mode-help';
-    const head=document.createElement('header'), h=document.createElement('h2'),close=document.createElement('button');
-    h.id='logic-modes-help-title';h.textContent=t('Modos de lógica','Logic modes');d.setAttribute('aria-labelledby',h.id);
-    close.type='button';close.className='hy-button hy-icon-button';LPDialogChrome.close(close);close.setAttribute('aria-label',t('Fechar','Close'));close.onclick=()=>d.close();head.append(h,close);d.append(head);
-    const intro=document.createElement('p');intro.textContent=t('O modo pertence a este argumento e orienta sua análise. Todos os símbolos continuam disponíveis. Mudar o modo preserva fórmulas e descrições; não traduz automaticamente entre linguagens.','The mode belongs to this argument and guides its analysis. All symbols remain available. Switching preserves formulas and descriptions; it does not translate automatically between languages.');d.append(intro);
-    const lessons=[
-      [modes[0],
-       'Estuda inferências entre termos, por meio de proposições como “Todo S é P”, “Nenhum S é P”, “Algum S é P” e “Algum S não é P”. Num silogismo categórico há duas premissas e uma conclusão, articuladas por três termos. Exemplo: todo M é P; todo S é M; portanto, todo S é P.',
-       'Studies inferences between terms through propositions such as “Every S is P”, “No S is P”, “Some S is P” and “Some S is not P”. A categorical syllogism has two premises and a conclusion involving three terms. Example: every M is P; every S is M; therefore every S is P.',
-       'As descrições identificam os termos. Pressupostos de existência e o tratamento de termos vazios precisam ser declarados. Silogística, lógica aristotélica e tradição escolástica não são expressões perfeitamente equivalentes. O verificador aceita A(S,P), E(S,P), I(S,P) e O(S,P), com até doze termos e limite de busca. Adota domínio não vazio e permite termos vazios; universais não pressupõem existência. Também aceita frases controladas como “Aristóteles é homem”: nomes próprios designam um indivíduo existente.',
-       'Descriptions identify the terms. Existential assumptions and treatment of empty terms must be specified. Syllogistic, Aristotelian logic and the scholastic tradition are not exactly interchangeable expressions. The checker accepts A(S,P), E(S,P), I(S,P) and O(S,P), with up to twelve terms and a search budget. It uses a nonempty domain and permits empty terms; universals carry no existential import. It also accepts controlled sentences such as “Aristotle is human”: proper names denote one existing individual.'],
-      [modes[1],
-       'Trata enunciados completos como unidades, representadas por A, B, P etc. Conectivos como ¬, ∧, ∨ e → determinam como os valores de verdade se combinam. Exemplo: A → B; A; portanto, B.',
-       'Treats complete statements as units represented by A, B, P and so on. Connectives such as ¬, ∧, ∨ and → determine how truth values combine. Example: A → B; A; therefore B.',
-       'As descrições registram o significado pretendido das letras. O verificador atual usa valorações clássicas para procurar premissas verdadeiras com conclusão falsa. Uma descrição não comprova que uma premissa é verdadeira no mundo. Quantificadores e operadores de outras lógicas ficam fora desse verificador.',
-       'Descriptions record the intended meanings of letters. The current validator uses classical valuations to search for true premises with a false conclusion. A description does not establish that a premise is true in the world. Quantifiers and operators of other logics are outside this validator.'],
-      [modes[2],
-       'Analisa a estrutura interna das afirmações: indivíduos, predicados, relações e quantificação. Em ∀x(P(x) → Q(x)), quantificamos sobre indivíduos de um domínio. Exemplo: ∀x(P(x) → Q(x)); P(a); portanto, Q(a).',
-       'Analyzes the internal structure of statements: individuals, predicates, relations and quantification. In ∀x(P(x) → Q(x)), quantification ranges over individuals in a domain. Example: ∀x(P(x) → Q(x)); P(a); therefore Q(a).',
-       'Um vocabulário formal deve distinguir domínio, constantes, funções e predicados com sua aridade e ordem dos argumentos. O vocabulário identifica tipos e aridades dos símbolos e registra uma anotação do domínio. O analisador confere a sintaxe e procura provas por tableaux e contramodelos finitos; variáveis livres recebem uma mesma atribuição em todas as linhas. Em geral, não existe um algoritmo que sempre termine decidindo todos os casos; uma busca sem resultado pode ser inconclusiva.',
-       'A formal vocabulary must distinguish domain, constants, functions and predicates with their arity and argument order. The vocabulary identifies symbol kinds and arities and records a domain annotation. The analyzer checks syntax and searches for tableau proofs and finite countermodels; free variables share the same assignment across all rows. In general, no algorithm always terminates deciding every case; an unsuccessful search may be inconclusive.'],
-    ];
-    for(const [mode,pt,en,ptNote,enNote] of lessons){const section=document.createElement('section'),heading=document.createElement('h3'),p=document.createElement('p'),note=document.createElement('p');heading.textContent=t(mode[1],mode[2]);p.textContent=t(pt,en);note.textContent=t(ptNote,enNote);section.append(heading,p,note);d.append(section);}
-    const link=document.createElement('a');link.href='https://forallx.openlogicproject.org/';link.target='_blank';link.rel='noopener noreferrer';link.textContent=t('Leitura: forall x — Open Logic Project','Reading: forall x — Open Logic Project');d.append(link);
-    root.append(d);d.onclose=()=>{d.remove();trigger.focus();};d.showModal();
-  }
-  function refresh(){
-    const mode=modes.find(([id])=>id===currentLogicMode())||modes[1];
-    trigger.setAttribute('aria-label',t('Sistema lógico: ','Logical system: ')+t(mode[1],mode[2]));
-    trigger.dataset.hintText=t(mode[1],mode[2])+'. '+t('Clique para escolher. Segure para conhecer os modos.','Click to choose. Hold to learn about the modes.');
-    trigger.dataset.mode=mode[0];
-    selectedName.textContent=t(...shortNames[mode[0]]);
-    selectedIcon.innerHTML=modeIcon(mode[0]);
-    menu.replaceChildren();
-    for(const [id,pt,en] of modes){const b=document.createElement('button');b.type='button';b.innerHTML=modeIcon(id);const name=document.createElement('span');name.textContent=t(pt,en);b.append(name);b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',String(id===mode[0]));b.onclick=()=>{menu.hidePopover();setLogicMode(id);refresh();trigger.focus();};menu.append(b);}
-
-  }
-  let timer,held=false;
-  const cancel=()=>clearTimeout(timer);
-  trigger.addEventListener('pointerdown',e=>{if(e.button!==0)return;held=false;timer=setTimeout(()=>{held=true;help();},getHoldDelay());});
-  for(const event of ['pointerup','pointercancel','pointerleave'])trigger.addEventListener(event,cancel);
-  window.addEventListener('blur',cancel);
-  trigger.onclick=()=>{if(held){held=false;return;}if(menu.matches(':popover-open')){menu.hidePopover();return;}refresh();menu.showPopover();const r=value.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,r.left+r.width/2-menu.offsetWidth/2))+'px';menu.style.top=r.bottom+8+'px';menu.querySelector('[aria-checked=true]')?.focus({preventScroll:true});};
-  menu.addEventListener('keydown',event=>{
-    if(event.key==='Tab'){menu.hidePopover();trigger.focus({preventScroll:true});return;}
-    const buttons=[...menu.querySelectorAll('button')],index=buttons.indexOf(document.activeElement);
-    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?buttons.length-1:1))%buttons.length;buttons[next]?.focus();}
-  });
-  document.addEventListener('pointerdown', event => {
-    if (!trigger.contains(event.target) && !menu.contains(event.target) && menu.matches(':popover-open')) menu.hidePopover();
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && menu.matches(':popover-open')) {
-      event.preventDefault(); event.stopPropagation(); menu.hidePopover(); trigger.focus();
-    }
-  }, true);
-  menu.addEventListener('toggle',e=>trigger.setAttribute('aria-expanded',String(e.newState==='open')));
-  workspaceEvents.addEventListener('saved',refresh);
-  root.querySelector('#settings-language').addEventListener('languagechange',refresh);
-  const header = root.querySelector('.hy-head');
-  function alignDock() {
-    value.style.top = header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top - 1 + 'px';
-    value.style.setProperty('--mode-header-background', getComputedStyle(header).backgroundColor);
-  }
-  new ResizeObserver(alignDock).observe(header);
-  root.addEventListener('lp-ui-colors', () => requestAnimationFrame(alignDock));
-  refresh();
-  alignDock();
-})();
-
 attachLogicModePicker(validationModeIcon,validationDialog,currentLogicMode,setLogicMode,'validation-mode-options');
 </script>
 

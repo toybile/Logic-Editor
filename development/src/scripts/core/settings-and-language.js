@@ -192,6 +192,7 @@ function applyUI() {
   root.querySelectorAll(".hy-theme-translucency-status").forEach(label=>label.textContent=translucent?interfaceText("Ativado","On"):interfaceText("Desativado","Off"));
   root.querySelectorAll(".hy-theme-mode-note").forEach(note=>note.textContent=ui.themeMode==="auto"?interfaceText("Acompanha o tema do navegador.","Follows your browser theme."):interfaceText("Escolha uma tonalidade abaixo.","Choose a palette below."));
   const paletteStyle = getComputedStyle(root);
+  document.documentElement.style.setProperty("--editor-scrollbar-accent", paletteStyle.getPropertyValue("--blue").trim());
   for (const token of ["paper", "ink", "edge"]) document.documentElement.style.setProperty("--editor-hint-" + token, paletteStyle.getPropertyValue("--" + token));
   root.style.colorScheme = isDarkTheme() ? "dark" : "light";
   root.querySelectorAll(".hy-theme-option").forEach(button=>{

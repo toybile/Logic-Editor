@@ -44,6 +44,7 @@ function attachLogicModePicker(trigger, dialog, getMode, onSelect, menuId) {
     menu.querySelector('[aria-checked=true]').focus();
   };
   menu.addEventListener('keydown',event=>{
+    if(event.key==='Tab'){close();trigger.focus({preventScroll:true});return;}
     const buttons=[...menu.children],index=buttons.indexOf(document.activeElement);
     if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
       event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?2:1))%3;buttons[next].focus();

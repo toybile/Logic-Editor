@@ -70,16 +70,15 @@ html[data-editor-palette="ambient"] .lp-unified-hint { background:var(--editor-h
 #lp-hybrid #editor-settings .hy-layout-recovery-button:hover { background:color-mix(in srgb,var(--blue) 12%,var(--paper)); border-color:var(--blue); }
 #lp-hybrid #editor-settings .hy-layout-recovery-button svg { width:18px; height:18px; flex-shrink:0; }
 /* Scrollbars follow the active surface and keep a visible draggable thumb. */
-html { scrollbar-width:thin; scrollbar-color:light-dark(#a5b0c2,#596582) transparent; }
-#lp-hybrid * { scrollbar-width:thin; scrollbar-color:color-mix(in srgb,var(--quiet) 52%,var(--paper)) transparent; }
-html::-webkit-scrollbar, #lp-hybrid ::-webkit-scrollbar { width:9px; height:9px; }
-html::-webkit-scrollbar-track, #lp-hybrid ::-webkit-scrollbar-track { background:transparent; }
-html::-webkit-scrollbar-thumb { background:light-dark(#a5b0c2,#596582); border:2px solid transparent; background-clip:content-box; border-radius:20px; }
-#lp-hybrid ::-webkit-scrollbar-thumb { background:color-mix(in srgb,var(--quiet) 52%,var(--paper)); border:2px solid transparent; background-clip:content-box; border-radius:20px; }
-#lp-hybrid ::-webkit-scrollbar-thumb:hover { background-color:var(--quiet); }
-html::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { background:transparent; }
+html, body, #lp-hybrid, #lp-hybrid * { scrollbar-width:thin; scrollbar-color:color-mix(in srgb,var(--editor-scrollbar-accent,#3d526e) 48%,transparent) transparent; }
+html::-webkit-scrollbar, body::-webkit-scrollbar, #lp-hybrid ::-webkit-scrollbar { width:6px; height:6px; }
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track, #lp-hybrid ::-webkit-scrollbar-track { background:transparent; }
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb, #lp-hybrid ::-webkit-scrollbar-thumb { background:color-mix(in srgb,var(--editor-scrollbar-accent,#3d526e) 48%,transparent); border:0; border-radius:999px; }
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover, #lp-hybrid ::-webkit-scrollbar-thumb:hover { background:color-mix(in srgb,var(--editor-scrollbar-accent,#3d526e) 76%,transparent); }
+html::-webkit-scrollbar-button, body::-webkit-scrollbar-button, #lp-hybrid ::-webkit-scrollbar-button { display:none !important; width:0 !important; height:0 !important; }
+html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner, #lp-hybrid ::-webkit-scrollbar-corner { background:transparent; }
 @supports selector(::-webkit-scrollbar) {
-  html, #lp-hybrid * { scrollbar-width:auto; scrollbar-color:auto; }
+  html, body, #lp-hybrid, #lp-hybrid * { scrollbar-width:auto !important; scrollbar-color:auto !important; }
 }
 #lp-hybrid .hy-panel-shortcuts { padding:16px 0; border-top:1px solid var(--edge); }
 #lp-hybrid .hy-panel-shortcuts h3 { font:400 12px/1.4 system-ui; margin:0 0 8px; color:var(--quiet); }
