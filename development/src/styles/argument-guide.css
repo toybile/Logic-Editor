@@ -1,0 +1,52 @@
+#lp-hybrid .hy-guide-dialog{position:fixed;inset:0;margin:auto;box-sizing:border-box;width:1180px;max-width:calc(100vw - 40px);height:800px;max-height:calc(100dvh - 40px);padding:0;overflow:hidden;border:1px solid var(--edge);border-radius:22px;background:var(--paper);color:var(--ink);box-shadow:0 28px 90px #0004;font:13px/1.65 "Segoe UI",system-ui}
+#lp-hybrid .hy-guide-dialog[open]{display:flex;flex-direction:column}
+#lp-hybrid .hy-guide-dialog::backdrop{background:light-dark(#15203650,#05081385);backdrop-filter:blur(4px)}
+#lp-hybrid .hy-guide-header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0;padding:22px 26px;border-bottom:1px solid var(--edge);background:var(--paper);flex:none}
+#lp-hybrid .hy-guide-identity{display:flex;align-items:center;gap:14px;min-width:0}
+#lp-hybrid .hy-guide-header h2{margin:0;font:600 18px/1.4 "Segoe UI",system-ui;letter-spacing:-.2px}
+#lp-hybrid .hy-guide-header h2:focus{outline:none}
+#lp-hybrid .hy-guide-header p{margin:4px 0 0;color:var(--quiet);font-size:12px}
+#lp-hybrid .hy-guide-body{display:grid;grid-template-columns:200px minmax(0,1fr);flex:1;min-height:0}
+#lp-hybrid .hy-guide-nav{display:flex;flex-direction:column;gap:6px;overflow:auto;min-height:0;padding:20px 12px;border-right:1px solid var(--edge);background:color-mix(in srgb,var(--soft) 38%,var(--paper))}
+#lp-hybrid .hy-guide-nav-label{margin:15px 10px 6px;color:var(--quiet);font-size:10px;letter-spacing:.1em}
+#lp-hybrid .hy-guide-nav-label:first-child{margin-top:3px}
+#lp-hybrid .hy-guide-nav button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:40px;padding:9px 10px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--quiet);text-align:left;font:12px/1.5 "Segoe UI",system-ui;cursor:pointer}
+#lp-hybrid .hy-guide-nav button:hover{background:var(--soft);color:var(--ink)}
+#lp-hybrid .hy-guide-nav button[aria-pressed=true]{border-color:var(--edge);background:var(--paper);color:var(--blue);box-shadow:0 2px 5px light-dark(#26364a08,#0002)}
+#lp-hybrid .hy-guide-nav small{flex:none;color:var(--quiet);font-size:10px}
+#lp-hybrid .hy-guide-main{display:flex;flex-direction:column;min-width:0;min-height:0;padding:24px 26px}
+#lp-hybrid .hy-guide-search-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex:none}
+#lp-hybrid .hy-guide-search-row[hidden]{display:none}
+#lp-hybrid .hy-guide-search-row input{flex:1;min-width:0;box-sizing:border-box;min-height:40px;margin:0;padding:9px 12px;border:1px solid var(--edge);border-radius:10px;background:var(--paper);color:var(--ink);font:13px/1.5 "Segoe UI",system-ui}
+#lp-hybrid .hy-guide-count{flex:none;margin:0;color:var(--quiet);font-size:11px}
+#lp-hybrid .hy-guide-content{min-height:0;overflow:auto;padding:0 3px 4px 0;scrollbar-width:thin;overscroll-behavior:contain}
+#lp-hybrid .hy-guide-scope{margin:0 0 18px;color:var(--quiet);font-size:12px;line-height:1.8}
+#lp-hybrid .hy-guide-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+#lp-hybrid .hy-guide-entry{margin:0;border:1px solid var(--edge);border-radius:12px;background:var(--paper);overflow:hidden}
+#lp-hybrid .hy-guide-entry>summary{display:flex;flex-direction:column;gap:7px;padding:15px 18px;list-style:none;cursor:pointer;background:var(--paper);transition:background .15s}
+#lp-hybrid .hy-guide-entry>summary::-webkit-details-marker{display:none}
+#lp-hybrid .hy-guide-entry>summary:hover{background:color-mix(in srgb,var(--blue) 7%,var(--paper))}
+#lp-hybrid .hy-guide-entry[open]>summary{border-bottom:1px solid var(--edge);background:var(--soft)}
+#lp-hybrid .hy-guide-entry-title{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;font-weight:600;line-height:1.5}
+#lp-hybrid .hy-guide-entry-title::after{content:'+';color:var(--quiet);font:20px/1 "Segoe UI",system-ui;font-weight:300}
+#lp-hybrid .hy-guide-entry[open] .hy-guide-entry-title::after{content:'−'}
+#lp-hybrid .hy-guide-entry-formula{display:block;color:var(--quiet);font:16px/1.7 "Cambria Math",serif;overflow-wrap:anywhere}
+#lp-hybrid .hy-guide-entry-body{padding:18px}
+#lp-hybrid .hy-guide-entry-body p{margin:0 0 14px;line-height:1.8}
+#lp-hybrid .hy-guide-entry-body h4{margin:18px 0 8px;color:var(--quiet);font-size:12px;font-weight:600}
+#lp-hybrid .hy-guide-argument{padding:14px 16px;border:1px solid var(--edge);border-radius:10px;background:var(--soft);font:18px/1.8 "Cambria Math",serif;overflow-wrap:anywhere}
+#lp-hybrid .hy-guide-argument p{margin:0}
+#lp-hybrid .hy-guide-entry-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:7px}
+#lp-hybrid .hy-guide-entry-actions .hy-button{min-height:36px;padding:8px 12px;font-size:12px;white-space:normal}
+#lp-hybrid .hy-guide-entry-actions a{color:var(--blue);font-size:11px;text-underline-offset:3px}
+#lp-hybrid .hy-guide-reading h3{margin:0 0 20px;font:600 18px/1.5 "Segoe UI",system-ui}
+#lp-hybrid .hy-guide-reading p{margin:0 0 20px;line-height:1.9}
+#lp-hybrid .hy-guide-sources{padding-left:20px}
+#lp-hybrid .hy-guide-sources li{margin:0 0 15px;overflow-wrap:anywhere}
+#lp-hybrid .hy-guide-sources a{color:var(--blue);text-underline-offset:3px}
+#lp-hybrid .hy-guide-dialog :is(button,input,summary,a):focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+#lp-hybrid .hy-open-argument-guide svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.5;flex:none}
+#lp-hybrid .hy-open-argument-guide{display:flex;align-items:center;gap:10px}
+@media(prefers-reduced-motion:reduce){#lp-hybrid .hy-guide-entry>summary{transition:none}}
+
+#lp-hybrid .hy-guide-search-row input::placeholder{color:var(--quiet);opacity:1}

@@ -19,7 +19,7 @@ assert.equal(cat.validate(rows(['A(S,P)','I(S,S)'],'I(S,P)')).status,'valid','ex
 assert.equal(cat.validate(rows(['I(S,S)','E(S,S)'],'A(S,P)')).satisfiable,false);
 assert.equal(cat.validate(rows(['A(S,P)'],'I(P,S)')).status,'invalid');
 assert.equal(cat.validate(rows(['∀x P(x)'],'I(P,S)')).status,'errors');
-assert.equal(cat.validate(rows(['A(S,M)','A(M,P)'],'A(S,Q)')).status,'limit');
+assert.equal(cat.validate(rows(['A(S,M)','A(M,P)'],'A(S,Q)')).status,'invalid');
 assert.deepEqual(cat.parse('Algum estudante não é leitor.'),{form:'O',subject:'estudante',predicate:'leitor'});
 assert.deepEqual(cat.parse('Some S are not P'),{form:'O',subject:'S',predicate:'P'});
 const good=['∀x(P(x) → Q(x))','∀xP(x)','∀x ∃y R(x,y)','∃x(∀x F(x) → G(x))','∀x(x = x)','a ≠ b','P(f(a),g(b,c))','P → Q','¬(⊤ ∧ ⊥)','∀person Loves(person,a)'];
@@ -28,7 +28,7 @@ assert.deepEqual(fol.parse('∀x(P(x) ∧ Q(y))').freeVariables,['y']);
 assert.deepEqual(fol.parse('∀xP(x) ∧ Q(x)').freeVariables,['x']);
 assert.deepEqual(fol.parse('∃x(∀x F(x) → G(x))').freeVariables,[]);
 assert.deepEqual(fol.parse('P(f(a),b)').symbols.map(s=>[s.name,s.kind,s.arity]),[['P','predicate',2],['f','function',1],['a','constant',0],['b','constant',0]]);
-for(const text of ['','∀P P(a)','P(a','P(a,,b)','P(a) Q(a)','a','P(P(a))','∀x(P(x) ∧)','P(x) ∧ P(x,y)','P(a) | Q(a)','∃!x P(x)','□P(a)']){assert.throws(()=>fol.parse(text),undefined,text);checks++;}
+for(const text of ['','∀P P(a)','P(a','P(a,,b)','P(a) Q(a)','a','P(P(a))','∀x(P(x) ∧)','P(x) ∧ P(x,y)','□P(a)']){assert.throws(()=>fol.parse(text),undefined,text);checks++;}
 assert.equal(fol.analyze(rows(['P(a)'],'P(a,b)')).errors[0].code,'signature');
 assert.equal(fol.analyze(rows(['P(f(a))'],'Q(f)')).errors[0].code,'signature');
 assert.equal(fol.analyze([{text:'garbage',role:'blank'},{text:'P(a)',role:'premise'}]).status,'syntax-checked');

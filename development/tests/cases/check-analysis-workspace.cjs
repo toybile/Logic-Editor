@@ -25,10 +25,10 @@ fs.mkdirSync('test-artifacts',{recursive:true});
     for(const e of [
      {mode:'propositional',premises:['A → B','A'],conclusion:'B',state:'valid'},
      {mode:'syllogistic',premises:['Todo mamífero é animal','Todo cão é mamífero'],conclusion:'Todo cão é animal',state:'valid'},
-     {mode:'first-order',premises:['∀x(H(x) → M(x))','H(s)'],conclusion:'M(s)',state:'syntax-checked'}]){
+     {mode:'first-order',premises:['∀x(H(x) → M(x))','H(s)'],conclusion:'M(s)',state:'valid'}]){
      await seed(e.mode,e.premises,e.conclusion);const before=await p.evaluate(()=>JSON.stringify(rows));await open(e.state);await geometry();
      if(width===1440)await p.screenshot({path:`test-artifacts/analysis-${e.mode}-${theme}.png`});
-     if(e.mode==='first-order')assert((await p.locator('#logic-panel').innerText()).includes('ainda não foi determinada'));
+     if(e.mode==='first-order')assert((await p.locator('#logic-panel').innerText()).includes('demonstrada'));
      const card=p.locator('#logic-panel details[data-analysis-tool]>summary').first(),previous=await p.locator('.hy-validation-preview').boundingBox();
      await card.click();assert(await inspector.isVisible());assert.deepEqual(await p.locator('.hy-validation-preview').boundingBox(),previous);
      assert(await p.locator('.hy-analysis-back').evaluate(e=>e===document.activeElement));await p.keyboard.press('Escape');assert(!(await inspector.isVisible()));assert(await dialog.isVisible());
@@ -56,9 +56,9 @@ fs.mkdirSync('test-artifacts',{recursive:true});
    await close();
    await seed('syllogistic',['A(S,P)'],'I(S,P)');await open('invalid');assert.equal(await p.locator('.hy-countermodel-table tbody tr').count(),1);
    await p.getByText('Semântica e limites',{exact:true}).click();assert((await inspector.innerText()).includes('A e E não pressupõem existência'));await p.keyboard.press('Escape');await close();
-   await seed('first-order',['P(x)'],'P(a)');await open('syntax-checked');assert((await p.locator('#logic-panel').innerText()).includes('variáveis livres — x'));await close();
+   await seed('first-order',['P(x)'],'P(a)');await open('invalid');assert((await p.locator('#logic-panel').innerText()).includes('variáveis livres — x'));await close();
    await seed('first-order',['P(a)'],'P(a,b)');await open('errors');assert((await p.locator('#logic-panel').innerText()).includes('tipos ou números de argumentos diferentes'));await close();
-   await seed('first-order',['∀x(H(x) → M(x))','H(s)'],'M(s)');await open('syntax-checked');await p.locator('.hy-analysis-vocabulary').click();
+   await seed('first-order',['∀x(H(x) → M(x))','H(s)'],'M(s)');await open('valid');await p.locator('.hy-analysis-vocabulary').click();
    assert(await sheet.isVisible());assert((await sheet.innerText()).includes('Predicados'));assert((await sheet.innerText()).includes('Constantes'));
    assert.equal(await sheet.locator('input').count(),4);await sheet.getByLabel('Domínio de discurso').fill('Pessoas');await sheet.locator('input').nth(1).fill('x é humano');await sheet.locator('input').nth(2).fill('x é mortal');await sheet.locator('input').nth(3).fill('Sócrates');
    const panelBounds=await sheet.boundingBox();assert.equal(panelBounds.x+panelBounds.width,1424);

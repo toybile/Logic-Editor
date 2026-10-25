@@ -326,8 +326,8 @@
       'A(S,P): every S is P; E(S,P): no S is P; I(S,P): some S is P; O(S,P): some S is not P. The checker permits empty terms: universals carry no existential import. The first four examples are valid; the last is invalid without an existence premise.',
     ],
     'first-order': [
-      '∀ quantifica universalmente; ∃ quantifica existencialmente; P e Q são predicados unários, R é uma relação binária, a e b são constantes. Estes exemplos ilustram inferências válidas na lógica clássica com identidade. O analisador atual verifica sintaxe, aridades e variáveis livres; ainda não prova a validade.',
-      '∀ is universal quantification; ∃ is existential quantification; P and Q are unary predicates, R is a binary relation, a and b are constants. These examples illustrate valid inferences in classical logic with identity. The current analyzer checks syntax, arities and free variables; it does not yet prove validity.',
+      '∀ quantifica universalmente; ∃ quantifica existencialmente; P e Q são predicados unários, R é uma relação binária, a e b são constantes. Estes exemplos ilustram inferências válidas na lógica clássica com identidade. O analisador verifica a sintaxe e procura provas por tableaux e contramodelos finitos. Quando a busca atinge seus limites, o resultado é inconclusivo.',
+      '∀ is universal quantification; ∃ is existential quantification; P and Q are unary predicates, R is a binary relation, a and b are constants. These examples illustrate valid inferences in classical logic with identity. The analyzer checks syntax and searches for tableau proofs and finite countermodels. Reaching a search limit produces an inconclusive result.',
     ],
   };
   const exampleHelp = [
@@ -511,12 +511,18 @@
     close.className = "hy-button";
     close.setAttribute("aria-label",label("Fechar","Close"));LPDialogChrome.close(close);
     close.onclick = () => dialog.close();
-    head.append(close);
+    const fullGuide=document.createElement('button');fullGuide.type='button';fullGuide.className='hy-button';fullGuide.textContent=label('Guia','Guide');fullGuide.onclick=()=>{dialog.close();root.dispatchEvent(new Event('lp-open-argument-guide'));};
+    head.append(fullGuide,close);
     root.append(dialog);
     dialog.onclose = () => {disposePicker();dialog.remove();};
     dialog.showModal();
   }
 
+  root.addEventListener("lp-load-guide-example", ({detail}) => {
+    if(!detail||!['propositional','first-order','syllogistic'].includes(detail.mode)||!Array.isArray(detail.items)||detail.items.length>200)return;
+    saveArguments();const id=addDocument(detail.name,detail.items.map(item=>({text:item.text,role:item.role})));
+    argumentWorkspace.documents.find(doc=>doc.id===id).logicMode=detail.mode;showArgument(id);saveArguments();
+  });
   root.addEventListener("lp-open-argument-examples", () => {
     document.querySelector("#argument-options").hidePopover();
     openExamples();
@@ -701,6 +707,7 @@
     section.append(summary);
     logicPanel.append(section);
     let offset = 0;
+    if(prepared.atoms.length>16){section.append(document.createTextNode(label('A validade foi verificada por SAT. A tabela-verdade visual permanece limitada a 16 proposições para evitar milhões de linhas.','Validity was checked by SAT. The visual truth table remains limited to 16 propositions to avoid millions of rows.')));return;}
     const count = 2 ** prepared.atoms.length,
       entries = [...prepared.premises, ...prepared.conclusions];
     const note = document.createElement("p");

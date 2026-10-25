@@ -7,7 +7,8 @@
     "styles/settings.css",
     "styles/text-import.css",
     "styles/dialog-consistency.css",
-    "styles/mobile.css"
+    "styles/mobile.css",
+    "styles/argument-guide.css"
   ],
   "scripts": [
     {
@@ -29,6 +30,10 @@
     {
       "name": "first-order-syntax",
       "file": "scripts/validation/first-order-syntax.js"
+    },
+    {
+      "name": "first-order-engine",
+      "file": "scripts/validation/first-order-engine.js"
     },
     {
       "name": "categorical-logic",
@@ -285,6 +290,14 @@
     {
       "name": "text-argument-import",
       "file": "scripts/workspace/text-argument-import.js"
+    },
+    {
+      "name": "argument-guide-data",
+      "file": "scripts/help/argument-guide-data.js"
+    },
+    {
+      "name": "argument-guide",
+      "file": "scripts/help/argument-guide.js"
     }
   ]
 }

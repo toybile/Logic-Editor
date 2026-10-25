@@ -2,9 +2,9 @@
 
 [Open the editor / Abrir o editor](https://toybile.github.io/Logic-Editor/)
 
-A browser workspace for writing and organizing logical arguments, including modal symbols and quantifiers. Automatic validation supports classical propositional logic. Read the **English** guide below. This README is the functionality reference; writing notation and automatic validation have different scopes.
+A browser workspace for writing and organizing logical arguments, including modal symbols and quantifiers. Automatic validation supports classical propositional logic, categorical arguments and bounded first-order proof/countermodel search. Read the **English** guide below. This README is the functionality reference; writing notation and automatic validation have different scopes.
 
-Um espaço no navegador para escrever e organizar argumentos lógicos, incluindo símbolos modais e quantificadores. A validação automática contempla lógica proposicional clássica. Abra o guia **Português (Brasil)** abaixo. Este README é a referência das funcionalidades; notação escrita e validação automática têm escopos diferentes.
+Um espaço no navegador para escrever e organizar argumentos lógicos, incluindo símbolos modais e quantificadores. A validação automática contempla lógica proposicional clássica, argumentos categóricos e busca limitada de provas/contramodelos em primeira ordem. Abra o guia **Português (Brasil)** abaixo. Este README é a referência das funcionalidades; notação escrita e validação automática têm escopos diferentes.
 
 <details>
 <summary><strong>English — complete user guide</strong></summary>
@@ -51,7 +51,7 @@ The **+ below the rows** and the full-width dividers between them insert a premi
 
 ## Multiple arguments and examples
 
-The **+ in the header** opens two choices: **Blank** creates an empty argument immediately; **Example** opens a selection window with formula previews. An example is added as a new argument, preserving the existing ones. **Help** in this window opens an offline explanation page for the current examples; the upper-left arrow returns to the examples without changing your argument.
+The **+ in the header** offers **Blank**, **Example**, **Text** and **Argument guide**. Blank creates an empty argument immediately; Example opens mode-specific formula previews; Text proposes a reviewable interpretation of controlled prose. An example is added as a new argument, preserving the existing ones. **Help** in this window opens an offline explanation page for the current examples; the upper-left arrow returns to the examples without changing your argument.
 
 Examples include modus ponens, modus tollens, disjunctive syllogism, affirming the consequent and formulas with longer proposition names. The affirming-the-consequent example deliberately demonstrates an invalid inference.
 
@@ -153,7 +153,7 @@ Names begin with a letter or `_`, may include letters, numbers, underscores and 
 
 Precedence, strongest first: negation; conjunction/NAND; disjunction/XOR/NOR; conditionals; biconditional. Conditionals associate to the right; the other binary operators associate to the left. Parentheses make the intended grouping explicit.
 
-Quantifiers, modal operators, set relations and other unsupported symbols are available as notation but are not evaluated. This is not a natural-language reasoner or a proof generator. Current validation limits: **16 distinct propositions**, **200 nonempty formulas**, **1,024 tokens**, **10,000 characters** and a parser nesting limit of **128** per formula.
+Propositional validation accepts up to **128 distinct propositions**. Up to 16 it enumerates valuations; beyond that it uses Tseitin encoding and bounded SAT search. A returned counterexample is checked against the original formulas. Resource exhaustion is a limit, never a validity verdict. The visual truth table remains limited to **16 propositions**. Other limits: **200 nonempty formulas**, **1,024 tokens**, **10,000 characters** and nesting **128** per formula. Quantifiers are interpreted in first-order mode; modal and second-order symbols remain notation outside the supported validators.
 
 ### Truth table and pagination
 
@@ -185,7 +185,7 @@ There is no account or cloud synchronization. Another browser, device or origin 
 
 ## Settings and accessibility
 
-Settings controls language (International English / Português do Brasil), four themes (Original light, Original dark, Indigo light and Indigo dark) and independent library/writing scales from **80% to 150%**, in 5% steps.
+Settings controls language (International English / Português do Brasil), eight color families, each with light/dark/automatic modes and independent background translucency and independent library/writing scales from **80% to 150%**, in 5% steps.
 
 **Hover hints** have an enable switch and a delay from **0.01 to 1 second**, default **0.5 s**. Disabling them hides control/symbol/decoration hover help without disabling the controls. Hints use a shared rounded panel, can show keyboard shortcuts and proposition descriptions, respect viewport edges and close on interaction or Escape. Keyboard focus can also show help.
 
@@ -193,7 +193,7 @@ Settings controls language (International English / Português do Brasil), four 
 
 **Restore defaults** opens a preview of 19 settings and target values. Turn on **Preserve** beside any item to exclude it; all off resets the listed items, all on disables confirmation. Choices apply only to this confirmation. Cancel/Escape changes nothing. Numbering resets only the active argument; arguments, names and proposition descriptions are never deleted. Favorites/Recent survive a library-layout reset. Restoring panel layout and Reorganize windows use the first-visit arrangement: side by side from 1440 px and stacked on narrower screens. Reorganize preserves content and other preferences.
 
-The Indigo themes use translucent surfaces and static blue/violet background glows, inspired by [Big Five](https://bigfive-test.com/). Theme selection is saved. Hold an empty background area for the configured hold delay to open the same four-theme chooser; moving cancels the gesture. Appearance also offers two panel-customization shortcuts, equivalent to holding each panel's eye button. Changing a panel color immediately updates its outer marker. Docked categories use the same compact margins as detached ones. Scrollbars and argument toolbar buttons follow the current theme. Settings has two tabs: Appearance groups themes, sizes and Reorganize windows; Functionalities groups the hover-hint switch, hint delay and hold-action delay.
+Eight families are available: Original, Indigo, Petroleum and turquoise, Graphite and amber, Sand and blue, Sage and olive, Rose and wine, and Plum and lavender. Each has light/dark/automatic modes and independent translucency. Holding the background switches light/dark; clicking and holding the second tap opens Settings with gear feedback. Appearance, Panels, Writing and Interactions organize controls. The language selector opens two cards with fixed labels: Português Brasileiro (pt-br) and International English (en). Preferences persist in this browser.
 
 First visits use the browser's Portuguese/English language (English fallback), a modus-ponens example, named role buttons, light theme, 100% scales, 0.5 s delays, uppercase typing, numbering and compact prefixes enabled. Soft panel colors, outer markers on, colored borders off and no inner detail are initial appearance choices. At 1440 px and above the writing/output panels start side by side; narrower screens stack them. Existing saved data/preferences are retained.
 
@@ -268,7 +268,7 @@ O **+ abaixo das linhas** e as divisórias entre elas inserem uma premissa na po
 
 ## Vários argumentos e exemplos
 
-O **+ no cabeçalho** abre duas opções: **Em branco** cria um argumento vazio imediatamente; **Exemplo** abre uma janela com prévias das fórmulas. O exemplo entra como um novo argumento, preservando os existentes. **Ajuda** nessa janela abre uma página offline com explicações dos exemplos atuais; a seta superior esquerda retorna à lista sem alterar seu argumento.
+O **+ no cabeçalho** oferece **Em branco**, **Exemplo**, **Texto** e **Guia de argumentos**. Em branco cria um argumento vazio; Exemplo apresenta fórmulas do modo escolhido; Texto propõe uma interpretação revisável de prosa controlada. O exemplo entra como um novo argumento, preservando os existentes. **Ajuda** nessa janela abre uma página offline com explicações dos exemplos atuais; a seta superior esquerda retorna à lista sem alterar seu argumento.
 
 Os exemplos incluem modus ponens, modus tollens, silogismo disjuntivo, afirmação do consequente e fórmulas com nomes maiores de proposições. A afirmação do consequente demonstra deliberadamente uma inferência inválida.
 
@@ -370,7 +370,7 @@ Nomes começam com letra ou `_` e podem conter letras, números, sublinhados e m
 
 Precedência, da maior para a menor: negação; conjunção/NAND; disjunção/XOR/NOR; condicionais; bicondicional. Condicionais associam à direita; os demais operadores binários, à esquerda. Parênteses explicitam o agrupamento pretendido.
 
-Quantificadores, operadores modais, relações de conjuntos e outros símbolos não aceitos servem como notação, mas não são avaliados. Não há raciocínio em linguagem natural nem geração de demonstrações. Limites atuais: **16 proposições distintas**, **200 fórmulas preenchidas**, **1.024 tokens**, **10.000 caracteres** e limite de aninhamento de **128** no analisador por fórmula.
+A validação proposicional aceita até **128 proposições distintas**. Até 16, enumera valorações; acima disso, usa codificação de Tseitin e busca SAT limitada. Um contraexemplo retornado é conferido nas fórmulas originais. Esgotar recursos indica limite, nunca validade. A tabela-verdade visual continua limitada a **16 proposições**. Outros limites: **200 fórmulas preenchidas**, **1.024 tokens**, **10.000 caracteres** e aninhamento **128** por fórmula. Quantificadores são interpretados no modo de primeira ordem; símbolos modais e de segunda ordem continuam disponíveis como notação, fora dos validadores suportados.
 
 ### Tabela-verdade e paginação
 
@@ -402,7 +402,7 @@ Não há conta nem sincronização na nuvem. Outro navegador, dispositivo ou ori
 
 ## Configurações e acessibilidade
 
-As configurações controlam idioma (International English / Português do Brasil), quatro temas (Claro original, Escuro original, Índigo claro e Índigo escuro) e escalas independentes da biblioteca e da escrita: **80% a 150%**, em passos de 5%.
+As configurações controlam idioma (International English / Português do Brasil), oito famílias de cores, cada uma com modos claro/escuro/automático e translucidez independente do fundo e escalas independentes da biblioteca e da escrita: **80% a 150%**, em passos de 5%.
 
 **Dicas de hover** têm interruptor e tempo entre **0,01 e 1 segundo**, padrão **0,5 s**. Desligá-las oculta as ajudas dos controles, símbolos e decorações sem desativar as funções. Usam janela arredondada compartilhada, podem incluir atalhos e descrições das proposições, respeitam a tela e fecham ao interagir ou por Escape. O foco pelo teclado também pode mostrar ajuda.
 
@@ -410,7 +410,7 @@ As configurações controlam idioma (International English / Português do Brasi
 
 **Restaurar padrões** abre uma prévia de 19 ajustes com os valores de destino. Ative **Preservar** junto ao que deve permanecer; todos desligados restaura os ajustes listados, todos ligados desabilita a confirmação. A escolha vale somente naquela confirmação. Cancelar/Escape não altera nada. A enumeração muda apenas no argumento ativo; argumentos, nomes e descrições nunca são apagados. Favoritos/Recentes sobrevivem ao reset da disposição da biblioteca.
 
-Os temas Índigo usam superfícies translúcidas e manchas estáticas azul-violeta no fundo, inspirados no [Big Five](https://bigfive-test.com/). A escolha é salva. Segurar uma área vazia do fundo pelo tempo configurado abre a mesma escolha dos quatro temas; mover cancela o gesto. Aparência também oferece dois atalhos de personalização dos painéis, equivalentes a segurar cada olhinho. A cor do marcador externo acompanha imediatamente a cor do painel. Categorias acopladas usam as mesmas margens compactas das destacadas. Barras de rolagem e botões do argumento acompanham o tema. Reset da disposição e Reorganizar janelas usam a disposição do primeiro acesso: lado a lado a partir de 1440 px e empilhadas em telas menores, sem apagar os argumentos. As configurações têm duas abas: Aparência reúne temas, tamanhos e Reorganizar janelas; Funcionalidades reúne o toggle de dicas de hover, o tempo das dicas e o tempo de toque longo.
+São oito famílias: Original, Índigo, Petróleo e turquesa, Grafite e âmbar, Areia e azul, Sálvia e oliva, Rosé e vinho e Ameixa e lavanda. Cada uma oferece modo claro/escuro/automático e translucidez independente. Segurar o fundo alterna claro/escuro; clicar e segurar o segundo toque abre Configurações, com feedback de engrenagem. Aparência, Painéis, Escrita e Interações organizam os controles. O seletor de idioma abre dois cards, com os nomes fixos Português Brasileiro (pt-br) e International English (en). As preferências são salvas neste navegador.
 
 O primeiro acesso usa o idioma português/inglês do navegador (inglês como alternativa), exemplo de modus ponens, botões de tipo com nomes, tema claro, escalas 100%, tempos 0,5 s, maiúsculas, enumeração e prefixos compactos ligados. Cores suaves, traços externos ligados, bordas coloridas desligadas e detalhe interno Nenhum são os valores iniciais. A partir de 1440 px, escrita e resultado começam lado a lado; abaixo disso ficam empilhados. Dados e preferências já salvos são preservados.
 
@@ -547,41 +547,58 @@ Os scripts compartilham o escopo do navegador e seguem a ordem do manifesto. O s
 
 ## Logical modes / Modos lógicos
 
-Use the selector below the Logic Editor title to choose a logical mode for the current argument. Hold the selector to open the introduction. All symbols remain available. Classical propositional validity and categorical consequence (up to three terms, under explicit Boolean existential assumptions) are implemented. First-order mode checks syntax, signatures and free variables; it does not determine validity. Symbol descriptions remain free annotations, not a formal interpretation. The mode is saved with the argument and included in workspace files.
+Choose the current argument's logical system below the Logic Editor title, or from the icon beside the validation heading. Hold the selector for an introduction. The choice is saved with the argument. All symbols remain available. A mode notice proposes a switch when the syntax clearly requires another supported system; it never silently rewrites the argument.
 
-Use o seletor abaixo do título do editor para escolher o modo lógico do argumento atual. Segure o seletor para abrir a introdução. Todos os símbolos continuam disponíveis. Estão implementadas a validade proposicional clássica e a consequência categórica (até três termos, com pressupostos existenciais booleanos explícitos). O modo de primeira ordem verifica sintaxe, assinatura e variáveis livres; não determina validade. As descrições continuam sendo anotações livres, não uma interpretação formal. O modo é salvo com o argumento e incluído nos arquivos de trabalho.
+Escolha o sistema lógico do argumento abaixo de Logic Editor ou pelo ícone junto do título da validação. Segure o seletor para abrir a introdução. A escolha é salva com o argumento. Todos os símbolos continuam disponíveis. Um aviso propõe a troca quando a sintaxe requer claramente outro sistema suportado; o argumento nunca é reescrito silenciosamente.
 
-Argument tabs respond to a short click without waiting for the hold duration. Their hold indicator appears only after a brief initial delay; the configured duration of the hold action is unchanged.
-As abas de argumentos respondem ao clique curto sem aguardar o tempo de segurar. O indicador só aparece após um breve intervalo inicial; o tempo configurado para a ação permanece igual.
+| System / Sistema | Method / Método | Result / Resultado |
+| --- | --- | --- |
+| Classical propositional / Proposicional clássica | Valuations up to 16 atoms; bounded SAT up to 128 / Valorações até 16 átomos; SAT limitado até 128 | Valid, counterexample, syntax error or resource limit / Válido, contraexemplo, erro sintático ou limite |
+| Categorical / Categórica | Membership regions and existential witnesses, up to 12 terms / Regiões de pertencimento e testemunhas de existência, até 12 termos | Valid, checked countermodel or limit / Válido, contramodelo conferido ou limite |
+| Classical first-order / Primeira ordem clássica | Bounded tableau with identity, plus checked finite-model search / Tableau limitado com identidade e busca de modelos finitos conferidos | Proved, countermodel or inconclusive / Demonstrado, contramodelo ou inconclusivo |
 
-+
-+## Categorical validation and first-order vocabulary / Validação categórica e vocabulário de LPO
-+
-+Categorical forms: `A(S,P)` (all S are P), `E(S,P)` (no S are P), `I(S,P)` (some S are P), `O(S,P)` (some S are not P). The corresponding fixed Portuguese/English sentence templates are also accepted with single-word terms; use the A/E/I/O notation for multiword term names. Terms are case-sensitive. The domain is nonempty, but each term may be empty: universals have no existential import. Add `I(S,S)` when the existence of S is a premise. This convention is modern Boolean semantics, not a claim to implement every historical Aristotelian or scholastic account. Limits: three distinct terms and 200 rows.
-+
-+Formas categóricas: `A(S,P)` (Todo S é P), `E(S,P)` (Nenhum S é P), `I(S,P)` (Algum S é P), `O(S,P)` (Algum S não é P). Esses modelos fixos de frase em português/inglês também são aceitos com termos de uma palavra; para termos com espaços, use a notação A/E/I/O. Os termos diferenciam maiúsculas de minúsculas. O domínio é não vazio, mas cada termo pode ser vazio: universais não pressupõem existência. Acrescente `I(S,S)` quando a existência de S for premissa. Essa é a semântica booleana moderna; não representa todas as concepções históricas aristotélicas ou escolásticas. Limites: três termos distintos e 200 linhas.
-+
-+The categorical engine enumerates occupied membership regions, with one representative per occupied region. A/E/I/O statements cannot distinguish cardinalities within a region. All 256 standard mood/figure combinations are tested against the 15 Boolean-valid forms, and returned countermodels are re-evaluated by a separate test evaluator.
-+
-+O mecanismo categórico enumera regiões de pertencimento ocupadas, com um representante por região ocupada. As formas A/E/I/O não distinguem cardinalidades dentro de uma região. Os 256 padrões de formas/figuras são testados contra os 15 válidos na semântica booleana; os contramodelos retornados são reavaliados por uma implementação separada nos testes.
-+
-+First-order syntax supports uppercase-initial predicates, lowercase constants/functions, individual quantifiers `∀`, `∃`, `∄`, identity, negation, conjunction, disjunction, conditional, biconditional and truth constants. Predicate arguments use parentheses and commas: `R(a,f(b))`. Unbound x/y/z/u/v/w with numeric/prime/underscore indices are variables; other unbound lowercase names are constants. Quantifiers bind the immediately following formula (use parentheses for a larger scope). Symbols must keep the same kind and arity throughout an argument. This is an explicitly chosen notation; juxtaposition such as `Rxy`, uniqueness quantifiers, modal operators and second-order quantification are not interpreted as those extensions. LPO limits: 200 rows, 10,000 characters and 1,024 tokens per formula, with bounded nesting.
-+
-+A sintaxe de LPO aceita predicados com inicial maiúscula, constantes/funções em minúscula, quantificadores individuais `∀`, `∃`, `∄`, identidade, negação, conjunção, disjunção, condicional, bicondicional e constantes de verdade. Argumentos de predicados usam parênteses e vírgulas: `R(a,f(b))`. x/y/z/u/v/w livres, com índices numéricos/linha/underscore, são variáveis; os outros nomes livres em minúscula são constantes. Quantificadores ligam a fórmula imediatamente seguinte (use parênteses para ampliar o alcance). Cada símbolo deve manter tipo e aridade no argumento inteiro. Essa é uma notação explicitamente escolhida; `Rxy` não é interpretado como uma aplicação binária, e quantificação de unicidade, operadores modais e quantificação de segunda ordem não são analisados como essas extensões. Limites de LPO: 200 linhas, 10.000 caracteres e 1.024 elementos por fórmula, com limite de aninhamento.
-+
-+Domain and symbol descriptions are annotations. They are saved, exported and imported with their argument, but do not define a formal model, supply axioms or prove real-world premises. Syntax checking never emits a validity verdict.
-+Domínio e descrições dos símbolos são anotações. São salvos, exportados e importados com o argumento, mas não definem um modelo formal, não fornecem axiomas e não comprovam premissas sobre o mundo. A conferência de sintaxe nunca emite um veredito de validade.
-+
-+References / Referências:
-+- [forall x: first-order syntax](https://forallx.openlogicproject.org/html/Ch27.html)
-+- [forall x: interpretations](https://forallx.openlogicproject.org/html/Ch30.html)
-+- [Stanford Encyclopedia: existential assumptions](https://plato.stanford.edu/entries/square/)
-+- [The Logic Book: categorical syllogisms](https://alg.manifoldapp.org/read/the-logic-book-clayton/section/5fc9008d-d5fa-4db9-9423-3eb68032353a)
-+
+First-order syntax supports uppercase-initial predicates, lowercase constants/functions, `∀`, `∃`, `∄`, `∃!`, identity/inequality, truth constants and classical connectives. Use `R(a,f(b))`, with matching `()`, `[]` or `{}`. Unbound x/y/z/u/v/w (including numeric, prime and underscore indices) are variables; other unbound lowercase names are constants. Quantifiers bind the immediately following formula; use grouping for a larger scope. Each symbol keeps its kind and arity throughout an argument. Juxtaposition such as `Rxy` is not a binary predicate application.
+
+A sintaxe de LPO aceita predicados com inicial maiúscula, constantes/funções minúsculas, `∀`, `∃`, `∄`, `∃!`, identidade/desigualdade, constantes de verdade e conectivos clássicos. Use `R(a,f(b))`, com `()`, `[]` ou `{}` correspondentes. x/y/z/u/v/w livres (incluindo índices numéricos, linhas e underscores) são variáveis; os demais nomes minúsculos livres são constantes. Quantificadores ligam a fórmula imediatamente seguinte; agrupe para ampliar o alcance. Cada símbolo mantém tipo e aridade no argumento inteiro. `Rxy` não é interpretado como aplicação binária.
+
+First-order semantics uses nonempty domains, total functions and identity. Names can co-refer; free variables retain one shared assignment across all rows. A closed tableau establishes consequence. A countermodel is evaluated on the original formulas before presentation. Exhausting bounded search is **inconclusive**, never a proof. Additional finite-model search tries domains of up to three objects for function-free inputs. Its failure establishes no validity. General first-order validity is undecidable; this browser implementation bounds time, branches, expansions and terms. The proof view summarizes tableau closure; it is not a full step-by-step proof certificate.
+
+A semântica de LPO usa domínios não vazios, funções totais e identidade. Nomes podem correferir; variáveis livres mantêm uma atribuição compartilhada por todas as linhas. Um tableau fechado demonstra consequência. O contramodelo é avaliado nas fórmulas originais antes de aparecer. Esgotar a busca limitada é **inconclusivo**, nunca uma prova. A busca adicional tenta domínios de até três objetos para entradas sem funções; sua falha não demonstra validade. Validade geral em primeira ordem é indecidível; esta implementação limita tempo, ramos, expansões e termos. A apresentação resume o fechamento do tableau; não é um certificado completo de prova passo a passo.
+
+Categorical A/E/I/O terms may be empty: universals do not assert existence. `I(S,S)` adds explicit existence. Proper names in supported controlled sentences denote one existing individual and may co-refer. The solver checks consistency separately and supports multiple conclusions. Its resource bounds are reported explicitly.
+
+Termos categóricos A/E/I/O podem ser vazios: universais não afirmam existência. `I(S,S)` acrescenta existência explícita. Nomes próprios nas frases controladas suportadas denotam um indivíduo existente e podem correferir. O mecanismo verifica consistência separadamente e admite várias conclusões. Seus limites de recursos são informados.
+
+Domain and symbol descriptions remain annotations: saved/exported/imported, but never added as axioms or evidence that real-world premises are true. Syntax checking alone is not a validity verdict. Modal, temporal, intuitionistic, paraconsistent and second-order semantics are outside the current three validators.
+
+Domínio e descrições continuam sendo anotações: salvos/exportados/importados, mas nunca acrescentados como axiomas ou evidência da verdade das premissas sobre o mundo. Conferir sintaxe não é emitir um veredito de validade. Semânticas modal, temporal, intuicionista, paraconsistente e de segunda ordem estão fora dos três verificadores atuais.
+
+## Argument guide / Guia de argumentos
+
+Open **+ → Argument guide**, or **Guide** in the examples window. Browse another logical system without changing the current document. Search by title, notation or explanation; open a card to see its reading, application conditions and source. **Load as new argument** preserves existing documents and selects the example's system.
+
+Abra **+ → Guia de argumentos** ou **Guia** na janela de exemplos. Consulte outro sistema sem alterar o documento atual. Busque pelo título, notação ou explicação; abra um card para ver sua leitura, condições de uso e fonte. **Carregar como novo argumento** preserva os documentos existentes e seleciona o sistema do exemplo.
+
+- **45** propositional schemas, equivalences and proof methods / esquemas proposicionais, equivalências e métodos de prova.
+- **28** first-order forms with quantifier, identity and uniqueness conditions / formas de primeira ordem com condições de quantificação, identidade e unicidade.
+- **24** categorical forms: all **15** three-term moods valid with potentially empty classes, plus **9** traditional forms with explicit existence premises / formas categóricas: todos os **15** modos de três termos válidos com classes possivelmente vazias, mais **9** formas tradicionais com premissas explícitas de existência.
+
+No finite catalogue contains every valid argument in logic. These **97 forms** generate infinitely many uniform instances. The categorical subcatalogue is exhaustive only for the stated A/E/I/O three-term fragment. The guide includes explanations of consequence, substitution, side conditions, methods, resource limits and unsupported systems. It is available offline in both interface languages.
+
+Nenhum catálogo finito contém todos os argumentos válidos da lógica. Estas **97 formas** geram infinitas instâncias uniformes. O subcatálogo categórico é exaustivo apenas para o fragmento A/E/I/O de três termos indicado. O guia explica consequência, substituição, condições de uso, métodos, limites de recursos e sistemas não suportados. Está disponível offline nos dois idiomas da interface.
+
+References / Referências:
+
+- [forall x: basic deduction rules](https://forallx.openlogicproject.org/html/Ch17.html)
+- [forall x: quantifier rules](https://forallx.openlogicproject.org/html/Ch36.html)
+- [forall x: identity](https://forallx.openlogicproject.org/html/Ch39.html)
+- [Logic in Action: categorical reasoning](https://www.logicinaction.org/docs/ch3.pdf)
+- [Logic and Mechanized Reasoning: first-order proof systems](https://avigad.github.io/lamr/proof_systems_for_first_order_logic.html)
+
 ## Controlled natural-language arguments
 
-In categorical mode, the editor accepts sentences such as `Todo homem é mortal` and `Aristóteles é homem`, including their supported English forms. Proper names denote one existing individual; different names may co-refer. General terms may be empty and universal propositions carry no existential import. Analysis remains limited to three distinct terms (including individual subjects) and 200 rows. Formal notation is case-sensitive; natural-language terms are normalized without resolving synonyms, inflections or pronouns.
+In categorical mode, the editor accepts sentences such as `Todo homem é mortal` and `Aristóteles é homem`, including their supported English forms. Proper names denote one existing individual; different names may co-refer. General terms may be empty and universal propositions carry no existential import. Analysis accepts up to 12 distinct terms (including individual subjects) and 200 rows, with explicit resource bounds. Formal notation is case-sensitive; natural-language terms are normalized without resolving synonyms, inflections or pronouns.
 
-Choose **+ → Text** or **File → Interpret text** to propose premises and conclusions from a paragraph. Review and edit every sentence and its role before loading it as a new argument. Supported conditionals, such as `Se chove, então venta`, can be mapped to propositions with a visible vocabulary. The last sentence is only a suggested conclusion when no explicit conclusion marker is present. Unrecognized passages block loading until they are rephrased or explicitly ignored. This is controlled-language interpretation, not unrestricted natural-language understanding or factual verification. First-order input still receives syntax analysis, not a validity proof. Text interpretation runs locally without a remote service.
+Choose **+ → Text** or **File → Interpret text** to propose premises and conclusions from a paragraph. Review and edit every sentence and its role before loading it as a new argument. Supported conditionals, such as `Se chove, então venta`, can be mapped to propositions with a visible vocabulary. The last sentence is only a suggested conclusion when no explicit conclusion marker is present. Unrecognized passages block loading until they are rephrased or explicitly ignored. This is controlled-language interpretation, not unrestricted natural-language understanding or factual verification. First-order formulas receive bounded proof/countermodel analysis as described above. Text interpretation runs locally without a remote service.
 
 Semantic reference: [forall x — names and domains](https://forallx.openlogicproject.org/bookml/Ch23.html).

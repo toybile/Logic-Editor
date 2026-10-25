@@ -76,5 +76,7 @@
   "check-natural-text",
   "check-natural-text-ui",
   "check-categorical-presentation",
-  "check-ui-window-consistency"
+  "check-ui-window-consistency",
+  "check-validation-expanded",
+  "check-argument-guide"
 ]

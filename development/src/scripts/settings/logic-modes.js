@@ -27,8 +27,8 @@ function currentLogicMode() {
       [modes[0],
        'Estuda inferências entre termos, por meio de proposições como “Todo S é P”, “Nenhum S é P”, “Algum S é P” e “Algum S não é P”. Num silogismo categórico há duas premissas e uma conclusão, articuladas por três termos. Exemplo: todo M é P; todo S é M; portanto, todo S é P.',
        'Studies inferences between terms through propositions such as “Every S is P”, “No S is P”, “Some S is P” and “Some S is not P”. A categorical syllogism has two premises and a conclusion involving three terms. Example: every M is P; every S is M; therefore every S is P.',
-       'As descrições identificam os termos. Pressupostos de existência e o tratamento de termos vazios precisam ser declarados. Silogística, lógica aristotélica e tradição escolástica não são expressões perfeitamente equivalentes. O verificador aceita A(S,P), E(S,P), I(S,P) e O(S,P), com até três termos. Adota domínio não vazio e permite termos vazios; universais não pressupõem existência. Também aceita frases controladas como “Aristóteles é homem”: nomes próprios designam um indivíduo existente.',
-       'Descriptions identify the terms. Existential assumptions and treatment of empty terms must be specified. Syllogistic, Aristotelian logic and the scholastic tradition are not exactly interchangeable expressions. The checker accepts A(S,P), E(S,P), I(S,P) and O(S,P), with up to three terms. It uses a nonempty domain and permits empty terms; universals carry no existential import. It also accepts controlled sentences such as “Aristotle is human”: proper names denote one existing individual.'],
+       'As descrições identificam os termos. Pressupostos de existência e o tratamento de termos vazios precisam ser declarados. Silogística, lógica aristotélica e tradição escolástica não são expressões perfeitamente equivalentes. O verificador aceita A(S,P), E(S,P), I(S,P) e O(S,P), com até doze termos e limite de busca. Adota domínio não vazio e permite termos vazios; universais não pressupõem existência. Também aceita frases controladas como “Aristóteles é homem”: nomes próprios designam um indivíduo existente.',
+       'Descriptions identify the terms. Existential assumptions and treatment of empty terms must be specified. Syllogistic, Aristotelian logic and the scholastic tradition are not exactly interchangeable expressions. The checker accepts A(S,P), E(S,P), I(S,P) and O(S,P), with up to twelve terms and a search budget. It uses a nonempty domain and permits empty terms; universals carry no existential import. It also accepts controlled sentences such as “Aristotle is human”: proper names denote one existing individual.'],
       [modes[1],
        'Trata enunciados completos como unidades, representadas por A, B, P etc. Conectivos como ¬, ∧, ∨ e → determinam como os valores de verdade se combinam. Exemplo: A → B; A; portanto, B.',
        'Treats complete statements as units represented by A, B, P and so on. Connectives such as ¬, ∧, ∨ and → determine how truth values combine. Example: A → B; A; therefore B.',
@@ -37,8 +37,8 @@ function currentLogicMode() {
       [modes[2],
        'Analisa a estrutura interna das afirmações: indivíduos, predicados, relações e quantificação. Em ∀x(P(x) → Q(x)), quantificamos sobre indivíduos de um domínio. Exemplo: ∀x(P(x) → Q(x)); P(a); portanto, Q(a).',
        'Analyzes the internal structure of statements: individuals, predicates, relations and quantification. In ∀x(P(x) → Q(x)), quantification ranges over individuals in a domain. Example: ∀x(P(x) → Q(x)); P(a); therefore Q(a).',
-       'Um vocabulário formal deve distinguir domínio, constantes, funções e predicados com sua aridade e ordem dos argumentos. O vocabulário identifica tipos e aridades dos símbolos e registra uma anotação do domínio. O analisador verifica sintaxe e variáveis livres; ainda não prova a validade dos argumentos. Em geral, não existe um algoritmo que sempre termine decidindo todos os casos; uma busca sem resultado pode ser inconclusiva.',
-       'A formal vocabulary must distinguish domain, constants, functions and predicates with their arity and argument order. The vocabulary identifies symbol kinds and arities and records a domain annotation. The analyzer checks syntax and free variables; it does not yet prove argument validity. In general, no algorithm always terminates deciding every case; an unsuccessful search may be inconclusive.'],
+       'Um vocabulário formal deve distinguir domínio, constantes, funções e predicados com sua aridade e ordem dos argumentos. O vocabulário identifica tipos e aridades dos símbolos e registra uma anotação do domínio. O analisador confere a sintaxe e procura provas por tableaux e contramodelos finitos; variáveis livres recebem uma mesma atribuição em todas as linhas. Em geral, não existe um algoritmo que sempre termine decidindo todos os casos; uma busca sem resultado pode ser inconclusiva.',
+       'A formal vocabulary must distinguish domain, constants, functions and predicates with their arity and argument order. The vocabulary identifies symbol kinds and arities and records a domain annotation. The analyzer checks syntax and searches for tableau proofs and finite countermodels; free variables share the same assignment across all rows. In general, no algorithm always terminates deciding every case; an unsuccessful search may be inconclusive.'],
     ];
     for(const [mode,pt,en,ptNote,enNote] of lessons){const section=document.createElement('section'),heading=document.createElement('h3'),p=document.createElement('p'),note=document.createElement('p');heading.textContent=t(mode[1],mode[2]);p.textContent=t(pt,en);note.textContent=t(ptNote,enNote);section.append(heading,p,note);d.append(section);}
     const link=document.createElement('a');link.href='https://forallx.openlogicproject.org/';link.target='_blank';link.rel='noopener noreferrer';link.textContent=t('Leitura: forall x — Open Logic Project','Reading: forall x — Open Logic Project');d.append(link);
@@ -60,7 +60,12 @@ function currentLogicMode() {
   trigger.addEventListener('pointerdown',e=>{if(e.button!==0)return;held=false;timer=setTimeout(()=>{held=true;help();},getHoldDelay());});
   for(const event of ['pointerup','pointercancel','pointerleave'])trigger.addEventListener(event,cancel);
   window.addEventListener('blur',cancel);
-  trigger.onclick=()=>{if(held){held=false;return;}if(menu.matches(':popover-open')){menu.hidePopover();return;}refresh();menu.showPopover();const r=value.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,r.left+r.width/2-menu.offsetWidth/2))+'px';menu.style.top=r.bottom+8+'px';};
+  trigger.onclick=()=>{if(held){held=false;return;}if(menu.matches(':popover-open')){menu.hidePopover();return;}refresh();menu.showPopover();const r=value.getBoundingClientRect();menu.style.left=Math.max(8,Math.min(innerWidth-menu.offsetWidth-8,r.left+r.width/2-menu.offsetWidth/2))+'px';menu.style.top=r.bottom+8+'px';menu.querySelector('[aria-checked=true]')?.focus({preventScroll:true});};
+  menu.addEventListener('keydown',event=>{
+    if(event.key==='Tab'){menu.hidePopover();trigger.focus({preventScroll:true});return;}
+    const buttons=[...menu.querySelectorAll('button')],index=buttons.indexOf(document.activeElement);
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(['ArrowUp','ArrowLeft'].includes(event.key)?buttons.length-1:1))%buttons.length;buttons[next]?.focus();}
+  });
   document.addEventListener('pointerdown', event => {
     if (!trigger.contains(event.target) && !menu.contains(event.target) && menu.matches(':popover-open')) menu.hidePopover();
   });
@@ -71,7 +76,7 @@ function currentLogicMode() {
   }, true);
   menu.addEventListener('toggle',e=>trigger.setAttribute('aria-expanded',String(e.newState==='open')));
   workspaceEvents.addEventListener('saved',refresh);
-  root.querySelector('#settings-language').addEventListener('click',refresh);
+  root.querySelector('#settings-language').addEventListener('languagechange',refresh);
   const header = root.querySelector('.hy-head');
   function alignDock() {
     value.style.top = header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().top - 1 + 'px';

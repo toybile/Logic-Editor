@@ -37,7 +37,7 @@ const logicWords = {
     invalid: "Argumento inválido",
     missingConclusion: "Marque pelo menos uma linha como conclusão.",
     limit:
-      "Validação limitada a 16 proposições diferentes, 200 fórmulas e 1.024 elementos por fórmula.",
+      "Limite de recursos atingido: até 128 proposições, 200 fórmulas e 1.024 elementos por fórmula. A busca pode terminar inconclusiva.",
     errors: "Corrija estas fórmulas antes de validar:",
     line: "Linha",
     column: "coluna",
@@ -67,7 +67,7 @@ const logicWords = {
     valid: "Valid argument",
     invalid: "Invalid argument",
     missingConclusion: "Mark at least one row as a conclusion.",
-    limit: "Limited to 16 distinct propositions, 200 formulas and 1,024 tokens per formula.",
+    limit: "Resource limit reached: up to 128 propositions, 200 formulas and 1,024 tokens per formula. Search may be inconclusive.",
     errors: "Correct these formulas before checking validity:",
     line: "Line",
     column: "column",
@@ -121,7 +121,7 @@ async function updateLogicValidation() {
   const advice = LPModeInference.inspect(rows, currentLogicMode());
   if (advice) { showValidationModeMismatch(); return; }
   if (typeof currentLogicMode === "function" && currentLogicMode() !== 'propositional') {
-    updateExtendedLogicValidation(currentLogicMode());
+    await updateExtendedLogicValidation(currentLogicMode(), {cancelled:()=>revision!==logicRevision||!logicEnabled});
     return;
   }
   const snapshot = rows.map((row) => ({ ...row }));
@@ -200,6 +200,7 @@ async function updateLogicValidation() {
   summary.textContent = words.help;
   help.append(summary, logicParagraph(words.guide));
   logicPanel.append(help);
+  if(result.method==='sat')logicPanel.append(logicParagraph(interfaceText('Verificado por busca SAT; o contramodelo, quando existe, é conferido nas fórmulas originais.','Checked by SAT search; any countermodel is verified against the original formulas.')));
   const prepared = ["valid", "invalid"].includes(result.status) ? LPLogic.prepare(snapshot) : null;
   for (const view of logicViews.values()) {
     if (revision !== logicRevision || !logicEnabled) return;

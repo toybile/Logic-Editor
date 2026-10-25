@@ -397,7 +397,8 @@ const languageFlags = {
 let languagePicker;
 function applyLanguage() {
   const english = ui.language === "en";
-  document.documentElement.lang = english ? "en" : "pt-BR";
+  const languageCode=english?"en":"pt-BR";
+  if(document.documentElement.lang!==languageCode)document.documentElement.lang=languageCode;
   document.title = english ? "Logic Editor" : "Editor de Lógica";
   const flag = root.querySelector("#settings-language");
   languagePicker?.refresh();
@@ -445,8 +446,9 @@ function createLanguagePicker(button,flags,getLanguage,setLanguage){
  function position(){const anchor=button.getBoundingClientRect(),width=picker.offsetWidth||Math.min(448,innerWidth-24),height=picker.offsetHeight||88;const bounds=parent.getBoundingClientRect(),left=Math.max(bounds.left+12,Math.min(anchor.right-width,bounds.right-width-12));picker.style.left=Math.max(12,Math.min(innerWidth-width-12,left))+'px';picker.style.top=Math.max(12,anchor.bottom+8+height<=innerHeight-12?anchor.bottom+8:anchor.top-height-8)+'px';}
  picker.addEventListener('beforetoggle',event=>{if(event.newState==='open'){refresh();position();}});
  picker.addEventListener('toggle',event=>{const open=event.newState==='open';button.setAttribute('aria-expanded',String(open));if(open){position();picker.querySelector('[aria-checked="true"]').focus({preventScroll:true});}});
- picker.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;event.preventDefault();const options=[...picker.children],index=options.indexOf(document.activeElement);options[event.key==='Home'?0:event.key==='End'?1:(index+1)%2].focus();});
+ picker.addEventListener('keydown',event=>{if(event.key==='Tab'){picker.hidePopover();button.focus({preventScroll:true});return;}if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;event.preventDefault();const options=[...picker.children],index=options.indexOf(document.activeElement);options[event.key==='Home'?0:event.key==='End'?1:(index+1)%2].focus();});
  window.addEventListener('resize',()=>{if(picker.matches(':popover-open'))position();});
+ parent.addEventListener('scroll',event=>{if(picker.matches(':popover-open')&&!picker.contains(event.target))picker.hidePopover();},true);
  parent.addEventListener('close',()=>{if(picker.matches(':popover-open'))picker.hidePopover();});parent.addEventListener('toggle',event=>{if(event.target===parent&&event.newState==='closed'&&picker.matches(':popover-open'))picker.hidePopover();});
  refresh();return{refresh};
 }

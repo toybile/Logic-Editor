@@ -1,4 +1,4 @@
-function updateExtendedLogicValidation(mode) {
+async function updateExtendedLogicValidation(mode, options = {}) {
   const t = interfaceText, section = document.createElement('div');
   section.className = 'hy-extended-logic';
   function node(tag, value, cls) {
@@ -32,7 +32,8 @@ function updateExtendedLogicValidation(mode) {
       summary(t('Limite da análise', 'Analysis limit'), t('Análise limitada a 200 linhas.', 'Analysis is limited to 200 rows.'), 'syntax');
       finish('limit'); return;
     }
-    const result = LPFirstOrder.analyze(rows);
+    const snapshot = rows.map(row=>({...row}));
+    const result = LPFirstOrder.analyze(snapshot);
     const messages = {
       name: t('Esperado um nome de símbolo ou variável.', 'Expected a symbol or variable name.'),
       variable: t('Quantificadores de primeira ordem ligam variáveis individuais em minúsculas.', 'First-order quantifiers bind lowercase individual variables.'),
@@ -44,7 +45,7 @@ function updateExtendedLogicValidation(mode) {
       limit: t('A fórmula excede o limite desta análise.', 'The formula exceeds the analysis limit.'),
     };
     if (result.status === 'errors') {
-      summary(t('Problemas de sintaxe ou vocabulário', 'Syntax or vocabulary issues'), t('Esses problemas não são um veredito de invalidade lógica.', 'These issues are not a verdict of logical invalidity.'), 'invalid');
+      summary(t('Problemas de sintaxe ou vocabulário', 'Syntax or vocabulary issues'), t('Esses problemas não são um veredito de invalidade lógica.', 'These issues are not a verdict of logical invalidity.'), 'syntax');
       for (const error of result.errors) {
         const item = node('div', '', 'hy-analysis-diagnostic');
         item.append(node('span', t('Linha ', 'Line ') + (error.index + 1) + ' · ' + t('coluna ', 'column ') + error.column, 'hy-analysis-location'));
@@ -54,12 +55,39 @@ function updateExtendedLogicValidation(mode) {
     } else if (result.status === 'empty') {
       summary(t('Nenhuma fórmula para analisar', 'No formula to analyze'), t('Escreva uma fórmula para analisar.', 'Enter a formula to analyze.'), 'syntax');
     } else {
-      summary(t('Sintaxe de LPO verificada', 'First-order syntax checked'), t('A escrita e a consistência dos símbolos foram conferidas. A validade do argumento ainda não foi determinada.', 'The syntax and consistency of symbols were checked. Argument validity has not been determined.'), 'syntax');
+      const verdict=await LPFirstOrder.validate(snapshot,{cancelled:options.cancelled||(()=>false),yieldTask:()=>new Promise(resolve=>setTimeout(resolve,0))});
+      if(options.cancelled?.()||verdict.status==='cancelled')return;
+      const title=verdict.status==='valid'?t('Argumento válido em LPO','Valid first-order argument'):verdict.status==='invalid'?t('Argumento inválido em LPO','Invalid first-order argument'):verdict.status==='missingConclusion'?t('Conclusão não indicada','No conclusion indicated'):t('Análise inconclusiva','Inconclusive analysis');
+      summary(title,verdict.status==='unknown'||verdict.status==='limit'?t('A busca atingiu seus limites. Isso não demonstra validade nem invalidade.','The search reached its limits. This establishes neither validity nor invalidity.'):verdict.status==='missingConclusion'?t('Marque pelo menos uma conclusão para verificar a consequência.','Mark at least one conclusion to check consequence.'):t('Domínio não vazio, identidade e funções totais. A análise usa somente as fórmulas; descrições não acrescentam premissas.','Nonempty domain, identity and total functions. Only formulas are analyzed; descriptions add no premises.'),verdict.status==='valid'?'valid':verdict.status==='invalid'?'invalid':'syntax');
+      if(verdict.satisfiable===false)section.append(node('p',t('As premissas são inconsistentes; as conclusões decorrem por vacuidade na lógica clássica. Isso não comprova a verdade das premissas.','The premises are inconsistent; the conclusions follow vacuously in classical logic. This does not establish premise truth.'),'hy-analysis-diagnostic'));
+      for(const conclusion of verdict.conclusions||[]){
+        const card=node('section','','hy-categorical-conclusion'),heading=node('h4');
+        heading.append(analysisIcon(conclusion.valid===true?'valid':conclusion.valid===false?'invalid':'syntax'),node('span',t('Conclusão da linha ','Conclusion on line ')+(conclusion.index+1)+' — '+(conclusion.valid===true?t('demonstrada','proved'):conclusion.valid===false?t('contramodelo encontrado','countermodel found'):t('inconclusiva','inconclusive'))));card.append(heading);
+        if(conclusion.proof){
+          const proof=node('details');proof.append(node('summary',t('Como foi demonstrado','How it was proved')));
+          proof.append(node('p',t('Tableau fechado: a hipótese de premissas verdadeiras e conclusão falsa conduz a contradição em todos os ramos.','Closed tableau: assuming true premises and a false conclusion leads to a contradiction on every branch.')));
+          proof.append(node('p',t('Expansões: ','Expansions: ')+conclusion.proof.steps+' · '+t('Ramos fechados: ','Closed branches: ')+conclusion.proof.closedBranches));
+          for(const[key,pt,en]of[['all','Instanciações universais','Universal instantiations'],['some','Testemunhas existenciais','Existential witnesses'],['equality','Restrições de identidade','Identity constraints']])if(conclusion.proof.rules[key])proof.append(node('p',t(pt,en)+': '+conclusion.proof.rules[key]));card.append(proof);
+        }
+        if(conclusion.countermodel){
+          const model=conclusion.countermodel,detail=node('details');detail.append(node('summary',t('Ver o contramodelo','View countermodel')));
+          detail.append(node('p',t('Todas as premissas são verdadeiras e esta conclusão é falsa nesta interpretação finita, conferida diretamente.','All premises are true and this conclusion is false in this directly checked finite interpretation.')));
+          detail.append(node('p',t('Domínio: ','Domain: ')+model.domain.join(', ')));
+          for(const[name,value]of Object.entries(model.constants))detail.append(node('p',name+' = '+value));
+          for(const[name,value]of Object.entries(model.freeVariables))detail.append(node('p',t('Variável livre ','Free variable ')+name+' = '+value));
+          for(const predicate of model.predicates){const facts=predicate.tuples.map(tuple=>predicate.name+(tuple.length?'('+tuple.join(', ')+')':''));detail.append(node('p',predicate.name+': '+(facts.length?facts.join(' · '):t('falso em todas as tuplas','false on every tuple'))));}
+          for(const fn of model.functions){detail.append(node('p',t('Função ','Function ')+fn.name+': '+fn.values.map(v=>fn.name+'('+v.args.join(', ')+') = '+v.value).join(' · ')+t('; demais casos = ','; all other cases = ')+fn.default));}
+          detail.append(node('p',t('As tuplas de predicados não listadas são falsas. Nomes diferentes podem designar o mesmo objeto.','Unlisted predicate tuples are false. Different names may denote the same object.')));card.append(detail);
+        }
+        section.append(card);
+      }
+      guide(t('Por que a busca pode ser inconclusiva?','Why can the search be inconclusive?'),t('Não há um procedimento que sempre decida todos os argumentos de LPO. Este buscador limita expansões, ramos, termos e tempo para manter a interface responsiva. A busca adicional de modelos finitos usa domínios de até três objetos; não encontrar um modelo não prova validade. Uma prova só é anunciada quando todos os ramos do tableau fecham.','No procedure always decides every first-order argument. This search bounds expansions, branches, terms and time to keep the interface responsive. Additional finite model search uses domains of up to three objects; failing to find a model does not prove validity. A proof is reported only when every tableau branch closes.'));
+      result.validationStatus=verdict.status;
       for (const entry of result.entries) {
         if (!entry.freeVariables.length) continue;
         const note = node('div', '', 'hy-analysis-diagnostic');
         note.append(node('span', t('Linha ', 'Line ') + (entry.index + 1), 'hy-analysis-location'));
-        note.append(node('p', t('variáveis livres — ', 'free variables — ') + entry.freeVariables.join(', ') + '. ' + t('A fórmula não é uma sentença fechada.', 'The formula is not a closed sentence.')));
+        note.append(node('p', t('variáveis livres — ', 'free variables — ') + entry.freeVariables.join(', ') + '. ' + t('A fórmula não é fechada. A mesma atribuição às variáveis livres é mantida em todas as linhas.', 'The formula is open. The same assignment to free variables is maintained across every line.')));
         section.append(note);
       }
       if (result.symbols.length) {
@@ -76,14 +104,14 @@ function updateExtendedLogicValidation(mode) {
       }
     }
     guide(t('Convenções e limites', 'Conventions and limits'), t('Convenção: variáveis livres x, y, z, u, v, w (com índices); nomes ligados por quantificadores também são variáveis. Quantificadores têm o alcance da fórmula imediatamente seguinte; use parênteses para ampliar esse alcance. Descrições em linguagem natural não são usadas como axiomas.', 'Convention: free variables x, y, z, u, v, w (with indices); names bound by quantifiers are also variables. Quantifiers scope over the immediately following formula; use parentheses for a wider scope. Natural-language descriptions are not used as axioms.'));
-    finish(result.status); return;
+    finish(result.validationStatus||result.status); return;
   }
   const result = LPCategorical.validate(rows);
   if (result.status === 'errors') {
     summary(t('Confira a forma das proposições', 'Check the proposition forms'), '', 'invalid');
     for (const error of result.errors) section.append(node('p', t('Linha ', 'Line ') + (error.index + 1) + ': ' + t('escrita não reconhecida. Use uma forma como “Todo homem é mortal”, “Aristóteles é homem” ou A(S,P). Frases com orações adicionais precisam ser reformuladas.', 'notation not recognized. Use a form such as “Every human is mortal”, “Aristotle is human” or A(S,P). Sentences with additional clauses need reformulation.'), 'hy-analysis-diagnostic'));
   } else if (result.status === 'limit') {
-    summary(t('Limite da análise', 'Analysis limit'), t('Este verificador aceita até três termos distintos e 200 linhas.', 'This checker accepts up to three distinct terms and 200 rows.'), 'syntax');
+    summary(t('Limite da análise', 'Analysis limit'), t('A análise aceita até doze termos distintos e 200 linhas, com limite de busca.', 'The analysis accepts up to twelve distinct terms and 200 rows, subject to a search budget.'), 'syntax');
   } else if (result.status === 'missingConclusion') {
     summary(t('Conclusão não indicada', 'No conclusion indicated'), t('Marque pelo menos uma conclusão.', 'Mark at least one conclusion.'), 'syntax');
   } else {

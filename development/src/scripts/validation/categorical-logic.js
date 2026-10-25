@@ -49,22 +49,48 @@
     if(entries.length>200)return {status:'limit'};
     const terms=[...new Set(entries.flatMap(e=>[e.subject,e.predicate]))],premises=entries.filter(e=>e.role==='premise'),conclusions=entries.filter(e=>e.role==='conclusion');
     if(!conclusions.length)return {status:'missingConclusion'};
-    if(terms.length>3)return {status:'limit'};
+    if(terms.length>12)return {status:'limit',terms:terms.length};
     const names=[...new Set(entries.filter(entry=>entry.singular).map(entry=>entry.subject))];
-    const failures=new Map();let satisfiable=false;
-    // Every object has one membership pattern. One representative of each
-    // occupied region suffices for A/E/I/O sentences; no cardinality is asserted.
-    for(let occupied=1;occupied<2**(2**terms.length);occupied++){
-      const regions=Array.from({length:2**terms.length},(_,i)=>i).filter(i=>occupied&(1<<i));
-      // A proper name denotes exactly one existing object. Names may co-refer.
-      if(!names.every(name=>regions.filter(region=>region&(1<<terms.indexOf(name))).length===1))continue;
-      if(!premises.every(e=>evaluate(e,regions,terms)))continue;
-      satisfiable=true;
-      for(const conclusion of conclusions){if(!failures.has(conclusion.index)&&!evaluate(conclusion,regions,terms)){
-        const domain=regions.map((region,i)=>({id:'d'+(i+1),terms:terms.filter((_,j)=>region&(1<<j))}));
-        failures.set(conclusion.index,domain);
-      }}
+    const bits=new Map(terms.map((term,i)=>[term,1<<i])),nameBits=names.map(name=>bits.get(name));
+    const failures=new Map();let operations=0;const deadline=Date.now()+250;
+    // Unary A/E/I/O formulas constrain membership regions. Existentials need witnesses;
+    // proper-name regions share one assignment per name, allowing co-reference.
+    function findModel(statements){
+      const universals=statements.filter(e=>e.form==='A'||e.form==='E'),existentials=statements.filter(e=>e.form==='I'||e.form==='O');
+      const allowed=[];
+      for(let region=0;region<2**terms.length;region++){
+        if(++operations>1500000||((operations&1023)===0&&Date.now()>deadline))throw Error('resource-limit');
+        if(universals.every(e=>!(region&bits.get(e.subject))||(e.form==='A'?Boolean(region&bits.get(e.predicate)):!(region&bits.get(e.predicate)))))allowed.push(region);
+      }
+      const matches=(e,region)=>Boolean(region&bits.get(e.subject))&&(e.form==='I'?Boolean(region&bits.get(e.predicate)):!(region&bits.get(e.predicate)));
+      allowed.sort((a,b)=>nameBits.reduce((n,bit)=>n+Boolean(a&bit)-Boolean(b&bit),0));
+      const requirements=[...existentials.map(e=>({test:region=>matches(e,region)})),...nameBits.map(bit=>({test:region=>Boolean(region&bit)}))];
+      for(const requirement of requirements){requirement.candidates=allowed.filter(requirement.test);if(!requirement.candidates.length)return null;}
+      requirements.sort((a,b)=>a.candidates.length-b.candidates.length);
+      const selected=new Set(),assignments=new Map();
+      function choose(index){
+        if(index===requirements.length)return [...selected.size?selected:[0]];
+        const requirement=requirements[index];if([...selected].some(requirement.test))return choose(index+1);
+        // Prefer witnesses not committing a proper name unnecessarily.
+        const candidates=requirement.candidates;
+        for(const region of candidates){
+          if(++operations>1500000||((operations&1023)===0&&Date.now()>deadline))throw Error('resource-limit');
+          if(nameBits.some(bit=>(region&bit)&&assignments.has(bit)&&assignments.get(bit)!==region))continue;
+          const added=[];for(const bit of nameBits)if((region&bit)&&!assignments.has(bit)){assignments.set(bit,region);added.push(bit);}
+          selected.add(region);const answer=choose(index+1);if(answer)return answer;selected.delete(region);for(const bit of added)assignments.delete(bit);
+        }
+        return null;
+      }
+      return choose(0);
     }
+    let satisfiable;
+    try{
+      satisfiable=Boolean(findModel(premises));
+      if(satisfiable)for(const conclusion of conclusions){
+        const opposite={...conclusion,form:{A:'O',E:'I',I:'E',O:'A'}[conclusion.form]},regions=findModel([...premises,opposite]);
+        if(regions)failures.set(conclusion.index,regions.map((region,i)=>({id:'d'+(i+1),terms:terms.filter((_,j)=>region&(1<<j))})));
+      }
+    }catch(_){return {status:'limit',terms:terms.length};}
     return {status:failures.size?'invalid':'valid',satisfiable,terms,names,entries,conclusions:conclusions.map(e=>({index:e.index,valid:!failures.has(e.index),countermodel:failures.get(e.index)||null}))};
   }
   scope.LPCategorical={parse,evaluate,validate};

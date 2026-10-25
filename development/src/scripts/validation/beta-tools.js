@@ -289,8 +289,8 @@
                 .join(", ");
           } else
             result.textContent = text(
-              "Confira a sintaxe das fórmulas e o limite de 16 proposições.",
-              "Check formula syntax and the 16-proposition limit.",
+              "Confira a sintaxe e os limites de recursos da busca (até 128 proposições).",
+              "Check formula syntax and search resource limits (up to 128 propositions).",
             );
         } finally {
           compare.disabled = false;

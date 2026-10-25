@@ -2,7 +2,7 @@
   class SyntaxIssue extends Error {
     constructor(code,column,token=''){super(code);Object.assign(this,{code,column,token});}
   }
-  const binary={'↔':[1,'iff'],'⇔':[1,'iff'],'<->':[1,'iff'],'→':[2,'implies'],'⇒':[2,'implies'],'->':[2,'implies'],'∨':[3,'or'],'∧':[4,'and'],'&':[4,'and']};
+  const binary={'↔':[1,'iff'],'⇔':[1,'iff'],'<->':[1,'iff'],'→':[2,'implies'],'⇒':[2,'implies'],'->':[2,'implies'],'∨':[3,'or'],'∧':[4,'and'],'&':[4,'and'],'•':[4,'and'],'⊃':[2,'implies'],'←':[2,'reverse'],'⇐':[2,'reverse'],'<-':[2,'reverse'],'↛':[2,'notImplies'],'⇏':[2,'notImplies'],'≡':[1,'iff'],'⊕':[3,'xor'],'⊻':[3,'xor'],'↮':[3,'xor'],'⇎':[3,'xor'],'↑':[4,'nand'],'⊼':[4,'nand'],'|':[4,'nand'],'↓':[3,'nor'],'⊽':[3,'nor'],'+':[3,'or']};
   const variable = name => /^[uvwxyz][\d_′']*$/u.test(name);
   const upper = name => /^\p{Lu}/u.test(name);
   function parse(text){
@@ -11,9 +11,9 @@
     let offset=0;
     while(offset<text.length){
       if(/\s/u.test(text[offset])){offset++;continue;}
-      const rest=text.slice(offset),value=rest.match(/^(?:<->|->|[\p{L}_][\p{L}\p{M}\p{N}_′']*|.)/u)?.[0];
+      const rest=text.slice(offset),value=rest.match(/^(?:<->|->|<-|!=|∃!|[\p{L}_][\p{L}\p{M}\p{N}_′']*|.)/u)?.[0];
       if(!value)throw new SyntaxIssue('symbol',offset+1);
-      if(tokens.at(-1)&&['∀','∃','∄'].includes(tokens.at(-1).value)){
+      if(tokens.at(-1)&&['∀','∃','∄','∃!'].includes(tokens.at(-1).value)){
         const compact=value.match(/^([uvwxyz][\d_′']*)(\p{Lu}[\p{L}\p{M}\p{N}_′']*)$/u);
         if(compact){tokens.push({value:compact[1],column:offset+1},{value:compact[2],column:offset+1+compact[1].length});offset+=value.length;continue;}
       }
@@ -36,22 +36,22 @@
       if(++depth>96)fail('limit');
       let node;
       if(['¬','~','∼','!'].includes(peek())){index++;node={op:'not',body:unary()};}
-      else if(['∀','∃','∄'].includes(peek())){
+      else if(['∀','∃','∄','∃!'].includes(peek())){
         const q=tokens[index++],name=identifier();
         if(upper(name.value))throw new SyntaxIssue('variable',name.column,name.value);
-        node={op:q.value==='∀'?'all':q.value==='∃'?'some':'none',variable:name.value,body:unary()};
-      }else if(peek()==='('){index++;node=expression(0);take(')');}
+        node={op:q.value==='∀'?'all':q.value==='∃'?'some':q.value==='∃!'?'unique':'none',variable:name.value,body:unary()};
+      }else if(['(','[','{'].includes(peek())){const closing={'(':')','[':']','{':'}'}[peek()];index++;node=expression(0);take(closing);}
       else if(['⊤','⊥'].includes(peek())){node={op:'truth',value:peek()==='⊤'};index++;}
       else{
         const left=term();
-        if(['=','≠'].includes(peek())){const operator=tokens[index++].value;node={op:operator==='='?'equal':'unequal',left,right:term()};}
+        if(['=','≠','!='].includes(peek())){const operator=tokens[index++].value;node={op:operator==='='?'equal':'unequal',left,right:term()};}
         else{if(!upper(left.name))throw new SyntaxIssue('predicate',left.column,left.name);node={op:'predicate',name:left.name,args:left.args,column:left.column};}
       }
       depth--;return node;
     }
     function expression(min){
       let left=unary();
-      while(binary[peek()]&&binary[peek()][0]>=min){const [level,op]=binary[tokens[index++].value];left={op,left,right:expression(op==='implies'?level:level+1)};}
+      while(binary[peek()]&&binary[peek()][0]>=min){const [level,op]=binary[tokens[index++].value];left={op,left,right:expression(['implies','reverse','notImplies'].includes(op)?level:level+1)};}
       return left;
     }
     const tree=expression(0);if(index!==tokens.length)fail('operator');
@@ -69,7 +69,7 @@
     }
     function visit(node,bound=new Set()){
       if(node.op==='predicate'){register(node.name,'predicate',node.args.length,node.column);node.args.forEach(t=>visitTerm(t,bound));}
-      else if(['all','some','none'].includes(node.op)){const next=new Set(bound);next.add(node.variable);visit(node.body,next);}
+      else if(['all','some','none','unique'].includes(node.op)){const next=new Set(bound);next.add(node.variable);visit(node.body,next);}
       else if(node.op==='not')visit(node.body,bound);
       else if(['equal','unequal'].includes(node.op)){visitTerm(node.left,bound);visitTerm(node.right,bound);}
       else if(node.op!=='truth'){visit(node.left,bound);visit(node.right,bound);}

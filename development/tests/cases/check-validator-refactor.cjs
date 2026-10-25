@@ -26,7 +26,7 @@ const row = (text, role = "premise") => ({ text, role });
         row(Array.from({ length: 17 }, (_, i) => "P" + i).join(" ∧ ")),
         row("P0", "conclusion"),
       ],
-      status: "limit",
+      status: "valid",
     },
   ];
   for (const c of cases) {
