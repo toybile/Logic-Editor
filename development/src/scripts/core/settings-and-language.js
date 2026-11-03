@@ -498,3 +498,6 @@ if (document.modelContext?.registerTool) {
     window.addEventListener("pagehide", () => lifecycle.abort(), { once: true });
   } catch {}
 }
+
+window.ToybileSignatureLanguage={get:()=>ui.language,set:code=>{ui.language=code;applyLanguage();saveUI();}};
+window.LogicSignatureBackground={getScheme:()=>isDarkTheme()?'dark':'light',setScheme:(scheme,mode)=>{ui.themeMode=mode==='system'?'auto':mode;resolveThemeScheme(ui.themeMode);applyUI();document.documentElement.dataset.theme=scheme;},setGlass:g=>{ui.backgroundTranslucency=g;applyUI();},isBackground:target=>isThemeBackgroundTarget(target)};
