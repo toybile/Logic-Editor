@@ -1,0 +1,1 @@
+window.ToybileSignatureConfig={...window.LogicSignatureBackground};
