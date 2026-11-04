@@ -50,3 +50,5 @@ function openBackgroundThemes(pointerId) {
   for(const name of ['pointercancel','scroll','keydown'])document.addEventListener(name,()=>{lastTap=null;cancel();},true);
   window.addEventListener('blur',()=>{lastTap=null;cancel();});
 })();
+
+document.addEventListener('keydown',event=>{if(event.altKey&&!event.ctrlKey&&!event.metaKey&&!event.repeat&&event.code==='KeyT'){event.preventDefault();root.querySelector('#editor-settings').showPopover();}});

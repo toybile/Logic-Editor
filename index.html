@@ -9597,6 +9597,8 @@ html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner, #lp-hybrid ::-we
 #lp-hybrid #editor-settings .hy-settings-actions #settings-language>svg{width:20px;height:20px}
 @media(prefers-reduced-motion:reduce){.site-language-picker .site-language-card{transition:none}}
 
+#lp-hybrid .hy-head [popovertarget="editor-settings"]{display:none!important}
+
 #lp-hybrid .hy-text-import-dialog { width:min(1000px,calc(100vw - 48px)); max-width:none; max-height:calc(100dvh - 48px); padding:0; overflow:hidden; border-radius:22px; }
 #lp-hybrid .hy-text-import-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:24px 26px; border-bottom:1px solid var(--edge); }
 #lp-hybrid .hy-text-import-identity { display:flex; align-items:center; gap:12px; }
@@ -22465,6 +22467,8 @@ function openBackgroundThemes(pointerId) {
   for(const name of ['pointercancel','scroll','keydown'])document.addEventListener(name,()=>{lastTap=null;cancel();},true);
   window.addEventListener('blur',()=>{lastTap=null;cancel();});
 })();
+
+document.addEventListener('keydown',event=>{if(event.altKey&&!event.ctrlKey&&!event.metaKey&&!event.repeat&&event.code==='KeyT'){event.preventDefault();root.querySelector('#editor-settings').showPopover();}});
 </script>
 
 <script id="validation-dialog">

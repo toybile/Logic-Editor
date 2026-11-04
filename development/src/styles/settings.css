@@ -55,3 +55,5 @@
 #settings-language>svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6}
 #lp-hybrid #editor-settings .hy-settings-actions #settings-language>svg{width:20px;height:20px}
 @media(prefers-reduced-motion:reduce){.site-language-picker .site-language-card{transition:none}}
+
+#lp-hybrid .hy-head [popovertarget="editor-settings"]{display:none!important}
