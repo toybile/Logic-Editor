@@ -9540,9 +9540,11 @@ html::-webkit-scrollbar-corner, body::-webkit-scrollbar-corner, #lp-hybrid ::-we
 #lp-hybrid .hy-didactic-conventions { margin-top:20px; }
 
 #lp-hybrid #editor-settings {
+  display:none; flex-direction:column;
   inset:0; width:900px; height:820px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 40px);
   box-sizing:border-box; margin:auto; padding:0; border:1px solid var(--edge); border-radius:20px; overflow:hidden;
   background:var(--paper); color:var(--ink); box-shadow:0 20px 65px light-dark(#24364a25,#0005);
+  transition:opacity .24s ease,transform .24s ease,display .24s allow-discrete,overlay .24s allow-discrete;
 }
 #lp-hybrid #editor-settings:popover-open { display:flex; flex-direction:column; }
 #lp-hybrid #editor-settings > .hy-settings-head { margin:0; padding:22px 24px; gap:16px; border-bottom:1px solid var(--edge); flex:none; }
@@ -25468,7 +25470,7 @@ async function updateExtendedLogicValidation(mode, options = {}) {
   }
   const icons={maximize:'<rect x="4" y="4" width="16" height="16" rx="2"/>',restore:'<path d="M8 8V4h12v12h-4"/><rect x="4" y="8" width="12" height="12" rx="1.5"/>'};
   function label(button,maximized){const text=interfaceText(maximized?'Restaurar tamanho':'Maximizar janela',maximized?'Restore size':'Maximize window');button.setAttribute('aria-label',text);button.dataset.hintText=text;button.setAttribute('aria-pressed',String(maximized));button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[maximized?'restore':'maximize']+'</svg>';}
-  function restore(window){const state=states.get(window);if(!state)return;const before=capture(window);window.classList.remove('hy-window-maximized');if(state.frame){window.hidePopover();if(state.popover===null)window.removeAttribute('popover');else window.setAttribute('popover',state.popover);state.placeholder.remove();window.style.cssText=state.style;}states.delete(window);window.scrollTop=state.scrollTop;label(state.button,false);const motion=spring(window,before);if(state.frame){const release=()=>{if(![...states.values()].some(s=>s.frame))delete root.dataset.windowMaximized;};if(motion)motion.finished.then(release,release);else release();}}
+  function restore(window,animate=true){const state=states.get(window);if(!state)return;const before=capture(window);window.classList.remove('hy-window-maximized');if(state.frame){window.hidePopover();if(state.popover===null)window.removeAttribute('popover');else window.setAttribute('popover',state.popover);state.placeholder.remove();window.style.cssText=state.style;}states.delete(window);window.scrollTop=state.scrollTop;label(state.button,false);const motion=animate?spring(window,before):null;if(state.frame){const release=()=>{if(![...states.values()].some(s=>s.frame))delete root.dataset.windowMaximized;};if(motion)motion.finished.then(release,release);else release();}}
   function toggle(window,button){if(states.has(window)){restore(window);return;}const frame=window.matches('.hy-panel-frame');if(frame){for(const [other,state]of states)if(state.frame)restore(other);}
     const before=capture(window);
     const state={button,frame,style:window.style.cssText,scrollTop:window.scrollTop,popover:window.getAttribute('popover')};
@@ -25478,7 +25480,7 @@ async function updateExtendedLogicValidation(mode, options = {}) {
   function install(window){if(installed.has(window))return;const frame=window.matches('.hy-panel-frame');const close=frame?null:window.querySelector('.hy-dialog-close,.hy-analysis-close,.hy-beta-close');const head=frame?window.querySelector('.hy-panel > .hy-section-head'):close?.parentElement;if(!head)return;
     const button=document.createElement('button');button.type='button';button.className='hy-button hy-icon-button hy-window-maximize';label(button,false);button.addEventListener('pointerdown',e=>e.stopPropagation());button.onclick=e=>{e.stopPropagation();toggle(window,button);};
     if(close){let actions=close.closest('.hy-settings-actions,.hy-window-actions');if(!actions){actions=document.createElement('span');actions.className='hy-window-actions';close.before(actions);actions.append(close);}actions.insertBefore(button,close);}else head.append(button);
-    installed.set(window,button);window.addEventListener('close',()=>restore(window));window.addEventListener('toggle',e=>{if(e.target===window&&e.newState==='closed'&&states.has(window))restore(window);});window.addEventListener('cancel',e=>{if(states.has(window)){e.preventDefault();restore(window);button.focus({preventScroll:true});}});
+    installed.set(window,button);window.addEventListener('close',()=>restore(window));window.addEventListener('toggle',e=>{if(e.target===window&&e.newState==='closed'&&states.has(window)){if(window.id==='editor-settings'){setTimeout(()=>{if(!window.matches(':popover-open'))restore(window,false);},matchMedia('(prefers-reduced-motion: reduce)').matches?0:260);}else restore(window);}});window.addEventListener('cancel',e=>{if(states.has(window)){e.preventDefault();restore(window);button.focus({preventScroll:true});}});
   }
   function scan(){for(const window of root.querySelectorAll('dialog,#editor-settings,.hy-panel-frame'))install(window);for(const [window]of states)if(!window.isConnected)restore(window);}
   let queued=false;new MutationObserver(()=>{if(queued)return;queued=true;queueMicrotask(()=>{queued=false;scan();});}).observe(root,{childList:true,subtree:true});

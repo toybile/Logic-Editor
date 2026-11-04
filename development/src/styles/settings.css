@@ -1,7 +1,9 @@
 #lp-hybrid #editor-settings {
+  display:none; flex-direction:column;
   inset:0; width:900px; height:820px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 40px);
   box-sizing:border-box; margin:auto; padding:0; border:1px solid var(--edge); border-radius:20px; overflow:hidden;
   background:var(--paper); color:var(--ink); box-shadow:0 20px 65px light-dark(#24364a25,#0005);
+  transition:opacity .24s ease,transform .24s ease,display .24s allow-discrete,overlay .24s allow-discrete;
 }
 #lp-hybrid #editor-settings:popover-open { display:flex; flex-direction:column; }
 #lp-hybrid #editor-settings > .hy-settings-head { margin:0; padding:22px 24px; gap:16px; border-bottom:1px solid var(--edge); flex:none; }
